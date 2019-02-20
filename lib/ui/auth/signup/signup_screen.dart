@@ -22,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
     return StoreConnector<AppState, SignupViewModel>(
       distinct: true,
+      onDispose: (store) => store.dispatch(SignupRestartData()),
       converter: (store) => SignupViewModel.fromStore(store: store),
       builder: (BuildContext _, SignupViewModel viewModel) {
 
@@ -394,16 +395,16 @@ class _SignupScreenState extends State<SignupScreen> {
 
 
     if (hasLoginError == true) {
-
+      scaffoldKey.currentState.hideCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(
         SnackBar(
-
+          backgroundColor: Colors.red,
           duration: Duration(seconds: 3),
           content: Text(
             loginError,
             style: TextStyle(
               fontSize: 16.0,
-              color: Colors.redAccent
+              color: Colors.white
             )
           )
 

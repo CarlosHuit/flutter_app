@@ -1,7 +1,7 @@
-class NavigateToHome {}
+class NavigatorReplaceHome {}
 
-class NavigateToSignin {}
+class NavigatorReplaceSignin {}
 
-class NavigateToSignup {}
+class NavigatorPushSignup {}
 
-class NavigatePop {}
+class NavigatorPop {}

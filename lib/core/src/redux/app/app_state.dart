@@ -47,7 +47,7 @@ class AppState {
       && authState    == other.authState
       && appName      == other.appName
       && loginState   == other.loginState
-      && authState    == other.authState;
+      && signupState  == other.signupState;
 
   @override
   int get hashCode =>

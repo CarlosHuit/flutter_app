@@ -33,6 +33,7 @@ class SignupUpdatePassword2 {
 
 class Signup {}
 
+class RemoveSignupError {}
 
 class SignupSuccess {
   final AuthLoginResponse authLoginResponse;
@@ -42,6 +43,10 @@ class SignupSuccess {
 class SignupFailed {
   final String error;
   SignupFailed({@required this.error});
+}
+
+class SignupRestartData {
+  
 }
 
 class SignupError {

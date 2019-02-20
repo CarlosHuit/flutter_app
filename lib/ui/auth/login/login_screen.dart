@@ -17,6 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   OnBackPressed onBackPressed = OnBackPressed();
+  final TextEditingController loginEmailController = TextEditingController();
+  final TextEditingController loginPasswordController =TextEditingController();
 
 
   @override
@@ -27,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    loginEmailController.dispose();
+    loginPasswordController.dispose();
     super.dispose();
   }
 
@@ -109,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
         style:        styleInput,
         keyboardType: TextInputType.emailAddress,
         onChanged:    viewModel.updateEmail,
+        controller:   loginEmailController,
         decoration:   InputDecoration(
 
           prefixIcon: Icon( Icons.account_circle, color: Colors.white ),
@@ -139,7 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
         obscureText:   true,
         style:         styleInput,
         enableInteractiveSelection: false,
-        onChanged: viewModel.updatePassword,
+        onChanged:     viewModel.updatePassword,
+        controller:    loginPasswordController,
 
         decoration:    InputDecoration(
 
@@ -249,7 +255,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
 
-      onTap:  viewModel.isLoading ? null : viewModel.goToSignupScreen
+      onTap:  viewModel.isLoading ? null : () {
+        viewModel.goToSignupScreen();
+        loginEmailController.clear();
+        loginPasswordController.clear();
+      }
 
     );
 
@@ -352,15 +362,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (hasLoginError == true) {
 
+      scaffoldKey.currentState.hideCurrentSnackBar();
       scaffoldKey.currentState.showSnackBar(
         SnackBar(
-
+          backgroundColor: Colors.red,
           duration: Duration(seconds: 3),
           content: Text(
             loginError,
+            maxLines: 1,
             style: TextStyle(
               fontSize: 16.0,
-              color: Colors.redAccent
+              color: Colors.white,
+              fontWeight: FontWeight.bold
             )
           )
 

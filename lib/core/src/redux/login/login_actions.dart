@@ -15,6 +15,9 @@ class LoginUpdatePassword {
 
 class Login {}
 
+class RemoveLoginError {}
+
+class LoginRestartData { }
 
 class LoginSuccess {
   final AuthLoginResponse authLoginResponse;

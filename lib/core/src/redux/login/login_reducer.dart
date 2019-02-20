@@ -8,7 +8,6 @@ LoginState loginReducer(LoginState state, dynamic action) {
   if (action is LoginUpdateEmail){
 
     final StatusValidator validator = AuthValidators.validateEmail(action.email);
-    print('email is: ${state.email}');
 
     return state.copyWith(
       email:         action.email,
@@ -38,7 +37,6 @@ LoginState loginReducer(LoginState state, dynamic action) {
   
   if ( action is LoginFailed ) {
 
-    print('login failed');
 
     return state.copyWith(
       isLoading:     false,
@@ -47,15 +45,24 @@ LoginState loginReducer(LoginState state, dynamic action) {
     );
 
   }
+
+  if (action is RemoveLoginError) {
+    return state.copyWith(
+      hasLoginError: false,
+      loginError: ''
+    );
+  }
   
   if ( action is LoginSuccess ) {
 
-    return state.copyWith(
-      isLoading: false,
-      loginSuccessful: true
-    );
+    return LoginState.initialState();
 
   }
+
+  if (action is LoginRestartData) {
+    return LoginState.initialState();
+  }
+
 
   return state;
 }

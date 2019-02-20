@@ -21,26 +21,20 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
     next(action);
 
     if (action is Login) {
-      print('loggging');
+
       final path = store.state.loginState;
       final credentials = Credentials(path.email, path.password);
 
-      await Future.delayed(Duration(seconds: 1));
+      try {
 
-      api.login(credentials).then(
-        (LoginResponse response) {
-          next(LoginSuccess(authLoginResponse: response.auth));
-          next(NavigateToHome());
-        }
+        final LoginResponse response = await api.login(credentials);
+        next(LoginSuccess(authLoginResponse: response.auth));
+        next(NavigatorReplaceHome());
 
-      ).catchError(
-
-        (error) {
-          print(error);
-          store.dispatch(LoginFailed(error: error));
-        }
-
-      );
+      } catch (e) {
+        next(LoginFailed(error: e));
+        Future.delayed(Duration(milliseconds: 100), () => next(RemoveLoginError()));
+      }
 
     }
     

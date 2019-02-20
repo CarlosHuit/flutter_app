@@ -1,3 +1,5 @@
+import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
+
 import '../../models/models.dart';
 import '../../networking/auth_api.dart';
 import '../../redux/app/app.dart';
@@ -12,11 +14,13 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
   SignupMiddleware({@required this.api});
 
   @override
-  void call(Store<AppState> store, action, NextDispatcher next) {
+  void call(Store<AppState> store, action, NextDispatcher next) async {
+
     next(action);
+
     if (action is Signup) {
 
-      final path =store.state.signupState;
+      final path = store.state.signupState;
 
       final AccountForm accountForm = AccountForm(
         email:      path.email,
@@ -27,15 +31,18 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
         avatar:     path.avatar
       );
 
-      api.signup(accountForm).then(
-        (LoginResponse response) => store.dispatch(
-          SignupSuccess(authLoginResponse: response.auth)
-        )
-      ).catchError(
-        (error) => store.dispatch(
-          SignupFailed(error: error)
-        )
-      );
+      try {
+ 
+        final LoginResponse response = await api.signup(accountForm);
+        next(SignupSuccess(authLoginResponse: response.auth));
+        next(NavigatorReplaceHome());
+
+      } catch (e) {
+
+        next( SignupFailed(error: e) );
+        Future.delayed(Duration(milliseconds: 100), () => next( RemoveSignupError() ));
+
+      }
 
     }
   }

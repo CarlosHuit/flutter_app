@@ -63,7 +63,7 @@ class LoginViewModel {
       updateEmail:      (term) => store.dispatch(LoginUpdateEmail(email: term)),
       updatePassword:   (term) => store.dispatch(LoginUpdatePassword(password: term)),
       login:            () => store.dispatch(Login()),
-      goToSignupScreen: () => store.dispatch(NavigateToSignup())
+      goToSignupScreen: () => store.dispatch(NavigatorPushSignup())
     );
 
   }

@@ -1,50 +1,26 @@
+import 'package:app19022019/ui/components/drawer/drawer.dart';
+import 'package:app19022019/ui/home/home_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../../utils/utils.dart';
 
 class HomeScreen extends StatelessWidget {
+
+  final OnBackPressed onBackPressed = OnBackPressed();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        centerTitle: true,
-      ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-
-            Text(
-              'Hello from HomeScreen',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 36.0,
-                fontWeight: FontWeight.bold
-              ),
-            ),
-
-            RaisedButton(
-              color: Colors.red,
-              textColor: Colors.white,
-              child: Text(
-                'DeleteToken',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () async{
-                final FlutterSecureStorage storage = FlutterSecureStorage();
-                await storage.delete(key: 'token');
-                final String token = await storage.read(key: 'token');
-                print('The CurrentToken is $token');
-              },
-            )
-
-          ],
-        ),
-      ),
+    return WillPopScope(
+      onWillPop: () => onBackPressed.validation(context),
+      child: Scaffold(
+        appBar: homeAppBar(),
+        drawer: myDrawer(context),
+        body:   Container(
+          alignment: Alignment.center,
+          child: Container(
+            child: Text('Hello world'),
+          ),
+        )
+      )
     );
   }
 }
