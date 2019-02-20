@@ -56,6 +56,8 @@ flutter:
    - assets/escritura-min.png
    - assets/arte-min.png
    - assets/lectura-min.png
+   - assets/background-drawer.jpg
+   - assets/user_icon.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 
