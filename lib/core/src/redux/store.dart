@@ -30,14 +30,16 @@ Future<Store<AppState>> createStore({
 
   return Store(
     appReducer,
-    distinct: true,
+    distinct:     true,
     initialState: AppState.initialState( keyValueStore: keyValueStore, auth: auth ),
     middleware: [
+
       LoginMiddleware(api: authApi),
       SignupMiddleware(api:authApi),
       AuthMiddleware(secureStorage: secureStorage),
       CoursesMiddleware(),
       NavigationMiddleware(),
+
     ]
   );
   

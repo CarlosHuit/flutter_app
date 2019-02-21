@@ -21,7 +21,7 @@ class CoursesState {
 
   CoursesState copyWith({
     List<Course> courses,
-    Course course,
+    Course currentCourse,
   }) {
     return CoursesState(
       courses: courses ?? this.courses,
