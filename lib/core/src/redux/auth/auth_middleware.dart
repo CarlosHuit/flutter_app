@@ -48,6 +48,15 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
 
       }
     }
+
+    if (action is Logout) {
+      try {
+        next( NavigatorReplaceSignin());
+        await secureStorage.delete(key: 'auth');
+      } catch (e) {
+        print(e);
+      }
+    }
     
 
   }

@@ -9,12 +9,19 @@ AuthState authReducer(AuthState state, dynamic action) {
       email:      action.auth.email,
       firstName:  action.auth.firstName,
       lastName:   action.auth.lastName,
+      avatar:     action.auth.avatar,
       isLoggedIn: true
     );
   }
 
   if (action is RemoveAuth) {
     return AuthState.initialState(auth: null);
+  }
+
+  if (action is Logout) {
+    Future.delayed(Duration(seconds: 1), () {
+      return AuthState.initialState(auth: null);
+    });
   }
 
   return state;

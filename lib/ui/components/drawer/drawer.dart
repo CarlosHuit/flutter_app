@@ -1,13 +1,15 @@
+import 'package:app19022019/core/src/viewmodels/home_view_model.dart';
 import 'package:flutter/material.dart';
 
-Widget myDrawer(BuildContext context) {
+
+Widget myDrawer(BuildContext context, HomeViewModel viewModel) {
 
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
 
-        drawerHeader(),
+        drawerHeader(viewModel),
 
         ListTile(
           leading: Icon(Icons.event_note),
@@ -33,19 +35,18 @@ Widget myDrawer(BuildContext context) {
           onTap: () {
             // update state
             Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, '/login');
+            viewModel.logout();
+            // Navigator.pushReplacementNamed(context, '/login');
           }
         )
       ],
     ),
   );
 
-
-
-
 }
 
-Widget userIcon() {
+
+Widget userIcon(HomeViewModel viewModel) {
   return Container(
     width:  60.0,
     height: 60.0,
@@ -53,7 +54,9 @@ Widget userIcon() {
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(50),
-      image:        DecorationImage(image: AssetImage('assets/user_icon.png')),
+      image:        DecorationImage(
+        image: AssetImage('assets/${viewModel.avatar}-min.png')
+      ),
       border:       Border.all(color: Colors.white, width: 2.0),
       boxShadow: <BoxShadow> [
 
@@ -68,7 +71,7 @@ Widget userIcon() {
 }
 
 
-Widget userData() {
+Widget userData(HomeViewModel viewModel) {
 
   return Container(
     margin: EdgeInsets.only(bottom: 5.0),
@@ -77,7 +80,7 @@ Widget userData() {
       children: <Widget>[
 
         Text(
-          'Carlos Pixtun',
+          viewModel.fullName(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 28.0
@@ -85,7 +88,7 @@ Widget userData() {
         ),
 
         Text(
-          'emox2544@gmail.com',
+          viewModel.email,
           style: TextStyle(
             fontSize: 14.0,
           ),
@@ -98,7 +101,7 @@ Widget userData() {
 
 }
 
-DrawerHeader drawerHeader() {
+DrawerHeader drawerHeader(HomeViewModel viewModel) {
 
   return DrawerHeader(
     decoration: BoxDecoration(
@@ -112,8 +115,8 @@ DrawerHeader drawerHeader() {
         mainAxisAlignment:  MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          userIcon(),
-          userData()
+          userIcon(viewModel),
+          userData(viewModel)
         ],
       ),
     ),

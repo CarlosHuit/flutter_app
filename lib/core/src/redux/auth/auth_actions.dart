@@ -9,4 +9,6 @@ class PersistAuth {
   
 }
 
+class Logout {}
+
 class RemoveAuth {}

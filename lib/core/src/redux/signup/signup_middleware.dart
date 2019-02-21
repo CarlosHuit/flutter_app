@@ -24,7 +24,7 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
 
       final AccountForm accountForm = AccountForm(
         email:      path.email,
-        firstName:  path.email,
+        firstName:  path.firstName,
         lastName:   path.lastName,
         password:   path.password,
         password2:  path.password2,
