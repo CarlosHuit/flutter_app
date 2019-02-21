@@ -17,7 +17,7 @@ void main() async {
   final FlutterSecureStorage secureStorage =FlutterSecureStorage();
   final String token = await secureStorage.read( key: 'token');
 
-  final Store<AppState> store = createStore(
+  final Store<AppState> store = await createStore(
     client:        Client(),
     keyValueStore: keyValueStore,
     secureStorage: secureStorage

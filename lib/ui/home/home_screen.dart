@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
 
   Future showStatusBar({@required Color color}) {
 
-    return Future.delayed(Duration(milliseconds: 200), () {
+    return Future.delayed(Duration(milliseconds: 500), () {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle( statusBarColor: color)
       );

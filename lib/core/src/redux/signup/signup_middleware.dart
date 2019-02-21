@@ -1,4 +1,4 @@
-import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
+import 'package:app19022019/core/src/redux/auth/auth_actions.dart';
 
 import '../../models/models.dart';
 import '../../networking/auth_api.dart';
@@ -34,8 +34,8 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
       try {
  
         final LoginResponse response = await api.signup(accountForm);
-        next(SignupSuccess(authLoginResponse: response.auth));
-        next(NavigatorReplaceHome());
+        next(PersistAuth(auth: response.auth, screen: 'signup'));
+
 
       } catch (e) {
 

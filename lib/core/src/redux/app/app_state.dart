@@ -1,3 +1,5 @@
+import 'package:app19022019/core/src/models/auth_login_response.dart';
+
 import '../auth/auth_state.dart';
 import '../signup/signup_state.dart';
 import 'package:key_value_store/key_value_store.dart';
@@ -21,13 +23,18 @@ class AppState {
   });
 
 
-  factory AppState.initialState({ @required KeyValueStore keyValueStore }) {
+  factory AppState.initialState({
+    @required KeyValueStore keyValueStore,
+    @required AuthLoginResponse auth
+  }) {
+
     return AppState(
       appName:      'Weduc',
-      authState:    AuthState.initialState(keyValueStore: keyValueStore),
+      authState:    AuthState.initialState(auth: auth),
       loginState:   LoginState.initialState(),
       signupState:  SignupState.initialState()
     );
+
   }
 
 

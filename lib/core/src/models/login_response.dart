@@ -22,13 +22,13 @@ class LoginResponse {
 
     return LoginResponse(
       auth: AuthLoginResponse(
-        respJson['auth']['token'],
-        respJson['auth']['message'],
-        respJson['auth']['userId'],
-        respJson['auth']['firstName'],
-        respJson['auth']['lastName'],
-        respJson['auth']['email'],
-        respJson['auth']['avatar']
+        token:     respJson['auth']['token'],
+        message:   respJson['auth']['message'],
+        userId:    respJson['auth']['userId'],
+        firstName: respJson['auth']['firstName'],
+        lastName:  respJson['auth']['lastName'],
+        email:     respJson['auth']['email'],
+        avatar:    respJson['auth']['avatar']
       ),
       courses: temListCourse
     );
