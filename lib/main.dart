@@ -13,9 +13,8 @@ void main() async {
   await setOrientation();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final FlutterKeyValueStore keyValueStore = FlutterKeyValueStore(prefs);
+  final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
-  final FlutterSecureStorage secureStorage =FlutterSecureStorage();
-  final String token = await secureStorage.read( key: 'token');
 
   final Store<AppState> store = await createStore(
     client:        Client(),
@@ -23,8 +22,5 @@ void main() async {
     secureStorage: secureStorage
   );
 
-  runApp( App(
-    store: store,
-    hasToken: token != null ? true : false
-  ) );
+  runApp( App( store: store ) );
 }

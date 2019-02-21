@@ -17,14 +17,8 @@ final Map<String, WidgetBuilder> routes = {
 
 class App extends StatefulWidget {
 
-  final bool hasToken;
   final Store<AppState> store;
-
-  const App({
-    Key key,
-    @required this.hasToken,
-    @required this.store
-  }) : super(key: key);
+  const App({ Key key, @required this.store }) : super(key: key);
 
   @override
   _AppState createState() => _AppState();
@@ -35,7 +29,6 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
 
-  bool get hasToken => widget.hasToken;
   Store get store => widget.store;
 
   @override
@@ -61,7 +54,7 @@ class _AppState extends State<App> {
               fontFamily: 'Roboto'
 
             ),
-            home:         hasToken ? HomeScreen() :LoginScreen(),
+            home:         viewModel.isLoggedIn ? HomeScreen() :LoginScreen(),
             routes:       routes,
             navigatorKey: NavigationKey.key,
             debugShowCheckedModeBanner: false,
