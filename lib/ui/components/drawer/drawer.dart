@@ -13,30 +13,28 @@ Widget myDrawer(BuildContext context, HomeViewModel viewModel) {
 
         ListTile(
           leading: Icon(Icons.event_note),
-          title: Text('Cursos', style: TextStyle(fontWeight: FontWeight.bold)),
-          onTap: () =>  Navigator.pop(context)
+          title:   Text('Cursos', style: TextStyle(fontWeight: FontWeight.bold)),
+          onTap:   () =>  Navigator.pop(context)
         ),
 
         ListTile(
           leading: Icon(Icons.collections_bookmark),
-          title: Text('Mis Cursos', style: TextStyle(fontWeight: FontWeight.bold)),
-          onTap: () =>  Navigator.pop(context)
+          title:   Text('Mis Cursos', style: TextStyle(fontWeight: FontWeight.bold)),
+          onTap:   () =>  Navigator.pop(context)
         ),
 
         ListTile(
           leading: Icon(Icons.calendar_today),
-          title: Text('Calendario', style: TextStyle(fontWeight: FontWeight.bold)),
-          onTap: () =>  Navigator.pop(context)
+          title:   Text('Calendario', style: TextStyle(fontWeight: FontWeight.bold)),
+          onTap:   () =>  Navigator.pop(context)
         ),
 
         ListTile(
           leading: Icon(Icons.exit_to_app),
-          title: Text('Cerrar Sesion', style: TextStyle(fontWeight: FontWeight.bold)),
-          onTap: () {
-            // update state
+          title:   Text('Cerrar Sesion', style: TextStyle(fontWeight: FontWeight.bold)),
+          onTap:   () {
             Navigator.pop(context);
             viewModel.logout();
-            // Navigator.pushReplacementNamed(context, '/login');
           }
         )
       ],
@@ -76,26 +74,25 @@ Widget userData(HomeViewModel viewModel) {
   return Container(
     margin: EdgeInsets.only(bottom: 5.0),
     child:  Column(
+
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
 
         Text(
           viewModel.fullName(),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 28.0
-          ),
+          overflow: TextOverflow.ellipsis,
+          style:    TextStyle( fontWeight: FontWeight.bold, fontSize: 28.0 ),
         ),
 
         Text(
           viewModel.email,
-          style: TextStyle(
-            fontSize: 14.0,
-          ),
+          overflow: TextOverflow.ellipsis,
+          style:    TextStyle( fontSize: 14.0 ),
         )
 
         
       ],
+
     ),
   );
 
@@ -104,12 +101,14 @@ Widget userData(HomeViewModel viewModel) {
 DrawerHeader drawerHeader(HomeViewModel viewModel) {
 
   return DrawerHeader(
+
     decoration: BoxDecoration(
       image: DecorationImage(
         image: AssetImage('assets/background-drawer.jpg'),
         fit:   BoxFit.cover
       )
     ),
+
     child: Container(
       child: Column(
         mainAxisAlignment:  MainAxisAlignment.end,
@@ -120,6 +119,7 @@ DrawerHeader drawerHeader(HomeViewModel viewModel) {
         ],
       ),
     ),
+
   );
 
 }

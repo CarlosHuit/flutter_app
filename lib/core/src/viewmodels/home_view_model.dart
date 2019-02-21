@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/models/course.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/auth/auth_actions.dart';
 import 'package:meta/meta.dart';
@@ -10,6 +11,7 @@ class HomeViewModel {
   final String     email;
   final String     avatar;
   final Function() logout;
+  final List<Course> courses;
 
 
   HomeViewModel(
@@ -18,7 +20,8 @@ class HomeViewModel {
       @required this.lastName,
       @required this.email,
       @required this.avatar,
-      @required this.logout
+      @required this.logout,
+      @required this.courses
     }
   );
 
@@ -30,7 +33,8 @@ class HomeViewModel {
       lastName:  store.state.authState.lastName,
       email:     store.state.authState.email,
       avatar:    store.state.authState.avatar,
-      logout:    () => store.dispatch(Logout())
+      logout:    () => store.dispatch(Logout()),
+      courses:   store.state.coursesState.courses,
     );
 
   }
@@ -46,6 +50,7 @@ class HomeViewModel {
     && lastName    == other.lastName
     && firstName   == other.firstName
     && avatar      == other.avatar
+    && courses     == other.courses
     && email       == other.email;
 
 
@@ -54,6 +59,7 @@ class HomeViewModel {
     firstName.hashCode ^
     lastName.hashCode ^
     avatar.hashCode ^
+    courses.hashCode ^
     email.hashCode;
 
 

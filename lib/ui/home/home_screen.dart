@@ -34,28 +34,11 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment:  MainAxisAlignment.center,
                   children: <Widget>[
-                    RaisedButton(
-                      color:     Colors.black,
-                      textColor: Colors.white,
-                      onPressed: () => showStatusBar(),
-                      child:     Text(
-                        'ShowStatusBar',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      color:     Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () => hideStatusBar(),
-                      child:     Text(
-                        'HideStatusBar',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                    ),
+
+                    Text(viewModel.courses[0].title),
+                    Text(viewModel.courses[1].title),
+                    Text(viewModel.courses[2].title),
+
                   ],
                 )
               ),
