@@ -16,13 +16,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  OnBackPressed onBackPressed = OnBackPressed();
+  final OnBackPressed         onBackPressed = OnBackPressed();
   final TextEditingController loginEmailController = TextEditingController();
   final TextEditingController loginPasswordController =TextEditingController();
 
 
   @override
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent
+      )
+    );
     super.initState();
   }
 
@@ -39,14 +44,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
 
 
-
-    hideStatusBar();
-
     return StoreConnector<AppState, LoginViewModel>(
+
       distinct:  true,
       converter: (store) => LoginViewModel.fromStore( store: store ),
-      builder: (BuildContext _, LoginViewModel viewModel) {
-
+      builder:   (BuildContext _, LoginViewModel viewModel) {
 
         return WillPopScope(
           
@@ -55,9 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
             key: _scaffoldKey,
             body: Stack(
               children: <Widget>[
+
                 backgroundImage(),
                 login(viewModel),
-
                 showSnackBar(
                   _scaffoldKey,
                   viewModel.hasLoginError,
@@ -98,6 +100,16 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
     });
+
+  }
+
+  void showStatusBar() {
+
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.black
+        )
+      );
 
   }
 

@@ -13,12 +13,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    showStatusBar(color: Colors.black12);
+
+
     return StoreConnector<AppState, HomeViewModel>(
       distinct: true,
+      onDispose: (store) => print('disposeHome'),
       converter: (store) => HomeViewModel.fromStore(store: store),
       builder: (_, viewModel) {
-
+        showStatusBar();
         return WillPopScope(
           onWillPop: () => onBackPressed.validation(context),
           child: Scaffold(
@@ -27,7 +29,35 @@ class HomeScreen extends StatelessWidget {
             body:   Container(
               alignment: Alignment.center,
               child: Container(
-                child: Text(viewModel.fullName()),
+
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment:  MainAxisAlignment.center,
+                  children: <Widget>[
+                    RaisedButton(
+                      color:     Colors.black,
+                      textColor: Colors.white,
+                      onPressed: () => showStatusBar(),
+                      child:     Text(
+                        'ShowStatusBar',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    RaisedButton(
+                      color:     Colors.red,
+                      textColor: Colors.white,
+                      onPressed: () => hideStatusBar(),
+                      child:     Text(
+                        'HideStatusBar',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ),
             )
           )
@@ -37,13 +67,18 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Future showStatusBar({@required Color color}) {
+  void showStatusBar() {
 
-    return Future.delayed(Duration(milliseconds: 500), () {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle( statusBarColor: color)
-      );
-    });
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle( statusBarColor: Colors.black12 )
+    );
 
   }
+
+  void hideStatusBar() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle( statusBarColor: Colors.transparent )
+    );
+  }
+
 }

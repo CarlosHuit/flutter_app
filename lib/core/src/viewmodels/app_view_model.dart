@@ -19,6 +19,7 @@ class AppViewModel {
 
   }
 
+
   @override
   bool operator ==(Object other) =>
   identical(this, other) || other is AppViewModel 
@@ -26,9 +27,11 @@ class AppViewModel {
     && isLoggedIn == other.isLoggedIn
     && title == other.title;
 
+
   @override
   int get hashCode =>
     title.hashCode ^
     isLoggedIn.hashCode;
+
 
 }

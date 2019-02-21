@@ -24,18 +24,23 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
       final path = store.state.loginState;
       final credentials = Credentials(path.email, path.password);
 
+
       try {
 
         final LoginResponse response = await api.login(credentials);
         next(PersistAuth(auth: response.auth, screen: 'login'));
 
-
       } catch (e) {
 
         next(LoginFailed(error: e));
-        Future.delayed(Duration(milliseconds: 100), () => next(RemoveLoginError()));
+
+        Future.delayed(
+          Duration(milliseconds: 100),
+          () => next(RemoveLoginError())
+        );
 
       }
+
 
     }
     

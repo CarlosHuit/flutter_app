@@ -1,26 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:redux/redux.dart';
-import './ui/app.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:key_value_store_flutter/key_value_store_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
+import 'package:http/http.dart'as http;
 import './utils/utils.dart';
 import './core/core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:key_value_store_flutter/key_value_store_flutter.dart';
+import './ui/app.dart';
+
 
 void main() async {
 
   await setOrientation();
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final FlutterKeyValueStore keyValueStore = FlutterKeyValueStore(prefs);
+
+  final SharedPreferences preferences      = await SharedPreferences.getInstance();
+  final FlutterKeyValueStore keyValueStore = FlutterKeyValueStore(preferences);
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
 
   final Store<AppState> store = await createStore(
-    client:        Client(),
+    client:        http.Client(),
     keyValueStore: keyValueStore,
-    secureStorage: secureStorage
+    secureStorage: secureStorage,
   );
 
-  runApp( App( store: store ) );
+  runApp( App(store: store) );
+
 }
+
+
