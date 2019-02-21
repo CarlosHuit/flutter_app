@@ -5,6 +5,7 @@ import '../signup/signup_state.dart';
 import 'package:key_value_store/key_value_store.dart';
 import 'package:meta/meta.dart';
 import '../login/login.dart';
+import '../courses/courses_state.dart';
 
 @immutable
 class AppState {
@@ -14,12 +15,14 @@ class AppState {
   final LoginState loginState;
   final SignupState signupState;
   final String appName;
+  final CoursesState coursesState;
 
   AppState({
     @required this.authState,
     @required this.appName,
     @required this.loginState,
-    @required this.signupState
+    @required this.signupState,
+    @required this.coursesState,
   });
 
 
@@ -32,18 +35,25 @@ class AppState {
       appName:      'Weduc',
       authState:    AuthState.initialState(auth: auth),
       loginState:   LoginState.initialState(),
-      signupState:  SignupState.initialState()
+      signupState:  SignupState.initialState(),
+      coursesState: CoursesState.initialState()
     );
 
   }
 
 
-  AppState copyWith({ AuthState authState }) {
+  AppState copyWith({
+    AuthState authState,
+    LoginState loginState,
+    SignupState signupState,
+    CoursesState coursesState,
+  }) {
     return AppState(
       appName:      'Weduc',
       authState:    authState ?? this.authState,
       loginState:   loginState ?? this.loginState,
-      signupState:  signupState ?? this.signupState
+      signupState:  signupState ?? this.signupState,
+      coursesState: coursesState ?? this.coursesState
     );
   }
 
@@ -54,13 +64,15 @@ class AppState {
       && authState    == other.authState
       && appName      == other.appName
       && loginState   == other.loginState
-      && signupState  == other.signupState;
+      && signupState  == other.signupState
+      && coursesState == other.coursesState;
 
   @override
   int get hashCode =>
     authState.hashCode ^
     appName.hashCode ^
     loginState.hashCode ^
+    coursesState.hashCode ^
     signupState.hashCode;
 
 }
