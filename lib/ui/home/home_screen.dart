@@ -38,8 +38,14 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: <Widget> [
                       Container(
-                        padding: EdgeInsets.all(10.0),
-                        child: TextField(
+                        padding: EdgeInsets.only(left: 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(width: 1.0, color: Colors.grey[300])
+                        ),
+                        // color: Colors.white,
+                        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        child:   TextField(
                           
                           onChanged: (term) => print(term),
                           decoration:   InputDecoration(
@@ -50,13 +56,16 @@ class HomeScreen extends StatelessWidget {
                             ),
                             border: InputBorder.none
                           ),
+
                         ),
                       ),
+
                       Container(
                         child: Column(
                           children: coursesList(viewModel, context)
                         )
                       )
+
                     ]
                   )
                 ),
