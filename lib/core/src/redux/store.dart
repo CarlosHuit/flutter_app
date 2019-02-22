@@ -1,4 +1,5 @@
 import 'package:app19022019/core/src/models/auth_login_response.dart';
+import 'package:app19022019/core/src/networking/courses_api.dart';
 import 'package:app19022019/core/src/redux/auth/auth_middleware.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:key_value_store/key_value_store.dart';
@@ -23,10 +24,12 @@ Future<Store<AppState>> createStore({
 }) async {
   
   
-  final AuthApi authApi = AuthApi(client: client);
   final String authJson = await secureStorage.read(key: 'auth');
   final AuthLoginResponse auth = authJson != null ? AuthLoginResponse.fromJson(json.decode(authJson)) : null;
 
+  /* Api's networking */
+  final AuthApi authApi       = AuthApi(client: client);
+  final CoursesApi coursesApi = CoursesApi(client: client, secureStorage: secureStorage);
 
   return Store(
     appReducer,
@@ -37,7 +40,7 @@ Future<Store<AppState>> createStore({
       LoginMiddleware(api: authApi),
       SignupMiddleware(api:authApi),
       AuthMiddleware(secureStorage: secureStorage),
-      CoursesMiddleware(),
+      CoursesMiddleware(api: coursesApi),
       NavigationMiddleware(),
 
     ]

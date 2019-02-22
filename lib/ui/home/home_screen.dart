@@ -21,30 +21,62 @@ class HomeScreen extends StatelessWidget {
       converter: (store) => HomeViewModel.fromStore(store: store),
       builder: (_, viewModel) {
         showStatusBar();
-        return WillPopScope(
-          onWillPop: () => onBackPressed.validation(context),
-          child: Scaffold(
-            appBar: homeAppBar(),
-            drawer: myDrawer(context, viewModel),
-            body:   Container(
-              alignment: Alignment.center,
-              child: Container(
 
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment:  MainAxisAlignment.center,
-                  children: <Widget>[
+        if (viewModel.courses.length > 0) {
 
-                    Text(viewModel.courses[0].title),
-                    Text(viewModel.courses[1].title),
-                    Text(viewModel.courses[2].title),
-
-                  ],
-                )
+          return WillPopScope(
+            onWillPop: () => onBackPressed.validation(context),
+            child: Scaffold(
+              appBar: homeAppBar(),
+              drawer: myDrawer(context, viewModel),
+              body:   Container(
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  itemCount: viewModel.courses.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical:   12.0,
+                        horizontal: 15.0
+                      ),
+                      title: Text(
+                        viewModel.courses[index].title,
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto'
+                        ),
+                      ),
+                      leading: Image.asset(
+                        'assets/${viewModel.courses[index].title.toLowerCase()}-min.png',
+                        height: 65.0,
+                        width: 65.0
+                      ),
+                      onTap: () => print('hello'),
+                    );
+                  },
+                ),
               ),
             )
-          )
-        );
+          );
+
+        } else {
+
+          return WillPopScope(
+            onWillPop: () => onBackPressed.validation(context),
+            child: Scaffold(
+              appBar: homeAppBar(),
+              drawer: myDrawer(context, viewModel),
+              body:   Container(
+                padding:   EdgeInsets.only(top: 10.0),
+                alignment: Alignment.topCenter,
+                child:     CircularProgressIndicator(),
+              )
+            )
+          );
+
+        }
 
       },
     );

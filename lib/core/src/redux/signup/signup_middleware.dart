@@ -1,12 +1,12 @@
-import 'package:app19022019/core/src/redux/auth/auth_actions.dart';
-import 'package:app19022019/core/src/redux/courses/courses_actions.dart';
-
-import '../../models/models.dart';
-import '../../networking/auth_api.dart';
-import '../../redux/app/app.dart';
-import '../../redux/signup/signup.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
+
+import '../../redux/courses/courses_actions.dart';
+import '../../redux/auth/auth_actions.dart';
+import '../../redux/signup/signup.dart';
+import '../../networking/auth_api.dart';
+import '../../redux/app/app.dart';
+import '../../models/models.dart';
 
 class SignupMiddleware extends MiddlewareClass<AppState> {
 
@@ -34,6 +34,7 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
 
       try {
  
+
         final LoginResponse response = await api.signup(accountForm);
         next(SetCourses(courses: response.courses));
         next(PersistAuth(auth: response.auth, screen: 'signup'));

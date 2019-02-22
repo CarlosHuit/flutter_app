@@ -25,6 +25,7 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
   
         final authEncoded = json.encode(action.auth.toJson());
         await secureStorage.write(key: 'auth', value: authEncoded);
+        await secureStorage.write(key: 'token', value: 'Bearer${action.auth.token}');
 
         if (action.screen == 'login')
           next(LoginSuccess(authLoginResponse: action.auth));
