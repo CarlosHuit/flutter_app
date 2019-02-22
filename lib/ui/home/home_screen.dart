@@ -76,49 +76,53 @@ class HomeScreen extends StatelessWidget {
       height: 80.0,
       child: Card(
         margin: EdgeInsets.all(0),
-        child: Row(
-          children: <Widget>[
+        child:InkWell(
+          onTap: () => print(course.title),
+          child: Row(
+            children: <Widget>[
 
-            Container(
-              width:     80.0,
-              height:    80.0,
-              margin:    EdgeInsets.only(left: 5.0),
-              alignment: Alignment.center,
-              child:     Image.asset(
-                'assets/${course.title.toLowerCase()}-min.png',
-                height: 65.0,
-                width: 65.0
-              ),
-            ),
-
-            Expanded(
-              child: Container(
+              Container(
+                width:     80.0,
                 height:    80.0,
-                margin:    EdgeInsets.only(left: 10.0),
-                alignment: Alignment.centerLeft,
-                child:     Text(
-
-                  course.title,
-                  overflow: TextOverflow.ellipsis,
-                  style:    TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize:   28.0,
-                    fontFamily: 'Roboto'
-                  ),
-
+                margin:    EdgeInsets.only(left: 5.0),
+                alignment: Alignment.center,
+                child:     Image.asset(
+                  'assets/${course.title.toLowerCase()}-min.png',
+                  height: 65.0,
+                  width: 65.0
                 ),
               ),
-            ),
 
-            Container(
-              width:     40.0,
-              height:    80.0,
-              margin:    EdgeInsets.symmetric(horizontal: 10.0),
-              alignment: Alignment.centerRight,
-            )
+              Expanded(
+                child: Container(
+                  height:    80.0,
+                  margin:    EdgeInsets.only(left: 10.0),
+                  alignment: Alignment.centerLeft,
+                  child:     Text(
 
-          ],
-        ),
+                    course.title,
+                    overflow: TextOverflow.ellipsis,
+                    style:    TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize:   28.0,
+                      fontFamily: 'Roboto'
+                    ),
+
+                  ),
+                ),
+              ),
+
+              Container(
+                width:     40.0,
+                height:    80.0,
+                margin:    EdgeInsets.symmetric(horizontal: 10.0),
+                alignment: Alignment.centerRight,
+              )
+
+            ],
+          ),
+
+        )
       ),
     );
   }
