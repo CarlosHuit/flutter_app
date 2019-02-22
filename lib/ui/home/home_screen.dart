@@ -29,37 +29,16 @@ class HomeScreen extends StatelessWidget {
             onWillPop: () => onBackPressed.validation(context),
             child: Scaffold(
               appBar: homeAppBar(),
+              // backgroundColor: Colors.grey[100],
               drawer: myDrawer(context, viewModel),
               body:   Container(
-                width: MediaQuery.of(context).size.width,
+
                 color: Colors.grey[100],
                 child: SingleChildScrollView(
-
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     children: <Widget> [
-                      Container(
-                        padding: EdgeInsets.only(left: 10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 1.0, color: Colors.grey[300])
-                        ),
-                        // color: Colors.white,
-                        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                        child:   TextField(
-                          
-                          onChanged: (term) => print(term),
-                          decoration:   InputDecoration(
-                            suffixIcon: Icon( Icons.search, color: Colors.black45 ),
-                            hintText:   '¿Qué quieres aprender hoy?',
-                            hintStyle:  TextStyle(
-                              color:    Colors.black38
-                            ),
-                            border: InputBorder.none
-                          ),
-
-                        ),
-                      ),
-
+                      searchInput(),
                       Container(
                         child: Column(
                           children: coursesList(viewModel, context)
@@ -101,6 +80,7 @@ class HomeScreen extends StatelessWidget {
     );
 
   }
+
 
   Widget itemCourse({ @required BuildContext context, @required Course course }) {
 
@@ -169,6 +149,7 @@ class HomeScreen extends StatelessWidget {
 
   }
 
+
   List<Widget> coursesList(HomeViewModel viewModel, BuildContext context) {
 
     List<Widget> courses = [];
@@ -179,6 +160,40 @@ class HomeScreen extends StatelessWidget {
     }
 
     return courses;
+  }
+
+
+  Widget searchInput() {
+
+    return Container(
+
+      margin:    EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      padding:   EdgeInsets.only(left: 15.0),
+      alignment: Alignment.bottomCenter,
+
+      decoration: BoxDecoration(
+        color:        Colors.white,
+        border:       Border.all( width: 1.5, color: Colors.grey[300] ),
+        borderRadius: BorderRadius.all( Radius.circular(4.0) )
+      ),
+
+      child:   TextField(
+        onSubmitted: (term) => print('text $term'),
+        onChanged:   (term) => print(term),
+        style:       TextStyle(fontSize: 16.0, color: Colors.black),
+        decoration:  InputDecoration(
+
+          contentPadding: EdgeInsets.symmetric(vertical: 12.0),
+          hintText:   '¿Qué quieres aprender hoy?',
+          border:     InputBorder.none,
+          hintStyle:  TextStyle(color: Colors.black45, fontSize: 18.0),
+          suffixIcon: Icon(Icons.search, color: Colors.black45, size: 28.0),
+
+        ),
+      ),
+
+    );
+
   }
 
 }
