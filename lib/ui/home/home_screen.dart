@@ -16,10 +16,11 @@ class HomeScreen extends StatelessWidget {
 
 
     return StoreConnector<AppState, HomeViewModel>(
-      distinct: true,
-      onDispose: (store) => print('disposeHome'),
+
+      distinct:  true,
       converter: (store) => HomeViewModel.fromStore(store: store),
-      builder: (_, viewModel) {
+      builder:   (_, viewModel) {
+
         showStatusBar();
 
         if (viewModel.courses.length > 0) {
@@ -69,15 +70,18 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget itemCourse({ @required BuildContext context, @required Course course }) {
+
     return Container(
 
       width:  MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
       height: 80.0,
       child: Card(
+
+
         margin: EdgeInsets.all(0),
-        child:InkWell(
-          onTap: () => print(course.title),
+        child:  InkWell(
+
           child: Row(
             children: <Widget>[
 
@@ -122,9 +126,14 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
 
+          onTap: () => print(course.title),
+
         )
+
+
       ),
     );
+
   }
 
   List<Widget> coursesList(HomeViewModel viewModel, BuildContext context) {
