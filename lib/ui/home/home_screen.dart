@@ -30,33 +30,11 @@ class HomeScreen extends StatelessWidget {
               appBar: homeAppBar(),
               drawer: myDrawer(context, viewModel),
               body:   Container(
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  itemCount: viewModel.courses.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical:   12.0,
-                        horizontal: 15.0
-                      ),
-                      title: Text(
-                        viewModel.courses[index].title,
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Roboto'
-                        ),
-                      ),
-                      leading: Image.asset(
-                        'assets/${viewModel.courses[index].title.toLowerCase()}-min.png',
-                        height: 65.0,
-                        width: 65.0
-                      ),
-                      onTap: () => print('hello'),
-                    );
-                  },
-                ),
+                width: MediaQuery.of(context).size.width,
+                color: Colors.grey[100],
+                child: Column(
+                  children: coursesList(viewModel, context)
+                )
               ),
             )
           );
@@ -90,10 +68,71 @@ class HomeScreen extends StatelessWidget {
 
   }
 
-  void hideStatusBar() {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle( statusBarColor: Colors.transparent )
+  Widget itemCourse({ @required BuildContext context, @required Course course }) {
+    return Container(
+
+      width:  MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
+      height: 80.0,
+      child: Card(
+        margin: EdgeInsets.all(0),
+        child: Row(
+          children: <Widget>[
+
+            Container(
+              width:     80.0,
+              height:    80.0,
+              margin:    EdgeInsets.only(left: 5.0),
+              alignment: Alignment.center,
+              child:     Image.asset(
+                'assets/${course.title.toLowerCase()}-min.png',
+                height: 65.0,
+                width: 65.0
+              ),
+            ),
+
+            Expanded(
+              child: Container(
+                height:    80.0,
+                margin:    EdgeInsets.only(left: 10.0),
+                alignment: Alignment.centerLeft,
+                child:     Text(
+
+                  course.title,
+                  overflow: TextOverflow.ellipsis,
+                  style:    TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize:   28.0,
+                    fontFamily: 'Roboto'
+                  ),
+
+                ),
+              ),
+            ),
+
+            Container(
+              width:     40.0,
+              height:    80.0,
+              margin:    EdgeInsets.symmetric(horizontal: 10.0),
+              alignment: Alignment.centerRight,
+            )
+
+          ],
+        ),
+      ),
     );
+  }
+
+  List<Widget> coursesList(HomeViewModel viewModel, BuildContext context) {
+
+    List<Widget> courses = [];
+
+    for (var i = 0; i < viewModel.courses.length; i++) {
+      final Course course = viewModel.courses[i];
+      courses.add(itemCourse(context: context, course: course));
+    }
+
+    return courses;
   }
 
 }
