@@ -33,9 +33,33 @@ class HomeScreen extends StatelessWidget {
               body:   Container(
                 width: MediaQuery.of(context).size.width,
                 color: Colors.grey[100],
-                child: Column(
-                  children: coursesList(viewModel, context)
-                )
+                child: SingleChildScrollView(
+
+                  child: Column(
+                    children: <Widget> [
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        child: TextField(
+                          
+                          onChanged: (term) => print(term),
+                          decoration:   InputDecoration(
+                            suffixIcon: Icon( Icons.search, color: Colors.black45 ),
+                            hintText:   '¿Qué quieres aprender hoy?',
+                            hintStyle:  TextStyle(
+                              color:    Colors.black38
+                            ),
+                            border: InputBorder.none
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: coursesList(viewModel, context)
+                        )
+                      )
+                    ]
+                  )
+                ),
               ),
             )
           );
