@@ -14,6 +14,13 @@ CoursesState coursesReducer(CoursesState state, dynamic action) {
     return state.copyWith(currentCourse: action.course);
   }
 
+  if (action is FetchCourses) {
+    return state;
+  }
+
+  if (action is FetchCoursesSuccess) {
+    return state.copyWith( courses: action.courses );
+  }
 
   return state;
 

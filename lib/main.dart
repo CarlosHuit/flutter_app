@@ -8,7 +8,6 @@ import './utils/utils.dart';
 import './core/core.dart';
 import './ui/app.dart';
 
-
 void main() async {
 
   await setOrientation();
@@ -17,12 +16,18 @@ void main() async {
   final FlutterKeyValueStore keyValueStore = FlutterKeyValueStore(preferences);
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
-
   final Store<AppState> store = await createStore(
     client:        http.Client(),
     keyValueStore: keyValueStore,
     secureStorage: secureStorage,
   );
+  
+  final state = store.state;
+
+  if (state.coursesState.courses.length == 0 && state.authState.isLoggedIn) {
+    print('Fetch Course on Init app');
+  }
+
 
   runApp( App(store: store) );
 

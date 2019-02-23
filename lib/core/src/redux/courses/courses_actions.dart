@@ -11,6 +11,16 @@ class SetCurrentCourse {
   SetCurrentCourse({@required this.course});
 }
 
+class FetchCoursesSuccess {
+  final List<Course> courses;
+  FetchCoursesSuccess({@required this.courses});
+}
+
+class FetchCoursesFailed {
+  final String error;
+  FetchCoursesFailed({@required this.error});
+}
+
 class FetchCourses {}
-class FetchCoursesSuccess {}
-class FetchCoursesFailed {}
+
+

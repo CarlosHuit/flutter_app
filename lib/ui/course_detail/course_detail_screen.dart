@@ -156,23 +156,20 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
 
           ),
 
-          Container(
-            width: size.width,
-            height: 200.0,
-            child: Card(
-              child: Center(
-                child: Text('Commentarios'),
-              ),
+          SingleChildScrollView(
+
+            child: Column(
+              children: <Widget>[
+                comments(context),
+              ],
             ),
-          )
+
+          ),
 
         ],
       ),
     );
   }
-
-
-
 
 
 
@@ -254,6 +251,8 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
     );
   }
 
+
+
   dynamic startVideoYouTube(FlutterYoutube youtube) {
 
     final FlutterYoutube youtube =  FlutterYoutube();
@@ -263,6 +262,48 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
       videoUrl:   "https://www.youtube.com/embed/mfVahyqBmC8?start=7",
       autoPlay:   true,
       fullScreen: false
+    );
+
+  }
+
+
+
+  Widget comments(BuildContext context) {
+
+    final size =MediaQuery.of(context).size;
+
+
+    return Container(
+      width: size.width,
+      margin: EdgeInsets.all(5.0),
+      child:  Card(
+
+        child: Container(
+          margin: EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+
+              Text(
+                'Comments Section',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey
+                ),
+              ),
+              SizedBox(height: 10.0,),
+              Icon(
+                Icons.message,
+                color: Colors.grey,
+                size: 48.0,
+              )
+
+            ],
+          ),
+        )
+
+      )
+
     );
 
   }

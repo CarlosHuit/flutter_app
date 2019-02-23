@@ -16,11 +16,11 @@ class CoursesApi {
   CoursesApi({@required this.client, @required this.secureStorage });
 
 
-  Future<List<Course>> login(Credentials credentials) async{
+  Future<List<Course>> fetchCourses() async{
     
 
     final String token = await secureStorage.read(key: 'token');
-    final Map headers  = { HttpHeaders.authorizationHeader: token };
+    final Map<String, String> headers  = { HttpHeaders.authorizationHeader: token };
 
 
     final http.Response response = await client.get(baseUrl, headers: headers);
@@ -28,7 +28,7 @@ class CoursesApi {
 
     if (response.statusCode == 200) {
 
-      final List<Map<String, dynamic>> result = json.decode(response.body);
+      final List<dynamic> result = json.decode(response.body);
       final List<Course> coursesList = [];
 
       result.forEach((c) =>  coursesList.add(Course(c)));

@@ -8,12 +8,14 @@ import './auth/signup/signup_screen.dart';
 import './home/home_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+
 final Map<String, WidgetBuilder> routes = {
-  '/home':   (context) => HomeScreen(),
-  '/signin': (context) => LoginScreen(),
-  '/signup': (context) => SignupScreen(),
+  '/home':          (context) => HomeScreen(),
+  '/signin':        (context) => LoginScreen(),
+  '/signup':        (context) => SignupScreen(),
   '/course-detail': (context) => CourseDetailScree(), 
 };
+
 
 final String youtubeApi = 'AIzaSyAdPTF-t9WCnHOUB6zWxZK4RrBemOvgrMQ';
 

@@ -19,6 +19,13 @@ class HomeScreen extends StatelessWidget {
     return StoreConnector<AppState, HomeViewModel>(
 
       distinct:  true,
+      onInit:    (store) {
+        final bool hasCourses = store.state.coursesState.courses.length > 0 ? true : false;
+        if (hasCourses == false) {
+          print('Dispatch Fetch Courses Action from Home');
+          store.dispatch(FetchCourses());
+        }
+      },
       converter: (store) => HomeViewModel.fromStore(store: store),
       builder:   (_, viewModel) {
 
