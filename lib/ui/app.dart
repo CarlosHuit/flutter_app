@@ -1,4 +1,5 @@
 import 'package:app19022019/core/core.dart';
+import 'package:app19022019/ui/course_detail/course_detail_screen.dart';
 import 'package:app19022019/ui/not_found/not_found_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
@@ -10,10 +11,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 final Map<String, WidgetBuilder> routes = {
   '/home':   (context) => HomeScreen(),
   '/signin': (context) => LoginScreen(),
-  '/signup': (context) => SignupScreen()
+  '/signup': (context) => SignupScreen(),
+  '/course-detail': (context) => CourseDetailScree(), 
 };
 
-
+final String youtubeApi = 'AIzaSyAdPTF-t9WCnHOUB6zWxZK4RrBemOvgrMQ';
 
 class App extends StatefulWidget {
 

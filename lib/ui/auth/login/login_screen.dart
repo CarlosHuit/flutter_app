@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
-
+    print(MediaQuery.of(context).size.width);
     return StoreConnector<AppState, LoginViewModel>(
 
       distinct:  true,

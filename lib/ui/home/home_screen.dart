@@ -1,6 +1,7 @@
 import 'package:app19022019/core/core.dart';
 import 'package:app19022019/ui/components/drawer/drawer.dart';
 import 'package:app19022019/ui/home/home_app_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -28,26 +29,29 @@ class HomeScreen extends StatelessWidget {
           return WillPopScope(
             onWillPop: () => onBackPressed.validation(context),
             child: Scaffold(
+              backgroundColor: Colors.grey[100],
+
               appBar: homeAppBar(),
-              // backgroundColor: Colors.grey[100],
               drawer: myDrawer(context, viewModel),
               body:   Container(
 
-                color: Colors.grey[100],
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: <Widget> [
-                      searchInput(),
-                      Container(
-                        child: Column(
-                          children: coursesList(viewModel, context)
-                        )
-                      )
+                height: MediaQuery.of(context).size.height,
+                child: Container(
 
-                    ]
-                  )
-                ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget> [
+                        searchInput(),
+                        Container(
+                          child: Column(
+                            children: coursesList(viewModel, context)
+                          )
+                        )
+
+                      ]
+                    )
+                  ),
+                )
               ),
             )
           );
@@ -139,7 +143,7 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
 
-          onTap: () => print(course.title),
+          onTap: () => Navigator.pushNamed(context, '/course-detail'),
 
         )
 
@@ -152,14 +156,13 @@ class HomeScreen extends StatelessWidget {
 
   List<Widget> coursesList(HomeViewModel viewModel, BuildContext context) {
 
-    List<Widget> courses = [];
-
-    for (var i = 0; i < viewModel.courses.length; i++) {
-      final Course course = viewModel.courses[i];
-      courses.add(itemCourse(context: context, course: course));
-    }
+    List<Widget> courses = [];  
+    viewModel.courses.forEach((c) => courses.add(itemCourse(context: context, course: c)));
+    viewModel.courses.forEach((c) => courses.add(itemCourse(context: context, course: c)));
+    viewModel.courses.forEach((c) => courses.add(itemCourse(context: context, course: c)));
 
     return courses;
+
   }
 
 
