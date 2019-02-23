@@ -30,6 +30,10 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
       NavigationKey.key.currentState.pop();
     }
 
+    if (action is NavigatorPushCourseDetail) {
+      NavigationKey.key.currentState.pushNamed('/course-detail');
+    }
+
     next(action);
 
   }

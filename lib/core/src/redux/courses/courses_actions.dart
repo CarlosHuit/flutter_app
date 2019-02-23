@@ -11,6 +11,8 @@ class SetCurrentCourse {
   SetCurrentCourse({@required this.course});
 }
 
+class UnsetCurrentCourse {}
+
 class FetchCoursesSuccess {
   final List<Course> courses;
   FetchCoursesSuccess({@required this.courses});

@@ -58,7 +58,7 @@ class _AppState extends State<App> {
               fontFamily: 'Roboto'
 
             ),
-            home:         viewModel.isLoggedIn ? HomeScreen() :LoginScreen(),
+            home:         viewModel.isLoggedIn ? HomeScreen() : LoginScreen(),
             routes:       routes,
             navigatorKey: NavigationKey.key,
             debugShowCheckedModeBanner: false,

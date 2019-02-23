@@ -1,6 +1,7 @@
 import 'package:app19022019/core/src/models/course.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/auth/auth_actions.dart';
+import 'package:app19022019/core/src/redux/courses/courses_actions.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
@@ -11,6 +12,7 @@ class HomeViewModel {
   final String     email;
   final String     avatar;
   final Function() logout;
+  final Function(Course course) setCurrentCourse;
   final List<Course> courses;
 
 
@@ -21,7 +23,8 @@ class HomeViewModel {
       @required this.email,
       @required this.avatar,
       @required this.logout,
-      @required this.courses
+      @required this.courses,
+      @required this.setCurrentCourse
     }
   );
 
@@ -35,6 +38,7 @@ class HomeViewModel {
       avatar:    store.state.authState.avatar,
       logout:    () => store.dispatch(Logout()),
       courses:   store.state.coursesState.courses,
+      setCurrentCourse: (course) => store.dispatch(SetCurrentCourse(course: course))
     );
 
   }

@@ -1,5 +1,7 @@
 
+import 'package:app19022019/core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 
 
@@ -32,32 +34,47 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
   @override
   Widget build(BuildContext context) {
 
+    return StoreConnector<AppState, CourseDetailViewModel>(
+      distinct:  true,
+      onDispose: (store) => store.dispatch(UnsetCurrentCourse()),
+      converter: (store) => CourseDetailViewModel.fromStore(store: store),
+      builder:   (_, viewModel) {
 
 
-    return Scaffold(
-      appBar: AppBar(
-        title:       Text('Detalle del Curso'),
-        centerTitle: true,
-      ),
-      body: Container(
-        color: Colors.grey[100],
-        child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          child: Column(
-            children: <Widget>[
 
-              fakeVideoContainer(context),
-              tabsCourseDetail(context),
+        return Scaffold(
+          appBar: AppBar(
+            title:       Text('Detalle del Curso'),
+            centerTitle: true
+          ),
+          body:   Container(
 
-            ],
+            color: Colors.grey[100],
+            child: SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              child: Column(
+                children: <Widget>[
+
+                  fakeVideoContainer(context, viewModel.course.urlVideo),
+                  tabsCourseDetail(context: context, viewModel: viewModel),
+
+                ],
+              )
+            )
+
           )
-        )
-      )
+        );
+
+
+
+      },
     );
+
+
   }
 
 
-  Widget fakeVideoContainer(BuildContext context) {
+  Widget fakeVideoContainer(BuildContext context, String videoUrl) {
 
     final size = MediaQuery.of(context).size;
     
@@ -91,7 +108,7 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
               size: 36.0,
             )
           ),
-          onTap: () => startVideoYouTube(youtube),
+          onTap: () => startVideoYouTube(youtube: youtube, videoUrl: videoUrl),
 
         )
       )
@@ -135,7 +152,10 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
 
 
 
-  Widget tabBarView(BuildContext context) {
+  Widget tabBarView({
+    @required BuildContext context,
+    @required CourseDetailViewModel viewModel
+  }) {
 
     final size = MediaQuery.of(context).size;
 
@@ -150,7 +170,7 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
 
             child: Column(
               children: <Widget>[
-                cardCourseDetail(context),
+                cardCourseDetail(context: context, viewModel: viewModel),
               ],
             ),
 
@@ -173,25 +193,29 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
 
 
 
-  Widget tabsCourseDetail(BuildContext context) {
+  Widget tabsCourseDetail({
+    @required BuildContext context,
+    @required CourseDetailViewModel viewModel
+  }) {
 
     return Container(
       child: Column(
         children: <Widget>[
 
           tabBar(),
-          tabBarView(context)
+          tabBarView(context: context, viewModel: viewModel)
 
         ],
       ),
     );
   }
 
-  Widget cardCourseDetail(BuildContext context) {
+  Widget cardCourseDetail({
+    @required BuildContext context,
+    @required CourseDetailViewModel viewModel
+  }) {
 
     final size =MediaQuery.of(context).size;
-    final String sss = "Aprender todo lo necesario para dominar el grandioso mundo de la escritura.";
-
 
     return Container(
       width: size.width,
@@ -206,11 +230,8 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
               
               Container(
                 child: Text(
-                  'CourseTitle',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 36.0
-                  ),  
+                  '${viewModel.course.title}',
+                  style: TextStyle( fontWeight: FontWeight.bold, fontSize: 36.0 ),  
                 ),
               ),
 
@@ -218,27 +239,35 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
 
               Container(
                 child: Text(
-                  sss,
-                  style: TextStyle(
-                    fontSize: 16.0
-                  ),
+                  '${viewModel.course.description}',
+                  style: TextStyle( fontSize: 16.0 ),
                 ),
               ),
 
               Container(
                 alignment: Alignment.center,
                 margin:    EdgeInsets.only(top: 20.0),
-                child:     RaisedButton(
-                  color: Colors.red,
-                  child: Text(
-                    'Empezar Curso',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 18.0
+                child: Container(
+
+
+                  width: 200.0,
+                  height: 40.0,
+                  child:  RaisedButton(
+
+                    color: Colors.red,
+                    child: Text(
+                      'Empezar Curso',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color:      Colors.white,
+                        fontSize:   18.0
+                      ),
                     ),
+                    onPressed: () => print('sddsd'),
+
                   ),
-                  onPressed: () => print('sddsd'),
+
+
                 ),
               )
 
@@ -253,13 +282,16 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
 
 
 
-  dynamic startVideoYouTube(FlutterYoutube youtube) {
+  dynamic startVideoYouTube({
+    @required FlutterYoutube youtube,
+    @required String videoUrl
+  }) {
 
-    final FlutterYoutube youtube =  FlutterYoutube();
+    // final FlutterYoutube youtube =  FlutterYoutube();
 
     return youtube.playYoutubeVideoByUrl(
       apiKey:     "AIzaSyAdPTF-t9WCnHOUB6zWxZK4RrBemOvgrMQ",
-      videoUrl:   "https://www.youtube.com/embed/mfVahyqBmC8?start=7",
+      videoUrl:   videoUrl,
       autoPlay:   true,
       fullScreen: false
     );

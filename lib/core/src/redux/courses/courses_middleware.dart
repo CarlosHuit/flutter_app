@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import '../../networking/courses_api.dart';
@@ -29,6 +30,11 @@ class CoursesMiddleware extends MiddlewareClass<AppState> {
 
       }
 
+    }
+
+    if (action is SetCurrentCourse) {
+      await Future.delayed(Duration(milliseconds: 100));
+      store.dispatch( NavigatorPushCourseDetail());
     }
 
   }

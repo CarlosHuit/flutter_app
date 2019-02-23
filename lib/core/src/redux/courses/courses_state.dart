@@ -23,9 +23,11 @@ class CoursesState {
     List<Course> courses,
     Course currentCourse,
   }) {
+    print('qwerty $currentCourse');
     return CoursesState(
       courses: courses ?? this.courses,
-      currentCourse: currentCourse ?? this.currentCourse
+      // currentCourse: currentCourse ?? this.currentCourse
+      currentCourse: currentCourse != null ? currentCourse : null
     );
   }
 

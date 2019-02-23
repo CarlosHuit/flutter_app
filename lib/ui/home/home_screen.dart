@@ -7,10 +7,29 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../../utils/utils.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+
+}
+
+class _HomeScreenState extends State<HomeScreen> {
 
   final OnBackPressed onBackPressed = OnBackPressed();
 
+  @override
+  void initState() {
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.black12
+      )
+    );
+
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
 
@@ -20,16 +39,15 @@ class HomeScreen extends StatelessWidget {
 
       distinct:  true,
       onInit:    (store) {
+
         final bool hasCourses = store.state.coursesState.courses.length > 0 ? true : false;
-        if (hasCourses == false) {
-          print('Dispatch Fetch Courses Action from Home');
+        if (hasCourses == false)
           store.dispatch(FetchCourses());
-        }
+
       },
       converter: (store) => HomeViewModel.fromStore(store: store),
-      builder:   (_, viewModel) {
+      builder:   (BuildContext _, HomeViewModel viewModel) {
 
-        showStatusBar();
 
         if (viewModel.courses.length > 0) {
 
@@ -48,6 +66,7 @@ class HomeScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget> [
+
                         searchInput(),
                         Container(
                           child: Column(
@@ -84,16 +103,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void showStatusBar() {
-
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle( statusBarColor: Colors.black12 )
-    );
-
-  }
 
 
-  Widget itemCourse({ @required BuildContext context, @required Course course }) {
+  Widget itemCourse({
+    @required BuildContext context,
+    @required Course course,
+    @required HomeViewModel viewModel
+  }) {
 
     return Container(
 
@@ -149,8 +165,7 @@ class HomeScreen extends StatelessWidget {
 
             ],
           ),
-
-          onTap: () => Navigator.pushNamed(context, '/course-detail'),
+          onTap: () => viewModel.setCurrentCourse(course)
 
         )
 
@@ -161,16 +176,16 @@ class HomeScreen extends StatelessWidget {
   }
 
 
+
   List<Widget> coursesList(HomeViewModel viewModel, BuildContext context) {
 
     List<Widget> courses = [];  
-    viewModel.courses.forEach((c) => courses.add(itemCourse(context: context, course: c)));
-    viewModel.courses.forEach((c) => courses.add(itemCourse(context: context, course: c)));
-    viewModel.courses.forEach((c) => courses.add(itemCourse(context: context, course: c)));
+    viewModel.courses.forEach((c) => courses.add(itemCourse(context: context, course: c, viewModel: viewModel)));
 
     return courses;
 
   }
+
 
 
   Widget searchInput() {
@@ -207,3 +222,4 @@ class HomeScreen extends StatelessWidget {
   }
 
 }
+
