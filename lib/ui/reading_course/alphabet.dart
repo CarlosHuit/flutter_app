@@ -68,14 +68,22 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
 
 
                   Container(
-                    height:     100.0,
-                    decoration: BoxDecoration( borderRadius: radiusLeft ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        letterItem(letter.toUpperCase()),
-                        letterItem(letter.toLowerCase())
-                      ],
+                    height: 100.0,
+                    child: Material(
+                      child: InkWell(
+                        highlightColor: Colors.transparent,
+                        splashFactory: InkRipple.splashFactory,
+                        onTap: () => print('$letter has been Selected'),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              letterItem(letter.toUpperCase()),
+                              letterItem(letter.toLowerCase())
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
 
@@ -90,7 +98,7 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
                       color:        Colors.transparent,
                       borderRadius: radiusLeft,
                       child:        InkWell(
-
+                        splashFactory: InkRipple.splashFactory,
                         splashColor:    Colors.orange[100],
                         highlightColor: Colors.transparent,
                         child: Icon( Icons.play_circle_outline, size:  42.0, color: Colors.orangeAccent ),
@@ -112,10 +120,32 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
 
           Container(
 
-            width:      100.0,
-            padding:    EdgeInsets.all(10.0),
-            decoration: BoxDecoration( color: Colors.black87, borderRadius: radiusRight ),
-            child:      Image( image: AssetImage('assets/user-min.png') ),
+            width:  100.0,
+            height: 100.0,
+            decoration: BoxDecoration(
+              color: Colors.black87,
+              borderRadius: radiusRight
+            ),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Image(image: AssetImage('assets/user-min.png'),),
+                ),
+                Container(
+                  child: Material(
+                    
+                    color: Colors.transparent,
+                    child: InkWell(
+                      splashFactory: InkRipple.splashFactory,                 
+                      highlightColor: Colors.transparent,
+                      onTap: () {},
+                    ),
+
+                  ),
+                )
+              ],
+            ),
 
           )
 
