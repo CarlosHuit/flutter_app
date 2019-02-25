@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+
 Widget alphabet(BuildContext context) {
 
   final size = MediaQuery.of(context).size;
@@ -21,6 +23,7 @@ Widget alphabet(BuildContext context) {
 
 
 }
+
 
 
 
@@ -75,13 +78,17 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
                         splashFactory: InkRipple.splashFactory,
                         onTap: () => print('$letter has been Selected'),
                         child: Container(
+
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
+
                               letterItem(letter.toUpperCase()),
                               letterItem(letter.toLowerCase())
+
                             ],
                           ),
+
                         ),
                       ),
                     ),
@@ -164,10 +171,11 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
 
 
 
+
 Widget tabAlphabet() {
 
   return Tab(
-
+    
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
