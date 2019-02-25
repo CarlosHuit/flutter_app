@@ -34,6 +34,14 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
       NavigationKey.key.currentState.pushNamed('/course-detail');
     }
 
+    if (action is NavigatorReplaceCourse) {
+
+      final String route = '/courses/${action.course}';
+      print(route);
+      NavigationKey.key.currentState.pushReplacementNamed(route);
+
+    }
+
     next(action);
 
   }

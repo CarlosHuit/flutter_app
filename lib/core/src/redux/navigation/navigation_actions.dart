@@ -1,8 +1,12 @@
-class NavigatorReplaceHome {}
-
-class NavigatorReplaceSignin {}
-
-class NavigatorPushSignup {}
-class NavigatorPushCourseDetail {}
+import 'package:meta/meta.dart';
 
 class NavigatorPop {}
+class NavigatorPushSignup {}
+class NavigatorReplaceHome {}
+class NavigatorReplaceSignin {}
+class NavigatorPushCourseDetail {}
+
+class NavigatorReplaceCourse {
+  final String course;
+  NavigatorReplaceCourse({@required this.course });
+}

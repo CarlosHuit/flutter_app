@@ -263,7 +263,7 @@ class _CourseDetailScreeState extends State<CourseDetailScree> with SingleTicker
                         fontSize:   18.0
                       ),
                     ),
-                    onPressed: () => print('sddsd'),
+                    onPressed: () => viewModel.startCourse(viewModel.course.subtitle),
 
                   ),
 
