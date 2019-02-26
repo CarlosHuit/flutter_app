@@ -25,7 +25,8 @@ class ReadingCourseApi {
 
     if (response.statusCode == 200) {
 
-      print(response);
+      final Map<String, dynamic> result =json.decode(response.body);
+      print(result);
 
     } else {
 

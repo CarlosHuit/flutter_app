@@ -7,7 +7,7 @@ class RCInitialData {
   final Letters              letters;
   final List<LearnedLetter>  learnedLetters;
   final List<SimilarLetters> similarLetters;
-  final List<Coordinates>     coordinates;
+  final List<Coordinates>    coordinates;
 
   RCInitialData({
     @required this.words,

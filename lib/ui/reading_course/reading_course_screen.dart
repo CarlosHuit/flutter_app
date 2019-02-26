@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/redux/reading_course/reading_course_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import './alphabet.dart';
@@ -30,8 +31,9 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
   Widget build(BuildContext context) {
 
     return StoreConnector<AppState, ReadingCourseViewModel>(
+      onInit:    (store) => store.dispatch( RCFetchInitialData() ),
       converter: (store) => ReadingCourseViewModel.fromStore(store: store),
-      builder: (_, viewModel) {
+      builder:   (BuildContext _, ReadingCourseViewModel viewModel) {
 
         return Scaffold(
           appBar: AppBar(
