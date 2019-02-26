@@ -1,4 +1,5 @@
 export './src/models/models.dart';
+export './src/services/app_services.dart';
 
 export './src/redux/store.dart';
 export './src/redux/app/app.dart';

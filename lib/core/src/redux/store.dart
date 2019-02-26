@@ -1,6 +1,8 @@
 import 'package:app19022019/core/src/models/auth_login_response.dart';
 import 'package:app19022019/core/src/networking/courses_api.dart';
+import 'package:app19022019/core/src/networking/reading_course_api.dart';
 import 'package:app19022019/core/src/redux/auth/auth_middleware.dart';
+import 'package:app19022019/core/src/redux/reading_course/reading_course_middleware.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:key_value_store/key_value_store.dart';
 import 'package:redux/redux.dart';
@@ -29,19 +31,34 @@ Future<Store<AppState>> createStore({
 
   /* Api's networking */
   final AuthApi authApi       = AuthApi(client: client);
-  final CoursesApi coursesApi = CoursesApi(client: client, secureStorage: secureStorage);
+
+  final CoursesApi coursesApi = CoursesApi(
+    client:        client,
+    secureStorage: secureStorage
+  );
+
+  final ReadingCourseApi readingCourseApi = ReadingCourseApi(
+    client: client,
+    secureStorage: secureStorage
+  ); 
+
+
 
   return Store(
     appReducer,
     distinct:     true,
-    initialState: AppState.initialState( keyValueStore: keyValueStore, auth: auth ),
+    initialState: AppState.initialState(
+      auth:          auth,
+      keyValueStore: keyValueStore,
+    ),
     middleware: [
 
       LoginMiddleware(api: authApi),
-      SignupMiddleware(api:authApi),
+      SignupMiddleware(api: authApi),
       AuthMiddleware(secureStorage: secureStorage),
       CoursesMiddleware(api: coursesApi),
       NavigationMiddleware(),
+      ReadingCourseMiddleware(api: readingCourseApi)
 
     ]
   );

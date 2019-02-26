@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 
 
-Widget alphabet(BuildContext context) {
+Widget alphabet({@required BuildContext context, FlutterTts flutterTts}) {
 
   final size = MediaQuery.of(context).size;
   final letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'o', 'p',
@@ -16,7 +17,7 @@ Widget alphabet(BuildContext context) {
       shrinkWrap:  true,
       itemCount:   letters.length,
       itemBuilder: (context, index) {
-        return itemCardLetter(size: size, letter: letters[index]);
+        return itemCardLetter(size: size, letter: letters[index], flutterTts: flutterTts);
       },
     ),
   );
@@ -27,7 +28,7 @@ Widget alphabet(BuildContext context) {
 
 
 
-Widget itemCardLetter({@required Size size, @required String letter}) {
+Widget itemCardLetter({@required Size size, @required String letter, @required FlutterTts flutterTts }) {
 
 
   final Radius radius4 = Radius.circular(4.0);
@@ -109,7 +110,7 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
                         splashColor:    Colors.orange[100],
                         highlightColor: Colors.transparent,
                         child: Icon( Icons.play_circle_outline, size:  42.0, color: Colors.orangeAccent ),
-                        onTap: () => print('letter: $letter'),
+                        onTap: () => _speak(flutterTts: flutterTts),
 
                       ),
 
@@ -169,7 +170,27 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
 
 }
 
+Future _speak({ @required FlutterTts flutterTts }) async{
 
+  try {
+
+    await flutterTts.setLanguage("es-US");
+    await flutterTts.setSpeechRate(1.5);
+    await flutterTts.setVolume(1.0);
+    await flutterTts.setPitch(1.0);
+    // await flutterTts.isLanguageAvailable("en-US");
+
+    final int result = await flutterTts.speak('Hola Mundo, esto es un ejemplo de sintesis de voz');
+    print('result $result');
+    
+  } catch (e) {
+    print('spech: Ha ocurrido un error');
+    print(e);
+  }
+
+
+
+}
 
 
 Widget tabAlphabet() {

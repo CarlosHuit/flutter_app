@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import './alphabet.dart';
 import './learned_letters.dart';
+import 'package:app19022019/core/core.dart';
 
 class ReadingCourseScreen extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class ReadingCourseScreen extends StatefulWidget {
 class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTickerProviderStateMixin {
 
   TabController tabController;
+  final SpeechSynthesisService tts = SpeechSynthesisService();
 
   @override
   void initState() {
@@ -25,41 +28,52 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
 
-        elevation: 3.0,
-        title:     Text(
-          'Weduc',
-          style: TextStyle(
-            fontFamily: 'Pacifico',
-            fontSize:   26.0
+    return StoreConnector<AppState, ReadingCourseViewModel>(
+      converter: (store) => ReadingCourseViewModel.fromStore(store: store),
+      builder: (_, viewModel) {
+
+        return Scaffold(
+          appBar: AppBar(
+
+            elevation: 3.0,
+            title:     Text(
+              'Weduc',
+              style: TextStyle(
+                fontFamily: 'Pacifico',
+                fontSize:   26.0
+              ),
+            ),
+            centerTitle: true,
+
+            bottom: TabBar(
+              indicatorColor: Colors.red,
+              indicatorWeight: 4.0,
+              controller: tabController,
+              tabs: <Widget>[
+                tabAlphabet(),
+                tabLearnedLetters()
+              ],
+            )
           ),
-        ),
-        centerTitle: true,
 
-        bottom: TabBar(
-          indicatorColor: Colors.red,
-          indicatorWeight: 4.0,
-          controller: tabController,
-          tabs: <Widget>[
-            tabAlphabet(),
-            tabLearnedLetters()
-          ],
-        )
-      ),
+          drawer: Drawer( ),
+          backgroundColor: Colors.grey[100],
+          body: TabBarView(
+            controller: tabController,
+            children: <Widget>[
+              alphabet(context: context),
+              learnedLetters()
+            ],
+          ),
+          
+        );
 
-      drawer: Drawer( ),
-      backgroundColor: Colors.grey[100],
-      body: TabBarView(
-        controller: tabController,
-        children: <Widget>[
-          alphabet(context),
-          learnedLetters()
-        ],
-      ),
-      
+      },
     );
+
   }
+
+
 
 }
