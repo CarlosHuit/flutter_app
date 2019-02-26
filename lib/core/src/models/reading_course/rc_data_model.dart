@@ -28,10 +28,22 @@ class ReadingCourseDataModel {
 
 class Coordinates {
 
-  final List<Coordinate> coorindates;
+  final List<Coordinate> coordinates;
   final String letter;
 
-  Coordinates(this.coorindates, this.letter);
+  Coordinates(this.coordinates, this.letter);
+
+  factory Coordinates.fromJson(Map<String, dynamic> parsedJson) {
+    final List<Coordinate> tempCoordinates = [];
+
+    for (var i = 0; i < parsedJson['coordinates'].length; i++) {
+      final Map<String, int> el = parsedJson['coordinates'][i];
+      tempCoordinates.add(Coordinate(el['x'], el['y']));     
+    }
+
+    return Coordinates(tempCoordinates, parsedJson['letter']);
+
+  }
 
 }
 
@@ -49,6 +61,10 @@ class SimilarLetters {
   final List<String> sl;
 
   SimilarLetters(this.l, this.sl);
+
+  factory SimilarLetters.fromJson(Map<String, dynamic> parsedJson) {
+    return SimilarLetters(parsedJson['l'], parsedJson['sl']);
+  }
 }
 
 class ItemLetterMenu {
@@ -70,6 +86,10 @@ class Words {
 
   Words(this.l, this.w);
 
+  factory Words.fromJson(Map<String, dynamic> parsedJson) {
+    return Words( parsedJson['l'], parsedJson['w'] );
+  }
+
 }
 
 
@@ -77,19 +97,31 @@ class Letters {
   final String  alphabet;
   final String  consonants;
   final String  vocals;
-  final dynamic combinatios;
-  final Map<String, dynamic> sount_letters;
+  final dynamic combinations;
+  final Map<String, dynamic> soundLetters;
 
-  Letters(this.alphabet, this.consonants, this.vocals, this.combinatios, this.sount_letters);
+  Letters(this.alphabet, this.consonants, this.vocals, this.combinations, this.soundLetters);
 }
 
 
 class LearnedLetter {
+
   final String letter;
   final int rating;
   final List<Combination> combinations;
 
   LearnedLetter(this.letter, this.rating, this.combinations);
+
+  factory LearnedLetter.fromJson(Map<String, dynamic> parsedJson, List<Combination> combinations) {
+
+    return LearnedLetter(
+      parsedJson['letter'],
+      parsedJson['rating'],
+      combinations
+    );
+
+  }
+
 }
 
 class Combination {

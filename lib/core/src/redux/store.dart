@@ -30,10 +30,10 @@ Future<Store<AppState>> createStore({
   final AuthLoginResponse auth = authJson != null ? AuthLoginResponse.fromJson(json.decode(authJson)) : null;
 
   /* Api's networking */
-  final AuthApi authApi       = AuthApi(client: client);
+  final AuthApi authApi = AuthApi(client: client);
 
   final CoursesApi coursesApi = CoursesApi(
-    client:        client,
+    client: client,
     secureStorage: secureStorage
   );
 

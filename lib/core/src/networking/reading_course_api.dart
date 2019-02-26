@@ -19,11 +19,9 @@ class ReadingCourseApi {
 
 
     final String token = await secureStorage.read(key: 'token');
-    final Map<String, String> headers  = { HttpHeaders.authorizationHeader: token };
-
+    final Map<String, String> headers = { HttpHeaders.authorizationHeader: token };
 
     final http.Response response = await client.get(baseUrl, headers: headers);
-    
 
     if (response.statusCode == 200) {
 

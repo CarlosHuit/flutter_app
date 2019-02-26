@@ -16,8 +16,10 @@ class LoginResponse {
     List<Course> temListCourse = [];
 
     for (var i = 0; i < respJson['courses'].length; i++) {
+
       Course el = Course(respJson['courses'][i]);
       temListCourse.add(el);
+
     }
 
     return LoginResponse(
