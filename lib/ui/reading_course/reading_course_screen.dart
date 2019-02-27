@@ -36,6 +36,8 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
       converter: (store) => ReadingCourseViewModel.fromStore(store: store),
       builder:   (BuildContext _, ReadingCourseViewModel viewModel) {
 
+          print(viewModel.lettersMenu[0].imgUrl);
+
           return Scaffold(
             appBar: AppBar(
 
@@ -80,3 +82,4 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
 
 
 }
+

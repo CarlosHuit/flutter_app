@@ -1,26 +1,95 @@
+import 'package:app19022019/core/src/models/reading_course/rc_initial_data.dart';
+import 'package:meta/meta.dart';
+
 class RCCourseDataModel {
 
   final String                currentLetter;
-  final Letters               letters;
-  final dynamic               combinations;
-  final List<Words>           words;
-  final List<Coordinates>     coordinates;
-  final List<LearnedLetter>   learnedLetters;
-  final List<ItemLetterMenu>  lettersMenu;
-  final List<SimilarLetters>  similarLetters;
-  final Map<String, dynamic>  soundLetters;
+  final String                alphabet;
+  final String                consonants;
+  final String                vocals;
 
-  RCCourseDataModel({
-    this.words,
-    this.letters,
-    this.learnedLetters,
-    this.lettersMenu,
-    this.combinations,
-    this.soundLetters,
-    this.similarLetters,
-    this.coordinates,
-    this.currentLetter
-  });
+  final Map<String, List<Combination>> combinations;
+  final List<Words>                    words;
+  final List<Coordinates>              coordinates;
+  final List<LearnedLetter>            learnedLetters;
+  final List<ItemLetterMenu>           lettersMenu;
+  final List<SimilarLetters>           similarLetters;
+  final Map<String, dynamic>           soundLetters;
+
+  RCCourseDataModel(
+    {
+      @required this.words,
+      @required this.alphabet,
+      @required this.consonants,
+      @required this.vocals,
+      @required this.learnedLetters,
+      @required this.lettersMenu,
+      @required this.combinations,
+      @required this.soundLetters,
+      @required this.similarLetters,
+      @required this.coordinates,
+      @required this.currentLetter
+    }
+  );
+
+   factory RCCourseDataModel.fromData(RCInitialData data) {
+
+    final List<ItemLetterMenu> itemsLettersMenu = [];
+
+    data.words.forEach((word) {
+
+      final bool letterNoLearned = data.learnedLetters.indexWhere((l) => l.letter == word.l ) < 0;
+
+      if ( letterNoLearned ) {
+        itemsLettersMenu.add(
+          ItemLetterMenu(word.l, word.l.toUpperCase(), word.l, word.w[0], 'assets/img100X100/${word.w[0]}-min.png' ));
+      }
+
+    });
+
+    return RCCourseDataModel(
+      currentLetter:  null,
+      alphabet:       data.letters.alphabet,
+      consonants:     data.letters.consonants,
+      vocals:         data.letters.vocals,
+      combinations:   data.letters.combinations,
+      words:          data.words,
+      soundLetters:   data.letters.soundLetters,
+      learnedLetters: data.learnedLetters,
+      coordinates:    data.coordinates,
+      similarLetters: data.similarLetters,
+      lettersMenu:    itemsLettersMenu
+    );
+
+  }
+
+  RCCourseDataModel copyWith({
+    String currentLetter,
+    String alphabet,
+    String consonants,
+    String vocals,
+    List<Words>          words,
+    List<Coordinates>    coordinates,
+    List<LearnedLetter>  learnedLetters,
+    List<ItemLetterMenu> lettersMenu,
+    List<SimilarLetters> similarLetters,
+    Map<String, dynamic> soundLetters,
+    Map<String, List<Combination>> combinations,
+  }) {
+    return RCCourseDataModel(
+      words:          words ?? this.words,
+      vocals:         vocals ?? this.vocals,
+      alphabet:       alphabet ?? this.alphabet,
+      consonants:     consonants ?? this.consonants,
+      lettersMenu:    lettersMenu ?? this.lettersMenu,
+      coordinates:    coordinates ?? this.coordinates,
+      combinations:   combinations ?? this.combinations,
+      soundLetters:   soundLetters ?? this.soundLetters,
+      currentLetter:  currentLetter ?? this.currentLetter,
+      learnedLetters: learnedLetters ?? this.learnedLetters,
+      similarLetters: similarLetters ?? this.similarLetters,
+    );
+  }
 
 }
 

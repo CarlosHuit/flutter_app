@@ -16,7 +16,7 @@ class ReadingCourseApi {
   ReadingCourseApi({@required this.client, @required this.secureStorage });
 
 
-  Future<void> fetchInitialData() async {
+  Future<RCInitialData> fetchInitialData() async {
 
 
     final String token = await secureStorage.read(key: 'token');
@@ -28,6 +28,7 @@ class ReadingCourseApi {
 
       final Map<String, dynamic> result = json.decode(response.body);
       final RCInitialData rcInitialData = RCInitialData.fromJson(result);
+      return rcInitialData;
 
     } else {
 

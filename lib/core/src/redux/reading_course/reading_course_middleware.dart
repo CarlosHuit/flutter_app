@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/models/reading_course/rc_initial_data.dart';
 import 'package:app19022019/core/src/networking/reading_course_api.dart';
 import 'package:app19022019/core/src/redux/reading_course/reading_course_actions.dart';
 import 'package:meta/meta.dart';
@@ -18,11 +19,14 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
     if (action is RCFetchInitialData) {
 
       try {
-        await api.fetchInitialData();
-        store.dispatch(RCFetchInitialDataSuccess());
+
+        final RCInitialData data = await api.fetchInitialData();
+        store.dispatch(RCFetchInitialDataSuccess(data: data));
+
       } catch (e) {
 
         store.dispatch(RCFetchInitialDataFailed(error: e.toString()));
+
       }
 
     }

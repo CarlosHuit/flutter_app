@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/models/reading_course/rc_data_model.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/reading_course_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -6,14 +7,12 @@ import 'package:flutter/material.dart';
 Widget alphabet( BuildContext context, ReadingCourseViewModel viewModel ) {
 
   final size = MediaQuery.of(context).size;
-  final letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'o', 'p',
-  'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
   if (viewModel.isLoading) {
     return Container(
       alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: 10.0),
-      child: CircularProgressIndicator(),
+      padding:   EdgeInsets.only(top: 10.0),
+      child:     CircularProgressIndicator(),
     );
   }
 
@@ -23,9 +22,13 @@ Widget alphabet( BuildContext context, ReadingCourseViewModel viewModel ) {
       padding:     EdgeInsets.symmetric(vertical: 5.0, horizontal: 2.0),
       physics:     BouncingScrollPhysics(),
       shrinkWrap:  true,
-      itemCount:   letters.length,
+      itemCount:   viewModel.lettersMenu.length,
       itemBuilder: (context, index) {
-        return itemCardLetter(size: size, letter: letters[index]);
+        return itemCardLetter(
+          size: size,
+          item: viewModel.lettersMenu[index],
+          viewModel: viewModel,
+        );
       },
     ),
   );
@@ -36,7 +39,11 @@ Widget alphabet( BuildContext context, ReadingCourseViewModel viewModel ) {
 
 
 
-Widget itemCardLetter({@required Size size, @required String letter}) {
+Widget itemCardLetter({
+  @required Size size,
+  @required ReadingCourseViewModel viewModel,
+  @required ItemLetterMenu item
+}) {
 
 
   final Radius radius4 = Radius.circular(4.0);
@@ -92,8 +99,8 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
 
-                              letterItem(letter.toUpperCase()),
-                              letterItem(letter.toLowerCase())
+                              letterItem(item.letterUpperCase),
+                              letterItem(item.letterLowerCase),
 
                             ],
                           ),
@@ -114,11 +121,16 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
                       color:        Colors.transparent,
                       borderRadius: radiusLeft,
                       child:        InkWell(
-                        splashFactory: InkRipple.splashFactory,
+
+                        splashFactory:  InkRipple.splashFactory,
                         splashColor:    Colors.orange[100],
                         highlightColor: Colors.transparent,
-                        child: Icon( Icons.play_circle_outline, size:  42.0, color: Colors.orangeAccent ),
-                        onTap: () => {},
+                        child:          Icon(
+                          Icons.play_circle_outline,
+                          size:  42.0,
+                          color: Colors.orangeAccent
+                        ),
+                        onTap: () => viewModel.speak(item.letter),
 
                       ),
 
@@ -146,7 +158,7 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.all(10.0),
-                  child: Image(image: AssetImage('assets/user-min.png'),),
+                  child:   Image(image: AssetImage(item.imgUrl),),
                 ),
                 Container(
                   child: Material(
