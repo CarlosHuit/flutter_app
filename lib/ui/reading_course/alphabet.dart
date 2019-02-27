@@ -1,13 +1,21 @@
+import 'package:app19022019/core/src/viewmodels/reading_course/reading_course_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 
 
 
-Widget alphabet({@required BuildContext context, FlutterTts flutterTts}) {
+Widget alphabet( BuildContext context, ReadingCourseViewModel viewModel ) {
 
   final size = MediaQuery.of(context).size;
   final letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'o', 'p',
   'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+  if (viewModel.isLoading) {
+    return Container(
+      alignment: Alignment.topCenter,
+      padding: EdgeInsets.only(top: 10.0),
+      child: CircularProgressIndicator(),
+    );
+  }
 
   return Container(
 
@@ -17,7 +25,7 @@ Widget alphabet({@required BuildContext context, FlutterTts flutterTts}) {
       shrinkWrap:  true,
       itemCount:   letters.length,
       itemBuilder: (context, index) {
-        return itemCardLetter(size: size, letter: letters[index], flutterTts: flutterTts);
+        return itemCardLetter(size: size, letter: letters[index]);
       },
     ),
   );
@@ -28,7 +36,7 @@ Widget alphabet({@required BuildContext context, FlutterTts flutterTts}) {
 
 
 
-Widget itemCardLetter({@required Size size, @required String letter, @required FlutterTts flutterTts }) {
+Widget itemCardLetter({@required Size size, @required String letter}) {
 
 
   final Radius radius4 = Radius.circular(4.0);
@@ -110,7 +118,7 @@ Widget itemCardLetter({@required Size size, @required String letter, @required F
                         splashColor:    Colors.orange[100],
                         highlightColor: Colors.transparent,
                         child: Icon( Icons.play_circle_outline, size:  42.0, color: Colors.orangeAccent ),
-                        onTap: () => _speak(flutterTts: flutterTts),
+                        onTap: () => {},
 
                       ),
 
@@ -170,27 +178,6 @@ Widget itemCardLetter({@required Size size, @required String letter, @required F
 
 }
 
-Future _speak({ @required FlutterTts flutterTts }) async{
-
-  try {
-
-    await flutterTts.setLanguage("es-US");
-    await flutterTts.setSpeechRate(1.5);
-    await flutterTts.setVolume(1.0);
-    await flutterTts.setPitch(1.0);
-    // await flutterTts.isLanguageAvailable("en-US");
-
-    final int result = await flutterTts.speak('Hola Mundo, esto es un ejemplo de sintesis de voz');
-    print('result $result');
-    
-  } catch (e) {
-    print('spech: Ha ocurrido un error');
-    print(e);
-  }
-
-
-
-}
 
 
 Widget tabAlphabet() {

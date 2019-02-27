@@ -71,7 +71,8 @@ class AppState {
       && appName      == other.appName
       && loginState   == other.loginState
       && signupState  == other.signupState
-      && coursesState == other.coursesState;
+      && coursesState == other.coursesState
+      && readingCourseState == other.readingCourseState;
 
   @override
   int get hashCode =>
@@ -79,6 +80,7 @@ class AppState {
     appName.hashCode ^
     loginState.hashCode ^
     coursesState.hashCode ^
+    readingCourseState.hashCode ^
     signupState.hashCode;
 
 }

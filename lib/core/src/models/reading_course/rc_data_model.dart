@@ -1,6 +1,5 @@
-class ReadingCourseDataModel {
+class RCCourseDataModel {
 
-  final bool                  isLoadingData;
   final String                currentLetter;
   final Letters               letters;
   final dynamic               combinations;
@@ -9,22 +8,19 @@ class ReadingCourseDataModel {
   final List<LearnedLetter>   learnedLetters;
   final List<ItemLetterMenu>  lettersMenu;
   final List<SimilarLetters>  similarLetters;
-  final Map<String, dynamic>  letterSounds;
+  final Map<String, dynamic>  soundLetters;
 
-  ReadingCourseDataModel(
-    {
-      this.words,
-      this.letters,
-      this.learnedLetters,
-      this.isLoadingData,
-      this.lettersMenu,
-      this.combinations,
-      this.letterSounds,
-      this.similarLetters,
-      this.coordinates,
-      this.currentLetter
-    }
-  );
+  RCCourseDataModel({
+    this.words,
+    this.letters,
+    this.learnedLetters,
+    this.lettersMenu,
+    this.combinations,
+    this.soundLetters,
+    this.similarLetters,
+    this.coordinates,
+    this.currentLetter
+  });
 
 }
 

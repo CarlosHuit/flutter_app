@@ -19,6 +19,7 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
 
       try {
         await api.fetchInitialData();
+        store.dispatch(RCFetchInitialDataSuccess());
       } catch (e) {
         print(e);
       }

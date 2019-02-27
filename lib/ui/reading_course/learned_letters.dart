@@ -1,15 +1,25 @@
+import 'package:app19022019/core/src/viewmodels/reading_course/reading_course_view_model.dart';
 import 'package:flutter/material.dart';
 
-Widget learnedLetters() {
+Widget learnedLetters( BuildContext context, ReadingCourseViewModel viewModel ) {
 
-  return Container(
-    alignment: Alignment.center,
-    // color: Colors.lime,
-    child: Text(
-      'learnedLetters'
-    ),
-  );
+  print('IsLoading? ${viewModel.isLoading}');
 
+  if (viewModel.isLoading == true) {
+    return Container(
+      padding: EdgeInsets.only(top: 20.0),
+      alignment: Alignment.topCenter,
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  if (viewModel.isLoading == false) {
+    return Container(
+      alignment: Alignment.center,
+      child:    Text( 'learnedLetters' )
+    );
+  }
+  return null;
 }
 
 Widget tabLearnedLetters() {

@@ -31,45 +31,46 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
   Widget build(BuildContext context) {
 
     return StoreConnector<AppState, ReadingCourseViewModel>(
+      distinct: true,
       onInit:    (store) => store.dispatch( RCFetchInitialData() ),
       converter: (store) => ReadingCourseViewModel.fromStore(store: store),
       builder:   (BuildContext _, ReadingCourseViewModel viewModel) {
 
-        return Scaffold(
-          appBar: AppBar(
+          return Scaffold(
+            appBar: AppBar(
 
-            elevation: 3.0,
-            title:     Text(
-              'Weduc',
-              style: TextStyle(
-                fontFamily: 'Pacifico',
-                fontSize:   26.0
+              elevation: 3.0,
+              title:     Text(
+                'Weduc',
+                style: TextStyle(
+                  fontFamily: 'Pacifico',
+                  fontSize:   26.0
+                ),
               ),
+              centerTitle: true,
+
+              bottom: TabBar(
+                indicatorColor: Colors.red,
+                indicatorWeight: 4.0,
+                controller: tabController,
+                tabs: <Widget>[
+                  tabAlphabet(),
+                  tabLearnedLetters()
+                ],
+              )
             ),
-            centerTitle: true,
 
-            bottom: TabBar(
-              indicatorColor: Colors.red,
-              indicatorWeight: 4.0,
+            drawer: Drawer( ),
+            backgroundColor: Colors.grey[100],
+            body: TabBarView(
               controller: tabController,
-              tabs: <Widget>[
-                tabAlphabet(),
-                tabLearnedLetters()
+              children: <Widget>[
+                alphabet(context, viewModel),
+                learnedLetters(context, viewModel)
               ],
-            )
-          ),
-
-          drawer: Drawer( ),
-          backgroundColor: Colors.grey[100],
-          body: TabBarView(
-            controller: tabController,
-            children: <Widget>[
-              alphabet(context: context),
-              learnedLetters()
-            ],
-          ),
-          
-        );
+            ),
+            
+          );
 
       },
     );
