@@ -17,61 +17,28 @@ class RCInitialData {
     @required this.coordinates
   });
 
-  factory RCInitialData.fromJson(Map<String, dynamic> parsedJson) {
+  factory RCInitialData.fromJson(Map<String, dynamic> json) {
 
-
-    Letters letters = Letters(
-      parsedJson['alphabet'],
-      parsedJson['consonants'],
-      parsedJson['vocals'],
-      parsedJson['combinations'],
-      parsedJson['sound_letters']
-    );
-
-
+    final Letters letters = Letters.fromJson(json['letters']);
 
     List<Words> tempWords = [];
-
-    for (var i = 0; i < parsedJson['words'].length; i++) {
-
-      final Words el = Words.fromJson(parsedJson['words'][i]);
-      tempWords.add(el);
-
-    }
-
+    List.from(json['words']).forEach( (el) =>
+      tempWords.add(Words.fromJson(el)) );
 
 
     List<SimilarLetters> tempSL = [];
-
-    for (var i = 0; i < parsedJson['similarLetters'].length; i++) {
-
-      final SimilarLetters el = SimilarLetters.fromJson(parsedJson['similarLetters'][i]);
-      tempSL.add(el);
-
-    }
-
+    List.from(json['similarLetters']).forEach((el) =>
+      tempSL.add(SimilarLetters.fromJson(el)));
 
 
     List<LearnedLetter> tempLL = [];
-
-    for (var i = 0; i < parsedJson['learnedLetters'].length; i++) {
-
-      final Map<String, dynamic> el = parsedJson['learnedLetters'][i];
-      final List<Combination> combinations = letters.combinations[el['letter']];
-      final LearnedLetter elLearnedLetter  = LearnedLetter.fromJson( el, combinations );
-
-      tempLL.add(elLearnedLetter);
-
-    }
-
+    List.from(json['learnedLetters']).forEach((el) =>
+      tempLL.add(LearnedLetter.fromJson( el, letters.combinations[el['letter']] )));
 
 
     List<Coordinates> tempCoordinates = [];
-
-    for (var i = 0; i < parsedJson['coordinates'].length; i++) {
-      final Coordinates coordinates = Coordinates.fromJson( parsedJson['coordinates'][i] );
-      tempCoordinates.add(coordinates);
-    }
+    List.from(json['coordinates']).forEach((el) =>
+      tempCoordinates.add(Coordinates.fromJson(el)));
 
 
     return RCInitialData(
@@ -81,6 +48,30 @@ class RCInitialData {
       learnedLetters: tempLL,
       similarLetters: tempSL,
     );
+
+
+  }
+
+  Map<String, dynamic> toJson() {
+
+    List<dynamic> listOfWords = [];
+    List<dynamic> listOfLearnedLetters = [];
+    List<dynamic> listOfCoordinates    = [];
+    List<dynamic> listOfSimilarLetters = [];
+
+    this.words.forEach((f) => listOfWords.add(f.toJson()));
+    this.learnedLetters.forEach((f) => listOfLearnedLetters.add(f.toJson()));
+    this.coordinates.forEach((f) => listOfCoordinates.add(f.toJson()));
+    this.similarLetters.forEach((f) => f.toJson());
+
+    return {
+      'letters':        this.letters.toJson(),
+      'words':          listOfWords,
+      'learnedLetters': listOfLearnedLetters,
+      'coordinates':    listOfCoordinates,
+      'similarLetters': listOfSimilarLetters
+
+    };
 
 
   }

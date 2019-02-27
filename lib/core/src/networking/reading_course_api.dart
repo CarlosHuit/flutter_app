@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:app19022019/core/src/models/reading_course/rc_initial_data.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,7 +11,7 @@ class ReadingCourseApi {
 
   http.Client client;
   final FlutterSecureStorage secureStorage;
-  final String baseUrl = 'https://weduc.herokuapp.com/api/initital-data';
+  final String baseUrl = 'https://weduc.herokuapp.com/api/initial-data';
 
   ReadingCourseApi({@required this.client, @required this.secureStorage });
 
@@ -25,8 +26,9 @@ class ReadingCourseApi {
 
     if (response.statusCode == 200) {
 
-      final Map<String, dynamic> result =json.decode(response.body);
-      print(result);
+      final Map<String, dynamic> result = json.decode(response.body);
+      final RCInitialData rcInitialData = RCInitialData.fromJson(result);
+      print(rcInitialData.toJson());
 
     } else {
 

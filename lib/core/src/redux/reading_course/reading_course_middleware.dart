@@ -12,20 +12,15 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
 
   @override
   void call(Store<AppState> store, action, NextDispatcher next) async{
-    next(action);
 
+    next(action);
 
     if (action is RCFetchInitialData) {
 
       try {
-
         await api.fetchInitialData();
-        // store.dispatch(FetchCoursesSuccess(courses: courses));
-
       } catch (e) {
         print(e);
-        // store.dispatch(FetchCoursesFailed(error: e.toString()));
-
       }
 
     }

@@ -1,4 +1,5 @@
 class ReadingCourseDataModel {
+
   final bool                  isLoadingData;
   final String                currentLetter;
   final Letters               letters;
@@ -10,42 +11,72 @@ class ReadingCourseDataModel {
   final List<SimilarLetters>  similarLetters;
   final Map<String, dynamic>  letterSounds;
 
-  ReadingCourseDataModel({
-    this.words,
-    this.letters,
-    this.learnedLetters,
-    this.isLoadingData,
-    this.lettersMenu,
-    this.combinations,
-    this.letterSounds,
-    this.similarLetters,
-    this.coordinates,
-    this.currentLetter
-  });
+  ReadingCourseDataModel(
+    {
+      this.words,
+      this.letters,
+      this.learnedLetters,
+      this.isLoadingData,
+      this.lettersMenu,
+      this.combinations,
+      this.letterSounds,
+      this.similarLetters,
+      this.coordinates,
+      this.currentLetter
+    }
+  );
 
 }
 
 
+
 class Coordinates {
 
-  final List<Coordinate> coordinates;
+  final List<List<Coordinate>> coordinates;
   final String letter;
 
   Coordinates(this.coordinates, this.letter);
 
   factory Coordinates.fromJson(Map<String, dynamic> parsedJson) {
-    final List<Coordinate> tempCoordinates = [];
+
+    final List<List<Coordinate>> groupOfCoordinates = [];
 
     for (var i = 0; i < parsedJson['coordinates'].length; i++) {
-      final Map<String, int> el = parsedJson['coordinates'][i];
-      tempCoordinates.add(Coordinate(el['x'], el['y']));     
+
+      final List<dynamic> el = parsedJson['coordinates'][i];
+      final List<Coordinate> tempListCoo = [];
+      el.forEach((e) => tempListCoo.add( Coordinate(e['x'], e['y']) ));
+
+      groupOfCoordinates.add(tempListCoo);
+
     }
 
-    return Coordinates(tempCoordinates, parsedJson['letter']);
+    return Coordinates(groupOfCoordinates, parsedJson['letter']);
 
   }
 
+
+  Map<String, dynamic> toJson() {
+
+    final List<dynamic> groupCoordinatesList = [];
+
+    this.coordinates.forEach((x) {
+      final List<dynamic> coordinatesList = [];
+      x.forEach((f) => coordinatesList.add(f.toJson()));
+      groupCoordinatesList.add(coordinatesList); 
+    });
+
+    return {
+      'letter':      letter,
+      'coordinates': groupCoordinatesList
+    };
+
+  }
+
+
 }
+
+
 
 class Coordinate {
 
@@ -54,30 +85,67 @@ class Coordinate {
 
   Coordinate(this.x, this.y);
 
+  Map<String, dynamic> toJson() => { 'x': x, 'y': y };
+
 }
 
+
+
 class SimilarLetters {
+
   final String       l;
   final List<String> sl;
 
   SimilarLetters(this.l, this.sl);
 
   factory SimilarLetters.fromJson(Map<String, dynamic> parsedJson) {
-    return SimilarLetters(parsedJson['l'], parsedJson['sl']);
+
+    final List<String> similarLettersList = [];
+    List.from(parsedJson['sl']).forEach((letter) => similarLettersList.add(letter) );
+    return SimilarLetters(parsedJson['l'], similarLettersList);
+
   }
+
+  Map<String, dynamic> toJson() {
+
+    final List<dynamic> listOfSimilarLetters = [];
+    this.sl.forEach((sl) => listOfSimilarLetters.add(sl));
+
+    return {
+      'l':  l,
+      'sl': listOfSimilarLetters
+    };
+  }
+
 }
+
+
 
 class ItemLetterMenu {
 
-    final String letterLowerCase;
-    final String letterUpperCase;
-    final String letter;
-    final String word;
-    final String imgUrl;
+  final String letterLowerCase;
+  final String letterUpperCase;
+  final String letter;
+  final String word;
+  final String imgUrl;
 
   ItemLetterMenu(this.letterLowerCase, this.letterUpperCase, this.letter, this.word, this.imgUrl);
 
+  Map<String, dynamic> toJson() {
+
+    return {
+      'letterLowerCase': letterLowerCase,
+      'letterUpperCase': letterUpperCase,
+      'letter':          letter,
+      'word':            word,
+      'imgUrl':          imgUrl,
+    };
+
+  }
+
 }
+
+
 
 class Words {
 
@@ -87,21 +155,76 @@ class Words {
   Words(this.l, this.w);
 
   factory Words.fromJson(Map<String, dynamic> parsedJson) {
-    return Words( parsedJson['l'], parsedJson['w'] );
+
+    final List<String> wordsList = [];
+    List.from(parsedJson['w']).forEach((word) => wordsList.add(word) );
+    return Words( parsedJson['l'], wordsList );
+
+  }
+
+  Map<String, dynamic> toJson() {
+
+    final List<String> s = [];
+    this.w.forEach((w) => s.add(w));
+    return { 'l': l, 'w': s };
+
   }
 
 }
+
 
 
 class Letters {
   final String  alphabet;
   final String  consonants;
   final String  vocals;
-  final dynamic combinations;
+  final Map<String, List<Combination>> combinations;
   final Map<String, dynamic> soundLetters;
 
   Letters(this.alphabet, this.consonants, this.vocals, this.combinations, this.soundLetters);
+
+  factory Letters.fromJson(Map<String, dynamic> parsedJson) {
+
+    final String alphabet   = parsedJson['alphabet'];
+    final String consonants = parsedJson['consonants'];
+    final String vocals     = parsedJson['vocals'];
+    final Map<String, List<Combination>> combinations = {};
+    final Map<String, dynamic> soundLetters = parsedJson['sound_letters'];
+
+    Map.from(parsedJson['combinations']).forEach((key, el) {
+
+      final List<Combination> listOfCombinations = [];
+      List.from(el).forEach((c) => listOfCombinations.add(Combination(c['p'], c['w']) ));
+      combinations[key.toString()] = listOfCombinations;
+
+    });
+
+    return Letters(alphabet, consonants, vocals, combinations, soundLetters);
+
+  }
+
+  Map<String, dynamic> toJson() {
+
+    final Map<String, dynamic> combinationsJson = {};
+
+    this.combinations.forEach((key, value) {
+      final List<dynamic> listOfCombinations = [];
+      value.forEach((c) => listOfCombinations.add(c.toJson()));
+      combinationsJson[key.toString()] = listOfCombinations;
+    });
+
+    return {
+      'alphabet':     alphabet,
+      'consonants':   consonants,
+      'vocals':       vocals,
+      'combinations': combinationsJson,
+      'soundLetters': soundLetters
+    };
+
+  }
+
 }
+
 
 
 class LearnedLetter {
@@ -122,11 +245,35 @@ class LearnedLetter {
 
   }
 
+  Map<String, dynamic> toJson() {
+
+    List<dynamic> combinationList = [];
+
+    combinations.forEach((combination) => combinationList.add(combination.toJson()));
+
+    return {
+      'letter': letter,
+      'rating': rating,
+      'combinations': combinationList
+    };
+
+  }
+
 }
 
+
+
 class Combination {
+
   final String p;
   final String w;
-
   Combination(this.p, this.w);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'p': p,
+      'w': w
+    };
+  }
+
 }

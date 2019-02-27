@@ -19,16 +19,14 @@ class CoursesState {
     );
   }
 
-  CoursesState copyWith({
-    List<Course> courses,
-    Course currentCourse,
-  }) {
-    print('qwerty $currentCourse');
+  CoursesState copyWith({ List<Course> courses, Course currentCourse }) {
+
     return CoursesState(
       courses: courses ?? this.courses,
       // currentCourse: currentCourse ?? this.currentCourse
       currentCourse: currentCourse != null ? currentCourse : null
     );
+
   }
 
 
