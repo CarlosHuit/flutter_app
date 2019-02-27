@@ -20,7 +20,7 @@ class SpeechSynthesisService {
 
 
     final int result = await _flutterTts.speak(term);
-    print('result $result');
+
 
     return _flutterTts;
 

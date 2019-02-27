@@ -25,7 +25,7 @@ void main() async {
   final state = store.state;
 
   if (state.coursesState.courses.length == 0 && state.authState.isLoggedIn) {
-    print('Fetch Course on Init app');
+    // ! fetchCourses after init App
   }
 
 

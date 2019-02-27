@@ -16,7 +16,7 @@ Widget homeAppBar() {
 
       IconButton(
         icon:       Icon(Icons.account_circle),
-        onPressed:  () => print('Hello world'),
+        onPressed:  () => null
       ),
 
     ],

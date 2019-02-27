@@ -11,7 +11,7 @@ CoursesState coursesReducer(CoursesState state, dynamic action) {
 
 
   if (action is SetCurrentCourse) {
-    print('SetCurrentCourse');
+
     return state.copyWith(currentCourse: action.course);
   }
 

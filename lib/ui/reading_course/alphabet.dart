@@ -85,7 +85,7 @@ Widget itemCardLetter({@required Size size, @required String letter}) {
                       child: InkWell(
                         highlightColor: Colors.transparent,
                         splashFactory: InkRipple.splashFactory,
-                        onTap: () => print('$letter has been Selected'),
+                        onTap: () {},
                         child: Container(
 
                           child: Row(

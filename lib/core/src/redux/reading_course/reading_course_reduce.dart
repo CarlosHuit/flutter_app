@@ -8,7 +8,7 @@ ReadingCourseState readingCourseReducer(ReadingCourseState state, dynamic action
   }
 
   if (action is RCFetchInitialDataSuccess) {
-    print('ReadingCourseFetchDataSuccess');
+
     return state.copyWith(isLoading: false);
   }
 

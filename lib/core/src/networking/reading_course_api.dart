@@ -28,12 +28,10 @@ class ReadingCourseApi {
 
       final Map<String, dynamic> result = json.decode(response.body);
       final RCInitialData rcInitialData = RCInitialData.fromJson(result);
-      print(rcInitialData.toJson());
 
     } else {
 
       final Map<String, dynamic> result = json.decode(response.body);
-      print( result['error'] );
       return throw(result['error']);
 
     }

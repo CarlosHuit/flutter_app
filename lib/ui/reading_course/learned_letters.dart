@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 Widget learnedLetters( BuildContext context, ReadingCourseViewModel viewModel ) {
 
-  print('IsLoading? ${viewModel.isLoading}');
+
 
   if (viewModel.isLoading == true) {
     return Container(

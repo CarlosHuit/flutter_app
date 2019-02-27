@@ -54,7 +54,7 @@ LoginState loginReducer(LoginState state, dynamic action) {
   }
   
   if ( action is LoginSuccess ) {
-    print('loginSuccess');
+
     return LoginState.initialState();
 
   }

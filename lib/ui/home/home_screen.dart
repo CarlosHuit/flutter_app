@@ -203,8 +203,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       child:   TextField(
-        onSubmitted: (term) => print('text $term'),
-        onChanged:   (term) => print(term),
+        onSubmitted: (term) => term,
+        onChanged:   (term) => term,
         style:       TextStyle(fontSize: 16.0, color: Colors.black),
         decoration:  InputDecoration(
 

@@ -25,7 +25,7 @@ class CoursesMiddleware extends MiddlewareClass<AppState> {
         store.dispatch(FetchCoursesSuccess(courses: courses));
 
       } catch (e) {
-        print(e);
+
         store.dispatch(FetchCoursesFailed(error: e.toString()));
 
       }
