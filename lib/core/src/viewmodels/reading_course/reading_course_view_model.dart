@@ -8,8 +8,8 @@ class ReadingCourseViewModel {
 
   final SpeechSynthesisService tts = SpeechSynthesisService();
   final List<String> letters;
-  final List<String> learnedLetters;
   final bool isLoading;
+  final List<LearnedLetter>  learnedLetters;
   final List<ItemLetterMenu> lettersMenu;
 
   ReadingCourseViewModel({
@@ -23,16 +23,17 @@ class ReadingCourseViewModel {
 
     return ReadingCourseViewModel(
       letters:        [],
-      learnedLetters: [],
+      learnedLetters: store.state.readingCourseState.data.learnedLetters,
       isLoading:      store.state.readingCourseState.isLoading,
       lettersMenu:    store.state.readingCourseState.data.lettersMenu,
     );
 
   }
 
-  Future<FlutterTts> speak(String term) {
-    return tts.speak(term: term, rate: 0.65);
+  Future<FlutterTts> speak({ @required String term, double rate }) {
+    return tts.speak(term: term, rate: rate ?? 0.65);
   }
+
 
   @override
   bool operator == (Object other) =>

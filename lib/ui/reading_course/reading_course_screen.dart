@@ -39,37 +39,19 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
           print(viewModel.lettersMenu[0].imgUrl);
 
           return Scaffold(
-            appBar: AppBar(
-
-              elevation: 3.0,
-              title:     Text(
-                'Weduc',
-                style: TextStyle(
-                  fontFamily: 'Pacifico',
-                  fontSize:   26.0
-                ),
-              ),
-              centerTitle: true,
-
-              bottom: TabBar(
-                indicatorColor: Colors.red,
-                indicatorWeight: 4.0,
-                controller: tabController,
-                tabs: <Widget>[
-                  tabAlphabet(),
-                  tabLearnedLetters()
-                ],
-              )
-            ),
-
-            drawer: Drawer( ),
+            appBar:          readingCourseBar(),
+            drawer:          Drawer( ),
             backgroundColor: Colors.grey[100],
-            body: TabBarView(
+            body:            TabBarView(
+
+
               controller: tabController,
               children: <Widget>[
                 alphabet(context, viewModel),
                 learnedLetters(context, viewModel)
               ],
+
+
             ),
             
           );
@@ -79,7 +61,30 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
 
   }
 
+  Widget readingCourseBar() {
+    return AppBar(
 
+      elevation: 3.0,
+      title:     Text(
+        'Weduc',
+        style: TextStyle(
+          fontFamily: 'Pacifico',
+          fontSize:   26.0
+        ),
+      ),
+      centerTitle: true,
+
+      bottom: TabBar(
+        indicatorColor: Colors.red,
+        indicatorWeight: 4.0,
+        controller: tabController,
+        tabs: <Widget>[
+          tabAlphabet(),
+          tabLearnedLetters()
+        ],
+      )
+    );
+  }
 
 }
 

@@ -130,7 +130,7 @@ Widget itemCardLetter({
                           size:  42.0,
                           color: Colors.orangeAccent
                         ),
-                        onTap: () => viewModel.speak(item.letter),
+                        onTap: () => viewModel.speak(term: item.letter),
 
                       ),
 
