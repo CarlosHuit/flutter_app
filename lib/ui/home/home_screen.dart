@@ -9,18 +9,109 @@ import 'package:flutter_redux/flutter_redux.dart';
 import '../../utils/utils.dart';
 
 
-class HomeBody extends StatelessWidget {
+
+class HomeScreen extends StatefulWidget {
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+
+}
+
+
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  final OnBackPressed onBackPressed = OnBackPressed();
+
+  @override
+  void initState() {
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle( statusBarColor: Colors.black12 )
+    );
+
+    super.initState();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+
+    return StoreConnector<AppState, HomeViewModel>(
+
+      distinct:  true,
+      onInit:    (store) {
+
+        final bool hasCourses = store.state.coursesState.courses.length > 0 ? true : false;
+        if (hasCourses == false) {
+          store.dispatch(FetchCourses());
+        }
+
+      },
+      converter: (store) => HomeViewModel.fromStore(store: store),
+      builder:   (BuildContext _, HomeViewModel viewModel) {
+
+        return WillPopScope(
+          onWillPop: () => onBackPressed.validation(context),
+          child:     Scaffold(
+            backgroundColor: Colors.grey[100],
+            appBar: homeAppBar(),
+            drawer: MyDrawer(viewModel: viewModel,),
+            body:  viewModel.courses.length > 0
+              ? HomeScreenBody(viewModel: viewModel)
+              : LoadingIndicator()
+
+          ),
+        );
+
+      },
+    );
+
+  }
+
+}
+
+
+
+class HomeScreenBody extends StatelessWidget {
 
   final HomeViewModel viewModel;
 
-  const HomeBody({Key key, this.viewModel}) : super(key: key);
+  const HomeScreenBody({Key key, this.viewModel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child:   Column(
+          children: <Widget>[
+            SearchInput(),
+            CoursesList(viewModel: viewModel,)
+
+          ],
+        ),
+      )
+
+    );
+  }
+
+}
+
+
+
+class CoursesList extends StatelessWidget {
+
+  final HomeViewModel viewModel;
+
+  const CoursesList({Key key, this.viewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: viewModel.courses.length,
+      shrinkWrap:  true,
+      physics:     BouncingScrollPhysics(),
+      itemCount:   viewModel.courses.length,
       itemBuilder: (_, index) => CourseCard(course: viewModel.courses[index], vm: viewModel),
     );
   }
@@ -40,7 +131,7 @@ class CourseCard extends StatelessWidget {
     return Container(
       height: 90.0,
       child: Card(
-        margin: EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
+        margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
         child:InkWell(
           onTap: () => vm.setCurrentCourse(course),
           child: Row(
@@ -73,83 +164,6 @@ class CourseCard extends StatelessWidget {
 
         )
       ),
-    );
-  }
-}
-
-
-
-class HomeScreen extends StatefulWidget {
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-
-}
-
-
-
-class _HomeScreenState extends State<HomeScreen> {
-
-  final OnBackPressed onBackPressed = OnBackPressed();
-
-  @override
-  void initState() {
-
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle( statusBarColor: Colors.black12 )
-    );
-
-    super.initState();
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-
-
-
-    return StoreConnector<AppState, HomeViewModel>(
-
-      distinct:  true,
-      onInit:    (store) {
-
-        final bool hasCourses = store.state.coursesState.courses.length > 0 ? true : false;
-        if (hasCourses == false) {
-          store.dispatch(FetchCourses());
-        }
-
-      },
-      converter: (store) => HomeViewModel.fromStore(store: store),
-      builder:   (BuildContext _, HomeViewModel viewModel) {
-
-
-        if (viewModel.courses.length > 0) {
-
-          return WillPopScope(
-            onWillPop: () => onBackPressed.validation(context),
-            child:     Scaffold(
-              backgroundColor: Colors.grey[100],
-              appBar: homeAppBar(),
-              drawer: MyDrawer(viewModel: viewModel,),
-              body:   HomeBody(viewModel: viewModel,),
-
-            ),
-          );
-
-
-        } else {
-
-          return WillPopScope(
-            onWillPop: () => onBackPressed.validation(context),
-            child: Scaffold(
-              appBar: homeAppBar(),
-              drawer: MyDrawer(viewModel: viewModel),
-              body:   LoadingIndicator()
-            )
-          );
-
-        }
-
-      },
     );
   }
 
