@@ -45,7 +45,7 @@ Widget itemLearnedLetter({@required LearnedLetter learnedLetter, @required Readi
   return Card(
     elevation: 1.0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
-    margin: EdgeInsets.symmetric(vertical: 3.0),
+    margin: EdgeInsets.symmetric(vertical: 4.0),
     child: ExpansionTile(
 
       title: Row(
@@ -93,10 +93,7 @@ Widget itemLearnedLetter({@required LearnedLetter learnedLetter, @required Readi
         ],
 
       ),
-      // backgroundColor: Colors.yellow[50],
       leading: Icon(Icons.favorite, color: Colors.red,),
-      // children: list.map((val) => ListTile(title: Text(val),)).toList()
-      // children: List.generate(5, (i) => ListTile(title: Text('data $i'),))
       children: <Widget>[
 
         Container(

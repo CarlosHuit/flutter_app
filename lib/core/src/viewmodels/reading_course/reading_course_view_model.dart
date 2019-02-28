@@ -23,9 +23,9 @@ class ReadingCourseViewModel {
 
     return ReadingCourseViewModel(
       letters:        [],
-      learnedLetters: store.state.readingCourseState.data.learnedLetters,
       isLoading:      store.state.readingCourseState.isLoading,
       lettersMenu:    store.state.readingCourseState.data.lettersMenu,
+      learnedLetters: store.state.readingCourseState.data.learnedLetters,
     );
 
   }

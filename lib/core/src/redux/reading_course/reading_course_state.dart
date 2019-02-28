@@ -18,7 +18,7 @@ class ReadingCourseState {
   factory ReadingCourseState.initialState() {
     return ReadingCourseState(
       currentLetter: null,
-      data:          null,
+      data:          RCCourseDataModel.initialData(),
       isLoading:     true
     );
   }

@@ -32,7 +32,23 @@ class RCCourseDataModel {
     }
   );
 
-   factory RCCourseDataModel.fromData(RCInitialData data) {
+  factory RCCourseDataModel.initialData() {
+    return RCCourseDataModel(
+      words:          null,
+      vocals:         null,
+      alphabet:       null,
+      consonants:     null,
+      coordinates:    null,
+      lettersMenu:    null,
+      combinations:   null,
+      soundLetters:   null,
+      currentLetter:  null,
+      learnedLetters: null,
+      similarLetters: null,
+    );
+  }
+
+  factory RCCourseDataModel.fromData(RCInitialData data) {
 
     final List<ItemLetterMenu> itemsLettersMenu = [];
 
