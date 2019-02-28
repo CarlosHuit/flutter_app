@@ -1,5 +1,6 @@
 import 'package:app19022019/core/core.dart';
 import 'package:app19022019/ui/components/drawer/drawer.dart';
+import 'package:app19022019/ui/components/loading_indicator.dart';
 import 'package:app19022019/ui/home/home_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,85 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../../utils/utils.dart';
 
+
+class HomeBody extends StatelessWidget {
+
+  final HomeViewModel viewModel;
+
+  const HomeBody({Key key, this.viewModel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: BouncingScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: viewModel.courses.length,
+      itemBuilder: (_, index) => CourseCard(course: viewModel.courses[index], vm: viewModel),
+    );
+  }
+}
+
+
+
+class CourseCard extends StatelessWidget {
+
+  final Course course;
+  final HomeViewModel vm;
+
+  const CourseCard({Key key, this.course, this.vm}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 90.0,
+      child: Card(
+        margin: EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
+        child:InkWell(
+          onTap: () => vm.setCurrentCourse(course),
+          child: Row(
+            children: <Widget>[
+              Container(
+                height: 100.0,
+                width: 100.0,
+                padding: EdgeInsets.all(8.0),
+                child:     Image.asset(
+                  'assets/${course.title.toLowerCase()}-min.png',
+                  height: 65.0,
+                  width: 65.0
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    '${course.title}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize:   28.0,
+                      fontFamily: 'Roboto'
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+
+        )
+      ),
+    );
+  }
+}
+
+
+
 class HomeScreen extends StatefulWidget {
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 
 }
+
+
 
 class _HomeScreenState extends State<HomeScreen> {
 
@@ -52,34 +126,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
           return WillPopScope(
             onWillPop: () => onBackPressed.validation(context),
-            child: Scaffold(
+            child:     Scaffold(
               backgroundColor: Colors.grey[100],
-
               appBar: homeAppBar(),
-              drawer: MyDrawer(context: context, viewModel:viewModel),
-              body:   Container(
+              drawer: MyDrawer(viewModel: viewModel,),
+              body:   HomeBody(viewModel: viewModel,),
 
-                height: MediaQuery.of(context).size.height,
-                child: Container(
-
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget> [
-
-                        SearchInput(),
-                        Container(
-                          child: Column(
-                            children: coursesList(viewModel, context)
-                          )
-                        )
-
-                      ]
-                    )
-                  ),
-                )
-              ),
-            )
+            ),
           );
+
 
         } else {
 
@@ -87,12 +142,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onWillPop: () => onBackPressed.validation(context),
             child: Scaffold(
               appBar: homeAppBar(),
-              drawer: MyDrawer(context: context, viewModel: viewModel),
-              body:   Container(
-                padding:   EdgeInsets.only(top: 10.0),
-                alignment: Alignment.topCenter,
-                child:     CircularProgressIndicator(),
-              )
+              drawer: MyDrawer(viewModel: viewModel),
+              body:   LoadingIndicator()
             )
           );
 
@@ -102,107 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
-  Widget itemCourse({
-    @required BuildContext context,
-    @required Course course,
-    @required HomeViewModel viewModel
-  }) {
-
-    return Container(
-
-      width:  MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
-      height: 80.0,
-      child: Card(
-
-
-        margin: EdgeInsets.all(0),
-        child:  InkWell(
-
-          child: Row(
-            children: <Widget>[
-
-              Container(
-                width:     80.0,
-                height:    80.0,
-                margin:    EdgeInsets.only(left: 5.0),
-                alignment: Alignment.center,
-                child:     Image.asset(
-                  'assets/${course.title.toLowerCase()}-min.png',
-                  height: 65.0,
-                  width: 65.0
-                ),
-              ),
-
-              Expanded(
-                child: Container(
-                  height:    80.0,
-                  margin:    EdgeInsets.only(left: 10.0),
-                  alignment: Alignment.centerLeft,
-                  child:     Text(
-
-                    course.title,
-                    overflow: TextOverflow.ellipsis,
-                    style:    TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize:   28.0,
-                      fontFamily: 'Roboto'
-                    ),
-
-                  ),
-                ),
-              ),
-
-              Container(
-                width:     40.0,
-                height:    80.0,
-                margin:    EdgeInsets.symmetric(horizontal: 10.0),
-                alignment: Alignment.centerRight,
-              )
-
-            ],
-          ),
-          onTap: () => viewModel.setCurrentCourse(course)
-
-        )
-
-
-      ),
-    );
-
-  }
-
-
-
-  List<Widget> coursesList(HomeViewModel viewModel, BuildContext context) {
-
-    List<Widget> courses = [];  
-    viewModel.courses.forEach((c) => courses.add(itemCourse(context: context, course: c, viewModel: viewModel)));
-
-    return courses;
-
-  }
-
-
-}
-
-class CoursesList extends StatelessWidget {
-
-  final HomeViewModel viewModel;
-
-  const CoursesList({Key key, this.viewModel}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    // List.generate(viewModel.courses.length, (i) => itemCou );
-
-    return Container(
-      
-    );
-  }
 }
 
 

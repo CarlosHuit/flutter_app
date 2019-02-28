@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
 
-  final BuildContext context;
   final HomeViewModel viewModel;
 
-  const MyDrawer({Key key, this.context, this.viewModel}) : super(key: key);
+  const MyDrawer({Key key, this.viewModel}) : super(key: key);
 
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget homeAppBar() {
 
+Widget homeAppBar() {
   return AppBar(
 
     elevation: 3.0,
@@ -22,5 +22,4 @@ Widget homeAppBar() {
     ],
 
   );
-
 }
