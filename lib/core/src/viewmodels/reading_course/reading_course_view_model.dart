@@ -7,16 +7,18 @@ import 'package:flutter_tts/flutter_tts.dart';
 class ReadingCourseViewModel {
 
   final SpeechSynthesisService tts = SpeechSynthesisService();
-  final List<String> letters;
-  final bool isLoading;
-  final List<LearnedLetter>  learnedLetters;
-  final List<ItemLetterMenu> lettersMenu;
+  final List<String>            letters;
+  final bool                    isLoading;
+  final List<LearnedLetter>     learnedLetters;
+  final List<ItemLetterMenu>    lettersMenu;
+  final Function(String letter) startCourse;
 
   ReadingCourseViewModel({
     @required this.letters,
     @required this.learnedLetters,
     @required this.isLoading,
-    @required this.lettersMenu
+    @required this.lettersMenu,
+    @required this.startCourse
   });
 
   static ReadingCourseViewModel fromStore({@required Store<AppState> store}) {
@@ -26,6 +28,7 @@ class ReadingCourseViewModel {
       isLoading:      store.state.readingCourseState.isLoading,
       lettersMenu:    store.state.readingCourseState.data.lettersMenu,
       learnedLetters: store.state.readingCourseState.data.learnedLetters,
+      startCourse:    (String letter) => store.dispatch(NavigatorPushRCLetterDetail())
     );
 
   }

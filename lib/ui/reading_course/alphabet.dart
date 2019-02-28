@@ -92,7 +92,7 @@ Widget itemCardLetter({
                       child: InkWell(
                         highlightColor: Colors.transparent,
                         splashFactory: InkRipple.splashFactory,
-                        onTap: () {},
+                        onTap: () => viewModel.startCourse(item.letter),
                         child: Container(
 
                           child: Row(
@@ -167,7 +167,7 @@ Widget itemCardLetter({
                     child: InkWell(
                       splashFactory: InkRipple.splashFactory,                 
                       highlightColor: Colors.transparent,
-                      onTap: () {},
+                      onTap: () => viewModel.startCourse(item.letter),
                     ),
 
                   ),

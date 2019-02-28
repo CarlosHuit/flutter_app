@@ -19,7 +19,6 @@ class SpeechSynthesisService {
     await _flutterTts.setPitch(speechPitch);
 
 
-    // final int result = await _flutterTts.speak(term);
     await _flutterTts.speak(term);
 
 
@@ -29,7 +28,3 @@ class SpeechSynthesisService {
 
 
 }
-
-
-
-// await _flutterTts.isLanguageAvailable("en-US");

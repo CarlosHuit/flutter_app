@@ -22,9 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
 
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.black12
-      )
+      SystemUiOverlayStyle( statusBarColor: Colors.black12 )
     );
 
     super.initState();
@@ -41,8 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
       onInit:    (store) {
 
         final bool hasCourses = store.state.coursesState.courses.length > 0 ? true : false;
-        if (hasCourses == false)
+        if (hasCourses == false) {
           store.dispatch(FetchCourses());
+        }
 
       },
       converter: (store) => HomeViewModel.fromStore(store: store),
@@ -57,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.grey[100],
 
               appBar: homeAppBar(),
-              drawer: myDrawer(context, viewModel),
+              drawer: MyDrawer(context: context, viewModel:viewModel),
               body:   Container(
 
                 height: MediaQuery.of(context).size.height,
@@ -67,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       children: <Widget> [
 
-                        searchInput(),
+                        SearchInput(),
                         Container(
                           child: Column(
                             children: coursesList(viewModel, context)
@@ -88,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onWillPop: () => onBackPressed.validation(context),
             child: Scaffold(
               appBar: homeAppBar(),
-              drawer: myDrawer(context, viewModel),
+              drawer: MyDrawer(context: context, viewModel: viewModel),
               body:   Container(
                 padding:   EdgeInsets.only(top: 10.0),
                 alignment: Alignment.topCenter,
@@ -187,9 +186,31 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
+}
 
-  Widget searchInput() {
+class CoursesList extends StatelessWidget {
 
+  final HomeViewModel viewModel;
+
+  const CoursesList({Key key, this.viewModel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    // List.generate(viewModel.courses.length, (i) => itemCou );
+
+    return Container(
+      
+    );
+  }
+}
+
+
+
+class SearchInput extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
 
       margin:    EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -218,8 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
     );
-
   }
 
-}
 
+}

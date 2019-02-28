@@ -35,10 +35,13 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
     }
 
     if (action is NavigatorReplaceCourse) {
-
       final String route = '/courses/${action.course}';
       NavigationKey.key.currentState.pushReplacementNamed(route);
+    }
 
+
+    if (action is NavigatorPushRCLetterDetail) {
+      NavigationKey.key.currentState.pushNamed('/courses/lectura/detalle-letra');
     }
 
     next(action);

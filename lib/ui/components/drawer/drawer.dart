@@ -2,14 +2,22 @@ import 'package:app19022019/core/src/viewmodels/home_view_model.dart';
 import 'package:flutter/material.dart';
 
 
-Widget myDrawer(BuildContext context, HomeViewModel viewModel) {
+class MyDrawer extends StatelessWidget {
 
+  final BuildContext context;
+  final HomeViewModel viewModel;
+
+  const MyDrawer({Key key, this.context, this.viewModel}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
 
-        drawerHeader(viewModel),
+        DrawerHeaderApp(viewModel: viewModel),
 
         ListTile(
           leading: Icon(Icons.event_note),
@@ -40,86 +48,107 @@ Widget myDrawer(BuildContext context, HomeViewModel viewModel) {
       ],
     ),
   );
-
+  }
 }
 
+class UserIcon extends StatelessWidget {
 
-Widget userIcon(HomeViewModel viewModel) {
-  return Container(
-    width:  60.0,
-    height: 60.0,
-    margin: EdgeInsets.only(bottom: 5.0),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(50),
-      image:        DecorationImage(
-        image: AssetImage('assets/${viewModel.avatar}-min.png')
-      ),
-      border:       Border.all(color: Colors.white, width: 2.0),
-      boxShadow: <BoxShadow> [
+  final HomeViewModel viewModel;
 
-        BoxShadow(
-          color:      Colors.black38,
-          blurRadius: 7.0, spreadRadius: 2.0
-        )
+  const UserIcon({Key key, this.viewModel}) : super(key: key);
 
-      ]
-    ),
-  );
-}
-
-
-Widget userData(HomeViewModel viewModel) {
-
-  return Container(
-    margin: EdgeInsets.only(bottom: 5.0),
-    child:  Column(
-
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-
-        Text(
-          viewModel.fullName(),
-          overflow: TextOverflow.ellipsis,
-          style:    TextStyle( fontWeight: FontWeight.bold, fontSize: 28.0 ),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width:  60.0,
+      height: 60.0,
+      margin: EdgeInsets.only(bottom: 5.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(50),
+        image:        DecorationImage(
+          image: AssetImage('assets/${viewModel.avatar}-min.png')
         ),
+        border:       Border.all(color: Colors.white, width: 2.0),
+        boxShadow: <BoxShadow> [
 
-        Text(
-          viewModel.email,
-          overflow: TextOverflow.ellipsis,
-          style:    TextStyle( fontSize: 14.0 ),
-        )
+          BoxShadow(
+            color:      Colors.black38,
+            blurRadius: 7.0, spreadRadius: 2.0
+          )
 
-        
-      ],
-
-    ),
-  );
-
+        ]
+      ),
+    );
+  }
 }
 
-DrawerHeader drawerHeader(HomeViewModel viewModel) {
+class UserData extends StatelessWidget {
 
-  return DrawerHeader(
+  final HomeViewModel viewModel;
 
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('assets/background-drawer.jpg'),
-        fit:   BoxFit.cover
-      )
-    ),
+  const UserData({Key key, this.viewModel}) : super(key: key);
 
-    child: Container(
-      child: Column(
-        mainAxisAlignment:  MainAxisAlignment.end,
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 5.0),
+      child:  Column(
+
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          userIcon(viewModel),
-          userData(viewModel)
+
+          Text(
+            viewModel.fullName(),
+            overflow: TextOverflow.ellipsis,
+            style:    TextStyle( fontWeight: FontWeight.bold, fontSize: 28.0 ),
+          ),
+
+          Text(
+            viewModel.email,
+            overflow: TextOverflow.ellipsis,
+            style:    TextStyle( fontSize: 14.0 ),
+          )
+
+          
         ],
+
       ),
-    ),
-
-  );
-
+    );
+  }
 }
+
+
+
+class DrawerHeaderApp extends StatelessWidget {
+
+  final HomeViewModel viewModel;
+
+  const DrawerHeaderApp({Key key, this.viewModel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DrawerHeader(
+
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/background-drawer.jpg'),
+          fit:   BoxFit.cover
+        )
+      ),
+
+      child: Container(
+        child: Column(
+          mainAxisAlignment:  MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            UserIcon(viewModel: viewModel),
+            UserData(viewModel: viewModel)
+          ],
+        ),
+      ),
+
+    );
+  }
+}
+

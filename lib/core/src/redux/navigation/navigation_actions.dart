@@ -10,3 +10,5 @@ class NavigatorReplaceCourse {
   final String course;
   NavigatorReplaceCourse({@required this.course });
 }
+
+class NavigatorPushRCLetterDetail {}
