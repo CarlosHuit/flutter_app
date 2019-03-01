@@ -1,23 +1,27 @@
+import 'dart:async';
+
+import 'package:app19022019/utils/flip_card.dart';
 import 'package:flutter/material.dart';
 
 class LetterDetailScreen extends StatefulWidget {
+
   @override
   _LetterDetailScreenState createState() => _LetterDetailScreenState();
 }
 
 class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
+
   @override
   void initState() {
-    // SystemChrome.setEnabledSystemUIOverlays([]);
-    // SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle( statusBarColor: Colors.transparent ));
+    Future.delayed(Duration(milliseconds: 0), _showModalSheet);
     super.initState();
+    
   }
+
 
   @override
   void dispose() {
-    // SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    // SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle( statusBarColor: Colors.black12 ));
     super.dispose();
   }
 
@@ -25,64 +29,190 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
   Widget build(BuildContext context) {
 
     final Size size = MediaQuery.of(context).size;
-    Offset _offset = Offset(0.4, 0.7); // new
-
-
     return Scaffold(
-      appBar: AppBar(title: Text('data'),),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+        child: Icon(Icons.arrow_upward, size: 28.0,),
+        onPressed: _showModalSheet,
+      ),
       body: Container(
-        alignment: Alignment.center,
         child: Container(
-          width: size.width * .90,
-          height: ((size.width * 0.90) / 3) * 4,
-          color: Colors.green,
-          child: GridView.count(
-            crossAxisCount: 3,
-            children: List.generate(12, (i) {
-
-
-              return Transform(
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.001) // perspective
-                  ..rotateX(_offset.dy)
-                  ..rotateY(_offset.dx),
-                alignment: FractionalOffset.center,
-                child: Container(
-                  alignment: Alignment.center,
-                  color: Colors.red,
-                  child: Text('$i'),
-                ),
-              );
-
-              // return Container(
-              //   alignment: Alignment.center,
-              //   decoration: BoxDecoration(
-              //     border: Border.all(width: 2.0, color: Colors.white),
-              //     gradient: LinearGradient(
-              //       colors: [
-              //         Colors.indigo[800],
-              //         Colors.indigo[400],
-              //       ],
-              //       begin: Alignment.bottomRight,
-              //       end:   Alignment.topLeft,
-              //       stops: [0.1, 1.0]
-              //     ),
-              //   ),
-              //   child: Text('$i', style: TextStyle(
-              //     fontSize:   36.0,
-              //     color:      Colors.white,
-              //     fontWeight: FontWeight.bold
-              //   )),
-              // );
-            }),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit:          BoxFit.fitHeight,
+            image:        AssetImage("assets/star-pattern.png"),
           ),
+          gradient: LinearGradient(
+            tileMode: TileMode.mirror,
+            stops: [0.0, 1],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              Color.fromARGB(255, 11, 62, 113),
+              Color.fromARGB(255, 13, 100, 176)
+            ]
+          )
         ),
+              
 
-
+          alignment: Alignment.center,
+          child: Container(
+            width:  size.width * .90,
+            height: ((size.width * 0.90) / 3) * 4,
+            child: GridView.count(
+              shrinkWrap:     true,
+              crossAxisCount: 3,
+              physics:  NeverScrollableScrollPhysics(),
+              padding:  EdgeInsets.all(1.0),
+              children: List.generate(12, (i) => OptionCard(letter: i.toString())),
+            ),
+          ),
+        )
 
       )
     );
 
   }
+
+
+  void _showModalSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (builder) {
+        return Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'P',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.yellowAccent,
+                  fontSize: 200.0,
+                  shadows: <Shadow> [
+                    Shadow(color: Colors.black, offset: Offset(-1.2, 1.2)),
+                    Shadow(color: Colors.black, offset: Offset(1.2, -1.2)),
+                    Shadow(color: Colors.black, offset: Offset(1.2, 1.2)),
+                    Shadow(color: Colors.black, offset: Offset(-1.2, -1.2)),
+                    Shadow(color: Colors.black, blurRadius: 15.0),
+                  ]
+                ),
+              ),
+              Container(
+                width: 200.0,
+                height: 40.0,
+                child: RaisedButton(
+                  color: Colors.red,
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Continuar',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 18.0
+                    ),
+                  ),
+                )
+              ),
+
+            ],
+          )
+        );
+      }
+    ).whenComplete(() => print('closed ${DateTime.now()}'));
+  }
+
+
+
 }
 
+
+class OptionCard extends StatelessWidget {
+
+  final String letter;
+
+  const OptionCard({Key key, this.letter}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+      padding: EdgeInsets.all(3.0),
+      child: FlipCard(
+        direction: FlipDirection.VERTICAL,
+        back: OptionCardBack(letter: letter,),
+        front: OptionCardFront()
+        
+      )
+
+    );
+  }
+}
+
+
+class OptionCardBack extends StatelessWidget {
+
+  final String letter;
+
+  const OptionCardBack({Key key, this.letter}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        border: Border.all(width: 3.0, color: Colors.white),
+        gradient: LinearGradient(
+          end:  Alignment.bottomRight,
+          begin:    Alignment.topLeft,
+          stops: [0.1, 0.5, 0.9],
+          colors: [
+            Colors.orange,
+            Colors.orange[600],
+            Colors.orange[700],
+          ],
+        ),
+      ),
+      alignment: Alignment.center,
+      child:     Text(
+        '$letter',
+        style: TextStyle(
+          color:      Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize:   60.0,
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class OptionCardFront extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment:  Alignment.center,
+      child:      Icon(
+        Icons.filter_vintage,
+        color: Colors.white,
+        size:  36.0,
+      ),
+      
+      decoration: BoxDecoration(
+        border: Border.all(width: 3.0, color: Colors.white),
+        borderRadius: BorderRadius.circular(5.0),
+        gradient: LinearGradient(
+          begin:  Alignment.topRight,
+          end:    Alignment.bottomLeft,
+          stops: [0.1, 0.9],
+          colors: [
+            Color.fromARGB(255, 0, 155, 77),
+            // Color.fromARGB(255, 0, 179, 95),
+            Color.fromARGB(255, 0, 172, 90),
+          ],
+        ),
+      ),
+    );
+  }
+}
