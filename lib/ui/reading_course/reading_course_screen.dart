@@ -46,8 +46,8 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
 
               controller: tabController,
               children: <Widget>[
-                alphabet(context, viewModel),
-                learnedLetters(context, viewModel)
+                Alphabet(viewModel: viewModel),
+                LearnedLetters(context: context, viewModel: viewModel)
               ],
 
 
@@ -78,8 +78,8 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
         indicatorWeight: 4.0,
         controller: tabController,
         tabs: <Widget>[
-          tabAlphabet(),
-          tabLearnedLetters()
+          TabAlphabet(),
+          TabLearnedLetters()
         ],
       )
     );
