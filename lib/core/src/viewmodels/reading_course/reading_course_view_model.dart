@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app19022019/core/core.dart';
 import 'package:app19022019/core/src/models/reading_course/rc_data_model.dart';
 import 'package:meta/meta.dart';

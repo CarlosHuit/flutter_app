@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';

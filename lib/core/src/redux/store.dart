@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app19022019/core/src/models/auth_login_response.dart';
 import 'package:app19022019/core/src/networking/courses_api.dart';
 import 'package:app19022019/core/src/networking/reading_course_api.dart';

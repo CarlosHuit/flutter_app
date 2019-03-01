@@ -5,10 +5,14 @@ import './alphabet.dart';
 import './learned_letters.dart';
 import 'package:app19022019/core/core.dart';
 
+
+
 class ReadingCourseScreen extends StatefulWidget {
   @override
   _ReadingCourseScreenState createState() => _ReadingCourseScreenState();
 }
+
+
 
 class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTickerProviderStateMixin {
 
@@ -66,17 +70,14 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
       elevation: 3.0,
       title:     Text(
         'Weduc',
-        style: TextStyle(
-          fontFamily: 'Pacifico',
-          fontSize:   26.0
-        ),
+        style: TextStyle( fontFamily: 'Pacifico', fontSize: 26.0 ),
       ),
       centerTitle: true,
 
       bottom: TabBar(
-        indicatorColor: Colors.red,
+        indicatorColor:  Colors.red,
         indicatorWeight: 4.0,
-        controller: tabController,
+        controller:      tabController,
         tabs: <Widget>[
           TabAlphabet(),
           TabLearnedLetters()

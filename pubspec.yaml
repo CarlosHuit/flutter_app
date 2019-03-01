@@ -13,13 +13,13 @@ dependencies:
   redux: ^3.0.0
   http: ^0.12.0+1
   key_value_store: ^1.0.0
-  kt_dart: ^0.5.0
   reselect: ^0.4.0
   flutter_redux: ^0.5.3
   key_value_store_flutter: ^1.0.0
   flutter_secure_storage: ^3.2.0
   flutter_youtube: "^1.1.4"
-  flutter_tts: ^0.2.3
+  flutter_tts: ^0.2.4
+
 
 
   # The following adds the Cupertino Icons font to your application.
