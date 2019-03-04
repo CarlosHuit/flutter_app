@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app19022019/core/core.dart';
-import 'package:app19022019/core/src/models/reading_course/rc_data_model.dart';
+import '../../redux/reading_course/rc_data/rc_data_state.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -27,7 +27,7 @@ class ReadingCourseViewModel {
 
     return ReadingCourseViewModel(
       letters:        [],
-      isLoading:      store.state.readingCourseState.isLoading,
+      isLoading:      store.state.readingCourseState.data.isLoading,
       lettersMenu:    store.state.readingCourseState.data.lettersMenu,
       learnedLetters: store.state.readingCourseState.data.learnedLetters,
       startCourse:    (String letter) => store.dispatch(NavigatorPushRCLetterDetail())

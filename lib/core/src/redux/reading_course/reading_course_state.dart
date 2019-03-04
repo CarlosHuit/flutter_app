@@ -1,37 +1,30 @@
-
+import './rc_data/rc_data_state.dart';
 import 'package:meta/meta.dart';
-import '../../models/reading_course/rc_data_model.dart';
 
 @immutable
 class ReadingCourseState {
 
-  final bool              isLoading;
-  final String            currentLetter;
-  final RCCourseDataModel data;
+  final RCDataState data;
+  // final RCLetterDetail    letterDetail;
 
   ReadingCourseState({
-    @required this.currentLetter,
-    @required this.isLoading,
-    @required this.data
+    @required this.data,
+    // @required this.letterDetail
   });
 
   factory ReadingCourseState.initialState() {
     return ReadingCourseState(
-      currentLetter: null,
-      data:          RCCourseDataModel.initialData(),
-      isLoading:     true
+      data:          RCDataState.initialData(),
     );
   }
 
   ReadingCourseState copyWith({
     bool isLoading,
     String currentLetter,
-    RCCourseDataModel data,
+    RCDataState data,
   }) {
 
     return ReadingCourseState(
-      currentLetter: currentLetter ?? this.currentLetter,
-      isLoading:     isLoading ?? this.isLoading,
       data:          data ?? this.data,
     );
   }
@@ -42,14 +35,10 @@ class ReadingCourseState {
   bool operator == (Object other) => 
     identical(this, other) || other is ReadingCourseState
       && runtimeType   == other.runtimeType
-      && isLoading     == other.isLoading
-      && data          == other.data
-      && currentLetter == other.currentLetter;
+      && data          == other.data;
 
   @override
   int get hashCode =>
-    isLoading.hashCode ^
-    data.hashCode ^
-    currentLetter.hashCode;
+    data.hashCode;
 
 }

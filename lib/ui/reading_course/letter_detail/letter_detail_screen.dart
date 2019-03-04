@@ -11,18 +11,28 @@ class LetterDetailScreen extends StatefulWidget {
 
 class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
+  bool showAllCards;
+  bool hideAllCards;
 
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 0), _showModalSheet);
     super.initState();
-    
+    Future.delayed(Duration(milliseconds: 0), _showModalSheet);
+    showAllCards = false;
+    hideAllCards = true;
   }
 
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _toggleShowAllCard() {
+    setState(() {
+      showAllCards = !showAllCards;
+      hideAllCards = !hideAllCards;
+    });
   }
 
   @override
@@ -33,7 +43,7 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         child: Icon(Icons.arrow_upward, size: 28.0,),
-        onPressed: _showModalSheet,
+        onPressed: _toggleShowAllCard,
       ),
       body: Container(
         child: Container(
@@ -64,7 +74,11 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
               crossAxisCount: 3,
               physics:  NeverScrollableScrollPhysics(),
               padding:  EdgeInsets.all(1.0),
-              children: List.generate(12, (i) => OptionCard(letter: i.toString())),
+              children: List.generate(12, (i) => OptionCard(
+                letter: i.toString(),
+                hideAllCars: hideAllCards,
+                showAllCards: showAllCards,
+              )),
             ),
           ),
         )
@@ -80,43 +94,51 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
       context: context,
       builder: (builder) {
         return Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'P',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.yellowAccent,
-                  fontSize: 200.0,
-                  shadows: <Shadow> [
-                    Shadow(color: Colors.black, offset: Offset(-1.2, 1.2)),
-                    Shadow(color: Colors.black, offset: Offset(1.2, -1.2)),
-                    Shadow(color: Colors.black, offset: Offset(1.2, 1.2)),
-                    Shadow(color: Colors.black, offset: Offset(-1.2, -1.2)),
-                    Shadow(color: Colors.black, blurRadius: 15.0),
-                  ]
-                ),
-              ),
-              Container(
-                width: 200.0,
-                height: 40.0,
-                child: RaisedButton(
-                  color: Colors.red,
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Continuar',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 18.0
-                    ),
-                  ),
-                )
-              ),
+          color:   Colors.grey[100],
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+          child:   Card(
 
-            ],
-          )
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'P',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.yellowAccent,
+                    fontSize: 200.0,
+                    shadows: <Shadow> [
+                      Shadow(color: Colors.black, offset: Offset(-1.2, 1.2)),
+                      Shadow(color: Colors.black, offset: Offset(1.2, -1.2)),
+                      Shadow(color: Colors.black, offset: Offset(1.2, 1.2)),
+                      Shadow(color: Colors.black, offset: Offset(-1.2, -1.2)),
+                      Shadow(color: Colors.black, blurRadius: 15.0),
+                    ]
+                  ),
+                ),
+                Container(
+                  width: 200.0,
+                  height: 40.0,
+                  child: RaisedButton(
+
+                    onPressed: () => Navigator.pop(context),
+                    color:     Colors.red,
+                    child:     Text(
+                      'Continuar',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color:      Colors.white,
+                        fontSize:   18.0
+                      ),
+                    ),
+
+                  )
+                ),
+
+              ],
+            )
+
+            )
         );
       }
     ).whenComplete(() => print('closed ${DateTime.now()}'));
@@ -130,18 +152,22 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 class OptionCard extends StatelessWidget {
 
   final String letter;
+  final bool showAllCards;
+  final bool hideAllCars;
 
-  const OptionCard({Key key, this.letter}) : super(key: key);
+  const OptionCard({Key key, this.letter, this.showAllCards, this.hideAllCars}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
+      
       padding: EdgeInsets.all(3.0),
       child: FlipCard(
-        direction: FlipDirection.VERTICAL,
-        back: OptionCardBack(letter: letter,),
-        front: OptionCardFront()
+        direction:    FlipDirection.VERTICAL,
+        back:         OptionCardBack(letter: letter,),
+        front:        OptionCardFront(),
+        hideAllCards: hideAllCars,
+        showAllCards: showAllCards,
         
       )
 

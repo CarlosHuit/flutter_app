@@ -35,11 +35,11 @@ class AppState {
   }) {
 
     return AppState(
-      appName:      'Weduc',
-      authState:    AuthState.initialState(auth: auth),
-      loginState:   LoginState.initialState(),
-      signupState:  SignupState.initialState(),
-      coursesState: CoursesState.initialState(),
+      appName:            'Weduc',
+      authState:          AuthState.initialState(auth: auth),
+      loginState:         LoginState.initialState(),
+      signupState:        SignupState.initialState(),
+      coursesState:       CoursesState.initialState(),
       readingCourseState: ReadingCourseState.initialState(),
     );
 
@@ -54,11 +54,11 @@ class AppState {
     ReadingCourseState readingCourseState
   }) {
     return AppState(
-      appName:      'Weduc',
-      authState:    authState ?? this.authState,
-      loginState:   loginState ?? this.loginState,
-      signupState:  signupState ?? this.signupState,
-      coursesState: coursesState ?? this.coursesState,
+      appName:            'Weduc',
+      authState:          authState ?? this.authState,
+      loginState:         loginState ?? this.loginState,
+      signupState:        signupState ?? this.signupState,
+      coursesState:       coursesState ?? this.coursesState,
       readingCourseState: readingCourseState ?? this.readingCourseState
     );
   }
@@ -66,12 +66,12 @@ class AppState {
   @override
   bool operator == (Object other) =>
     identical(this, other) || other is AppState
-      && runtimeType  == other.runtimeType
-      && authState    == other.authState
-      && appName      == other.appName
-      && loginState   == other.loginState
-      && signupState  == other.signupState
-      && coursesState == other.coursesState
+      && runtimeType        == other.runtimeType
+      && authState          == other.authState
+      && appName            == other.appName
+      && loginState         == other.loginState
+      && signupState        == other.signupState
+      && coursesState       == other.coursesState
       && readingCourseState == other.readingCourseState;
 
   @override

@@ -9,7 +9,7 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
 
   final ReadingCourseApi api;
 
-  ReadingCourseMiddleware({@required this.api});
+  ReadingCourseMiddleware({ @required this.api });
 
   @override
   void call(Store<AppState> store, action, NextDispatcher next) async{

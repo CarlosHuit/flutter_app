@@ -6,15 +6,21 @@ enum FlipDirection { VERTICAL, HORIZONTAL }
 
 
 class FlipCard extends StatefulWidget {
+
   final Widget front;
   final Widget back;
-  final int speed = 500;
+  final int    speed = 500;
   final FlipDirection direction;
+
+  final bool showAllCards;
+  final bool hideAllCards;
 
   const FlipCard({
     Key key,
     @required this.front,
     @required this.back,
+    @required this.showAllCards,
+    @required this.hideAllCards,
     this.direction = FlipDirection.HORIZONTAL
   }) : super(key: key);
 
@@ -31,6 +37,8 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
   Animation<double> _backRotation;
 
   bool isFront = true;
+  bool get _showAllCards => widget.showAllCards;
+  bool get _hideAllCards => widget.hideAllCards;
 
   @override
   void initState() {
@@ -75,6 +83,7 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
 
       ],
     ).animate(controller);
+
   }
 
 
@@ -84,7 +93,7 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-
+/// [ Void ] a function to hide or show the current card
   _toggleCard() {
 
     if (isFront)
@@ -96,8 +105,30 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
 
   }
 
+  void showAllCards() {
+    isFront = false;
+    controller.forward();
+  }
+
+  void hideAllCards() {
+    isFront = true;
+    controller.reverse();
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+    if (_showAllCards) {
+      print('show all cards ${DateTime.now()}');
+      showAllCards();
+    }
+
+    if (_hideAllCards) {
+      print('hide all cards ${DateTime.now()}');
+      hideAllCards();
+    }
+
     return GestureDetector(
       onTap: _toggleCard,
       child: Stack(

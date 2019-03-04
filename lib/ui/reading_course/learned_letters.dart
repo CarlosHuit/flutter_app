@@ -1,4 +1,4 @@
-import 'package:app19022019/core/src/models/reading_course/rc_data_model.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/reading_course_view_model.dart';
 import 'package:app19022019/ui/components/loading_indicator.dart';
 import 'package:flutter/material.dart';

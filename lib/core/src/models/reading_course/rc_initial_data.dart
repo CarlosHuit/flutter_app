@@ -1,4 +1,4 @@
-import 'package:app19022019/core/src/models/reading_course/rc_data_model.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_state.dart';
 import 'package:meta/meta.dart';
 
 class RCInitialData {

@@ -1,12 +1,14 @@
 import 'package:app19022019/core/src/models/reading_course/rc_initial_data.dart';
 import 'package:meta/meta.dart';
 
-class RCCourseDataModel {
+@immutable
+class RCDataState {
 
   final String                currentLetter;
   final String                alphabet;
   final String                consonants;
   final String                vocals;
+  final bool                  isLoading;
 
   final Map<String, List<Combination>> combinations;
   final List<Words>                    words;
@@ -16,7 +18,7 @@ class RCCourseDataModel {
   final List<SimilarLetters>           similarLetters;
   final Map<String, dynamic>           soundLetters;
 
-  RCCourseDataModel(
+  RCDataState(
     {
       @required this.words,
       @required this.alphabet,
@@ -28,12 +30,13 @@ class RCCourseDataModel {
       @required this.soundLetters,
       @required this.similarLetters,
       @required this.coordinates,
-      @required this.currentLetter
+      @required this.currentLetter,
+      @required this.isLoading,
     }
   );
 
-  factory RCCourseDataModel.initialData() {
-    return RCCourseDataModel(
+  factory RCDataState.initialData() {
+    return RCDataState(
       words:          null,
       vocals:         null,
       alphabet:       null,
@@ -45,10 +48,11 @@ class RCCourseDataModel {
       currentLetter:  null,
       learnedLetters: null,
       similarLetters: null,
+      isLoading:      null,
     );
   }
 
-  factory RCCourseDataModel.fromData(RCInitialData data) {
+  factory RCDataState.fromData(RCInitialData data) {
 
     final List<ItemLetterMenu> itemsLettersMenu = [];
 
@@ -63,7 +67,7 @@ class RCCourseDataModel {
 
     });
 
-    return RCCourseDataModel(
+    return RCDataState(
       currentLetter:  null,
       alphabet:       data.letters.alphabet,
       consonants:     data.letters.consonants,
@@ -74,16 +78,18 @@ class RCCourseDataModel {
       learnedLetters: data.learnedLetters,
       coordinates:    data.coordinates,
       similarLetters: data.similarLetters,
-      lettersMenu:    itemsLettersMenu
+      lettersMenu:    itemsLettersMenu,
+      isLoading:      true
     );
 
   }
 
-  RCCourseDataModel copyWith({
-    String currentLetter,
-    String alphabet,
-    String consonants,
-    String vocals,
+  RCDataState copyWith({
+    String               vocals,
+    String               alphabet,
+    bool                 isLoading,
+    String               consonants,
+    String               currentLetter,
     List<Words>          words,
     List<Coordinates>    coordinates,
     List<LearnedLetter>  learnedLetters,
@@ -92,10 +98,11 @@ class RCCourseDataModel {
     Map<String, dynamic> soundLetters,
     Map<String, List<Combination>> combinations,
   }) {
-    return RCCourseDataModel(
+    return RCDataState(
       words:          words ?? this.words,
       vocals:         vocals ?? this.vocals,
       alphabet:       alphabet ?? this.alphabet,
+      isLoading:      isLoading ?? this.isLoading,
       consonants:     consonants ?? this.consonants,
       lettersMenu:    lettersMenu ?? this.lettersMenu,
       coordinates:    coordinates ?? this.coordinates,
