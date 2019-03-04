@@ -18,22 +18,20 @@ class RCDataState {
   final List<SimilarLetters>           similarLetters;
   final Map<String, dynamic>           soundLetters;
 
-  RCDataState(
-    {
-      @required this.words,
-      @required this.alphabet,
-      @required this.consonants,
-      @required this.vocals,
-      @required this.learnedLetters,
-      @required this.lettersMenu,
-      @required this.combinations,
-      @required this.soundLetters,
-      @required this.similarLetters,
-      @required this.coordinates,
-      @required this.currentLetter,
-      @required this.isLoading,
-    }
-  );
+  RCDataState({
+    @required this.words,
+    @required this.alphabet,
+    @required this.consonants,
+    @required this.vocals,
+    @required this.learnedLetters,
+    @required this.lettersMenu,
+    @required this.combinations,
+    @required this.soundLetters,
+    @required this.similarLetters,
+    @required this.coordinates,
+    @required this.currentLetter,
+    @required this.isLoading,
+  });
 
   factory RCDataState.initialData() {
     return RCDataState(
@@ -79,7 +77,7 @@ class RCDataState {
       coordinates:    data.coordinates,
       similarLetters: data.similarLetters,
       lettersMenu:    itemsLettersMenu,
-      isLoading:      true
+      isLoading:      false
     );
 
   }
@@ -98,6 +96,7 @@ class RCDataState {
     Map<String, dynamic> soundLetters,
     Map<String, List<Combination>> combinations,
   }) {
+
     return RCDataState(
       words:          words ?? this.words,
       vocals:         vocals ?? this.vocals,
@@ -112,6 +111,7 @@ class RCDataState {
       learnedLetters: learnedLetters ?? this.learnedLetters,
       similarLetters: similarLetters ?? this.similarLetters,
     );
+
   }
 
 }

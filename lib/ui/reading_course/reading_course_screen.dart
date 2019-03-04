@@ -1,4 +1,4 @@
-import 'package:app19022019/core/src/redux/reading_course/reading_course_actions.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import './alphabet.dart';

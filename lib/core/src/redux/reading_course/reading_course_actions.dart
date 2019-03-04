@@ -1,19 +1,19 @@
-import 'package:app19022019/core/src/models/reading_course/rc_initial_data.dart';
-import 'package:meta/meta.dart';
+// import 'package:app19022019/core/src/models/reading_course/rc_initial_data.dart';
+// import 'package:meta/meta.dart';
 
-class RCFetchInitialData {}
+// class RCFetchInitialData {}
 
-class RCFetchInitialDataSuccess {
+// class RCFetchInitialDataSuccess {
 
-  final RCInitialData data;
-  RCFetchInitialDataSuccess({ @required  this.data });
+//   final RCInitialData data;
+//   RCFetchInitialDataSuccess({ @required  this.data });
 
-}
+// }
 
 
-class RCFetchInitialDataFailed {
+// class RCFetchInitialDataFailed {
 
-  final String error;
-  RCFetchInitialDataFailed({ @required this.error });
+//   final String error;
+//   RCFetchInitialDataFailed({ @required this.error });
 
-}
+// }

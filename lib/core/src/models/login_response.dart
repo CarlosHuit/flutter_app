@@ -11,7 +11,7 @@ class LoginResponse {
 
   LoginResponse({ this.auth,  this.courses});
 
-  factory LoginResponse.fromJson(Map<String, dynamic> respJson) {
+  factory LoginResponse.fromJson(dynamic respJson) {
 
     List<Course> temListCourse = [];
 
@@ -73,40 +73,3 @@ class LoginResponse {
 
 
 
-
-
-/* class LoginResponse {
-
-  AuthLoginResponse auth;
-  List<Course> courses = [];
-
-  LoginResponse.fromJson(Map<String, dynamic> respJson) {
-
-    final tempAuth = AuthLoginResponse(
-
-      respJson['auth']['token'],
-      respJson['auth']['message'],
-      respJson['auth']['userId'],
-      respJson['auth']['firstName'],
-      respJson['auth']['lastName'],
-      respJson['auth']['email'],
-      respJson['auth']['avatar']
-
-    );
-
-    auth = tempAuth;
-
-    List<Course> tempCourses = [];
-
-    for (var i = 0; i < respJson['courses'].length; i++) {
-      Course el = Course(respJson['courses'][i]);
-      tempCourses.add(el);
-    }
-
-    courses = tempCourses;
-
-  }
-
-
-
-} */

@@ -17,7 +17,7 @@ class RCInitialData {
     @required this.coordinates
   });
 
-  factory RCInitialData.fromJson(Map<String, dynamic> json) {
+  factory RCInitialData.fromJson(dynamic json) {
 
     final Letters letters = Letters.fromJson(json['letters']);
 

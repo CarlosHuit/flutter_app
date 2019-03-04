@@ -1,6 +1,6 @@
 import 'package:app19022019/core/src/models/reading_course/rc_initial_data.dart';
 import 'package:app19022019/core/src/networking/reading_course_api.dart';
-import 'package:app19022019/core/src/redux/reading_course/reading_course_actions.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_actions.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import '../app/app_state.dart';

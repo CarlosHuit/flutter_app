@@ -19,21 +19,22 @@ class ReadingCourseApi {
 
   Future<RCInitialData> fetchInitialData() async {
 
+    await Future.delayed(Duration(seconds: 2));
 
-    final String token = await secureStorage.read(key: 'token');
-    final Map<String, String> headers = { HttpHeaders.authorizationHeader: token };
+    final token = await secureStorage.read(key: 'token');
+    final headers = { HttpHeaders.authorizationHeader: token };
+    final response = await client.get(baseUrl, headers: headers);
 
-    final http.Response response = await client.get(baseUrl, headers: headers);
 
     if (response.statusCode == 200) {
 
-      final Map<String, dynamic> result = json.decode(response.body);
-      final RCInitialData rcInitialData = RCInitialData.fromJson(result);
+      final result = json.decode(response.body);
+      final  rcInitialData = RCInitialData.fromJson(result);
       return rcInitialData;
 
     } else {
 
-      final Map<String, dynamic> result = json.decode(response.body);
+      final result = json.decode(response.body);
       return throw(result['error']);
 
     }

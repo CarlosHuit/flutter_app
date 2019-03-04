@@ -16,8 +16,8 @@ class AuthApi {
   Future<LoginResponse> login(Credentials credentials) async{
     
     final url = '$baseUrl/signin';
-    final http.Response response = await client.post(url, body: credentials.toJson());
-    final Map<String, dynamic> result = json.decode(response.body);
+    final response = await client.post(url, body: credentials.toJson());
+    final result = json.decode(response.body);
     
     if (response.statusCode == 200)
       return LoginResponse.fromJson(result);
@@ -30,8 +30,8 @@ class AuthApi {
   Future<LoginResponse> signup(AccountForm accountForm) async {
     
     final url = '$baseUrl/signup';
-    final http.Response response = await client.post(url, body:accountForm.toJson());
-    final Map<String, dynamic> result = json.decode(response.body);
+    final response = await client.post(url, body:accountForm.toJson());
+    final result = json.decode(response.body);
     
     if (response.statusCode == 201)
       return LoginResponse.fromJson(result);
