@@ -114,6 +114,38 @@ class RCDataState {
 
   }
 
+  @override
+  bool operator == (Object other) =>
+    identical(this, other) || other is RCDataState
+      && runtimeType    == other.runtimeType
+      && words          == other.words
+      && alphabet       == other.alphabet
+      && consonants     == other.consonants
+      && vocals         == other.vocals
+      && learnedLetters == other.learnedLetters
+      && lettersMenu    == other.lettersMenu
+      && combinations   == other.combinations
+      && soundLetters   == other.soundLetters
+      && similarLetters == other.similarLetters
+      && coordinates    == other.coordinates
+      && currentLetter  == other.currentLetter
+      && isLoading      == other.isLoading;
+
+  @override
+  int get hashCode => 
+    words.hashCode ^
+    alphabet.hashCode ^
+    consonants.hashCode ^
+    vocals.hashCode ^
+    learnedLetters.hashCode ^
+    lettersMenu.hashCode ^
+    combinations.hashCode ^
+    soundLetters.hashCode ^
+    similarLetters.hashCode ^
+    coordinates.hashCode ^
+    currentLetter.hashCode ^
+    isLoading.hashCode;
+
 }
 
 

@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 
 
 class RCLetterDetail {
+
   final List<SLData> data;
   final SLSelections selections;
   final int          currentIndex;
@@ -81,20 +82,79 @@ class RCLetterDetail {
     );
   }
 
+  @override
+  bool operator == (Object other) =>
+    identical(this, other) || other is RCLetterDetail
+      && runtimeType       == other.runtimeType
+      && data              == data
+      && selections        == selections
+      && canPlayGame       == canPlayGame
+      && currentData       == currentData
+      && currentIndex      == currentIndex
+      && showAllCards      == showAllCards
+      && hideAllCards      == hideAllCards
+      && isSettingData     == isSettingData
+      && showSuccessScreen == showSuccessScreen;
+
+  @override
+  int get hashCode => 
+    data.hashCode ^
+    selections.hashCode ^
+    canPlayGame.hashCode ^
+    currentData.hashCode ^
+    currentIndex.hashCode ^
+    showAllCards.hashCode ^
+    hideAllCards.hashCode ^
+    isSettingData.hashCode ^
+    showSuccessScreen.hashCode;
+
 }
 
+
+
 class SLData {
+
   final String letter;
   final List<String> data;
   final String type;
 
-
   SLData(this.letter, this.data, this.type);
+
+  @override
+  bool operator == (Object other) => 
+    identical(this, other) || other is SLData
+       && runtimeType == other.runtimeType
+       && letter      == other.letter
+       && data        == other.data
+       && type        == other.type;
+
+  @override
+  int get hashCode => 
+    letter.hashCode ^
+    data.hashCode ^
+    type.hashCode;
+
 }
 
+
+
 class SLSelections {
+
   final String selection1;
   final String selection2;
 
   SLSelections(this.selection1, this.selection2);
+
+  @override
+  bool operator == (Object other) =>
+    identical(this, other) || other is SLSelections
+      && runtimeType == other.runtimeType
+      && selection1 == other.selection1
+      && selection2 == other.selection2;
+  
+  @override
+  int get hashCode => 
+    selection1.hashCode ^
+    selection2.hashCode;
+
 }
