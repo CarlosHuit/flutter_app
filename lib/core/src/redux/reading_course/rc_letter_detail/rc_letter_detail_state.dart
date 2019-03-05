@@ -1,6 +1,5 @@
-import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/reading_course/reading_course_state.dart';
 import 'package:meta/meta.dart';
-import 'package:redux/redux.dart';
 
 
 class RCLetterDetail {
@@ -42,7 +41,9 @@ class RCLetterDetail {
     );
   }
 
-  RCLetterDetail fromStore(Store<AppState> store) {
+  RCLetterDetail fromStore(ReadingCourseState store) {
+
+    print(store.data.currentLetter);
 
     return RCLetterDetail(
       canPlayGame:       false,

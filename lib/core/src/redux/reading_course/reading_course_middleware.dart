@@ -1,6 +1,9 @@
 import 'package:app19022019/core/src/models/reading_course/rc_initial_data.dart';
 import 'package:app19022019/core/src/networking/reading_course_api.dart';
+import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_actions.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_letter_detail/rc_letter_detail_actions.dart';
+import 'package:app19022019/core/src/redux/reading_course/reading_course_actions.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import '../app/app_state.dart';
@@ -31,6 +34,16 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
 
     }
 
+    if (action is RCSelectLetter) {
+
+      print('selectLetter ${action.letter}');
+      next(RCSetCurrentLetter(action.letter));
+      next(RCSetInitialDataLD(action.letter));
+      store.dispatch(NavigatorPushRCLetterDetail());
+
+    }
+
+    // next(action);
 
   }
   

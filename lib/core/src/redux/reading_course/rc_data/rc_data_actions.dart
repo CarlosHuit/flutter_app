@@ -13,8 +13,12 @@ class RCFetchInitialDataSuccess {
 
 
 class RCFetchInitialDataFailed {
-
   final String error;
   RCFetchInitialDataFailed({ @required this.error });
-
 }
+
+class RCSetCurrentLetter {
+  final String letter;
+  RCSetCurrentLetter(this.letter);
+}
+
