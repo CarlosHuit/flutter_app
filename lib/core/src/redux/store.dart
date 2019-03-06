@@ -59,8 +59,8 @@ Future<Store<AppState>> createStore({
       SignupMiddleware(api: authApi),
       AuthMiddleware(secureStorage: secureStorage),
       CoursesMiddleware(api: coursesApi),
+      ReadingCourseMiddleware(api: readingCourseApi),
       NavigationMiddleware(),
-      ReadingCourseMiddleware(api: readingCourseApi)
 
     ]
   );

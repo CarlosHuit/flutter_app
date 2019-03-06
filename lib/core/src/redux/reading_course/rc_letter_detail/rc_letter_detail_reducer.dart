@@ -2,11 +2,33 @@ import '../reading_course_state.dart';
 import './rc_letter_detail_actions.dart';
 import './rc_letter_detail_state.dart';
 
-RCLetterDetail readingCourseLetterDetailReducer(ReadingCourseState state, dynamic action) {
+RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, dynamic action) {
+
 
   if (action is RCSetInitialDataLD) {
-    print('Letter Detail: Set Initial Data of letter ${action.letter}');
-    return state.letterDetail.fromStore(state);
+    return RCLetterDetailState.fromStore(state);
+  }
+
+  if (action is RCSelectOptionLD) {
+    print('You have selected: ${action.selection}');
+
+    if (state.letterDetail.selections.selection1 == null) {
+      return state.letterDetail.copyWith(
+        selections: state.letterDetail.selections.copyWith(
+          selection1: action.selection )
+      );
+      
+    }
+
+    if (state.letterDetail.selections.selection1 != null) {
+      return state.letterDetail.copyWith(
+        selections: state.letterDetail.selections.copyWith(
+          selection2: action.selection
+        )
+      );
+    }
+
+    return state.letterDetail;
   }
 
   return state.letterDetail;

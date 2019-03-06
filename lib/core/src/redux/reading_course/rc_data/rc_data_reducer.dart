@@ -19,7 +19,6 @@ RCDataState readingCourseDataReducer(RCDataState state, dynamic action) {
   }
 
   if (action is RCSetCurrentLetter) {
-    print('Data: Set Current Letter ${action.letter}');
     return state.copyWith( currentLetter: action.letter );
   }
 

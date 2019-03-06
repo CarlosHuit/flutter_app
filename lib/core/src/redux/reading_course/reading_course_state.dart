@@ -6,24 +6,30 @@ import './rc_data/rc_data_state.dart';
 @immutable
 class ReadingCourseState {
 
-  final RCDataState data;
-  final RCLetterDetail    letterDetail;
+  final RCDataState         data;
+  final RCLetterDetailState letterDetail;
 
   ReadingCourseState({
     @required this.data,
     @required this.letterDetail
   });
 
+
+
   factory ReadingCourseState.initialState() {
+
     return ReadingCourseState(
       data:          RCDataState.initialData(),
-      letterDetail:  RCLetterDetail.initialState()
+      letterDetail:  RCLetterDetailState.initialState()
     );
+
   }
+
+
 
   ReadingCourseState copyWith({
     RCDataState data,
-    RCLetterDetail letterDetail
+    RCLetterDetailState letterDetail
   }) {
 
     return ReadingCourseState(

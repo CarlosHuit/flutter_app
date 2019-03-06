@@ -1,8 +1,8 @@
 import 'package:app19022019/core/src/redux/reading_course/reading_course_state.dart';
 import 'package:meta/meta.dart';
 
-
-class RCLetterDetail {
+@immutable
+class RCLetterDetailState {
 
   final List<SLData> data;
   final SLSelections selections;
@@ -14,7 +14,7 @@ class RCLetterDetail {
   final bool         canPlayGame;
   final bool         showSuccessScreen;
 
-  RCLetterDetail({
+  RCLetterDetailState({
     @required this.data,
     @required this.selections,
     @required this.canPlayGame,
@@ -27,8 +27,8 @@ class RCLetterDetail {
 
   });
 
-  factory RCLetterDetail.initialState() {
-    return RCLetterDetail(
+  factory RCLetterDetailState.initialState() {
+    return RCLetterDetailState(
       canPlayGame:       null,
       currentData:       null,
       currentIndex:      null,
@@ -41,25 +41,52 @@ class RCLetterDetail {
     );
   }
 
-  RCLetterDetail fromStore(ReadingCourseState store) {
+  factory RCLetterDetailState.fromStore(ReadingCourseState store) {
 
-    print(store.data.currentLetter);
+    final letterLC = store.data.currentLetter.toLowerCase();
+    final letterUC = store.data.currentLetter.toUpperCase();
 
-    return RCLetterDetail(
+    final slLowerCase = List.of(
+      store.data.similarLetters.firstWhere((x) => x.l == letterLC).sl);
+
+    final slUpperCase = List.of(
+      store.data.similarLetters.firstWhere((x) => x.l == letterUC).sl);
+
+    for (var i = 0; i < 3; i++) {
+      slLowerCase.add(slLowerCase[i]);
+      slUpperCase.add(slUpperCase[i]);
+    }
+
+    for (var i = 0; i < 2; i++) {
+      slLowerCase.add(letterLC);
+      slUpperCase.add(letterUC);
+    }
+
+
+    slLowerCase.shuffle();
+    slUpperCase.shuffle();
+
+    final dataLowerCase = SLData(letterLC, slLowerCase, 'minúscula');
+    final dataUpperCase = SLData(letterUC, slUpperCase, 'mayúscula');
+
+
+    return RCLetterDetailState(
       canPlayGame:       false,
-      currentData:       SLData('letter', ['data'], 'mayuscula'),
+      currentData:       dataLowerCase,
       currentIndex:      0,
-      data:              [ SLData('l', ['d'], 'm'), SLData('l', ['d'], 'm') ],
+      data:              [ dataLowerCase, dataUpperCase ],
       hideAllCards:      true,
       showAllCards:      false,
       isSettingData:     false,
-      selections:        SLSelections('', ''),
+      selections:        SLSelections(selection1: null, selection2: null),
       showSuccessScreen: false
     );
 
   }
 
-  RCLetterDetail copyWith({
+
+
+  RCLetterDetailState copyWith({
     SLSelections selections,
     List<SLData> data,
     SLData currentData,
@@ -70,7 +97,7 @@ class RCLetterDetail {
     bool showSuccessScreen,
     int currentIndex,
   }) {
-    return RCLetterDetail(
+    return RCLetterDetailState(
       data:              data              ?? this.data,
       currentIndex:      currentIndex      ?? this.currentIndex,
       currentData:       currentData       ?? this.currentData,
@@ -85,17 +112,17 @@ class RCLetterDetail {
 
   @override
   bool operator == (Object other) =>
-    identical(this, other) || other is RCLetterDetail
+    identical(this, other) || other is RCLetterDetailState
       && runtimeType       == other.runtimeType
-      && data              == data
-      && selections        == selections
-      && canPlayGame       == canPlayGame
-      && currentData       == currentData
-      && currentIndex      == currentIndex
-      && showAllCards      == showAllCards
-      && hideAllCards      == hideAllCards
-      && isSettingData     == isSettingData
-      && showSuccessScreen == showSuccessScreen;
+      && data              == other.data
+      && selections        == other.selections
+      && canPlayGame       == other.canPlayGame
+      && currentData       == other.currentData
+      && currentIndex      == other.currentIndex
+      && showAllCards      == other.showAllCards
+      && hideAllCards      == other.hideAllCards
+      && isSettingData     == other.isSettingData
+      && showSuccessScreen == other.showSuccessScreen;
 
   @override
   int get hashCode => 
@@ -121,19 +148,27 @@ class SLData {
 
   SLData(this.letter, this.data, this.type);
 
-  @override
-  bool operator == (Object other) => 
-    identical(this, other) || other is SLData
-       && runtimeType == other.runtimeType
-       && letter      == other.letter
-       && data        == other.data
-       && type        == other.type;
 
-  @override
-  int get hashCode => 
-    letter.hashCode ^
-    data.hashCode ^
-    type.hashCode;
+  Map<String, dynamic> toJson() {
+    return {
+      'letter': letter,
+      'data':  data,
+      'type':  type
+    };
+  }
+  // @override
+  // bool operator == (Object other) => 
+  //   identical(this, other) || other is SLData
+  //      && runtimeType == other.runtimeType
+  //      && letter      == other.letter
+  //      && data        == other.data
+  //      && type        == other.type;
+
+  // @override
+  // int get hashCode => 
+  //   letter.hashCode ^
+  //   data.hashCode ^
+  //   type.hashCode;
 
 }
 
@@ -144,18 +179,35 @@ class SLSelections {
   final String selection1;
   final String selection2;
 
-  SLSelections(this.selection1, this.selection2);
+  SLSelections({
+    this.selection1,
+    this.selection2
+  });
 
-  @override
-  bool operator == (Object other) =>
-    identical(this, other) || other is SLSelections
-      && runtimeType == other.runtimeType
-      && selection1 == other.selection1
-      && selection2 == other.selection2;
+  SLSelections copyWith({
+    String selection1,
+    String selection2
+  }) {
+    return SLSelections(
+      selection1: selection1 ?? this.selection1,
+      selection2: selection2 ?? this.selection2
+    );
+  }
+
+  SLSelections restart() {
+    return SLSelections(selection2: null, selection1: null);
+  }
+
+  // @override
+  // bool operator == (Object other) =>
+  //   identical(this, other) || other is SLSelections
+  //     && runtimeType == other.runtimeType
+  //     && selection1 == other.selection1
+  //     && selection2 == other.selection2;
   
-  @override
-  int get hashCode => 
-    selection1.hashCode ^
-    selection2.hashCode;
+  // @override
+  // int get hashCode => 
+  //   selection1.hashCode ^
+  //   selection2.hashCode;
 
 }

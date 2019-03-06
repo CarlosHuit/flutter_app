@@ -11,9 +11,11 @@ class FlipCard extends StatefulWidget {
   final Widget back;
   final int    speed = 500;
   final FlipDirection direction;
+  final Function() callBack;
 
   final bool showAllCards;
   final bool hideAllCards;
+  final bool showCard;
 
   const FlipCard({
     Key key,
@@ -21,6 +23,8 @@ class FlipCard extends StatefulWidget {
     @required this.back,
     @required this.showAllCards,
     @required this.hideAllCards,
+    @required this.callBack,
+    @required this.showCard,
     this.direction = FlipDirection.HORIZONTAL
   }) : super(key: key);
 
@@ -37,8 +41,19 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
   Animation<double> _backRotation;
 
   bool isFront = true;
+
+  FlipDirection get _direction => widget.direction;
+  Function get _callBack => widget.callBack;
+
   bool get _showAllCards => widget.showAllCards;
   bool get _hideAllCards => widget.hideAllCards;
+  bool get _showCard => widget.showCard;
+
+
+  Widget get _front => widget.front;
+  Widget get _back  => widget.back;
+
+
 
   @override
   void initState() {
@@ -93,24 +108,24 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-/// [ Void ] a function to hide or show the current card
-  _toggleCard() {
 
-    if (isFront)
-      controller.forward();
-    else
-      controller.reverse();
+  // _toggleCard() {
 
-    isFront = !isFront;
+  //   if (isFront)
+  //     controller.forward();
+  //   else
+  //     controller.reverse();
 
-  }
+  //   isFront = !isFront;
 
-  void showAllCards() {
+  // }
+
+  void showCard() {
     isFront = false;
     controller.forward();
   }
 
-  void hideAllCards() {
+  void hideCard() {
     isFront = true;
     controller.reverse();
   }
@@ -119,36 +134,25 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
 
-    if (_showAllCards) {
-      print('show all cards ${DateTime.now()}');
-      showAllCards();
-    }
-
-    if (_hideAllCards) {
-      print('hide all cards ${DateTime.now()}');
-      hideAllCards();
-    }
+    if ( _showAllCards || _showCard ) { showCard(); }
+    if ( _hideAllCards && !_showCard ) { hideCard(); }
 
     return GestureDetector(
-      onTap: _toggleCard,
+      onTap: () {
+        if (isFront) { _callBack(); }
+        showCard();
+      },
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
 
-          AnimationCard(
-            animation: _frontRotation,
-            child:     widget.front,
-            direction: widget.direction,
-          ),
-          AnimationCard(
-            animation: _backRotation,
-            child:     widget.back,
-            direction: widget.direction,
-          ),
+          AnimationCard( animation: _frontRotation, child: _front, direction: _direction ),
+          AnimationCard( animation: _backRotation, child: _back, direction: _direction ),
 
         ],
       ),
     );
+
   }
 
 
@@ -177,10 +181,15 @@ class AnimationCard extends StatelessWidget {
 
         transform.setEntry(3, 2, 0.001);
 
-        if (direction == FlipDirection.VERTICAL)
+        if (direction == FlipDirection.VERTICAL) {
+
           transform.rotateX(animation.value);
-        else
+
+        } else {
+
           transform.rotateY(animation.value);
+
+        }
 
         return Transform(
           transform: transform,

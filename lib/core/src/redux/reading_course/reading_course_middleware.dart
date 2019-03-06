@@ -36,10 +36,9 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
 
     if (action is RCSelectLetter) {
 
-      print('selectLetter ${action.letter}');
-      next(RCSetCurrentLetter(action.letter));
-      next(RCSetInitialDataLD(action.letter));
-      store.dispatch(NavigatorPushRCLetterDetail());
+      store.dispatch(RCSetCurrentLetter(action.letter));
+      store.dispatch(RCSetInitialDataLD(action.letter));
+      next(NavigatorPushRCLetterDetail());
 
     }
 

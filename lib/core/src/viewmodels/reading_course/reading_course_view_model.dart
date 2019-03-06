@@ -9,7 +9,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 class ReadingCourseViewModel {
 
-  final SpeechSynthesisService tts = SpeechSynthesisService();
+  final SpeechSynthesisService  tts = SpeechSynthesisService();
   final List<String>            letters;
   final bool                    isLoading;
   final List<LearnedLetter>     learnedLetters;
@@ -18,10 +18,10 @@ class ReadingCourseViewModel {
 
   ReadingCourseViewModel({
     @required this.letters,
-    @required this.learnedLetters,
     @required this.isLoading,
+    @required this.startCourse,
     @required this.lettersMenu,
-    @required this.startCourse
+    @required this.learnedLetters,
   });
 
   static ReadingCourseViewModel fromStore({@required Store<AppState> store}) {
