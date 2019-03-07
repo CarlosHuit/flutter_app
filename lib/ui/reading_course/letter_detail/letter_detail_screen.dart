@@ -6,6 +6,7 @@ import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_view_model.dart';
 import 'package:app19022019/ui/reading_course/letter_detail/letter_detail_body.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/ui/reading_course/letter_detail/letter_modal.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +61,7 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
     );
 
   }
-  
+
   void _showModalSheet(SLData data, BuildContext context, Function cb1, Function cb2) {
     
     final initialMsg = 'Esta es la letra: ${data.letter} ${data.type}';
@@ -69,73 +70,18 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
     tts.speak(term: initialMsg);
 
     showModalBottomSheet(
+
       context: context,
-      builder: (BuildContext builder) {
+      builder: (_) => LetterModal(letter: data.letter)
 
-
-        return Container(
-          color:   Colors.grey[100],
-          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
-          child:   Card(
-
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  data.letter,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.yellowAccent,
-                    fontSize: 200.0,
-                    shadows: <Shadow> [
-                      Shadow(color: Colors.black, offset: Offset(-1.2, 1.2)),
-                      Shadow(color: Colors.black, offset: Offset(1.2, -1.2)),
-                      Shadow(color: Colors.black, offset: Offset(1.2, 1.2)),
-                      Shadow(color: Colors.black, offset: Offset(-1.2, -1.2)),
-                      Shadow(color: Colors.black, blurRadius: 15.0),
-                    ]
-                  ),
-                ),
-                Container(
-                  width: 200.0,
-                  height: 40.0,
-                  margin: EdgeInsets.only(top: 10.0),
-                  child: RaisedButton(
-
-                    onPressed: () => Navigator.pop(context),
-                    color:     Colors.red,
-                    child:     Text(
-                      'Continuar',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color:      Colors.white,
-                        fontSize:   18.0
-                      ),
-                    ),
-
-                  )
-                ),
-
-              ],
-            )
-
-          )
-        );
-
-
-      }
-    )
-    .whenComplete(() {
+    ).whenComplete(() {
       tts.speak(term: finalMsg);
       cb1();
-      Future.delayed(Duration(milliseconds: 2500), () {
-        cb2();
-      });
+      Future.delayed(Duration(milliseconds: 2500), () => cb2());
     });
 
   }
 
 
 }
-
 
