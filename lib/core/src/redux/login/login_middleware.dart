@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import '../../models/credentials.dart';
 import '../../models/login_response.dart';
@@ -15,7 +14,7 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
 
   final AuthApi api;
 
-  LoginMiddleware({@required this.api});
+  LoginMiddleware( this.api );
 
   @override
   Future<Null> call(Store<AppState> store, action, NextDispatcher next) async{

@@ -29,10 +29,7 @@ class AppState {
   });
 
 
-  factory AppState.initialState({
-    @required KeyValueStore keyValueStore,
-    @required AuthLoginResponse auth
-  }) {
+  factory AppState.initialState( AuthLoginResponse auth, KeyValueStore keyValueStore) {
 
     return AppState(
       appName:            'Weduc',

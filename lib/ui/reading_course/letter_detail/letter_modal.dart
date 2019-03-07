@@ -21,22 +21,22 @@ class LetterModal extends StatelessWidget {
               letter,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.yellowAccent,
+                color: Color.fromARGB(255, 255, 215, 0),
                 fontSize: 200.0,
                 shadows: <Shadow> [
-                  Shadow(color: Colors.black, offset: Offset(-1.2, 1.2)),
-                  Shadow(color: Colors.black, offset: Offset(1.2, -1.2)),
-                  Shadow(color: Colors.black, offset: Offset(1.2, 1.2)),
-                  Shadow(color: Colors.black, offset: Offset(-1.2, -1.2)),
-                  Shadow(color: Colors.black, blurRadius: 15.0),
+                  Shadow(color: Colors.black,   offset: Offset(-1.2, 1.2)),
+                  Shadow(color: Colors.black,   offset: Offset(1.2, -1.2)),
+                  Shadow(color: Colors.black,   offset: Offset(1.2, 1.2)),
+                  Shadow(color: Colors.black,   offset: Offset(-1.2, -1.2)),
+                  Shadow(color: Colors.black45, blurRadius: 12.0),
                 ]
               ),
             ),
             Container(
-              width: 200.0,
+              width:  200.0,
               height: 40.0,
               margin: EdgeInsets.only(top: 10.0),
-              child: RaisedButton(
+              child:  RaisedButton(
 
                 onPressed: () => Navigator.pop(context),
                 color:     Colors.red,

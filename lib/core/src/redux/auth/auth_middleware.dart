@@ -6,14 +6,13 @@ import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/signup/signup_actions.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../redux/app/app_state.dart';
-import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import './auth_actions.dart';
 
 class AuthMiddleware extends MiddlewareClass<AppState> {
 
   final FlutterSecureStorage secureStorage;
-  AuthMiddleware({@required this.secureStorage});
+  AuthMiddleware( this.secureStorage );
 
   @override
   Future<Null> call(Store<AppState> store, action, NextDispatcher next) async{

@@ -40,7 +40,7 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
         final Function cb2 = () => store.dispatch(RCHideAllCardsLD());
         final SLData data = store.state.readingCourseState.letterDetail.currentData;
-        Future.delayed(Duration(milliseconds: 0), () => _showModalSheet(data, context, cb1, cb2));
+        Future.delayed(Duration(milliseconds: 500), () => _showModalSheet(data, context, cb1, cb2));
 
       },
       onDispose: (store) =>  tts.cancel(),
@@ -49,10 +49,9 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
         return Scaffold(
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.red,
             onPressed: () => _showModalSheet(vm.data, context, cb1, cb2),
-            child:     Icon(Icons.arrow_upward, size: 28.0,),
-            mini:      true,
+            child: Icon(Icons.arrow_upward, size: 28.0,),
+            mini: true,
           ),
           body: LetterDetailBody(vm: vm)
         );

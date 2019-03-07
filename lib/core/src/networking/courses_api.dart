@@ -6,7 +6,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../models/models.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 class CoursesApi {
 
@@ -14,7 +13,7 @@ class CoursesApi {
   final FlutterSecureStorage secureStorage;
   final String baseUrl = 'https://weduc.herokuapp.com/api/courses';
 
-  CoursesApi({@required this.client, @required this.secureStorage });
+  CoursesApi(this.client, this.secureStorage);
 
 
   Future<List<Course>> fetchCourses() async{

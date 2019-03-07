@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
 import '../../redux/courses/courses_actions.dart';
@@ -14,7 +13,7 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
 
   final AuthApi api;
 
-  SignupMiddleware({@required this.api});
+  SignupMiddleware( this.api );
 
   @override
   void call(Store<AppState> store, action, NextDispatcher next) async {

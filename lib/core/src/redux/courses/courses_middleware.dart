@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
-import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import '../../networking/courses_api.dart';
 import '../app/app_state.dart';
@@ -12,7 +11,7 @@ class CoursesMiddleware extends MiddlewareClass<AppState> {
 
   final CoursesApi api;
 
-  CoursesMiddleware({@required this.api});
+  CoursesMiddleware( this.api );
 
   @override
   void call(Store<AppState> store, action, NextDispatcher next) async{

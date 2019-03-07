@@ -3,14 +3,13 @@ import 'dart:convert';
 
 import '../models/models.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 class AuthApi {
 
   http.Client client;
   final String baseUrl = 'https://weduc.herokuapp.com/api/auth';
 
-  AuthApi({@required this.client });
+  AuthApi(this.client);
 
 
   Future<LoginResponse> login(Credentials credentials) async{
