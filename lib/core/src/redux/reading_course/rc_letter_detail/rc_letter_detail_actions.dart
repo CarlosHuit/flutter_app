@@ -1,5 +1,5 @@
-class RCShowAllCards {}
-class RCHideAllCards {}
+class RCShowAllCardsLD {}
+class RCHideAllCardsLD {}
 class RCSetCurrentDataLD {}
 class RCSelectionsAreCorrectsLD {}
 class RCSelectionsAreIncorrectsLD {}

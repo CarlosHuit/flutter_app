@@ -31,6 +31,20 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
     return state.letterDetail;
   }
 
+  if (action is RCShowAllCardsLD) {
+    return state.letterDetail.copyWith(
+      showAllCards: true,
+      hideAllCards: false
+    );
+  }
+
+  if (action is RCHideAllCardsLD) {
+    return state.letterDetail.copyWith(
+      showAllCards: false,
+      hideAllCards: true
+    );
+  }
+
   return state.letterDetail;
 
 }

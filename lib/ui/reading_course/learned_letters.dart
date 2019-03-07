@@ -239,7 +239,7 @@ class ItemLearnedLetter extends StatelessWidget {
                   'Volver a praticar',
                   style: TextStyle( fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 0.8 ),
                 ),
-                onPressed: () {},
+                onPressed: () => viewModel.startCourse(learnedLetter.letter) ,
               ),
             )
           )

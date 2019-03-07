@@ -28,5 +28,9 @@ class SpeechSynthesisService {
 
   }
 
+  void cancel() {
+    _flutterTts.stop();
+  }
+
 
 }

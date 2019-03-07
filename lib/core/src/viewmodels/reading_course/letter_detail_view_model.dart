@@ -14,8 +14,11 @@ class LetterDetailViewModel {
   final SLSelections selections;
   final String       selection1;
   final String       selection2;
+  final SLData       data;
 
   final Function(String term) selectOpt;
+  final Function() showCards;
+  final Function() hideCards;
 
   LetterDetailViewModel( {
     @required this.letter,
@@ -27,7 +30,10 @@ class LetterDetailViewModel {
     @required this.selections,
     @required this.selectOpt,
     @required this.selection1,
-    @required this.selection2
+    @required this.selection2,
+    @required this.showCards,
+    @required this.hideCards,
+    @required this.data,
   });
 
 
@@ -41,9 +47,12 @@ class LetterDetailViewModel {
       hideAllCards: store.state.readingCourseState.letterDetail.hideAllCards,
       canPlayGame:  store.state.readingCourseState.letterDetail.canPlayGame,
       selections:   store.state.readingCourseState.letterDetail.selections,
-      selectOpt:    (term) => store.dispatch(RCSelectOptionLD(term)),
       selection1:   store.state.readingCourseState.letterDetail.selections.selection1,
       selection2:   store.state.readingCourseState.letterDetail.selections.selection2,
+      data:         store.state.readingCourseState.letterDetail.currentData,
+      selectOpt:    (term) => store.dispatch(RCSelectOptionLD(term)),
+      showCards:    () => store.dispatch(RCShowAllCardsLD()),
+      hideCards:    () => store.dispatch(RCHideAllCardsLD()),
     );
   }
 
@@ -59,6 +68,7 @@ class LetterDetailViewModel {
     && selections   == other.selections
     && selection1   == other.selection1
     && selection2   == other.selection2
+    && data         == other.data
     && typeLetter   == other.typeLetter;
 
   @override
@@ -71,6 +81,7 @@ class LetterDetailViewModel {
     selections.hashCode ^
     selection1.hashCode ^
     selection2.hashCode ^
+    data.hashCode ^
     typeLetter.hashCode;
 
 }
