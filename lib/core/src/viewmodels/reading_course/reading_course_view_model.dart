@@ -37,7 +37,7 @@ class ReadingCourseViewModel {
   }
 
   Future<FlutterTts> speak({ @required String term, double rate }) {
-    return tts.speak(term: term, rate: rate ?? 0.65);
+    return tts.speak(term: term, rate: rate ?? .80);
   }
 
 

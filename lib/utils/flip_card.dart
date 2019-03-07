@@ -9,7 +9,8 @@ class FlipCard extends StatefulWidget {
 
   final Widget front;
   final Widget back;
-  final int    speed = 500;
+  // final int    speed = 500;
+  final int    speed = 700;
   final FlipDirection direction;
   final Function() callBack;
 
@@ -19,13 +20,15 @@ class FlipCard extends StatefulWidget {
 
   const FlipCard({
     Key key,
+    this.direction = FlipDirection.HORIZONTAL,
+
     @required this.front,
     @required this.back,
     @required this.showAllCards,
     @required this.hideAllCards,
     @required this.callBack,
     @required this.showCard,
-    this.direction = FlipDirection.HORIZONTAL
+
   }) : super(key: key);
 
   @override
@@ -59,10 +62,7 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
 
-    controller = AnimationController(
-      duration: Duration(milliseconds: widget.speed),
-      vsync:    this
-    );
+    controller = AnimationController( duration: Duration(milliseconds: widget.speed), vsync: this );
 
     _frontRotation = TweenSequence(
       <TweenSequenceItem<double>>[
@@ -109,17 +109,6 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
   }
 
 
-  // _toggleCard() {
-
-  //   if (isFront)
-  //     controller.forward();
-  //   else
-  //     controller.reverse();
-
-  //   isFront = !isFront;
-
-  // }
-
   void showCard() {
     isFront = false;
     controller.forward();
@@ -138,17 +127,12 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
     if ( _hideAllCards && !_showCard ) { hideCard(); }
 
     return GestureDetector(
-      onTap: () {
-        if (isFront) { _callBack(); }
-        showCard();
-      },
+      onTap: () => isFront ? _callBack() : null,
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-
           AnimationCard( animation: _frontRotation, child: _front, direction: _direction ),
           AnimationCard( animation: _backRotation, child: _back, direction: _direction ),
-
         ],
       ),
     );
