@@ -1,5 +1,10 @@
+import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/viewmodels/drawer_view_model.dart';
 import 'package:app19022019/core/src/viewmodels/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+
+
 
 
 class MyDrawer extends StatelessWidget {
@@ -11,48 +16,59 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return Drawer(
-    child: ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
 
-        DrawerHeaderApp(viewModel: viewModel),
+    return StoreConnector<AppState, DrawerViewModel>(
+      distinct:  true,
+      converter: (store) => DrawerViewModel.fromStore(store),
+      builder:   (_, viewModel) {
 
-        ListTile(
-          leading: Icon(Icons.event_note),
-          title:   Text('Cursos', style: TextStyle(fontWeight: FontWeight.bold)),
-          onTap:   () =>  Navigator.pop(context)
-        ),
+        return Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
 
-        ListTile(
-          leading: Icon(Icons.collections_bookmark),
-          title:   Text('Mis Cursos', style: TextStyle(fontWeight: FontWeight.bold)),
-          onTap:   () =>  Navigator.pop(context)
-        ),
+              DrawerHeaderApp(viewModel: viewModel),
 
-        ListTile(
-          leading: Icon(Icons.calendar_today),
-          title:   Text('Calendario', style: TextStyle(fontWeight: FontWeight.bold)),
-          onTap:   () =>  Navigator.pop(context)
-        ),
+              ListTile(
+                leading: Icon(Icons.event_note),
+                title:   Text('Cursos', style: TextStyle(fontWeight: FontWeight.bold)),
+                onTap:   () =>  Navigator.pop(context)
+              ),
 
-        ListTile(
-          leading: Icon(Icons.exit_to_app),
-          title:   Text('Cerrar Sesion', style: TextStyle(fontWeight: FontWeight.bold)),
-          onTap:   () {
-            Navigator.pop(context);
-            viewModel.logout();
-          }
-        )
-      ],
-    ),
-  );
+              ListTile(
+                leading: Icon(Icons.collections_bookmark),
+                title:   Text('Mis Cursos', style: TextStyle(fontWeight: FontWeight.bold)),
+                onTap:   () =>  Navigator.pop(context)
+              ),
+
+              ListTile(
+                leading: Icon(Icons.calendar_today),
+                title:   Text('Calendario', style: TextStyle(fontWeight: FontWeight.bold)),
+                onTap:   () =>  Navigator.pop(context)
+              ),
+
+              ListTile(
+                leading: Icon(Icons.exit_to_app),
+                title:   Text('Cerrar Sesion', style: TextStyle(fontWeight: FontWeight.bold)),
+                onTap:   () {
+                  Navigator.pop(context);
+                  viewModel.logout();
+                }
+              )
+            ],
+          ),
+        );
+
+      },
+    );
+
+
   }
 }
 
 class UserIcon extends StatelessWidget {
 
-  final HomeViewModel viewModel;
+  final DrawerViewModel viewModel;
 
   const UserIcon({Key key, this.viewModel}) : super(key: key);
 
@@ -84,7 +100,7 @@ class UserIcon extends StatelessWidget {
 
 class UserData extends StatelessWidget {
 
-  final HomeViewModel viewModel;
+  final DrawerViewModel viewModel;
 
   const UserData({Key key, this.viewModel}) : super(key: key);
 
@@ -121,7 +137,7 @@ class UserData extends StatelessWidget {
 
 class DrawerHeaderApp extends StatelessWidget {
 
-  final HomeViewModel viewModel;
+  final DrawerViewModel viewModel;
 
   const DrawerHeaderApp({Key key, this.viewModel}) : super(key: key);
 

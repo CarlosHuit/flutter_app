@@ -1,4 +1,5 @@
 import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_actions.dart';
+import 'package:app19022019/ui/components/drawer/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import './alphabet.dart';
@@ -43,7 +44,7 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
 
           return Scaffold(
             appBar:          readingCourseBar(),
-            drawer:          Drawer( ),
+            drawer:          MyDrawer(),
             backgroundColor: Colors.grey[100],
             body:            TabBarView(
 
