@@ -8,20 +8,23 @@ import 'package:redux/redux.dart';
 class LetterDetailViewModel {
   
   SpeechSynthesisService tts = SpeechSynthesisService(); 
+
+  final SLData       data;
   final String       letter;
   final List<String> options;
   final String       typeLetter;
-  final bool         showAllCards;
-  final bool         hideAllCards;
-  final bool         canPlayGame;
   final SLSelections selections;
   final String       selection1;
   final String       selection2;
-  final SLData       data;
+  final bool         canPlayGame;
+  final String       letterSound;
+  final bool         showAllCards;
+  final bool         hideAllCards;
 
   final Function(dynamic action) dispatch;
 
   LetterDetailViewModel( {
+
     @required this.letter,
     @required this.options,
     @required this.typeLetter,
@@ -32,45 +35,51 @@ class LetterDetailViewModel {
     @required this.selection1,
     @required this.selection2,
     @required this.data,
-    @required this.dispatch
+    @required this.letterSound,
+    @required this.dispatch,
   });
 
 
   factory LetterDetailViewModel.fromStore(Store<AppState> store) {
 
+    final path = store.state.readingCourseState.letterDetail;
+
     return LetterDetailViewModel(
-      letter:       store.state.readingCourseState.letterDetail.currentData.letter,
-      options:      store.state.readingCourseState.letterDetail.currentData.data,
-      typeLetter:   store.state.readingCourseState.letterDetail.currentData.type,
-      showAllCards: store.state.readingCourseState.letterDetail.showAllCards,
-      hideAllCards: store.state.readingCourseState.letterDetail.hideAllCards,
-      canPlayGame:  store.state.readingCourseState.letterDetail.canPlayGame,
-      selections:   store.state.readingCourseState.letterDetail.selections,
-      selection1:   store.state.readingCourseState.letterDetail.selections.selection1,
-      selection2:   store.state.readingCourseState.letterDetail.selections.selection2,
-      data:         store.state.readingCourseState.letterDetail.currentData,
+      selections:   path.selections,
+      data:         path.currentData,
+      canPlayGame:  path.canPlayGame,
+      showAllCards: path.showAllCards,
+      hideAllCards: path.hideAllCards,
+      options:      path.currentData.data,
+      typeLetter:   path.currentData.type,
+      letter:       path.currentData.letter,
+      selection1:   path.selections.selection1,
+      selection2:   path.selections.selection2,
+      letterSound:  store.state.readingCourseState.data.soundLetters[path.currentData.letter.toLowerCase()],
       dispatch:     (action) => store.dispatch(action),
     );
+
   }
 
 
   void selectOption(String option) {
 
-    if (option[0] == letter) {
-      tts.speak(term: 'Correcto', rate: 1.0);
-    } else {
+
+    if (option[0] == letter)
+      tts.speak(term: '$letterSound $typeLetter', rate: 1.0);
+    else
       AudioService.playAsset(AudioType.incorrect);
-    }
+
+
 
     if (selection1 == null) {
-      print('Add First Selection');
       dispatch(RCAddFirstSelectionLD(option));
     }
 
     if (selection1!= null ) {
-      print('Add Second Selection');
       dispatch(RCAddSecondSelectionLD(option));
     }
+
 
   }
 
@@ -87,6 +96,7 @@ class LetterDetailViewModel {
     && selection1   == other.selection1
     && selection2   == other.selection2
     && data         == other.data
+    && letterSound  == other.letterSound
     && typeLetter   == other.typeLetter;
 
   @override
@@ -100,6 +110,7 @@ class LetterDetailViewModel {
     selection1.hashCode ^
     selection2.hashCode ^
     data.hashCode ^
+    letterSound.hashCode ^
     typeLetter.hashCode;
 
 }

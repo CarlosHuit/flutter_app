@@ -22,16 +22,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   final OnBackPressed onBackPressed = OnBackPressed();
+  AssetImage providerBackgroundDrawer;
+
 
   @override
   void initState() {
-
+    providerBackgroundDrawer =AssetImage('assets/background-drawer.jpg');
+    providerBackgroundDrawer.resolve(ImageConfiguration()).addListener((i, b) {});
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle( statusBarColor: Colors.black12 )
     );
 
     super.initState();
   }
+
   
   @override
   Widget build(BuildContext context) {
