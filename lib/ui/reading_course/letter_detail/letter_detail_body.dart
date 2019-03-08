@@ -23,10 +23,9 @@ class LetterDetailBody extends StatelessWidget {
             image: AssetImage("assets/star-pattern.png"),
           ),
           gradient: LinearGradient(
-            tileMode: TileMode.mirror,
-            stops:    [0.0, 1],
-            begin:    Alignment.bottomCenter,
-            end:      Alignment.topCenter,
+            stops:    [0.0, 0.8],
+            begin: Alignment.bottomLeft,
+            end:   Alignment.topRight,
             colors: [
               Color.fromARGB(255, 11, 62, 113),
               Color.fromARGB(255, 13, 100, 176)

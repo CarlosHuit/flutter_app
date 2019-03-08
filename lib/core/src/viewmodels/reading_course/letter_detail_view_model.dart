@@ -38,7 +38,23 @@ class LetterDetailViewModel {
 
 
   factory LetterDetailViewModel.fromStore(Store<AppState> store) {
-    
+
+  void addSelection(String term, Store<AppState> store) {
+
+    final String firstSelection =store.state.readingCourseState.letterDetail.selections.selection1;
+
+    if (firstSelection == null) {
+      print('addFirstSelection');
+      store.dispatch(RCAddFirstSelectionLD(term));
+    }
+
+    if (firstSelection != null ) {
+      print('addSecondSelection');
+      store.dispatch(RCAddSecondSelectionLD(term));
+    }
+
+  }
+
     return LetterDetailViewModel(
       letter:       store.state.readingCourseState.letterDetail.currentData.letter,
       options:      store.state.readingCourseState.letterDetail.currentData.data,
@@ -50,11 +66,14 @@ class LetterDetailViewModel {
       selection1:   store.state.readingCourseState.letterDetail.selections.selection1,
       selection2:   store.state.readingCourseState.letterDetail.selections.selection2,
       data:         store.state.readingCourseState.letterDetail.currentData,
-      selectOpt:    (term) => store.dispatch(RCSelectOptionLD(term)),
+      // selectOpt:    (term) => store.dispatch(RCSelectOptionLD(term)),
       showCards:    () => store.dispatch(RCShowAllCardsLD()),
       hideCards:    () => store.dispatch(RCHideAllCardsLD()),
+      selectOpt:    (term) => addSelection(term, store),
     );
   }
+
+
 
   @override
   bool operator == (Object other) => 

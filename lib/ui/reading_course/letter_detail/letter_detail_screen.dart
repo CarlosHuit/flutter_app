@@ -7,6 +7,7 @@ import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_vie
 import 'package:app19022019/ui/reading_course/letter_detail/letter_detail_body.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/ui/reading_course/letter_detail/letter_modal.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,21 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
   Function() cb2;
 
   @override
+  void initState() {
+
+    Future.delayed(Duration(milliseconds: 0), () {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle( statusBarColor: Colors.transparent ));
+    });
+
+    super.initState();
+  }
+
+  @override
   void dispose() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle( statusBarColor: Colors.black12 )
+    );
     cb1 = null;
     cb2 = null;
     super.dispose();
@@ -61,6 +76,8 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
   }
 
+  
+
   void _showModalSheet(SLData data, BuildContext context, Function cb1, Function cb2) {
     
     final initialMsg = 'Esta es la letra: ${data.letter} ${data.type}';
@@ -76,7 +93,7 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
     ).whenComplete(() {
       tts.speak(term: finalMsg);
       cb1();
-      Future.delayed(Duration(milliseconds: 2500), () => cb2());
+      Future.delayed(Duration(milliseconds: 3000), () => cb2());
     });
 
   }

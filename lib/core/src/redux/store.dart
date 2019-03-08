@@ -28,8 +28,8 @@ Future<Store<AppState>> createStore({
 
 
   final readingCourseApi = ReadingCourseApi(client, secureStorage); 
-  final coursesApi  = CoursesApi(client, secureStorage);
-  final authApi     = AuthApi(client);
+  final coursesApi = CoursesApi(client, secureStorage);
+  final authApi    = AuthApi(client);
 
 
 

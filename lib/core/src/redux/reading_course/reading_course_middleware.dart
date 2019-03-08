@@ -41,7 +41,7 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
 
     }
 
-    // next(action);
+
 
   }
   

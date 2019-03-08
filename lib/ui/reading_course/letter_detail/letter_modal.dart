@@ -21,8 +21,8 @@ class LetterModal extends StatelessWidget {
               letter,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 255, 215, 0),
-                fontSize: 200.0,
+                color:      Color.fromARGB(255, 255, 215, 0),
+                fontSize:   200.0,
                 shadows: <Shadow> [
                   Shadow(color: Colors.black,   offset: Offset(-1.2, 1.2)),
                   Shadow(color: Colors.black,   offset: Offset(1.2, -1.2)),
