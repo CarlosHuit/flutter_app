@@ -11,6 +11,7 @@ import './ui/app.dart';
 void main() async {
 
   await setOrientation();
+  await AudioService.init();
 
   final SharedPreferences preferences      = await SharedPreferences.getInstance();
   final FlutterKeyValueStore keyValueStore = FlutterKeyValueStore(preferences);

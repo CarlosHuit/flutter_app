@@ -1,10 +1,13 @@
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_letter_detail/rc_letter_detail.dart';
+import 'package:app19022019/core/src/services/audio_service.dart';
+import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
 class LetterDetailViewModel {
   
+  SpeechSynthesisService tts = SpeechSynthesisService(); 
   final String       letter;
   final List<String> options;
   final String       typeLetter;
@@ -16,9 +19,7 @@ class LetterDetailViewModel {
   final String       selection2;
   final SLData       data;
 
-  final Function(String term) selectOpt;
-  final Function() showCards;
-  final Function() hideCards;
+  final Function(dynamic action) dispatch;
 
   LetterDetailViewModel( {
     @required this.letter,
@@ -28,32 +29,14 @@ class LetterDetailViewModel {
     @required this.hideAllCards,
     @required this.canPlayGame,
     @required this.selections,
-    @required this.selectOpt,
     @required this.selection1,
     @required this.selection2,
-    @required this.showCards,
-    @required this.hideCards,
     @required this.data,
+    @required this.dispatch
   });
 
 
   factory LetterDetailViewModel.fromStore(Store<AppState> store) {
-
-  void addSelection(String term, Store<AppState> store) {
-
-    final String firstSelection =store.state.readingCourseState.letterDetail.selections.selection1;
-
-    if (firstSelection == null) {
-      print('addFirstSelection');
-      store.dispatch(RCAddFirstSelectionLD(term));
-    }
-
-    if (firstSelection != null ) {
-      print('addSecondSelection');
-      store.dispatch(RCAddSecondSelectionLD(term));
-    }
-
-  }
 
     return LetterDetailViewModel(
       letter:       store.state.readingCourseState.letterDetail.currentData.letter,
@@ -66,14 +49,30 @@ class LetterDetailViewModel {
       selection1:   store.state.readingCourseState.letterDetail.selections.selection1,
       selection2:   store.state.readingCourseState.letterDetail.selections.selection2,
       data:         store.state.readingCourseState.letterDetail.currentData,
-      // selectOpt:    (term) => store.dispatch(RCSelectOptionLD(term)),
-      showCards:    () => store.dispatch(RCShowAllCardsLD()),
-      hideCards:    () => store.dispatch(RCHideAllCardsLD()),
-      selectOpt:    (term) => addSelection(term, store),
+      dispatch:     (action) => store.dispatch(action),
     );
   }
 
 
+  void selectOption(String option) {
+
+    if (option[0] == letter) {
+      tts.speak(term: 'Correcto', rate: 1.0);
+    } else {
+      AudioService.playAsset(AudioType.incorrect);
+    }
+
+    if (selection1 == null) {
+      print('Add First Selection');
+      dispatch(RCAddFirstSelectionLD(option));
+    }
+
+    if (selection1!= null ) {
+      print('Add Second Selection');
+      dispatch(RCAddSecondSelectionLD(option));
+    }
+
+  }
 
   @override
   bool operator == (Object other) => 

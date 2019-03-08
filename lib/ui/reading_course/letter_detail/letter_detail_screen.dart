@@ -50,10 +50,11 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
       distinct:  true,
       onInit: (store) {
 
+
         this.cb1 = () => store.dispatch(RCShowAllCardsLD());
         this.cb2 = () => store.dispatch(RCHideAllCardsLD());
 
-        final Function cb2 = () => store.dispatch(RCHideAllCardsLD());
+
         final SLData data = store.state.readingCourseState.letterDetail.currentData;
         Future.delayed(Duration(milliseconds: 500), () => _showModalSheet(data, context, cb1, cb2));
 
