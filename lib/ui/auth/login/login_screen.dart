@@ -22,14 +22,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController loginEmailController = TextEditingController();
   final TextEditingController loginPasswordController =TextEditingController();
 
+  AssetImage providerBackgroundImage;
 
   @override
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent
-      )
-    );
+      SystemUiOverlayStyle( statusBarColor: Colors.transparent ));
+    providerBackgroundImage = AssetImage('assets/background.jpg');
+    providerBackgroundImage.resolve(ImageConfiguration()).addListener((i, b){});
     super.initState();
   }
 
