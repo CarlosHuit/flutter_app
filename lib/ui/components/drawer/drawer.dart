@@ -116,7 +116,10 @@ class UserData extends StatelessWidget {
           Text(
             viewModel.fullName(),
             overflow: TextOverflow.ellipsis,
-            style:    TextStyle( fontWeight: FontWeight.bold, fontSize: 28.0 ),
+            style:    TextStyle( fontWeight: FontWeight.bold, fontSize: 26.0, color: Colors.white,
+            shadows: <Shadow>[
+              Shadow(color: Colors.black, blurRadius: 10.0)
+            ] ),
           ),
 
           Text(
@@ -148,7 +151,8 @@ class DrawerHeaderApp extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/background-drawer.jpg'),
-          fit:   BoxFit.cover
+          fit:   BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.black12, BlendMode.color)
         )
       ),
 
