@@ -17,6 +17,7 @@ class FlipCard extends StatefulWidget {
   final bool showAllCards;
   final bool hideAllCards;
   final bool showCard;
+  final bool canPlayGame;
 
   const FlipCard({
     Key key,
@@ -28,6 +29,7 @@ class FlipCard extends StatefulWidget {
     @required this.hideAllCards,
     @required this.callBack,
     @required this.showCard,
+    @required this.canPlayGame,
 
   }) : super(key: key);
 
@@ -51,7 +53,7 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
   bool get _showAllCards => widget.showAllCards;
   bool get _hideAllCards => widget.hideAllCards;
   bool get _showCard => widget.showCard;
-
+  bool get _canPlayGame => widget.canPlayGame;
 
   Widget get _front => widget.front;
   Widget get _back  => widget.back;
@@ -125,9 +127,10 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
 
     if ( _showAllCards || _showCard ) { showCard(); }
     if ( _hideAllCards && !_showCard ) { hideCard(); }
+    print('canPLayGame: $_canPlayGame');
 
     return GestureDetector(
-      onTap: () => isFront ? _callBack() : null,
+      onTap: _canPlayGame ? () => isFront ? _callBack() : null : null,
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[

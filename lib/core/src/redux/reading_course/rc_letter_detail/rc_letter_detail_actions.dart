@@ -19,3 +19,5 @@ class RCAddSecondSelectionLD {
   final String selection;
   RCAddSecondSelectionLD(this.selection);
 }
+
+class RCValidateSelectionsLD {}

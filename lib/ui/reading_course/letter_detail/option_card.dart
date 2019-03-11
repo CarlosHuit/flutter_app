@@ -33,6 +33,7 @@ class OptionCard extends StatelessWidget {
         hideAllCards: hideAllCars,
         showAllCards: showAllCards,
         showCard:     letterId == vm.selection1 || letterId == vm.selection2,
+        canPlayGame:  vm.canPlayGame,
       ),
 
     );
