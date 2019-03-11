@@ -45,6 +45,7 @@ class RCLetterDetailState {
 
     final letterLC = store.data.currentLetter.toLowerCase();
     final letterUC = store.data.currentLetter.toUpperCase();
+    final letterSound = store.data.soundLetters[letterLC];
 
     final slLowerCase = List.of(
       store.data.similarLetters.firstWhere((x) => x.l == letterLC).sl);
@@ -66,8 +67,8 @@ class RCLetterDetailState {
     slLowerCase.shuffle();
     slUpperCase.shuffle();
 
-    final dataLowerCase = SLData(letterLC, slLowerCase, 'minúscula');
-    final dataUpperCase = SLData(letterUC, slUpperCase, 'mayúscula');
+    final dataLowerCase = SLData(letterLC, slLowerCase, 'minúscula', letterSound);
+    final dataUpperCase = SLData(letterUC, slUpperCase, 'mayúscula', letterSound);
 
 
     return RCLetterDetailState(
@@ -145,15 +146,17 @@ class SLData {
   final String letter;
   final List<String> data;
   final String type;
+  final String letterSound;
 
-  SLData(this.letter, this.data, this.type);
+  SLData(this.letter, this.data, this.type, this.letterSound);
 
 
   Map<String, dynamic> toJson() {
     return {
-      'letter': letter,
-      'data':  data,
-      'type':  type
+      'letter':      letter,
+      'data':        data,
+      'type':        type,
+      'letterSound': letterSound
     };
   }
   // @override

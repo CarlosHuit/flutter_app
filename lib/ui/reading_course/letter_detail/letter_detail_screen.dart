@@ -48,15 +48,15 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
     return StoreConnector<AppState, LetterDetailViewModel>(
       distinct:  true,
-      onInit: (store) {
+      onInit:    (store) {
 
 
         this.cb1 = () => store.dispatch(RCShowAllCardsLD());
         this.cb2 = () => store.dispatch(RCHideAllCardsLD());
 
 
-        final SLData data = store.state.readingCourseState.letterDetail.currentData;
-        Future.delayed(Duration(milliseconds: 500), () => _showModalSheet(data, context, cb1, cb2));
+        final data = store.state.readingCourseState.letterDetail.currentData;
+        Future.delayed(Duration(milliseconds: 500), () => _showModalSheet(data));
 
       },
       onDispose: (store) =>  tts.cancel(),
@@ -65,9 +65,9 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
         return Scaffold(
           floatingActionButton: FloatingActionButton(
-            onPressed: () => _showModalSheet(vm.data, context, cb1, cb2),
-            child: Icon(Icons.arrow_upward, size: 28.0,),
-            mini: true,
+            onPressed: () => _showModalSheet(vm.data),
+            child:     Icon(Icons.arrow_upward, size: 28.0,),
+            mini:      true,
           ),
           body: LetterDetailBody(vm: vm)
         );
@@ -79,10 +79,10 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
   
 
-  void _showModalSheet(SLData data, BuildContext context, Function cb1, Function cb2) {
+  void _showModalSheet(SLData data) {
     
-    final initialMsg = 'Esta es la letra: ${data.letter} ${data.type}';
-    final finalMsg   = 'Encuentra la pareja de letras: ${data.letter} ${data.type}';
+    final initialMsg = 'Esta es la letra: ${data.letterSound} ${data.type}';
+    final finalMsg   = 'Encuentra la pareja de letras: ${data.letterSound} ${data.type}';
 
     tts.speak(term: initialMsg);
 
