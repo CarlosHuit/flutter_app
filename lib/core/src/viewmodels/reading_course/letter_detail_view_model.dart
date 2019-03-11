@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_letter_detail/rc_letter_detail.dart';
 import 'package:app19022019/core/src/services/audio_service.dart';
