@@ -62,13 +62,14 @@ class LetterDetailViewModel {
   }
 
 
-  void selectOption(String option) {
+  void selectOption(String option) async{
 
 
-    if (option[0] == letter)
+    if (option[0] == letter) {
       tts.speak(term: '$letterSound $typeLetter', rate: 1.0);
-    else
+    } else {
       AudioService.playAsset(AudioType.incorrect);
+    }
 
 
 

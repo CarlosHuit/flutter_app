@@ -127,7 +127,6 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
 
     if ( _showAllCards || _showCard ) { showCard(); }
     if ( _hideAllCards && !_showCard ) { hideCard(); }
-    print('canPLayGame: $_canPlayGame');
 
     return GestureDetector(
       onTap: _canPlayGame ? () => isFront ? _callBack() : null : null,
