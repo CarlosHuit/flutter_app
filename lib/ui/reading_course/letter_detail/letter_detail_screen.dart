@@ -64,11 +64,11 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
       builder:   (BuildContext _, LetterDetailViewModel vm) {
 
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => _showModalSheet(vm.data),
-            child:     Icon(Icons.arrow_upward, size: 28.0,),
-            mini:      true,
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () => _showModalSheet(vm.data),
+          //   child:     Icon(Icons.arrow_upward, size: 28.0,),
+          //   mini:      true,
+          // ),
           body: LetterDetailBody(vm: vm)
         );
 
