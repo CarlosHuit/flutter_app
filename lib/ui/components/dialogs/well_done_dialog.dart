@@ -10,12 +10,14 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
   double translated;
   double translateY;
   int millisecondsTime;
+  bool isVisible;
 
   @override
   void initState() {
     super.initState();
     translateY = 0.0;
     translated = 0.0;
+    isVisible = true;
     millisecondsTime = 500;
   }
 
@@ -23,6 +25,7 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
     setState(() {
       millisecondsTime = 200;
       translateY = MediaQuery.of(context).size.width;
+      isVisible = false;
     });
   }
 
@@ -30,6 +33,7 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
     setState(() {
       millisecondsTime = 200;
       translateY = -MediaQuery.of(context).size.width;
+      isVisible = false;
     });
   }
 
@@ -43,18 +47,22 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
 
   void handleDragUpdate(DragUpdateDetails s) {
 
-    translateTo(s.primaryDelta);
+    if (isVisible) {
 
-    final maxTranslated = MediaQuery.of(context).size.width / 4;
-    final t = translated > 0 ? translated : - translated;
+      translateTo(s.primaryDelta);
+
+      final maxTranslated = MediaQuery.of(context).size.width / 4;
+      final t = translated > 0 ? translated : - translated;
 
 
-    if ( t > maxTranslated) {
+      if ( t > maxTranslated) {
 
-      if (s.primaryDelta > 0)
-        hideRight();
-      else if (s.primaryDelta < 0) 
-        hideLeft();
+        if (s.primaryDelta > 0)
+          hideRight();
+        else if (s.primaryDelta < 0) 
+          hideLeft();
+
+      }
 
     }
 

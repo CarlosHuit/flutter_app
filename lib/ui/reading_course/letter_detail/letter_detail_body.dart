@@ -66,8 +66,8 @@ class LetterDetailBody extends StatelessWidget {
 
         ),
 
-        // WellDoneDialog(),
-        TryAgainDialog(),
+        WellDoneDialog(),
+        // TryAgainDialog(),
 
       ]
     );

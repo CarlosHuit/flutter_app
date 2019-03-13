@@ -9,13 +9,15 @@ class _TryAgainDialogState extends State<TryAgainDialog> {
 
   double translated;
   double translateY;
-  int millisecondsTime;
+  int    millisecondsTime;
+  bool   isVisible;
 
   @override
   void initState() {
     super.initState();
     translateY = 0.0;
     translated = 0.0;
+    isVisible  = true;
     millisecondsTime = 500;
   }
 
@@ -23,6 +25,7 @@ class _TryAgainDialogState extends State<TryAgainDialog> {
     setState(() {
       millisecondsTime = 200;
       translateY = MediaQuery.of(context).size.width;
+      isVisible = false;
     });
   }
 
@@ -30,6 +33,7 @@ class _TryAgainDialogState extends State<TryAgainDialog> {
     setState(() {
       millisecondsTime = 200;
       translateY = -MediaQuery.of(context).size.width;
+      isVisible = false;
     });
   }
 
@@ -43,18 +47,21 @@ class _TryAgainDialogState extends State<TryAgainDialog> {
 
   void handleDragUpdate(DragUpdateDetails s) {
 
-    translateTo(s.primaryDelta);
+    if (isVisible) {
 
-    final maxTranslated = MediaQuery.of(context).size.width / 4;
-    final t = translated > 0 ? translated : - translated;
+      translateTo(s.primaryDelta);
+
+      final maxTranslated = MediaQuery.of(context).size.width / 4;
+      final t = translated > 0 ? translated : - translated;
 
 
-    if ( t > maxTranslated) {
+      if ( t > maxTranslated ) {
 
-      if (s.primaryDelta > 0)
-        hideRight();
-      else if (s.primaryDelta < 0) 
-        hideLeft();
+        if (s.primaryDelta > 0)
+          hideRight();
+        else if (s.primaryDelta < 0) 
+          hideLeft();
+      }
 
     }
 
@@ -78,17 +85,17 @@ class _TryAgainDialogState extends State<TryAgainDialog> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             AnimatedContainer(
-              duration: Duration(milliseconds: millisecondsTime),
-              width: size.width,
-              transform: Matrix4.translationValues(translateY, -10, 0),
-              height: 120.0,
-              margin: EdgeInsets.all(20.0),
-              padding: EdgeInsets.all(10.0),
+              height:     120.0,
+              width:      size.width,
+              duration:   Duration(milliseconds: millisecondsTime),
+              transform:  Matrix4.translationValues(translateY, -10, 0),
+              margin:     EdgeInsets.all(20.0),
+              padding:    EdgeInsets.all(10.0),
               decoration: BoxDecoration(
-                color: Colors.redAccent[100],
+                color:        Colors.redAccent[100],
+                border:       Border.all(width: 4.0, color: Colors.red[600]),
                 borderRadius: BorderRadius.circular(3.0),
-                border: Border.all(width: 4.0, color: Colors.red[600]),
-                boxShadow: <BoxShadow> [
+                boxShadow:    <BoxShadow> [
                   BoxShadow(color: Colors.black45, blurRadius: 10.0, spreadRadius: 5.0 ),
                   BoxShadow(color: Colors.white, spreadRadius: 2.0 )
                 ]
@@ -100,7 +107,6 @@ class _TryAgainDialogState extends State<TryAgainDialog> {
                     Icons.error_outline,
                     color: Colors.red[600],
                     size:  64.0,
-                    semanticLabel: 'ss',
                   ),
 
                   Expanded(
