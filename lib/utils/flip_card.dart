@@ -52,11 +52,11 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
 
   bool get _showAllCards => widget.showAllCards;
   bool get _hideAllCards => widget.hideAllCards;
+  bool get _canPlayGame  => widget.canPlayGame;
   bool get _showCard => widget.showCard;
-  bool get _canPlayGame => widget.canPlayGame;
+  Widget get _front  => widget.front;
+  Widget get _back   => widget.back;
 
-  Widget get _front => widget.front;
-  Widget get _back  => widget.back;
 
 
 
