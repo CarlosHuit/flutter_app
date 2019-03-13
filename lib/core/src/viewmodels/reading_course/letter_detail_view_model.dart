@@ -21,6 +21,9 @@ class LetterDetailViewModel {
   final bool         showAllCards;
   final bool         hideAllCards;
 
+  final bool showTryAgainDialog;
+  final bool showWellDoneDialog;
+
   final Function(dynamic action) dispatch;
 
   LetterDetailViewModel( {
@@ -37,6 +40,8 @@ class LetterDetailViewModel {
     @required this.data,
     @required this.letterSound,
     @required this.dispatch,
+    @required this.showTryAgainDialog,
+    @required this.showWellDoneDialog
   });
 
 
@@ -57,6 +62,8 @@ class LetterDetailViewModel {
       selection2:   path.selections.selection2,
       letterSound:  store.state.readingCourseState.data.soundLetters[path.currentData.letter.toLowerCase()],
       dispatch:     (action) => store.dispatch(action),
+      showTryAgainDialog: store.state.readingCourseState.letterDetail.showTryAgainDialog,
+      showWellDoneDialog: store.state.readingCourseState.letterDetail.showWellDoneDialog,
     );
 
   }
@@ -91,18 +98,20 @@ class LetterDetailViewModel {
   @override
   bool operator == (Object other) => 
   identical(this, other) || other is LetterDetailViewModel
-    && runtimeType  == other.runtimeType
-    && letter       == other.letter
-    && options      == other.options
-    && showAllCards == other.showAllCards
-    && hideAllCards == other.hideAllCards
-    && canPlayGame  == other.canPlayGame
-    && selections   == other.selections
-    && selection1   == other.selection1
-    && selection2   == other.selection2
-    && data         == other.data
-    && letterSound  == other.letterSound
-    && typeLetter   == other.typeLetter;
+    && runtimeType         == other.runtimeType
+    && letter              == other.letter
+    && options             == other.options
+    && showAllCards        == other.showAllCards
+    && hideAllCards        == other.hideAllCards
+    && canPlayGame         == other.canPlayGame
+    && selections          == other.selections
+    && selection1          == other.selection1
+    && selection2          == other.selection2
+    && data                == other.data
+    && letterSound         == other.letterSound
+    && showTryAgainDialog  == other.showTryAgainDialog
+    && showWellDoneDialog  == other.showWellDoneDialog
+    && typeLetter          == other.typeLetter;
 
   @override
   int get hashCode =>
@@ -116,6 +125,8 @@ class LetterDetailViewModel {
     selection2.hashCode ^
     data.hashCode ^
     letterSound.hashCode ^
+    showTryAgainDialog.hashCode ^
+    showWellDoneDialog.hashCode ^
     typeLetter.hashCode;
 
 }
