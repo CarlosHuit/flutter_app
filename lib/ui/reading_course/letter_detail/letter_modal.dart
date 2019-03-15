@@ -10,8 +10,8 @@ class LetterModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color:   Colors.grey[100],
       padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+      color:   Colors.grey[100],
       child:   Card(
 
         child: Column(
@@ -20,9 +20,9 @@ class LetterModal extends StatelessWidget {
             Text(
               letter,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
                 color:      Color.fromARGB(255, 255, 215, 0),
                 fontSize:   200.0,
+                fontWeight: FontWeight.bold,
                 shadows: <Shadow> [
                   Shadow(color: Colors.black,   offset: Offset(-1.2, 1.2)),
                   Shadow(color: Colors.black,   offset: Offset(1.2, -1.2)),

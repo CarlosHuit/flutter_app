@@ -48,7 +48,7 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
   bool isFront = true;
 
   FlipDirection get _direction => widget.direction;
-  Function get _callBack => widget.callBack;
+  Function      get _callBack  => widget.callBack;
 
   bool get _showAllCards => widget.showAllCards;
   bool get _hideAllCards => widget.hideAllCards;
@@ -64,19 +64,18 @@ class _FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
 
-    controller = AnimationController( duration: Duration(milliseconds: widget.speed), vsync: this );
+    controller = AnimationController(
+      vsync:    this,
+      duration: Duration(milliseconds: widget.speed),
+    );
 
     _frontRotation = TweenSequence(
       <TweenSequenceItem<double>>[
 
         TweenSequenceItem<double>(
           weight: 50.0,
-          tween: Tween(
-            begin: 0.0,
-            end: pi / 2
-          ).chain(
-            CurveTween(curve: Curves.linear)
-          ),
+          tween:  Tween(begin: 0.0, end: pi / 2 )
+            .chain( CurveTween(curve: Curves.linear) ),
         ),
         TweenSequenceItem<double>(
           tween: ConstantTween<double>(pi / 2),

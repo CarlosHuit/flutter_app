@@ -187,15 +187,9 @@ class SLSelections {
   final String selection1;
   final String selection2;
 
-  SLSelections({
-    this.selection1,
-    this.selection2
-  });
+  SLSelections({ this.selection1, this.selection2 });
 
-  SLSelections copyWith({
-    String selection1,
-    String selection2
-  }) {
+  SLSelections copyWith({ String selection1, String selection2 }) {
     return SLSelections(
       selection1: selection1 ?? this.selection1,
       selection2: selection2 ?? this.selection2

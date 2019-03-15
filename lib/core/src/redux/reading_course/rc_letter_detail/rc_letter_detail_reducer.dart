@@ -49,10 +49,42 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
   }
 
   if (action is RCValidateSelectionsLD) {
-    final selections = state.letterDetail.selections;
-    print('selection1: ${selections.selection1} -- selection2: ${selections.selection2}');
+    return handleValidateSelections(state.letterDetail);
   }
 
   return state.letterDetail;
+
+}
+
+RCLetterDetailState handleValidateSelections(RCLetterDetailState state) {
+
+  final selections = state.selections;
+  final sel1 = selections.selection1[0];
+  final sel2 = selections.selection2[0];
+  final currentLetter = state.currentData.letter;
+
+  if (sel1 == currentLetter && sel2 == currentLetter ) {
+
+    return state.copyWith(
+      canPlayGame: false,
+      hideAllCards: true,
+      showAllCards: false,
+      showSuccessScreen: false,
+      showWellDoneDialog: true,
+      selections: state.selections.restart()
+    );
+
+  } else {
+
+    return state.copyWith(
+      canPlayGame: false,
+      hideAllCards: true,
+      showAllCards: false,
+      showTryAgainDialog: true,
+      showWellDoneDialog: false,
+      selections: state.selections.restart(),
+    );
+
+  }
 
 }

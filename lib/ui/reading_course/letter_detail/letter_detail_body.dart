@@ -19,14 +19,16 @@ class LetterDetailBody extends StatelessWidget {
     final options = List.generate(
       vm.options.length,
       (i) => OptionCard(
-        vm: vm,
-        hideAllCars: vm.hideAllCards,
         showAllCards: vm.showAllCards,
+        hideAllCars: vm.hideAllCards,
         letterId: '${vm.options[i]}$i',
+        vm: vm,
       )
     );
 
+
     return Stack(
+
       children: <Widget>[
 
         Container(
@@ -66,8 +68,17 @@ class LetterDetailBody extends StatelessWidget {
 
         ),
 
-        WellDoneDialog(),
-        // TryAgainDialog(),
+        Positioned(
+          child: vm.showWellDoneDialog
+            ? WellDoneDialog( callBack: () => print('CallBack executed'), vm: vm)
+            : SizedBox()
+        ),
+
+        Positioned(
+          child: vm.showTryAgainDialog
+            ? TryAgainDialog( callBack: () => print('CallBack executed'), vm: vm,)
+            : SizedBox(),
+        ),
 
       ]
     );

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_letter_detail/rc_letter_detail.dart';
 import 'package:app19022019/core/src/services/audio_service.dart';
@@ -47,23 +49,23 @@ class LetterDetailViewModel {
 
   factory LetterDetailViewModel.fromStore(Store<AppState> store) {
 
-    final path = store.state.readingCourseState.letterDetail;
+    final path = store.state.readingCourseState;
 
     return LetterDetailViewModel(
-      selections:   path.selections,
-      data:         path.currentData,
-      canPlayGame:  path.canPlayGame,
-      showAllCards: path.showAllCards,
-      hideAllCards: path.hideAllCards,
-      options:      path.currentData.data,
-      typeLetter:   path.currentData.type,
-      letter:       path.currentData.letter,
-      selection1:   path.selections.selection1,
-      selection2:   path.selections.selection2,
-      letterSound:  store.state.readingCourseState.data.soundLetters[path.currentData.letter.toLowerCase()],
-      dispatch:     (action) => store.dispatch(action),
-      showTryAgainDialog: store.state.readingCourseState.letterDetail.showTryAgainDialog,
-      showWellDoneDialog: store.state.readingCourseState.letterDetail.showWellDoneDialog,
+      selections:         path.letterDetail.selections,
+      data:               path.letterDetail.currentData,
+      canPlayGame:        path.letterDetail.canPlayGame,
+      showAllCards:       path.letterDetail.showAllCards,
+      hideAllCards:       path.letterDetail.hideAllCards,
+      options:            path.letterDetail.currentData.data,
+      typeLetter:         path.letterDetail.currentData.type,
+      letter:             path.letterDetail.currentData.letter,
+      selection1:         path.letterDetail.selections.selection1,
+      selection2:         path.letterDetail.selections.selection2,
+      showTryAgainDialog: path.letterDetail.showTryAgainDialog,
+      showWellDoneDialog: path.letterDetail.showWellDoneDialog,
+      letterSound:        path.data.soundLetters[path.letterDetail.currentData.letter.toLowerCase()],
+      dispatch:          (action) => store.dispatch(action),
     );
 
   }
@@ -75,6 +77,7 @@ class LetterDetailViewModel {
     if (option[0] == letter) {
       tts.speak(term: '$letterSound $typeLetter', rate: 1.0);
     } else {
+      tts.cancel();
       AudioService.playAsset(AudioType.incorrect);
     }
 
@@ -87,13 +90,22 @@ class LetterDetailViewModel {
     if (selection1!= null ) {
 
       dispatch(RCAddSecondSelectionLD(option));
-      dispatch(RCValidateSelectionsLD());
+      Future.delayed(Duration(milliseconds: 1200), () {
+        dispatch(RCValidateSelectionsLD());
+      });
 
     }
 
 
   }
 
+  void listenCorrectMsg() {
+    tts.speak(term: 'Bien Hecho');
+  }
+
+  void listenIncorrectMsg() {
+    tts.speak(term: 'Inténtalo nuevamente');
+  }
 
   @override
   bool operator == (Object other) => 
@@ -115,16 +127,16 @@ class LetterDetailViewModel {
 
   @override
   int get hashCode =>
+    data.hashCode ^
     letter.hashCode ^
     options.hashCode ^
-    showAllCards.hashCode ^
-    hideAllCards.hashCode ^
-    canPlayGame.hashCode ^
     selections.hashCode ^
     selection1.hashCode ^
     selection2.hashCode ^
-    data.hashCode ^
+    canPlayGame.hashCode ^
     letterSound.hashCode ^
+    showAllCards.hashCode ^
+    hideAllCards.hashCode ^
     showTryAgainDialog.hashCode ^
     showWellDoneDialog.hashCode ^
     typeLetter.hashCode;

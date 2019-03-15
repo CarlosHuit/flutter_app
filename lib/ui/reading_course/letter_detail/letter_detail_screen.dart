@@ -50,10 +50,8 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
       distinct:  true,
       onInit:    (store) {
 
-
         this.cb1 = () => store.dispatch(RCShowAllCardsLD());
         this.cb2 = () => store.dispatch(RCHideAllCardsLD());
-
 
         final data = store.state.readingCourseState.letterDetail.currentData;
         Future.delayed(Duration(milliseconds: 500), () => _showModalSheet(data));
@@ -64,11 +62,6 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
       builder:   (BuildContext _, LetterDetailViewModel vm) {
 
         return Scaffold(
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () => _showModalSheet(vm.data),
-          //   child:     Icon(Icons.arrow_upward, size: 28.0,),
-          //   mini:      true,
-          // ),
           body: LetterDetailBody(vm: vm)
         );
 
@@ -102,3 +95,9 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
 }
 
+
+// floatingActionButton: FloatingActionButton(
+//   onPressed: () => _showModalSheet(vm.data),
+//   child:     Icon(Icons.arrow_upward, size: 28.0,),
+//   mini:      true,
+// ),
