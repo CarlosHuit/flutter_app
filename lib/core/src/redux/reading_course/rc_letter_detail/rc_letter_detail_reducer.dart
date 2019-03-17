@@ -48,23 +48,19 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
     );
   }
 
+
+
   if (action is RCValidateSelectionsLD) {
     return handleValidateSelections(state.letterDetail);
   }
 
+
+
   if (action is RCChangeCurrentDataLD) {
-
-    final path = state.letterDetail;
-    final nextIndex = path.currentIndex + 1;
-
-    if (nextIndex <= path.data.length) {
-      return path.copyWith(
-        currentData:  path.data[nextIndex],
-        currentIndex: nextIndex,
-      );
-    }
-
+    changeCurrentData(state.letterDetail);
   }
+
+
 
   if (action is RCHideTryAgainDialogLD) {
     return state.letterDetail.copyWith(
@@ -73,8 +69,13 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
     );
   }
 
+
+
   if (action is RCHideWellDoneDialogLD) {
-    return state.letterDetail.copyWith(showWellDoneDialog: false, canPlayGame: true);
+    return state.letterDetail.copyWith(
+      showWellDoneDialog: false,
+      canPlayGame: true
+    );
   }
 
   return state.letterDetail;
@@ -111,5 +112,20 @@ RCLetterDetailState handleValidateSelections(RCLetterDetailState state) {
     );
 
   }
+
+}
+
+RCLetterDetailState changeCurrentData(RCLetterDetailState state) {
+
+  final nextIndex = state.currentIndex + 1;
+
+  if (nextIndex <= state.data.length) {
+    return state.copyWith(
+      currentData: state.data[nextIndex],
+      currentIndex: nextIndex,
+    );
+  }
+
+  return state;
 
 }
