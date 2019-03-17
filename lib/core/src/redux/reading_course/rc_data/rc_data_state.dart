@@ -341,11 +341,11 @@ class Letters {
     });
 
     return {
+      'vocals':       vocals,
       'alphabet':     alphabet,
       'consonants':   consonants,
-      'vocals':       vocals,
+      'soundLetters': soundLetters,
       'combinations': combinationsJson,
-      'soundLetters': soundLetters
     };
 
   }
