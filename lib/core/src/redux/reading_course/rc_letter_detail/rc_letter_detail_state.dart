@@ -189,7 +189,10 @@ class SLSelections {
 
   SLSelections({ this.selection1, this.selection2 });
 
-  SLSelections copyWith({ String selection1, String selection2 }) {
+  SLSelections copyWith({
+    String selection1,
+    String selection2,
+  }) {
     return SLSelections(
       selection1: selection1 ?? this.selection1,
       selection2: selection2 ?? this.selection2
@@ -197,7 +200,10 @@ class SLSelections {
   }
 
   SLSelections restart() {
-    return SLSelections(selection2: null, selection1: null);
+    return SLSelections(
+      selection1: null,
+      selection2: null,
+    );
   }
 
   Map<String, dynamic> toJson() {

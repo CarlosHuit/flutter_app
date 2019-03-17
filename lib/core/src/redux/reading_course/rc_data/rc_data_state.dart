@@ -205,7 +205,14 @@ class Coordinate {
 
   Coordinate(this.x, this.y);
 
-  Map<String, dynamic> toJson() => { 'x': x, 'y': y };
+  Map<String, dynamic> toJson() {
+
+    return {
+      'x': x,
+      'y': y
+    };
+
+  }
 
 }
 
