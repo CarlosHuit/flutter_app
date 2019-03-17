@@ -76,7 +76,7 @@ class LetterDetailBody extends StatelessWidget {
           child: vm.showWellDoneDialog
             ? WellDoneDialog(
               vm: vm,
-              callBack: () => print('CallBack executed'),
+              callBack: () => print('Change Current Data'),
             )
             : SizedBox()
         ),

@@ -4,19 +4,19 @@ import 'package:meta/meta.dart';
 @immutable
 class RCDataState {
 
-  final String                currentLetter;
-  final String                alphabet;
-  final String                consonants;
-  final String                vocals;
-  final bool                  isLoading;
+  final String currentLetter;
+  final String alphabet;
+  final String consonants;
+  final String vocals;
+  final bool   isLoading;
 
   final Map<String, List<Combination>> combinations;
-  final List<Words>                    words;
-  final List<Coordinates>              coordinates;
-  final List<LearnedLetter>            learnedLetters;
-  final List<ItemLetterMenu>           lettersMenu;
-  final List<SimilarLetters>           similarLetters;
-  final Map<String, dynamic>           soundLetters;
+  final List<Words>          words;
+  final List<Coordinates>    coordinates;
+  final List<LearnedLetter>  learnedLetters;
+  final List<ItemLetterMenu> lettersMenu;
+  final List<SimilarLetters> similarLetters;
+  final Map<String, dynamic> soundLetters;
 
   RCDataState({
     @required this.words,
@@ -205,14 +205,8 @@ class Coordinate {
 
   Coordinate(this.x, this.y);
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() => { 'x': x, 'y': y };
 
-    return {
-      'x': x,
-      'y': y
-    };
-
-  }
 
 }
 
@@ -220,7 +214,7 @@ class Coordinate {
 
 class SimilarLetters {
 
-  final String       l;
+  final String l;
   final List<String> sl;
 
   SimilarLetters(this.l, this.sl);

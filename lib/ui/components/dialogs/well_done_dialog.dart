@@ -47,6 +47,7 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
 
   }
 
+
   void showBottom() {
     setState(() {
       translateY = 0;
@@ -54,6 +55,7 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
     });
     vm.listenCorrectMsg();
   }
+
 
   void hideRight() {
 
@@ -64,16 +66,24 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
       isVisible  = false;
     });
 
+    executeCallBack();
+
   }
 
+
   void hideLeft() {
+
     setState(() {
       time = 200;
       color      = Colors.transparent;
       translateX = -MediaQuery.of(context).size.width;
       isVisible  = false;
     });
+
+    executeCallBack();
+
   }
+
 
   void hideBottom() {
 
@@ -85,14 +95,23 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
         isVisible  = false;
       });
 
-      callBack();
-      Future.delayed(Duration(milliseconds: 200), () {
-        vm.hideWellDoneDialog();
-      });
+      executeCallBack();
 
     }
 
   }
+
+
+  void executeCallBack() {
+
+    callBack();
+    Future.delayed(
+      Duration(milliseconds: 200),
+      () => vm.hideWellDoneDialog()
+    );
+
+  }
+
 
   void translateTo(double amount) {
 
@@ -103,6 +122,7 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
     });
 
   }
+
 
   void handleDragUpdate(DragUpdateDetails el) {
 
@@ -126,6 +146,7 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
     }
 
   }
+
 
   @override
   Widget build(BuildContext context) {
