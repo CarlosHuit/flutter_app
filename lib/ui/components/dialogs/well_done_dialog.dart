@@ -7,7 +7,11 @@ class WellDoneDialog extends StatefulWidget {
 
   final Function() callBack;
   final LetterDetailViewModel vm;
-  const WellDoneDialog({Key key, @required this.callBack, @required this.vm}) : super(key: key);
+  const WellDoneDialog({
+    Key key,
+    @required this.vm,
+    @required this.callBack,
+  }) : super(key: key);
 
   @override
   _WellDoneDialogState createState() => _WellDoneDialogState();

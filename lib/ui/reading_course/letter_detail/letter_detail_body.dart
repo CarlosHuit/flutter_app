@@ -9,20 +9,24 @@ class LetterDetailBody extends StatelessWidget {
 
   final LetterDetailViewModel vm;
 
-  const LetterDetailBody({ Key key, @required this.vm }) : super(key: key);
+  const LetterDetailBody({
+    Key key,
+    @required this.vm
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    final size = MediaQuery.of(context).size;
+    final size    = MediaQuery.of(context).size;
     final width90 = size.width * 0.90;
+
     final options = List.generate(
       vm.options.length,
       (i) => OptionCard(
-        showAllCards: vm.showAllCards,
-        hideAllCars: vm.hideAllCards,
-        letterId: '${vm.options[i]}$i',
         vm: vm,
+        letterId: '${vm.options[i]}$i',
+        hideAllCars: vm.hideAllCards,
+        showAllCards: vm.showAllCards,
       )
     );
 

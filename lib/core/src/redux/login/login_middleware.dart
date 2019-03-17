@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:redux/redux.dart';
 import '../../models/credentials.dart';
@@ -35,7 +36,16 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
 
       } catch (e) {
 
-        next(LoginFailed(error: e));
+        if (e is SocketException) {
+
+          next(LoginFailed(error: 'No hay conexion a internet'));
+
+        } else {
+
+          next(LoginFailed(error: e.toString() ));
+
+        }
+
 
         Future.delayed(
           Duration(milliseconds: 100),

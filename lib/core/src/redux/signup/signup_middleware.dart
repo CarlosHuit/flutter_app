@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:redux/redux.dart';
 
@@ -43,7 +44,12 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
 
       } catch (e) {
 
-        next( SignupFailed(error: e) );
+        if (e is SocketException) {
+          next( SignupFailed(error: 'No hay conexion a internet') );
+        } else {
+          next( SignupFailed(error: e) );
+        }
+
         Future.delayed(
           Duration(milliseconds: 100),
           () => next( RemoveSignupError() )
