@@ -36,15 +36,11 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
 
       } catch (e) {
 
-        if (e is SocketException) {
 
+        if (e is SocketException)
           next(LoginFailed(error: 'No hay conexion a internet'));
-
-        } else {
-
+        else
           next(LoginFailed(error: e.toString() ));
-
-        }
 
 
         Future.delayed(
