@@ -12,3 +12,8 @@ class NavigatorReplaceCourse {
 }
 
 class NavigatorPushRCLetterDetail {}
+
+class NavigatorPushRigthToLeft {
+  final dynamic screen;
+  NavigatorPushRigthToLeft(this.screen);
+}

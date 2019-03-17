@@ -1,10 +1,11 @@
 
+import 'package:redux/redux.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/login/login_actions.dart';
-import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/signup/signup_actions.dart';
-import 'package:redux/redux.dart';
+import './navigation_actions.dart';
 import 'key_navigation.dart';
+import 'package:page_transition/page_transition.dart';
 
 class NavigationMiddleware extends MiddlewareClass<AppState> {
 
@@ -42,6 +43,18 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
 
     if (action is NavigatorPushRCLetterDetail) {
       NavigationKey.key.currentState.pushNamed('/courses/lectura/detalle-letra');
+    }
+
+    if (action is NavigatorPushRigthToLeft) {
+
+      /// -> /courses/lectura/juego
+      NavigationKey.key.currentState.pushReplacement(
+        PageTransition(
+          type:  PageTransitionType.rightToLeft,
+          child: action.screen
+        )
+      );
+
     }
 
     next(action);

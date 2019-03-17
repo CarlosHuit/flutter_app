@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_letter_detail/rc_letter_detail.dart';
 import 'package:app19022019/core/src/services/audio_service.dart';
 import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
+import 'package:app19022019/ui/reading_course/game/game_screen.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
@@ -129,6 +131,7 @@ class LetterDetailViewModel {
       dispatch(RCChangeCurrentDataLD());
     } else {
       print('redirect');
+      dispatch(NavigatorPushRigthToLeft(GameScreen()));
     }
 
   }

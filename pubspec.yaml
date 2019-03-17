@@ -20,6 +20,8 @@ dependencies:
   flutter_youtube: "^1.1.4"
   flutter_tts: ^0.2.4
   audioplayers: ^0.10.0
+  page_transition: ^1.0.9
+
 
 
 

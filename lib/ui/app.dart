@@ -1,3 +1,4 @@
+import 'package:app19022019/ui/reading_course/game/game_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:app19022019/core/core.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ final Map<String, WidgetBuilder> routes = {
   '/course-detail':                 (context) => CourseDetailScree(), 
   '/courses/lectura':               (context) => ReadingCourseScreen(), 
   '/courses/lectura/detalle-letra': (context) => LetterDetailScreen(), 
+  '/courses/lectura/juego':         (context) => GameScreen(), 
 };
 
 
