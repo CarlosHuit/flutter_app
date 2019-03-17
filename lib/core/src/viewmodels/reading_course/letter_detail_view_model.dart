@@ -22,6 +22,8 @@ class LetterDetailViewModel {
   final String       letterSound;
   final bool         showAllCards;
   final bool         hideAllCards;
+  final int          currentIndex;
+  final int          dataLength;
 
   final bool showTryAgainDialog;
   final bool showWellDoneDialog;
@@ -43,7 +45,9 @@ class LetterDetailViewModel {
     @required this.letterSound,
     @required this.dispatch,
     @required this.showTryAgainDialog,
-    @required this.showWellDoneDialog
+    @required this.showWellDoneDialog,
+    @required this.currentIndex,
+    @required this.dataLength,
   });
 
 
@@ -66,6 +70,8 @@ class LetterDetailViewModel {
       showWellDoneDialog: path.letterDetail.showWellDoneDialog,
       letterSound:        path.data.soundLetters[path.letterDetail.currentData.letter.toLowerCase()],
       dispatch:          (action) => store.dispatch(action),
+      currentIndex:       path.letterDetail.currentIndex,
+      dataLength:         path.letterDetail.data.length
     );
 
   }
@@ -117,7 +123,33 @@ class LetterDetailViewModel {
   }
 
   void changeCurrentData() {
-    dispatch(RCChangeCurrentDataLD());
+
+    if (currentIndex < dataLength - 1) {
+      print('Change CurrentData');
+      dispatch(RCChangeCurrentDataLD());
+    } else {
+      print('redirect');
+    }
+
+  }
+
+  void dispatchShowAllCards() {
+    dispatch(RCShowAllCardsLD());
+  }
+
+  void dispatchHideAllCards() {
+    dispatch(RCHideAllCardsLD());
+  }
+
+
+  void modalSheetIMsg() {
+    final iMsg = 'Esta es la letra: ${data.letterSound} ${data.type}';
+    tts.speak(term: iMsg);
+  }
+
+  void modalSheetFMsg() {
+    final fMsg   = 'Encuentra la pareja de letras: ${data.letterSound} ${data.type}';
+    tts.speak(term: fMsg);
   }
 
   @override
@@ -136,6 +168,8 @@ class LetterDetailViewModel {
     && letterSound         == other.letterSound
     && showTryAgainDialog  == other.showTryAgainDialog
     && showWellDoneDialog  == other.showWellDoneDialog
+    && currentIndex        == other.currentIndex
+    && dataLength          == other.dataLength
     && typeLetter          == other.typeLetter;
 
   @override
@@ -152,6 +186,8 @@ class LetterDetailViewModel {
     hideAllCards.hashCode ^
     showTryAgainDialog.hashCode ^
     showWellDoneDialog.hashCode ^
+    currentIndex.hashCode ^
+    dataLength.hashCode ^
     typeLetter.hashCode;
 
 }

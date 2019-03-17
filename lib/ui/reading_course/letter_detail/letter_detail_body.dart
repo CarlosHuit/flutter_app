@@ -1,41 +1,55 @@
-
-import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_view_model.dart';
-import 'package:app19022019/ui/components/dialogs/try_again_dialog.dart';
-import 'package:app19022019/ui/components/dialogs/well_done_dialog.dart';
-import 'package:app19022019/ui/reading_course/letter_detail/option_card.dart';
 import 'package:flutter/material.dart';
 
-class LetterDetailBody extends StatelessWidget {
+import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_view_model.dart';
+import './bottom_sheet_letter_detail.dart';
+import './option_card.dart';
+import './try_again_dialog.dart';
+import './well_done_dialog.dart';
+
+class LetterDetailBody extends StatefulWidget {
 
   final LetterDetailViewModel vm;
 
-  const LetterDetailBody({
-    Key key,
-    @required this.vm
-  }) : super(key: key);
+  const LetterDetailBody({ Key key, @required this.vm }) : super(key: key);
+
+  @override
+  _LetterDetailBodyState createState() => _LetterDetailBodyState();
+}
+
+class _LetterDetailBodyState extends State<LetterDetailBody> {
+
+
+  LetterDetailViewModel get vm => widget.vm;
+
+  @override
+  void initState() {
+
+    super.initState();
+    showModalSheet(vm, context);
+
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final size    = MediaQuery.of(context).size;
     final width90 = size.width * 0.90;
-
     final options = List.generate(
-      vm.options.length,
+      widget.vm.options.length,
       (i) => OptionCard(
-        vm: vm,
-        letterId: '${vm.options[i]}$i',
-        hideAllCars: vm.hideAllCards,
-        showAllCards: vm.showAllCards,
+        vm: widget.vm,
+        letterId: '${widget.vm.options[i]}$i',
+        hideAllCars: widget.vm.hideAllCards,
+        showAllCards: widget.vm.showAllCards,
       )
     );
-
 
     return Stack(
 
       children: <Widget>[
 
         Container(
+
           child: Container(
             alignment:  Alignment.center,
             decoration: BoxDecoration(
@@ -75,8 +89,10 @@ class LetterDetailBody extends StatelessWidget {
         Positioned(
           child: vm.showWellDoneDialog
             ? WellDoneDialog(
-              speak: vm.listenCorrectMsg,
+              viewModel:  vm,
+              speak:      vm.listenCorrectMsg,
               hideDialog: vm.hideWellDoneDialog,
+              canShowModalSheet: vm.currentIndex < vm.dataLength -1 ? true : false,
               callBack: () => print('Change Current Data'),
             )
             : SizedBox()
@@ -85,7 +101,7 @@ class LetterDetailBody extends StatelessWidget {
         Positioned(
           child: vm.showTryAgainDialog
             ? TryAgainDialog(
-              speak: vm.listenIncorrectMsg,
+              speak:      vm.listenIncorrectMsg,
               hideDialog: vm.hideTryAgainDialog,
               callBack: () => print('CallBack executed'),
             )
@@ -96,5 +112,6 @@ class LetterDetailBody extends StatelessWidget {
     );
 
   }
+
 
 }

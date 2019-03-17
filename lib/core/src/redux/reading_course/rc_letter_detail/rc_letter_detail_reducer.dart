@@ -34,7 +34,9 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
   if (action is RCShowAllCardsLD) {
     return state.letterDetail.copyWith(
       showAllCards: true,
-      hideAllCards: false
+      hideAllCards: false,
+      showTryAgainDialog: false,
+      showWellDoneDialog: false,
     );
   }
 
@@ -57,7 +59,7 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
 
 
   if (action is RCChangeCurrentDataLD) {
-    changeCurrentData(state.letterDetail);
+    return changeCurrentData(state.letterDetail);
   }
 
 

@@ -1,18 +1,25 @@
 import 'dart:async';
 
+import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_view_model.dart';
+import 'package:app19022019/ui/reading_course/letter_detail/bottom_sheet_letter_detail.dart';
 import 'package:flutter/material.dart';
 
 class WellDoneDialog extends StatefulWidget {
 
+  final LetterDetailViewModel viewModel;
   final Function() speak;
   final Function() callBack;
   final Function() hideDialog;
+
+  final bool canShowModalSheet;
 
   const WellDoneDialog({
     Key key,
     @required this.speak,
     @required this.callBack,
+    @required this.viewModel,
     @required this.hideDialog,
+    @required this.canShowModalSheet,
   }) : super(key: key);
 
   @override
@@ -32,6 +39,8 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
   Function() get speak => widget.speak;
   Function() get callBack => widget.callBack;
   Function() get hideDialog => widget.hideDialog;
+  LetterDetailViewModel get vm => widget.viewModel;
+  bool get canShowModalSheet => widget.canShowModalSheet;
 
   @override
   void initState() {
@@ -108,10 +117,15 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
   }
 
 
-  void executeCallBack() {
+  void executeCallBack() async{
 
-    callBack();
-    Future.delayed( Duration(milliseconds: 200), hideDialog );
+    vm.changeCurrentData();
+    if (canShowModalSheet) {
+      Future.delayed(
+        Duration(milliseconds: 200) ,
+        () => showModalSheet(vm, context)
+      );
+    }
 
   }
 

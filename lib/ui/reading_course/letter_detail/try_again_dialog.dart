@@ -33,7 +33,6 @@ class _TryAgainDialogState extends State<TryAgainDialog> with SingleTickerProvid
   Function() get callBack => widget.callBack;
   Function() get hideDialog => widget.hideDialog;
 
-
   @override
   void initState() {
     
