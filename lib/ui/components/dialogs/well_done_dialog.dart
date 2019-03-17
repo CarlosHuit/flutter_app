@@ -1,16 +1,18 @@
 import 'dart:async';
 
-import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_view_model.dart';
 import 'package:flutter/material.dart';
 
 class WellDoneDialog extends StatefulWidget {
 
+  final Function() speak;
   final Function() callBack;
-  final LetterDetailViewModel vm;
+  final Function() hideDialog;
+
   const WellDoneDialog({
     Key key,
-    @required this.vm,
+    @required this.speak,
     @required this.callBack,
+    @required this.hideDialog,
   }) : super(key: key);
 
   @override
@@ -27,8 +29,9 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
   Color  color;
   int    time;
 
+  Function() get speak => widget.speak;
   Function() get callBack => widget.callBack;
-  LetterDetailViewModel get vm => widget.vm;
+  Function() get hideDialog => widget.hideDialog;
 
   @override
   void initState() {
@@ -49,11 +52,14 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
 
 
   void showBottom() {
+
     setState(() {
       translateY = 0;
       color = Colors.black45;
     });
-    vm.listenCorrectMsg();
+
+    Future.delayed(Duration(milliseconds: 50), speak);
+
   }
 
 
@@ -105,10 +111,7 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
   void executeCallBack() {
 
     callBack();
-    Future.delayed(
-      Duration(milliseconds: 200),
-      () => vm.hideWellDoneDialog()
-    );
+    Future.delayed( Duration(milliseconds: 200), hideDialog );
 
   }
 

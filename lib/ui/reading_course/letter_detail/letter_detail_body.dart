@@ -75,7 +75,8 @@ class LetterDetailBody extends StatelessWidget {
         Positioned(
           child: vm.showWellDoneDialog
             ? WellDoneDialog(
-              vm: vm,
+              speak: vm.listenCorrectMsg,
+              hideDialog: vm.hideWellDoneDialog,
               callBack: () => print('Change Current Data'),
             )
             : SizedBox()
@@ -84,7 +85,8 @@ class LetterDetailBody extends StatelessWidget {
         Positioned(
           child: vm.showTryAgainDialog
             ? TryAgainDialog(
-              vm: vm,
+              speak: vm.listenIncorrectMsg,
+              hideDialog: vm.hideTryAgainDialog,
               callBack: () => print('CallBack executed'),
             )
             : SizedBox(),

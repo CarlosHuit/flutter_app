@@ -74,7 +74,7 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
   if (action is RCHideWellDoneDialogLD) {
     return state.letterDetail.copyWith(
       showWellDoneDialog: false,
-      canPlayGame: true
+      canPlayGame:        false
     );
   }
 

@@ -1,14 +1,19 @@
 import 'dart:async';
-
-import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_view_model.dart';
 import 'package:flutter/material.dart';
 
 class TryAgainDialog extends StatefulWidget {
 
   final Function() callBack;
-  final LetterDetailViewModel vm;
+  final Function() speak;
+  final Function() hideDialog;
 
-  TryAgainDialog({Key key, @required this.callBack, @required this.vm}) : super(key: key);
+
+  TryAgainDialog({
+    Key key,
+    @required this.callBack,
+    @required this.hideDialog,
+    @required this.speak,
+  }) : super(key: key);
 
   @override
   _TryAgainDialogState createState() => _TryAgainDialogState();
@@ -24,8 +29,10 @@ class _TryAgainDialogState extends State<TryAgainDialog> with SingleTickerProvid
   Color  color;
   int    time;
 
+  Function() get speak => widget.speak;
   Function() get callBack => widget.callBack;
-  LetterDetailViewModel get vm => widget.vm;
+  Function() get hideDialog => widget.hideDialog;
+
 
   @override
   void initState() {
@@ -49,9 +56,7 @@ class _TryAgainDialogState extends State<TryAgainDialog> with SingleTickerProvid
       translateY = 0;
       color = Colors.black38;
     });
-    Future.delayed(Duration(milliseconds: 50), () {
-      vm.listenIncorrectMsg();
-    });
+    Future.delayed(Duration(milliseconds: 50), speak);
   }
 
   void hideRight() {
@@ -97,10 +102,7 @@ class _TryAgainDialogState extends State<TryAgainDialog> with SingleTickerProvid
 
   void executeCallBack() {
     callBack();
-    Future.delayed(
-      Duration(milliseconds: 200),
-      () => vm.hideTryAgainDialog()
-    );
+    Future.delayed( Duration(milliseconds: 200), hideDialog );
   }
 
   void translateTo(double amount) {
