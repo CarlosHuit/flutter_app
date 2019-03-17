@@ -76,7 +76,7 @@ class RCLetterDetailState {
     final dataLowerCase = SLData(letterLC, slLowerCase, 'minúscula', letterSound);
     final dataUpperCase = SLData(letterUC, slUpperCase, 'mayúscula', letterSound);
     final selections    = SLSelections(selection1: null, selection2: null);
-    final data = [ dataLowerCase, dataUpperCase ];
+    final data          = [ dataLowerCase, dataUpperCase ];
 
     return RCLetterDetailState(
       currentIndex:       0,
@@ -198,6 +198,13 @@ class SLSelections {
 
   SLSelections restart() {
     return SLSelections(selection2: null, selection1: null);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'selection1': selection1,
+      'selection2': selection2
+    };
   }
 
 
