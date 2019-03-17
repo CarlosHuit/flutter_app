@@ -1,9 +1,9 @@
 class RCShowAllCardsLD {}
 class RCHideAllCardsLD {}
-class RCSetCurrentDataLD {}
 class RCSelectionsAreCorrectsLD {}
 class RCSelectionsAreIncorrectsLD {}
 
+class RCChangeCurrentDataLD {}
 
 class RCSetInitialDataLD {
   final String letter;
@@ -21,3 +21,6 @@ class RCAddSecondSelectionLD {
 }
 
 class RCValidateSelectionsLD {}
+
+class RCHideTryAgainDialogLD {}
+class RCHideWellDoneDialogLD {}

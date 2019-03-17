@@ -90,9 +90,10 @@ class LetterDetailViewModel {
     if (selection1!= null ) {
 
       dispatch(RCAddSecondSelectionLD(option));
-      Future.delayed(Duration(milliseconds: 1200), () {
-        dispatch(RCValidateSelectionsLD());
-      });
+      Future.delayed(
+        Duration(milliseconds: 1200),
+        () => dispatch(RCValidateSelectionsLD())
+      );
 
     }
 
@@ -105,6 +106,18 @@ class LetterDetailViewModel {
 
   void listenIncorrectMsg() {
     tts.speak(term: 'Inténtalo nuevamente');
+  }
+
+  void hideTryAgainDialog() {
+    dispatch(RCHideTryAgainDialogLD());
+  }
+
+  void hideWellDoneDialog() {
+    dispatch(RCHideWellDoneDialogLD());
+  }
+
+  void changeCurrentData() {
+    dispatch(RCChangeCurrentDataLD());
   }
 
   @override

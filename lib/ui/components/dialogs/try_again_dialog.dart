@@ -62,17 +62,20 @@ class _TryAgainDialogState extends State<TryAgainDialog> with SingleTickerProvid
       translateX = MediaQuery.of(context).size.width;
       isVisible  = false;
     });
+    executeCallBack();
 
   }
 
   void hideLeft() {
 
     setState(() {
-      time = 200;
-      color      = Colors.transparent;
+      time  = 200;
+      color = Colors.transparent;
       translateX = -MediaQuery.of(context).size.width;
       isVisible  = false;
     });
+
+    executeCallBack();
 
   }
 
@@ -86,10 +89,18 @@ class _TryAgainDialogState extends State<TryAgainDialog> with SingleTickerProvid
         isVisible  = false;
       });
 
-      callBack();
+      executeCallBack();
 
     }
 
+  }
+
+  void executeCallBack() {
+    callBack();
+    Future.delayed(
+      Duration(milliseconds: 200),
+      () => vm.hideTryAgainDialog()
+    );
   }
 
   void translateTo(double amount) {

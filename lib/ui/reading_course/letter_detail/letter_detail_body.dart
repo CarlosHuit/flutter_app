@@ -70,13 +70,19 @@ class LetterDetailBody extends StatelessWidget {
 
         Positioned(
           child: vm.showWellDoneDialog
-            ? WellDoneDialog( callBack: () => print('CallBack executed'), vm: vm)
+            ? WellDoneDialog(
+              vm: vm,
+              callBack: () => print('CallBack executed'),
+            )
             : SizedBox()
         ),
 
         Positioned(
           child: vm.showTryAgainDialog
-            ? TryAgainDialog( callBack: () => print('CallBack executed'), vm: vm,)
+            ? TryAgainDialog(
+              vm: vm,
+              callBack: () => print('CallBack executed'),
+            )
             : SizedBox(),
         ),
 

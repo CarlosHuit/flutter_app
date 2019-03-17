@@ -82,6 +82,9 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
       });
 
       callBack();
+      Future.delayed(Duration(milliseconds: 200), () {
+        vm.hideWellDoneDialog();
+      });
 
     }
 
