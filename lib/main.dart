@@ -10,7 +10,7 @@ import './ui/app.dart';
 
 void main() async {
 
-  await setOrientation();
+  await setOrientationAndSetUIOverlays();
   await AudioService.init();
 
   final SharedPreferences preferences      = await SharedPreferences.getInstance();

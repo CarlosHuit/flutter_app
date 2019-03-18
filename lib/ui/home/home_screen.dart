@@ -45,8 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
       distinct:  true,
       onInit:    (store) {
 
-        final bool hasCourses = store.state.coursesState.courses.length > 0 ? true : false;
-        if (hasCourses == false) {
+        if (store.state.coursesState.courses.length < 1) {
+          print('(root) => fetch all courses');
           store.dispatch(FetchCourses());
         }
 
@@ -141,13 +141,13 @@ class CourseCard extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Container(
-                height: 100.0,
-                width: 100.0,
+                height:  100.0,
+                width:   100.0,
                 padding: EdgeInsets.all(8.0),
-                child:     Image.asset(
+                child:   Image.asset(
                   'assets/${course.title.toLowerCase()}-min.png',
                   height: 65.0,
-                  width: 65.0
+                  width:  65.0
                 ),
               ),
               Expanded(
