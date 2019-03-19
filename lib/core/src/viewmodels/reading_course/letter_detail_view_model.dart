@@ -131,7 +131,7 @@ class LetterDetailViewModel {
       dispatch(RCChangeCurrentDataLD());
     } else {
       print('redirect');
-      dispatch(NavigatorPushRigthToLeft(GameScreen()));
+      dispatch(NavigatorPushReplaceRigthToLeft(GameScreen()));
     }
 
   }

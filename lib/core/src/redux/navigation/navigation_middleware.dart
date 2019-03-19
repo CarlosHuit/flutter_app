@@ -45,7 +45,7 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
       NavigationKey.key.currentState.pushNamed('/courses/lectura/detalle-letra');
     }
 
-    if (action is NavigatorPushRigthToLeft) {
+    if (action is NavigatorPushReplaceRigthToLeft) {
 
       /// -> /courses/lectura/juego
       NavigationKey.key.currentState.pushReplacement(
@@ -55,6 +55,15 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
         )
       );
 
+    }
+
+    if (action is NavigatorPushWithTransition) {
+      NavigationKey.key.currentState.push(
+        PageTransition(
+          child: action.screen,
+          type: action.transition
+        )
+      );
     }
 
     next(action);
