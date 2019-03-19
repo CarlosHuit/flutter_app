@@ -9,9 +9,10 @@ import 'package:app19022019/ui/reading_course/game/game_screen.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
+@immutable
 class LetterDetailViewModel {
-  
-  SpeechSynthesisService tts = SpeechSynthesisService(); 
+
+  final SpeechSynthesisService tts = SpeechSynthesisService(); 
 
   final SLData       data;
   final String       letter;
@@ -58,22 +59,22 @@ class LetterDetailViewModel {
     final path = store.state.readingCourseState;
 
     return LetterDetailViewModel(
-      selections:         path.letterDetail.selections,
-      data:               path.letterDetail.currentData,
-      canPlayGame:        path.letterDetail.canPlayGame,
-      showAllCards:       path.letterDetail.showAllCards,
-      hideAllCards:       path.letterDetail.hideAllCards,
-      options:            path.letterDetail.currentData.data,
-      typeLetter:         path.letterDetail.currentData.type,
-      letter:             path.letterDetail.currentData.letter,
-      selection1:         path.letterDetail.selections.selection1,
-      selection2:         path.letterDetail.selections.selection2,
+      data:         path.letterDetail.currentData,
+      letter:       path.letterDetail.currentData.letter,
+      options:      path.letterDetail.currentData.data,
+      selections:   path.letterDetail.selections,
+      typeLetter:   path.letterDetail.currentData.type,
+      selection1:   path.letterDetail.selections.selection1,
+      selection2:   path.letterDetail.selections.selection2,
+      canPlayGame:  path.letterDetail.canPlayGame,
+      showAllCards: path.letterDetail.showAllCards,
+      hideAllCards: path.letterDetail.hideAllCards,
+      letterSound:  path.data.soundLetters[path.letterDetail.currentData.letter.toLowerCase()],
+      currentIndex: path.letterDetail.currentIndex,
+      dataLength:   path.letterDetail.data.length,
+      dispatch:          (action) => store.dispatch(action),
       showTryAgainDialog: path.letterDetail.showTryAgainDialog,
       showWellDoneDialog: path.letterDetail.showWellDoneDialog,
-      letterSound:        path.data.soundLetters[path.letterDetail.currentData.letter.toLowerCase()],
-      dispatch:          (action) => store.dispatch(action),
-      currentIndex:       path.letterDetail.currentIndex,
-      dataLength:         path.letterDetail.data.length
     );
 
   }
