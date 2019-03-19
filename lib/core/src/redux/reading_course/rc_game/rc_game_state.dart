@@ -1,10 +1,13 @@
 
+import 'dart:math';
+
+import 'package:app19022019/core/src/redux/reading_course/reading_course_state.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class RCGameState {
   
-  final Map<String, dynamic> selection;
+  final Map<String, dynamic> selections;
   final List<RCGameData> data;
   final RCGameData currentData;
   final bool isSettingData;
@@ -15,7 +18,7 @@ class RCGameState {
 
   RCGameState({
     @required this.data,
-    @required this.selection,
+    @required this.selections,
     @required this.currentData,
     @required this.currentIndex,
     @required this.isSettingData,
@@ -24,10 +27,37 @@ class RCGameState {
     @required this.showCorrectLetters,
   });
 
+  factory RCGameState.fromStore(ReadingCourseState state) {
+
+    final path = state;
+    final letterLC = path.data.currentLetter.toLowerCase();
+    final letterUC = path.data.currentLetter.toUpperCase();
+
+    final slLowerCase = path.data.similarLetters.firstWhere((el) => el.l == letterLC).sl;
+    final slUpperCase = path.data.similarLetters.firstWhere((el) => el.l == letterUC).sl;
+
+    final dataLC = RCGameData.initialize(slLowerCase, letterLC, 411.42857142857144, 'minúscula');
+    final dataUC = RCGameData.initialize(slUpperCase, letterUC, 411.42857142857144, 'mayúscula');
+    final data = [dataLC, dataUC];
+
+    return RCGameState(
+      currentData:        dataLC,
+      data:               data,
+      currentIndex:       0,
+      selections:          {},
+      showCoincidences:   true,
+      isSettingData:      false,
+      showCorrectLetters: false,
+      showWellDoneDialog: false,
+
+    );
+
+  }
+
   factory RCGameState.initialState() {
     return RCGameState(
       data:     null,
-      selection:  null,
+      selections:  null,
       currentData:  null,
       currentIndex:   null,
       isSettingData:    null,
@@ -38,7 +68,7 @@ class RCGameState {
   }
 
   RCGameState copyWith({
-    Map<String, dynamic> selection,
+    Map<String, dynamic> selections,
     List<RCGameData> data,
     RCGameData currentData,
     bool isSettingData,
@@ -49,7 +79,7 @@ class RCGameState {
   }) {
     return RCGameState(
       data:               data     ?? this.data,
-      selection:          selection  ?? this.selection,
+      selections:          selections  ?? this.selections,
       currentData:        currentData  ?? this.currentData,
       currentIndex:       currentIndex   ?? this.currentIndex,
       isSettingData:      isSettingData    ?? this.isSettingData,
@@ -64,7 +94,7 @@ class RCGameState {
     identical(this, other) || other is RCGameState
       && runtimeType == other.runtimeType
       && data     ==   other.data
-      && selection  ==   other.selection
+      && selections  ==   other.selections
       && currentData  ==   other.currentData
       && currentIndex   ==   other.currentIndex
       && isSettingData    ==   other.isSettingData
@@ -75,7 +105,7 @@ class RCGameState {
   @override
   int get hashCode =>
     data.hashCode    ^
-    selection.hashCode ^
+    selections.hashCode ^
     currentData.hashCode ^
     currentIndex.hashCode  ^
     isSettingData.hashCode   ^
@@ -88,7 +118,7 @@ class RCGameState {
 class RCGameData {
 
   final String letter;
-  final dynamic data;
+  final List<List<dynamic>> data;
   final String type;
   final int correctsValidation;
   final int totalCorrects;
@@ -106,5 +136,62 @@ class RCGameData {
     @required this.countIncorrects,
     @required this.opportunities
   });
+
+  factory RCGameData.initialize(List<String> sl, String letter, double screenWidth, String type) {
+
+    final approximatedElements = 35;
+
+    final columnWidth = 90.0;
+    final surplus = screenWidth % columnWidth;
+    final columns = surplus > 0
+      ? (screenWidth - surplus) ~/ columnWidth
+      : screenWidth ~/ columnWidth;
+
+    final rows = (approximatedElements / columns).round();
+    final elements = columns * rows;
+
+    final minCorrects = 8;
+    final maxCorrexts = 12;
+    final corrects = minCorrects + Random().nextInt(maxCorrexts - minCorrects);
+    final elementsToInsert = elements - corrects;
+
+    List<String> x = [];
+    List<String> t = [];
+    List<List<String>> result = [];
+
+    // Generate array with the correct letters 
+    for (var i = 0; i < corrects; i++) {
+      x.add(letter);
+    }
+
+    // fill array with 8 * 7 = 56 > aproxEls
+    for (var i = 0; i < 8; i++) {
+      sl.forEach((l) => t.add(l));
+    }
+
+    // fill array with the incorrect letters;
+    for (var i = 0; i < elementsToInsert; i++) {
+      x.add(t[i]);
+    }
+
+
+    x.shuffle();
+    final max = x.length ~/ columns;
+    for (var i = 0; i < columns; i++) {
+      result.add( x.sublist(0, max) );
+      x.removeRange(0, max);
+    }
+
+    return RCGameData(
+      letter: letter,
+      data:   result,
+      type:   type,
+      correctsValidation: corrects,
+      totalCorrects:      corrects,
+      countCorrects:   0,
+      countIncorrects: 0,
+      opportunities:   3
+    );
+  }
 
 }

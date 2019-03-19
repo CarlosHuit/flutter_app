@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_state.dart';
 import 'package:meta/meta.dart';
 
 import './rc_letter_detail/rc_letter_detail_state.dart';
@@ -8,10 +9,12 @@ class ReadingCourseState {
 
   final RCDataState         data;
   final RCLetterDetailState letterDetail;
+  final RCGameState         game;
 
   ReadingCourseState({
     @required this.data,
-    @required this.letterDetail
+    @required this.letterDetail,
+    @required this.game,
   });
 
 
@@ -20,7 +23,8 @@ class ReadingCourseState {
 
     return ReadingCourseState(
       data:          RCDataState.initialData(),
-      letterDetail:  RCLetterDetailState.initialState()
+      game:          RCGameState.initialState(),
+      letterDetail:  RCLetterDetailState.initialState(),
     );
 
   }
@@ -29,12 +33,14 @@ class ReadingCourseState {
 
   ReadingCourseState copyWith({
     RCDataState data,
-    RCLetterDetailState letterDetail
+    RCGameState game,
+    RCLetterDetailState letterDetail,
   }) {
 
     return ReadingCourseState(
       data: data ?? this.data,
-      letterDetail: letterDetail ?? this.letterDetail
+      game: game ?? this.game,
+      letterDetail:  letterDetail ?? this.letterDetail,
     );
   }
 
@@ -44,12 +50,14 @@ class ReadingCourseState {
   bool operator == (Object other) => 
     identical(this, other) || other is ReadingCourseState
       && runtimeType   == other.runtimeType
-      && data          == other.data
-      && letterDetail  == other.letterDetail;
+      && data          ==  other.data
+      && game          ==  other.game
+      && letterDetail  ==  other.letterDetail;
 
   @override
   int get hashCode =>
     data.hashCode ^
+    game.hashCode ^
     letterDetail.hashCode;
 
 }

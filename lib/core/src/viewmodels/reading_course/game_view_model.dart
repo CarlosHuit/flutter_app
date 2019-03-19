@@ -1,5 +1,6 @@
 
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_state.dart';
 import 'package:app19022019/core/src/services/audio_service.dart';
 import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:meta/meta.dart';
@@ -9,21 +10,49 @@ import 'package:redux/redux.dart';
 class GameViewModel {
 
   final SpeechSynthesisService tts = SpeechSynthesisService(); 
-  final String letter;
+  final Map<String, dynamic> selection;
+  final List<RCGameData> data;
+  final RCGameData currentData;
+  final bool isSettingData;
+  final bool showWellDoneDialog;
+  final bool showCoincidences;
+  final bool showCorrectLetters;
+  final int  currentIndex;
+
 
   GameViewModel({
-    @required this.letter
+    @required this.selection,
+    @required this.data,
+    @required this.currentData,
+    @required this.isSettingData,
+    @required this.showWellDoneDialog,
+    @required this.showCoincidences,
+    @required this.showCorrectLetters,
+    @required this.currentIndex
   });
 
   factory GameViewModel.fromStore(Store<AppState> store) {
+
+    final path = store.state.readingCourseState.game;
+
     return GameViewModel(
-      letter: 'a'
+      data:               path.data,
+      selection:          path.selections,
+      currentData:        path.currentData,
+      currentIndex:       path.currentIndex,
+      isSettingData:      path.isSettingData,
+      showCoincidences:   path.showCoincidences,
+      showWellDoneDialog: path.showWellDoneDialog,
+      showCorrectLetters: path.showCorrectLetters,
     );
+
   } 
 
-  void selectOption(String letterId) {
+  void selectOption(String letterSelected) {
 
-    if (letterId[0] ==letter) {
+    final letter =currentData.letter;
+
+    if (letterSelected == letter) {
       tts.speak(term: letter);
     } else {
       AudioService.playAsset(AudioType.incorrect);
@@ -34,12 +63,26 @@ class GameViewModel {
   @override
   bool operator ==(Object other) =>
     identical(this, other) || other is GameViewModel
-      && runtimeType == other.runtimeType
-      && letter == other.letter;
+      && runtimeType        == other.runtimeType
+      && selection          == other.selection
+      && data               == other.data
+      && currentData        == other.currentData
+      && isSettingData      == other.isSettingData
+      && showWellDoneDialog == other.showWellDoneDialog
+      && showCoincidences   == other.showCoincidences
+      && showCorrectLetters == other.showCorrectLetters
+      && currentIndex       == other.currentIndex;
 
   @override
   int get hashCode =>
-    letter.hashCode;
+    selection.hashCode ^
+    data.hashCode ^
+    currentData.hashCode ^
+    isSettingData.hashCode ^
+    showWellDoneDialog.hashCode ^
+    showCoincidences.hashCode ^
+    showCorrectLetters.hashCode ^
+    currentIndex.hashCode;
 
 
 

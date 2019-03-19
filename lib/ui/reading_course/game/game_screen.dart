@@ -1,4 +1,8 @@
+import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_actions.dart';
+import 'package:app19022019/core/src/viewmodels/reading_course/game_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class GameScreen extends StatefulWidget {
 
@@ -13,113 +17,59 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final size  = MediaQuery.of(context).size;
-    final width = size.width;
-    final els   = '0123456789'.split('');
-    final data  = List.generate(4, (i) => els);
 
     final columnWidth = 90.0;
-    final surplus = width % columnWidth;
-    final columns = surplus > 0 ? (width - surplus) ~/ columnWidth : width ~/ columnWidth;
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        actions: <Widget>[
-          
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
-            child: Row(
-              children: <Widget>[
 
-                Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  width: 30.0,
-                  height: 30.0,
-                  decoration:BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(3.0),
-                    color: Colors.red
-                  ),
-                  child: Text(
-                    '0',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0
-                    ),
-                  ),
+    return StoreConnector<AppState, GameViewModel>(
+      onInit: (store) => store.dispatch(RCSetInitialDataG()),
+      converter: (store) => GameViewModel.fromStore(store),
+      builder: (_, viewModel) {
+
+        return Scaffold(
+
+          body: Container(
+            alignment: Alignment.topCenter,
+            color: Colors.black87,
+            child: Container(
+              padding: EdgeInsets.only(top: 5.0),
+              child:  SingleChildScrollView(
+
+                physics: BouncingScrollPhysics(),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(
+                    viewModel.currentData.data.length, (i) => Column(
+                      children: List.generate(
+                        viewModel.currentData.data[i].length,
+                        (el) => BlocExample(
+                          letter: viewModel.currentData.data[i][el],
+                          columnWidth: columnWidth
+                        )
+                      ),
+                    )
+                  )
                 ),
 
-                Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  width: 30.0,
-                  height: 30.0,
-                  decoration:BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(3.0),
-                    color: Colors.green
-                  ),
-                  child: Text(
-                    '0',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0
-                    ),
-                  ),
-                ),
-
-              ],
+              )
             ),
           ),
 
-        ],
-      ),
-      body: Container(
-        alignment: Alignment.topCenter,
-        color: Colors.black87,
-        child: Container(
-          padding: EdgeInsets.only(top: 5.0),
-          child:  SingleChildScrollView(
-
-            physics: BouncingScrollPhysics(),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(
-                columns, (i) => Column(
-                  children: List.generate(
-                    data[i].length,
-                    (el) => BlocExample(
-                      letter: data[i][el],
-                      columnWidth: columnWidth
-                    )
-                  ),
-                )
-              )
-            ),
-
-          )
-        ),
-      ),
+        );
 
 
 
 
+      },
     );
+
+
 
   }
 }
+
+
 
 class BlocExample extends StatefulWidget {
 
@@ -194,3 +144,69 @@ class _BlocExampleState extends State<BlocExample> with SingleTickerProviderStat
     );
   }
 }
+
+
+
+
+  // appBar: AppBar(
+  //   automaticallyImplyLeading: false,
+  //   elevation: 2.0,
+  //   actions: <Widget>[
+      
+  //     Container(
+  //       margin: EdgeInsets.symmetric(horizontal: 5.0),
+  //       child: Row(
+  //         children: <Widget>[
+
+  //           Container(
+  //             alignment: Alignment.center,
+  //             margin: EdgeInsets.symmetric(horizontal: 5.0),
+  //             width: 30.0,
+  //             height: 30.0,
+  //             decoration:BoxDecoration(
+  //               border: Border.all(
+  //                 color: Colors.white,
+  //                 width: 2,
+  //               ),
+  //               borderRadius: BorderRadius.circular(3.0),
+  //               color: Colors.red
+  //             ),
+  //             child: Text(
+  //               '0',
+  //               overflow: TextOverflow.ellipsis,
+  //               style: TextStyle(
+  //                 fontWeight: FontWeight.bold,
+  //                 fontSize: 16.0
+  //               ),
+  //             ),
+  //           ),
+
+  //           Container(
+  //             alignment: Alignment.center,
+  //             margin: EdgeInsets.symmetric(horizontal: 5.0),
+  //             width: 30.0,
+  //             height: 30.0,
+  //             decoration:BoxDecoration(
+  //               border: Border.all(
+  //                 color: Colors.white,
+  //                 width: 2,
+  //               ),
+  //               borderRadius: BorderRadius.circular(3.0),
+  //               color: Colors.green
+  //             ),
+  //             child: Text(
+  //               '0',
+  //               overflow: TextOverflow.ellipsis,
+  //               style: TextStyle(
+  //                 fontWeight: FontWeight.bold,
+  //                 fontSize: 16.0
+  //               ),
+  //             ),
+  //           ),
+
+  //         ],
+  //       ),
+  //     ),
+
+  //   ],
+  // ),
