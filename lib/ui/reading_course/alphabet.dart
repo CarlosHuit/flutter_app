@@ -92,11 +92,8 @@ class ItemCardLetter extends StatelessWidget {
       height: 108.0,
       child:  Card(
 
-
         child: Row(
           children: <Widget>[
-
-
 
             Expanded(
 

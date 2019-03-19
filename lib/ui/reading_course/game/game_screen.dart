@@ -161,26 +161,27 @@ class _BlocExampleState extends State<BlocExample> with SingleTickerProviderStat
     return GestureDetector(
       onTap: hide,
       child: AnimatedContainer(
+        width:    columnWidth,
+        curve:    Curves.easeInCubic,
+        height:   height,
+        padding:  EdgeInsets.all(3.0),
         duration: Duration(milliseconds: 360),
-        width:  columnWidth,
-        curve: Curves.easeInCubic,
-        height: height,
-        padding: EdgeInsets.all(3.0),
         child: Container(
-          alignment: Alignment.center,
           width:  columnWidth,
           height: columnWidth,
+          alignment:  Alignment.center,
           decoration: BoxDecoration(
              
             borderRadius: BorderRadius.circular(6.0),
             gradient: LinearGradient(
               begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
+              end:   Alignment.topLeft,
               colors: <Color> [
                 Colors.deepOrange[500],
-                Colors.deepOrange[400],
+                Colors.deepOrange[400]
               ]
             )
+
           ),
           child: !showLetter ? SizedBox() : Text(
             letter,
