@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 class Block extends StatefulWidget {
 
@@ -6,7 +8,7 @@ class Block extends StatefulWidget {
   final double columnWidth;
   final bool   highlight;
 
-  final Function() callBack;
+  final Function(String letter) callBack;
 
   const Block({
     Key key,
@@ -28,25 +30,29 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   String get letter => widget.letter;
   double get columnWidth => widget.columnWidth;
   String get correctLetter => widget.correctLetter;
-  Function() get callBack => widget.callBack;
+  Function(String letter) get callBack => widget.callBack;
   bool get highlight => widget.highlight;
 
   double height;
   bool showLetter;
-
+  double blockWidth;
+  double blockHeight;
 
   @override
   void initState() {
 
     super.initState();
     height = columnWidth;
-    showLetter = true;
+    blockHeight = columnWidth;
+    blockWidth  = columnWidth;
+    showLetter  = true;
 
   }
 
-  void onSelect() {
+  void onTap() {
 
-    callBack();
+    print('onTap at ${DateTime.now()}');
+    callBack(letter);
 
     if (letter == correctLetter) {
       print('you have pressed a correct letter');
@@ -57,11 +63,51 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
 
   }
 
+  void pressButton() {
+
+    setState(() {
+      blockHeight = blockHeight - 10;
+      blockWidth  = blockWidth - 10;
+    });
+
+    Future.delayed(Duration( milliseconds: 300, ), 
+      () => setState(() {
+        blockHeight = blockHeight + 10;
+        blockWidth = blockWidth + 10;
+      })
+    );
+
+  }
+
+  onTapDown(TapDownDetails ev) {
+    print('onTapDown at ${DateTime.now()}');
+    setState(() {
+      blockHeight = blockHeight - 10;
+      blockWidth  = blockWidth - 10;
+    });
+  }
+
+  onTapUp(TapUpDetails ev) {
+    print('onTapUp at ${DateTime.now()}');
+    setState(() {
+      blockHeight = blockHeight + 10;
+      blockWidth  = blockWidth + 10;
+    });
+  }
+
+  onTapCancel() {
+    print('onTapCancel at ${DateTime.now()}');
+    setState(() {
+      blockHeight = blockHeight + 10;
+      blockWidth  = blockWidth + 10;
+    });
+  }
+
   void hide() {
 
     setState(() {
       showLetter = false;
-      height     = 0;
+      height = 0;
     });
 
   }
@@ -73,18 +119,23 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
     final hightligthGradient = [ Colors.green, Colors.green ];
 
     return GestureDetector(
-      onTap: onSelect,
+      onTap:       onTap,
+      onTapUp:     onTapUp,
+      onTapDown:   onTapDown,
+      onTapCancel: onTapCancel,
       child: AnimatedContainer(
 
         width:    columnWidth,
+        alignment: Alignment.center,
         curve:    Curves.bounceOut,
         height:   height,
         padding:  EdgeInsets.all(3.0),
         duration: Duration(milliseconds: 920),
-        child:    !showLetter ? SizedBox() : Container(
-
-          width:      columnWidth,
-          height:     columnWidth,
+        child:    !showLetter ? SizedBox() : AnimatedContainer(
+          
+          duration: Duration(milliseconds: 200),
+          width:      blockWidth,
+          height:     blockHeight,
           alignment:  Alignment.center,
           decoration: BoxDecoration(
              

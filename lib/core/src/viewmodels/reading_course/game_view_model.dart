@@ -48,13 +48,15 @@ class GameViewModel {
 
   } 
 
-  void selectOption(String letterSelected) {
+  void selectOption(String letter) {
 
-    final letter =currentData.letter;
+    final correctLetter = currentData.letter;
+    final type = currentData.type;
 
-    if (letterSelected == letter) {
-      tts.speak(term: letter);
+    if (letter == correctLetter) {
+      tts.speak(term: '$letter $type');
     } else {
+      tts.cancel();
       AudioService.playAsset(AudioType.incorrect);
     }
 
