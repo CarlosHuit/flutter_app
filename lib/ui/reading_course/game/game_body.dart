@@ -13,7 +13,7 @@ class GameBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final width =MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
     final columnWidth = 90.0;
 
     return Scaffold(
@@ -36,6 +36,8 @@ class GameBody extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+
+
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10.0),
                             child: Row(
@@ -45,6 +47,7 @@ class GameBody extends StatelessWidget {
                               ],
                             ),
                           ),
+
 
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10.0),
@@ -59,6 +62,8 @@ class GameBody extends StatelessWidget {
                               ),
                             )
                           ),
+
+
                         ],
                       ),
                     ),
@@ -89,8 +94,9 @@ class GameBody extends StatelessWidget {
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Row(
+
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
                     children: List.generate(
                       viewModel.currentData.data.length,
                       (i) => Column(
@@ -99,15 +105,18 @@ class GameBody extends StatelessWidget {
                           (el) => Block(
                             letter: viewModel.currentData.data[i][el],
                             columnWidth: columnWidth,
+                            correctLetter: viewModel.currentData.letter,
                           )
                         ),
                       )
                     ),
-                  ),
 
+                  ),
                 ),
               ),
             )
+
+
           ],
         ),
       ),
