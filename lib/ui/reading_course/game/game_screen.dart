@@ -19,10 +19,10 @@ class _GameScreenState extends State<GameScreen> {
 
 
     final columnWidth = 90.0;
-    final width =MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
 
     return StoreConnector<AppState, GameViewModel>(
-      onInit: (store) => store.dispatch(RCSetInitialDataG()),
+      onInit:    (store) => store.dispatch(RCSetInitialDataG()),
       converter: (store) => GameViewModel.fromStore(store),
       builder: (_, viewModel) {
 
@@ -34,55 +34,72 @@ class _GameScreenState extends State<GameScreen> {
               children: <Widget>[
 
                 /*----- Game Bar -----*/
+
                 Container(
                   color: Colors.blue,
-                  height: 65.0,
-                  child: Stack(
-                    fit: StackFit.expand,
+                  height: 65,
+                  child: Column(
                     children: <Widget>[
- 
+
+
+                      Expanded(
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Counter(color: Colors.red, count: 1),
+                                    Counter(color: Colors.green, count: 0),
+                                  ],
+                                ),
+                              ),
+
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  child: IconButton(
+                                    tooltip: 'Ayuda',
+                                    highlightColor: Colors.transparent,
+                                    iconSize: 28.0,
+                                    icon: Icon(Icons.visibility, color: Colors.white,),
+                                    onPressed: () {},
+                                  ),
+                                )
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+
+                      Container(
+                        height: 5.0,
+                        alignment: Alignment.bottomLeft,
+                        child: ProgressBarIndicator(
+                          w: width,
+                          h: 5.0,
+                          p: 0.10,
+                        ),
+
+                      )
+
+
+                    ],
+                  ),
+                ),
+/* 
                       Positioned(
                         left:   0,
                         bottom: 0,
                         height: 5.0,
                         width:  width,
                         child:  ProgressBarIndicator( w: width, h: 5.0, p : 0 ),
-                      ),
- 
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Counter(color: Colors.red, count: 1),
-                                  Counter(color: Colors.green, count: 0),
-                                ],
-                              ),
-                            ),
+                      ), */
 
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: IconButton(
-                                  tooltip: 'Ayuda',
-                                  highlightColor: Colors.transparent,
-                                  iconSize: 28.0,
-                                  icon: Icon(Icons.visibility, color: Colors.white,),
-                                  onPressed: () {},
-                                ),
-                              )
-                            ),
-                          ],
-                        ),
-                      ),
- 
-                    ],
-                  ),
-                ),
 
                 /*----- Game Content -----*/
                 Expanded(
@@ -176,6 +193,7 @@ class ProgressBarIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: w,
       // padding: EdgeInsets.symmetric(horizontal: 5.0),
       alignment: Alignment.bottomCenter,
       child: Container(
