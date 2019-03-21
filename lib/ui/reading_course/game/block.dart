@@ -33,8 +33,9 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   Function(String letter) get callBack => widget.callBack;
   bool get highlight => widget.highlight;
 
+  bool isWrongSelection;
   double height;
-  bool showLetter;
+  bool   showLetter;
   double blockWidth;
   double blockHeight;
 
@@ -46,24 +47,35 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
     blockHeight = columnWidth;
     blockWidth  = columnWidth;
     showLetter  = true;
+    isWrongSelection = false;
 
   }
 
   void onTap() {
 
-    print('onTap at ${DateTime.now()}');
+    pressEffect();
     callBack(letter);
 
     if (letter == correctLetter) {
-      print('you have pressed a correct letter');
-      hide();
+      correctSelection();
     } else {
-      print('you have pressed a incorrect letter');
+      wrongSelection();
     }
 
   }
 
-  void pressButton() {
+  void wrongSelection() {
+    setState(() {
+      isWrongSelection = true;
+    });
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        isWrongSelection = false;
+      });
+    });
+  }
+
+  void pressEffect() {
 
     setState(() {
       blockHeight = blockHeight - 10;
@@ -80,7 +92,6 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   }
 
   onTapDown(TapDownDetails ev) {
-    print('onTapDown at ${DateTime.now()}');
     setState(() {
       blockHeight = blockHeight - 10;
       blockWidth  = blockWidth - 10;
@@ -88,7 +99,6 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   }
 
   onTapUp(TapUpDetails ev) {
-    print('onTapUp at ${DateTime.now()}');
     setState(() {
       blockHeight = blockHeight + 10;
       blockWidth  = blockWidth + 10;
@@ -96,18 +106,17 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   }
 
   onTapCancel() {
-    print('onTapCancel at ${DateTime.now()}');
     setState(() {
       blockHeight = blockHeight + 10;
       blockWidth  = blockWidth + 10;
     });
   }
 
-  void hide() {
+  void correctSelection() {
 
     setState(() {
       showLetter = false;
-      height = 0;
+      height     = 0;
     });
 
   }
@@ -117,12 +126,13 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
 
     final normalGradient = [ Colors.deepOrange[500], Colors.deepOrange[400] ];
     final hightligthGradient = [ Colors.green, Colors.green ];
+    final wrongGradient = [ Colors.red, Colors.red ];
 
     return GestureDetector(
       onTap:       onTap,
-      onTapUp:     onTapUp,
-      onTapDown:   onTapDown,
-      onTapCancel: onTapCancel,
+      // onTapUp:     onTapUp,
+      // onTapDown:   onTapDown,
+      // onTapCancel: onTapCancel,
       child: AnimatedContainer(
 
         width:    columnWidth,
@@ -146,7 +156,9 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
               begin:  Alignment.bottomRight,
               colors: highlight && letter == correctLetter
                 ? hightligthGradient
-                : normalGradient
+                : isWrongSelection == true
+                  ? wrongGradient 
+                  : normalGradient
             )
 
           ),
