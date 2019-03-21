@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
 class Block extends StatefulWidget {
 
   final String letter;
   final String correctLetter;
   final double columnWidth;
+  final bool   highlight;
 
   final Function() callBack;
 
@@ -14,21 +14,26 @@ class Block extends StatefulWidget {
     @required this.columnWidth,
     @required this.correctLetter,
     @required this.callBack,
+    @required this.highlight,
   }) : super(key: key);
 
   @override
-  _Block createState() => _Block();
+  _BlockState createState() => _BlockState();
 }
 
-class _Block extends State<Block> with SingleTickerProviderStateMixin {
+
+
+class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
 
   String get letter => widget.letter;
   double get columnWidth => widget.columnWidth;
   String get correctLetter => widget.correctLetter;
   Function() get callBack => widget.callBack;
+  bool get highlight => widget.highlight;
 
   double height;
   bool showLetter;
+
 
   @override
   void initState() {
@@ -64,6 +69,8 @@ class _Block extends State<Block> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
+    final normalGradient = [ Colors.deepOrange[500], Colors.deepOrange[400] ];
+    final hightligthGradient = [ Colors.green, Colors.green ];
 
     return GestureDetector(
       onTap: onSelect,
@@ -86,10 +93,9 @@ class _Block extends State<Block> with SingleTickerProviderStateMixin {
             gradient: LinearGradient(
               end:    Alignment.topLeft,
               begin:  Alignment.bottomRight,
-              colors: <Color> [
-                Colors.deepOrange[500],
-                Colors.deepOrange[400]
-              ]
+              colors: highlight && letter == correctLetter
+                ? hightligthGradient
+                : normalGradient
             )
 
           ),

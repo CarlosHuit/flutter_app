@@ -107,6 +107,7 @@ class GameBody extends StatelessWidget {
                             columnWidth: columnWidth,
                             correctLetter: viewModel.currentData.letter,
                             callBack: () => print('callBack is executed at ${DateTime.now()}'),
+                            highlight: viewModel.showCorrectLetters,
                           )
                         ),
                       )
