@@ -6,9 +6,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class GameScreen extends StatefulWidget {
 
-
   @override
   _GameScreenState createState() => _GameScreenState();
+
 }
 
 class _GameScreenState extends State<GameScreen> {
@@ -19,55 +19,191 @@ class _GameScreenState extends State<GameScreen> {
 
 
     final columnWidth = 90.0;
-
+    final width =MediaQuery.of(context).size.width;
 
     return StoreConnector<AppState, GameViewModel>(
       onInit: (store) => store.dispatch(RCSetInitialDataG()),
       converter: (store) => GameViewModel.fromStore(store),
       builder: (_, viewModel) {
 
+
         return Scaffold(
-
           body: Container(
-            alignment: Alignment.topCenter,
             color: Colors.black87,
-            child: Container(
-              padding: EdgeInsets.only(top: 5.0),
-              child:  SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
 
-                physics: BouncingScrollPhysics(),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(
-                    viewModel.currentData.data.length, (i) => Column(
-                      children: List.generate(
-                        viewModel.currentData.data[i].length,
-                        (el) => BlocExample(
-                          letter: viewModel.currentData.data[i][el],
-                          columnWidth: columnWidth
-                        )
+                /*----- Game Bar -----*/
+                Container(
+                  color: Colors.blue,
+                  height: 65.0,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: <Widget>[
+ 
+                      Positioned(
+                        left:   0,
+                        bottom: 0,
+                        height: 5.0,
+                        width:  width,
+                        child:  ProgressBarIndicator( w: width, h: 5.0, p : 0 ),
                       ),
-                    )
-                  )
+ 
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Counter(color: Colors.red, count: 1),
+                                  Counter(color: Colors.green, count: 0),
+                                ],
+                              ),
+                            ),
+
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: IconButton(
+                                  tooltip: 'Ayuda',
+                                  highlightColor: Colors.transparent,
+                                  iconSize: 28.0,
+                                  icon: Icon(Icons.visibility, color: Colors.white,),
+                                  onPressed: () {},
+                                ),
+                              )
+                            ),
+                          ],
+                        ),
+                      ),
+ 
+                    ],
+                  ),
                 ),
 
-              )
+                /*----- Game Content -----*/
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5.0),
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: List.generate(
+                          viewModel.currentData.data.length,
+                          (i) => Column(
+                            children: List.generate(
+                              viewModel.currentData.data[i].length,
+                              (el) => BlocExample(
+                                letter: viewModel.currentData.data[i][el],
+                                columnWidth: columnWidth,
+                              )
+                            ),
+                          )
+                        ),
+                      ),
+
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
-
         );
-
-
-
 
       },
     );
 
 
+  }
 
+}
+
+class Counter extends StatelessWidget {
+
+  final Color color;
+  final int count;
+
+  const Counter({
+    Key key,
+    @required this.color,
+    @required this.count
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.symmetric(horizontal: 3.0),
+      height: 40.0,
+      width: 40.0,
+      decoration: BoxDecoration(
+        color: color,
+        border: Border.all(width: 2.0, color: Colors.white),
+        borderRadius: BorderRadius.circular(50)
+      ),
+      child: Text(
+        '$count',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18.0
+        ),
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
   }
 }
+
+
+class ProgressBarIndicator extends StatelessWidget {
+
+  final double w;
+  final double h;
+  final double p;
+  const ProgressBarIndicator({
+    Key key,
+    @required this.w,
+    @required this.h,
+    @required this.p,
+  }) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // padding: EdgeInsets.symmetric(horizontal: 5.0),
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: h,
+        width:  w,
+        decoration: BoxDecoration(
+          color: Colors.red[100],
+          // borderRadius: BorderRadius.circular(10.0)
+        ),
+        child: Row(
+          children: <Widget>[
+            AnimatedContainer(
+              duration: Duration(milliseconds: 800),
+              width: w * p,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                // borderRadius: BorderRadius.circular(10.0)
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+}
+
+
 
 
 
@@ -147,66 +283,3 @@ class _BlocExampleState extends State<BlocExample> with SingleTickerProviderStat
 
 
 
-
-  // appBar: AppBar(
-  //   automaticallyImplyLeading: false,
-  //   elevation: 2.0,
-  //   actions: <Widget>[
-      
-  //     Container(
-  //       margin: EdgeInsets.symmetric(horizontal: 5.0),
-  //       child: Row(
-  //         children: <Widget>[
-
-  //           Container(
-  //             alignment: Alignment.center,
-  //             margin: EdgeInsets.symmetric(horizontal: 5.0),
-  //             width: 30.0,
-  //             height: 30.0,
-  //             decoration:BoxDecoration(
-  //               border: Border.all(
-  //                 color: Colors.white,
-  //                 width: 2,
-  //               ),
-  //               borderRadius: BorderRadius.circular(3.0),
-  //               color: Colors.red
-  //             ),
-  //             child: Text(
-  //               '0',
-  //               overflow: TextOverflow.ellipsis,
-  //               style: TextStyle(
-  //                 fontWeight: FontWeight.bold,
-  //                 fontSize: 16.0
-  //               ),
-  //             ),
-  //           ),
-
-  //           Container(
-  //             alignment: Alignment.center,
-  //             margin: EdgeInsets.symmetric(horizontal: 5.0),
-  //             width: 30.0,
-  //             height: 30.0,
-  //             decoration:BoxDecoration(
-  //               border: Border.all(
-  //                 color: Colors.white,
-  //                 width: 2,
-  //               ),
-  //               borderRadius: BorderRadius.circular(3.0),
-  //               color: Colors.green
-  //             ),
-  //             child: Text(
-  //               '0',
-  //               overflow: TextOverflow.ellipsis,
-  //               style: TextStyle(
-  //                 fontWeight: FontWeight.bold,
-  //                 fontSize: 16.0
-  //               ),
-  //             ),
-  //           ),
-
-  //         ],
-  //       ),
-  //     ),
-
-  //   ],
-  // ),
