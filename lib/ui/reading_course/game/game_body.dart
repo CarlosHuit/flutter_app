@@ -106,6 +106,7 @@ class GameBody extends StatelessWidget {
                             letter: viewModel.currentData.data[i][el],
                             columnWidth: columnWidth,
                             correctLetter: viewModel.currentData.letter,
+                            callBack: () => print('callBack is executed at ${DateTime.now()}'),
                           )
                         ),
                       )

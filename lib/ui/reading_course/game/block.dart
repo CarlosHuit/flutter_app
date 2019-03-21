@@ -4,14 +4,16 @@ class Block extends StatefulWidget {
 
   final String letter;
   final String correctLetter;
-
   final double columnWidth;
+
+  final Function() callBack;
 
   const Block({
     Key key,
     @required this.letter,
     @required this.columnWidth,
     @required this.correctLetter,
+    @required this.callBack,
   }) : super(key: key);
 
   @override
@@ -23,6 +25,8 @@ class _Block extends State<Block> with SingleTickerProviderStateMixin {
   String get letter => widget.letter;
   double get columnWidth => widget.columnWidth;
   String get correctLetter => widget.correctLetter;
+  Function() get callBack => widget.callBack;
+
   double height;
   bool showLetter;
 
@@ -35,20 +39,25 @@ class _Block extends State<Block> with SingleTickerProviderStateMixin {
 
   }
 
-  void hide() {
+  void onSelect() {
+
+    callBack();
 
     if (letter == correctLetter) {
-
       print('you have pressed a correct letter');
-
-      setState(() {
-        showLetter = false;
-        height     = 0;
-      });
-
+      hide();
     } else {
       print('you have pressed a incorrect letter');
     }
+
+  }
+
+  void hide() {
+
+    setState(() {
+      showLetter = false;
+      height     = 0;
+    });
 
   }
 
@@ -57,7 +66,7 @@ class _Block extends State<Block> with SingleTickerProviderStateMixin {
 
 
     return GestureDetector(
-      onTap: hide,
+      onTap: onSelect,
       child: AnimatedContainer(
 
         width:    columnWidth,
