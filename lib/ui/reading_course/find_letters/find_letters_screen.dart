@@ -39,7 +39,7 @@ class FindLettersScreen extends StatelessWidget {
                       width:     200.0,
                       height:    200.0,
                       alignment: Alignment.center,
-                      child:     Image(
+                      child: Image(
                         image: AssetImage('assets/img100X100/carro-min.png'),
                       )
                     ),

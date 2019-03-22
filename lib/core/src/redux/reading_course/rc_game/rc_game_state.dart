@@ -44,12 +44,11 @@ class RCGameState {
       currentData:        dataLC,
       data:               data,
       currentIndex:       0,
-      selections:          {},
+      selections:         {},
       showCoincidences:   true,
       isSettingData:      false,
       showCorrectLetters: false,
       showWellDoneDialog: false,
-
     );
 
   }
