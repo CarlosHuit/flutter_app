@@ -108,15 +108,21 @@ class GameViewModel {
   @override
   bool operator ==(Object other) =>
     identical(this, other) || other is GameViewModel
-      && runtimeType        == other.runtimeType
-      && selection          == other.selection
-      && data               == other.data
-      && currentData        == other.currentData
-      && isSettingData      == other.isSettingData
-      && showWellDoneDialog == other.showWellDoneDialog
-      && showCoincidences   == other.showCoincidences
-      && showCorrectLetters == other.showCorrectLetters
-      && currentIndex       == other.currentIndex;
+      && runtimeType         == other.runtimeType
+      &&  selection          == other.selection
+      &&  data               == other.data
+      &&  currentData        == other.currentData
+      &&  isSettingData      == other.isSettingData
+      &&  showWellDoneDialog == other.showWellDoneDialog
+      &&  showCoincidences   == other.showCoincidences
+      &&  showCorrectLetters == other.showCorrectLetters
+      &&  currentIndex       == other.currentIndex
+      &&  totalCorrects      == other.totalCorrects
+      &&  pendings           == other.pendings
+      &&  countCorrects      == other.countCorrects
+      &&  countIncorrects    == other.countIncorrects
+      &&  percentPendings    == other.percentPendings;
+
 
   @override
   int get hashCode =>
@@ -127,8 +133,12 @@ class GameViewModel {
     showWellDoneDialog.hashCode ^
     showCoincidences.hashCode ^
     showCorrectLetters.hashCode ^
-    currentIndex.hashCode;
-
+    currentIndex.hashCode ^
+    totalCorrects.hashCode ^
+    pendings.hashCode ^
+    countCorrects.hashCode ^
+    countIncorrects.hashCode ^
+    percentPendings.hashCode;
 
 
 }
