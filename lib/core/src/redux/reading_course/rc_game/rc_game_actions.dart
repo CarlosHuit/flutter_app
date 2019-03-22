@@ -11,3 +11,7 @@ class RCRegisterWrongSelectionG {
   final String letter;
   RCRegisterWrongSelectionG({@required this.letter});
 }
+
+class RCShowWellDoneDialog {
+  
+}

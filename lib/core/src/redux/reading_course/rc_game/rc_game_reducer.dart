@@ -27,6 +27,12 @@ RCGameState readingCourseGameReducer(ReadingCourseState state, dynamic action) {
     );
   }
 
+  if (action is RCShowWellDoneDialog) {
+    return state.game.copyWith(
+      showWellDoneDialog: true
+    );
+  }
+
   return state.game;
 
 

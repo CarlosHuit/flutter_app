@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_state.dart';
@@ -49,13 +51,12 @@ class GameViewModel {
 
   factory GameViewModel.fromStore(Store<AppState> store) {
 
-    final path = store.state.readingCourseState.game;
-    final totalCorrects = path.currentData.totalCorrects;
-    final totalPendings = path.currentData.correctsValidation;
-
-
+    final path            = store.state.readingCourseState.game;
+    final totalCorrects   = path.currentData.totalCorrects;
+    final totalPendings   = path.currentData.correctsValidation;
     final percentPendings = (100 - ((totalPendings * 100) / totalCorrects)) * 0.01;
-    print('tc: $totalCorrects tp: $totalPendings %: $percentPendings');
+
+
 
 
     return GameViewModel(
@@ -81,33 +82,42 @@ class GameViewModel {
 
     final correctLetter = currentData.letter;
     final type = currentData.type;
+    final p = pendings - 1;
 
+    if (pendings > 0) {
 
-    if (letter == correctLetter) {
+      if (letter == correctLetter) {
 
-      print('Total pengings: ${pendings - 1}');
-      // final p =pendings - 1;
-      // if (p > 0) {
-      //   print('puuuuuuuuuuuuuuuuuuum');
-      // }
-      dispatch( RCRegisterCorrectSelectionG(letter: letter) );
-      print('correct selection');
-      tts.speak(term: '$letter $type');
+        dispatch( RCRegisterCorrectSelectionG(letter: letter) );
+        tts.speak(term: '$letter $type');
 
-    } else {
+        if (p == 0) {
+          Future.delayed(
+            Duration(milliseconds: 1200),
+            () => dispatch(RCShowWellDoneDialog())
+          );
+        }
 
-      dispatch( RCRegisterWrongSelectionG(letter: letter) );
-      print('wrong selection');
-      tts.cancel();
-      AudioService.playAsset(AudioType.incorrect);
+      } else {
+
+        dispatch( RCRegisterWrongSelectionG(letter: letter) );
+        tts.cancel();
+        AudioService.playAsset(AudioType.incorrect);
+
+      }
 
     }
 
   }
 
+  void speakWellDoneMsg() {
+    const msg = 'Bien Hecho';
+    tts.speak(term: msg);
+  }
+
   @override
   bool operator ==(Object other) =>
-    identical(this, other) || other is GameViewModel
+    identical( this, other ) || other is GameViewModel
       && runtimeType         == other.runtimeType
       &&  selection          == other.selection
       &&  data               == other.data
@@ -122,7 +132,6 @@ class GameViewModel {
       &&  countCorrects      == other.countCorrects
       &&  countIncorrects    == other.countIncorrects
       &&  percentPendings    == other.percentPendings;
-
 
   @override
   int get hashCode =>
