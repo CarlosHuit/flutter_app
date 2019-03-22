@@ -128,10 +128,10 @@ class GameBody extends StatelessWidget {
             ),
           ),
 
-          viewModel.showWellDoneDialog
+          viewModel.showWellDoneDialog == false
             ? SizedBox()
             : DialogWellDone(
-              callBack: () => print('callbakck'),
+              callBack: viewModel.hideDialogWD,
               speak:    viewModel.speakWellDoneMsg
             )
 

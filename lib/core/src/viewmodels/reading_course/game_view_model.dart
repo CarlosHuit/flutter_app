@@ -17,17 +17,17 @@ class GameViewModel {
   final Map<String, dynamic> selection;
   final List<RCGameData> data;
   final RCGameData currentData;
-  final bool isSettingData;
-  final bool showWellDoneDialog;
-  final bool showCoincidences;
-  final bool showCorrectLetters;
-  final int  currentIndex;
+  final bool   isSettingData;
+  final bool   showWellDoneDialog;
+  final bool   showCoincidences;
+  final bool   showCorrectLetters;
+  final int    currentIndex;
 
-  final int totalCorrects;
-  final int pendings;
+  final int    totalCorrects;
+  final int    pendings;
 
-  final int countCorrects;
-  final int countIncorrects;
+  final int    countCorrects;
+  final int    countIncorrects;
   final double percentPendings;
 
   final Function(dynamic action) dispatch;
@@ -94,7 +94,10 @@ class GameViewModel {
         if (p == 0) {
           Future.delayed(
             Duration(milliseconds: 1200),
-            () => dispatch(RCShowWellDoneDialog())
+            () {
+              showDialogWD();
+              changeCurrentData();
+            }
           );
         }
 
@@ -110,13 +113,30 @@ class GameViewModel {
 
   }
 
+  void changeCurrentData() {
+    if (currentIndex < data.length - 1) {
+      print('changeCurrentData');
+      dispatch(RCChangeCurrentDataG());
+    } else {
+      print('redirect');
+    }
+  }
+
+  void showDialogWD() {
+    dispatch(RCShowWellDoneDialogG());
+  }
+
+  void hideDialogWD() {
+    dispatch(RCHideWellDoneDialogG());
+  }
+
   void speakWellDoneMsg() {
     const msg = 'Bien Hecho';
     tts.speak(term: msg);
   }
 
   @override
-  bool operator ==(Object other) =>
+  bool operator == (Object other) =>
     identical( this, other ) || other is GameViewModel
       && runtimeType         == other.runtimeType
       &&  selection          == other.selection

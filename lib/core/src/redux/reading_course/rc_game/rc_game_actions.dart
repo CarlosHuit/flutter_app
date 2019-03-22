@@ -12,6 +12,8 @@ class RCRegisterWrongSelectionG {
   RCRegisterWrongSelectionG({@required this.letter});
 }
 
-class RCShowWellDoneDialog {
-  
-}
+class RCHideWellDoneDialogG {}
+
+class RCShowWellDoneDialogG {}
+
+class RCChangeCurrentDataG {}
