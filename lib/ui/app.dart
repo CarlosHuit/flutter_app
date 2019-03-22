@@ -1,3 +1,4 @@
+import 'package:app19022019/ui/reading_course/find_letters/find_letters_screen.dart';
 import 'package:app19022019/ui/reading_course/game/game_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:app19022019/core/core.dart';
@@ -13,13 +14,14 @@ import '../ui/reading_course/letter_detail/letter_detail_screen.dart';
 
 
 final Map<String, WidgetBuilder> routes = {
-  '/home':                          (context) => HomeScreen(),
-  '/signin':                        (context) => LoginScreen(),
-  '/signup':                        (context) => SignupScreen(),
-  '/course-detail':                 (context) => CourseDetailScree(), 
-  '/courses/lectura':               (context) => ReadingCourseScreen(), 
-  '/courses/lectura/detalle-letra': (context) => LetterDetailScreen(), 
-  '/courses/lectura/juego':         (context) => GameScreen(), 
+  '/home':                             (context) => HomeScreen(),
+  '/signin':                           (context) => LoginScreen(),
+  '/signup':                           (context) => SignupScreen(),
+  '/course-detail':                    (context) => CourseDetailScree(), 
+  '/courses/lectura':                  (context) => ReadingCourseScreen(), 
+  '/courses/lectura/detalle-letra':    (context) => LetterDetailScreen(), 
+  '/courses/lectura/juego':            (context) => GameScreen(), 
+  '/courses/lectura/encontrar-letras': (context) => FindLettersScreen(), 
 };
 
 

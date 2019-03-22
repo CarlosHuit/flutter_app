@@ -108,7 +108,10 @@ class _DialogWellDoneState extends State<DialogWellDone> {
 
   void executeCallBack() async{
 
-    callBack();
+    Future.delayed(
+      Duration(milliseconds: 200) ,
+      callBack
+    );
 
   }
 

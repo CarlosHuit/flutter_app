@@ -66,6 +66,15 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
       );
     }
 
+    if (action is NavigatorPushReplaceWithTransition) {
+      NavigationKey.key.currentState.pushReplacement(
+        PageTransition(
+          child: action.screen,
+          type: action.transition
+        )
+      );
+    }
+
     next(action);
 
   }

@@ -2,11 +2,14 @@
 import 'dart:async';
 
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_state.dart';
 import 'package:app19022019/core/src/services/audio_service.dart';
 import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
+import 'package:app19022019/ui/reading_course/find_letters/find_letters_screen.dart';
 import 'package:meta/meta.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:redux/redux.dart';
 
 
@@ -113,13 +116,42 @@ class GameViewModel {
 
   }
 
+  void showAllCoincidences() {
+
+    final letter = currentData.letter;
+    final type = currentData.type;
+    final msg = 'Encuentra todas las letras: $letter $type';
+
+    tts.speak( term: msg );
+
+    dispatch(RCShowCoincidencesG());
+
+    Future.delayed(
+      Duration(milliseconds: 3000), () {
+        dispatch(RCHideCoincidencesG());
+      }
+    );
+  }
+
   void changeCurrentData() {
+
     if (currentIndex < data.length - 1) {
-      print('changeCurrentData');
+
       dispatch(RCChangeCurrentDataG());
+
     } else {
-      print('redirect');
+      Future.delayed(
+        Duration(milliseconds: 2500), () {
+
+          dispatch(NavigatorPushReplaceWithTransition(
+            screen: FindLettersScreen(),
+            transition: PageTransitionType.rightToLeft
+          ));
+
+        }
+      );
     }
+
   }
 
   void showDialogWD() {

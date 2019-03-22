@@ -40,8 +40,24 @@ RCGameState readingCourseGameReducer(ReadingCourseState state, dynamic action) {
   }
 
   if (action is RCChangeCurrentDataG) {
+    final nextIndex = state.game.currentIndex + 1;
     return state.game.copyWith(
-      currentData: state.game.data[state.game.currentIndex + 1]
+      currentData: state.game.data[nextIndex],
+      currentIndex: nextIndex
+    );
+  }
+
+  if (action is RCShowCoincidencesG) {
+    return state.game.copyWith(
+      showCoincidences: true,
+      showCorrectLetters: true
+    );
+  }
+
+  if (action is RCHideCoincidencesG) {
+    return state.game.copyWith(
+      showCoincidences: false,
+      showCorrectLetters: false,
     );
   }
 

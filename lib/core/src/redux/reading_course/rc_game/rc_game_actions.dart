@@ -15,5 +15,10 @@ class RCRegisterWrongSelectionG {
 class RCHideWellDoneDialogG {}
 
 class RCShowWellDoneDialogG {}
-
 class RCChangeCurrentDataG {}
+
+
+class RCShowCoincidencesG {}
+
+class RCHideCoincidencesG {}
+  
