@@ -32,8 +32,9 @@ class ProgressBarIndicator extends StatelessWidget {
         child: Row(
           children: <Widget>[
             AnimatedContainer(
-              duration: Duration(milliseconds: 800),
-              width: w * p,
+              width:    w * p,
+              curve:    Curves.easeOut,
+              duration: Duration(milliseconds: 400),
               decoration: BoxDecoration(
                 color: Colors.red,
                 borderRadius: BorderRadius.circular(radius ?? 0.0)

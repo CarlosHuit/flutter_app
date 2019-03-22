@@ -194,4 +194,26 @@ class RCGameData {
     );
   }
 
+  RCGameData copyWith({
+    String letter,
+    List<List<dynamic>> data,
+    String type,
+    int correctsValidation,
+    int totalCorrects,
+    int countCorrects,
+    int countIncorrects,
+    int opportunities,
+  }) {
+    return RCGameData(
+      letter:             letter ?? this.letter,
+      data:               data   ?? this.data,
+      type:               type   ?? this.type,
+      correctsValidation: correctsValidation ?? this.correctsValidation,
+      totalCorrects:      totalCorrects      ?? this.totalCorrects,
+      countCorrects:      countCorrects      ?? this.countCorrects,
+      countIncorrects:    countIncorrects    ?? this.countIncorrects,
+      opportunities:      opportunities      ?? this.opportunities,
+    );
+  }
+
 }

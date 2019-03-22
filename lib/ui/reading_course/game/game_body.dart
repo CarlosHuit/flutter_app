@@ -42,8 +42,8 @@ class GameBody extends StatelessWidget {
                             margin: EdgeInsets.symmetric(horizontal: 10.0),
                             child: Row(
                               children: <Widget>[
-                                Counter(color: Colors.red, count: 1),
-                                Counter(color: Colors.green, count: 0),
+                                Counter(color: Colors.red, count: viewModel.countIncorrects),
+                                Counter(color: Colors.green, count: viewModel.countCorrects),
                               ],
                             ),
                           ),
@@ -76,7 +76,7 @@ class GameBody extends StatelessWidget {
                     child: ProgressBarIndicator(
                       w: width,
                       h: 5.0,
-                      p: 0.10,
+                      p: viewModel.percentPendings,
                     ),
 
                   )
