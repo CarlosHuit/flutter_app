@@ -22,6 +22,11 @@ class _FindLettersScreenState extends State<FindLettersScreen> {
   void initState() {
     super.initState();
     pageController = PageController();
+
+    pageController.addListener(() {
+      print('Current page: ${pageController.page}');
+    });
+
   }
 
   @override
@@ -29,6 +34,7 @@ class _FindLettersScreenState extends State<FindLettersScreen> {
     pageController.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +44,8 @@ class _FindLettersScreenState extends State<FindLettersScreen> {
       onInit:    (store) => store.dispatch(RCSetInitialDataFL()),
       converter: (store) => FindLettersViewModel.fromStore(store),
       builder:   (_, vm) {
+
+
 
         return ScrollConfiguration(
           behavior: MyBehavior(),

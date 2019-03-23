@@ -52,12 +52,15 @@ class FindLettersPage extends StatelessWidget {
                   ),
 
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      data.word.length,
-                      (i) => ItemLetterButton( letter: data.word[i], correctLetter: data.letter )
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        data.word.length,
+                        (i) => ItemLetterButton( letter: data.word[i], correctLetter: data.letter )
+                      ),
                     ),
                   ),
 
