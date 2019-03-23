@@ -29,12 +29,12 @@ class RCFindLettersState {
 
   factory RCFindLettersState.initialState() {
     return RCFindLettersState(
-      data:     null,
-      pendings:  null,
-      disableAll: null,
-      currentData: null,
-      currentIndex: null,
-      isSettingData: null,
+      data:      null,
+      pendings:   null,
+      disableAll:  null,
+      currentData:  null,
+      currentIndex:  null,
+      isSettingData:  null,
       totalOfCorrects: null,
       showCoincidences: null,
       showSuccessDialog: null,

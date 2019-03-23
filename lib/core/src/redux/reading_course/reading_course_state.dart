@@ -1,22 +1,24 @@
-import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_state.dart';
 import 'package:meta/meta.dart';
 
-import './rc_letter_detail/rc_letter_detail_state.dart';
+import './rc_game/rc_game_state.dart';
 import './rc_data/rc_data_state.dart';
+import './rc_find_letters/rc_find_letters_state.dart';
+import './rc_letter_detail/rc_letter_detail_state.dart';
 
 @immutable
 class ReadingCourseState {
 
   final RCDataState         data;
-  final RCLetterDetailState letterDetail;
   final RCGameState         game;
+  final RCLetterDetailState letterDetail;
+  final RCFindLettersState  findLetters;
 
   ReadingCourseState({
     @required this.data,
     @required this.letterDetail,
     @required this.game,
+    @required this.findLetters,
   });
-
 
 
   factory ReadingCourseState.initialState() {
@@ -25,6 +27,7 @@ class ReadingCourseState {
       data:          RCDataState.initialData(),
       game:          RCGameState.initialState(),
       letterDetail:  RCLetterDetailState.initialState(),
+      findLetters:   RCFindLettersState.initialState(),
     );
 
   }
@@ -35,12 +38,14 @@ class ReadingCourseState {
     RCDataState data,
     RCGameState game,
     RCLetterDetailState letterDetail,
+    RCFindLettersState  findLetters
   }) {
 
     return ReadingCourseState(
       data: data ?? this.data,
       game: game ?? this.game,
       letterDetail:  letterDetail ?? this.letterDetail,
+      findLetters:   findLetters  ?? this.findLetters,
     );
   }
 
@@ -52,12 +57,14 @@ class ReadingCourseState {
       && runtimeType   == other.runtimeType
       && data          ==  other.data
       && game          ==  other.game
+      && findLetters   ==  other.findLetters
       && letterDetail  ==  other.letterDetail;
 
   @override
   int get hashCode =>
     data.hashCode ^
     game.hashCode ^
+    findLetters.hashCode ^
     letterDetail.hashCode;
 
 }
