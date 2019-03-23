@@ -1,5 +1,5 @@
 
-import 'package:app19022019/core/src/redux/reading_course/reading_course_state.dart';
+import '../../reading_course/reading_course_state.dart';
 import './rc_find_letters_actions.dart';
 import './rc_find_letters_state.dart';
 
