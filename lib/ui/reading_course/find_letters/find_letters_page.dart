@@ -57,10 +57,7 @@ class FindLettersPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
                       data.word.length,
-                      (i) => ItemLetterButton(
-                      letter: data.word[i],
-                      correctLetter: 'l',
-                      )
+                      (i) => ItemLetterButton( letter: data.word[i], correctLetter: data.letter )
                     ),
                   ),
 
