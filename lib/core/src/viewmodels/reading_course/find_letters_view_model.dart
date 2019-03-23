@@ -29,14 +29,50 @@ class FindLettersViewModel {
     @required this.showCoincidences,
     @required this.disableAll,
     @required this.totalOfCorrects,
-    @required this.pendings
+    @required this.pendings,
   });
 
-/*   factory FindLettersViewModel.fromStore(Store<AppState> store) {
-    final path = store.state.
-    return FindLettersViewModel(
+  factory FindLettersViewModel.fromStore(Store<AppState> store) {
 
+    final path = store.state.readingCourseState.findLetters;
+    return FindLettersViewModel(
+      currentData:       path.currentData,
+      currentIndex:      path.currentIndex,
+      data:              path.data,
+      disableAll:        path.disableAll,
+      isSettingData:     path.isSettingData,
+      pendings:          path.pendings,
+      showCoincidences:  path.showCoincidences,
+      showSuccessDialog: path.showSuccessDialog,
+      totalOfCorrects:   path.totalOfCorrects,
     );
-  } */
+
+  }
+
+  @override 
+  bool operator == (Object other) =>
+    identical(this, other) || other is FindLettersViewModel
+      && runtimeType       == other.runtimeType
+      && data              == other.data
+      && currentData       == other.currentData
+      && currentIndex      == other.currentIndex
+      && isSettingData     == other.isSettingData
+      && showSuccessDialog == other.showSuccessDialog
+      && showCoincidences  == other.showCoincidences
+      && disableAll        == other.disableAll
+      && totalOfCorrects   == other.totalOfCorrects
+      && pendings          == other.pendings;
+
+  @override
+  int get hashCode =>
+    data.hashCode ^
+    disableAll.hashCode ^
+    currentData.hashCode ^
+    currentIndex.hashCode ^
+    isSettingData.hashCode ^
+    totalOfCorrects.hashCode ^
+    showCoincidences.hashCode ^
+    showSuccessDialog.hashCode ^
+    pendings.hashCode;
 
 }
