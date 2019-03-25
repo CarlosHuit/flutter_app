@@ -23,6 +23,10 @@ class CardItemFL extends StatelessWidget {
     final intRadius = 25.0;
 
     return Container(
+
+      alignment:  Alignment.center,
+      margin:     EdgeInsets.symmetric(vertical: 25.0),
+
       decoration: BoxDecoration(
 
         color:        Colors.white,
@@ -31,9 +35,8 @@ class CardItemFL extends StatelessWidget {
         border:       Border.all( color: Colors.yellow[200], width: 4.0 )
 
       ),
-      alignment: Alignment.center,
-      margin:    EdgeInsets.symmetric(vertical: 25.0),
-      child:     Column(
+
+      child: Column(
 
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
