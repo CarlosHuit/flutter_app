@@ -19,6 +19,7 @@ class FindLettersViewModel {
   final bool disableAll;
   final int totalOfCorrects;
   final int pendings;
+  final String currentLetter;
 
   FindLettersViewModel({
     @required this.data,
@@ -30,6 +31,7 @@ class FindLettersViewModel {
     @required this.disableAll,
     @required this.totalOfCorrects,
     @required this.pendings,
+    @required this.currentLetter,
   });
 
   factory FindLettersViewModel.fromStore(Store<AppState> store) {
@@ -45,8 +47,13 @@ class FindLettersViewModel {
       showCoincidences:  path.showCoincidences,
       showSuccessDialog: path.showSuccessDialog,
       totalOfCorrects:   path.totalOfCorrects,
+      currentLetter:     path.currentData.letter
     );
 
+  }
+
+  selectLetter() {
+    
   }
 
   @override 
@@ -61,6 +68,7 @@ class FindLettersViewModel {
       && showCoincidences  == other.showCoincidences
       && disableAll        == other.disableAll
       && totalOfCorrects   == other.totalOfCorrects
+      && currentLetter     == other.currentLetter
       && pendings          == other.pendings;
 
   @override
@@ -69,7 +77,8 @@ class FindLettersViewModel {
     disableAll.hashCode ^
     currentData.hashCode ^
     currentIndex.hashCode ^
-    isSettingData.hashCode ^
+    currentLetter.hashCode ^
+    isSettingData.hashCode  ^
     totalOfCorrects.hashCode ^
     showCoincidences.hashCode ^
     showSuccessDialog.hashCode ^
