@@ -70,7 +70,7 @@ class FindLettersViewModel {
 
 
   void listenInstructions() {
-    final msg = 'Encuentra las letras ${currentData.letter} de la palabra ${currentData.word}';
+    final msg = 'Encuentra las letras: ${currentData.soundLetter} ${currentData.type} de la palabra ${currentData.word}';
     tts.speak(term: msg);
   }
 

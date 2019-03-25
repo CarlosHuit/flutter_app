@@ -47,8 +47,10 @@ class RCFindLettersState {
     final letter = state.data.currentLetter.toLowerCase();
     final words  = state.data.words.firstWhere((el) => el.l == letter).w;
 
+    final soundLetter =state.data.soundLetters[letter];
+
     final List<FLData> els = [];
-    words.forEach((w) => els.add(FLData.initialize(w, letter)) );
+    words.forEach((w) => els.add(FLData.initialize(w, letter, soundLetter)) );
 
 
     return RCFindLettersState(
@@ -129,10 +131,11 @@ class FLData {
   final String letter;
   final String type;
   final int corrects;
-  final List<String> letters;
+  final List<String>         letters;
   final Map<String, dynamic> selections;
   final Map<String, dynamic> wrongSelections;
   final Map<String, dynamic> correctSelections;
+  final String soundLetter;
 
   FLData({
     @required this.word,
@@ -143,10 +146,11 @@ class FLData {
     @required this.letters,
     @required this.selections,
     @required this.wrongSelections,
-    @required this.correctSelections
+    @required this.correctSelections,
+    @required this.soundLetter,
   });
 
-  factory FLData.initialize(String w, String letter) {
+  factory FLData.initialize(String w, String letter, String soundLetter) {
 
     final word    = w.toLowerCase();
     final letters = word.split('');
@@ -155,14 +159,15 @@ class FLData {
     letters.forEach((l) => l == letter ? corrects ++ : null);
 
     return FLData(
-      word:     word,
-      imgUrl:   urlImg,
-      letter:   letter,
-      letters:  letters,
-      corrects: corrects,
-      type:     'minúscula',
-      selections:    {},
-      wrongSelections: {},
+      word:        word,
+      imgUrl:      urlImg,
+      letter:      letter,
+      letters:     letters,
+      corrects:    corrects,
+      soundLetter: soundLetter, 
+      type:        'minúscula',
+      selections:        {},
+      wrongSelections:   {},
       correctSelections: {},
     );
 
