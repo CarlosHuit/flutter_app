@@ -126,28 +126,30 @@ class RCFindLettersState {
 
 class FLData {
 
+  final int corrects;
+  final int pendings;
   final String word;
+  final String type;
   final String imgUrl;
   final String letter;
-  final String type;
-  final int corrects;
-  final List<String>         letters;
+  final String soundLetter;
+  final List<String> letters;
   final Map<String, dynamic> selections;
   final Map<String, dynamic> wrongSelections;
   final Map<String, dynamic> correctSelections;
-  final String soundLetter;
 
   FLData({
     @required this.word,
-    @required this.imgUrl,
-    @required this.letter,
     @required this.type,
-    @required this.corrects,
+    @required this.letter,
+    @required this.imgUrl,
     @required this.letters,
+    @required this.corrects,
+    @required this.pendings,
     @required this.selections,
+    @required this.soundLetter,
     @required this.wrongSelections,
     @required this.correctSelections,
-    @required this.soundLetter,
   });
 
   factory FLData.initialize(String w, String letter, String soundLetter) {
@@ -164,6 +166,7 @@ class FLData {
       letter:      letter,
       letters:     letters,
       corrects:    corrects,
+      pendings:    corrects,
       soundLetter: soundLetter, 
       type:        'minúscula',
       selections:        {},
