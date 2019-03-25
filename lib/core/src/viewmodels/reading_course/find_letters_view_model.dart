@@ -74,6 +74,9 @@ class FindLettersViewModel {
     tts.speak(term: msg);
   }
 
+  void listenWord() {
+    tts.speak(term: currentData.word);
+  }
 
   @override 
   bool operator == (Object other) =>

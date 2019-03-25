@@ -68,11 +68,36 @@ class CardItemFL extends StatelessWidget {
                       borderRadius: BorderRadius.circular(150.0),
                     ),
 
-                    child: Container(
-                      width:     180.0,
-                      height:    180.0,
+                    child: Stack(
                       alignment: Alignment.center,
-                      child:     Image( image: AssetImage(urlImg) )
+                      children: <Widget>[
+
+                        Container(
+                          width:     180.0,
+                          height:    180.0,
+                          alignment: Alignment.center,
+                          child:     Image( image: AssetImage(urlImg) )
+                        ),
+
+                        Material(
+                          color:        Colors.transparent,
+                          borderRadius: BorderRadius.circular(150),
+
+                          child: InkWell(
+                            borderRadius:   BorderRadius.circular(150.0),
+                            highlightColor: Colors.transparent,
+                            onTap:          viewModel.listenWord,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(150.0)
+                              ),
+                            ),
+                          ),
+
+                        )
+
+
+                      ],
                     ),
 
                   ),
@@ -116,6 +141,7 @@ class CardItemFL extends StatelessWidget {
 
             ),
             child: Material(
+
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.only(
@@ -128,6 +154,7 @@ class CardItemFL extends StatelessWidget {
                 highlightColor: Colors.transparent,
 
                 child: Container(
+
                   child: Row(
                     mainAxisAlignment:  MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
