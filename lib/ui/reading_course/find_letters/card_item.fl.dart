@@ -42,13 +42,20 @@ class CardItemFL extends StatelessWidget {
           Expanded(
             
             child: Container(
+
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(intRadius),
+                  topLeft:  Radius.circular(intRadius),
                   topRight: Radius.circular(intRadius),
                 ),
               ),
-              padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+
+              padding: EdgeInsets.only(
+                top:   10.0,
+                left:  10.0,
+                right: 10.0
+              ),
+
               child: Column(
 
                 crossAxisAlignment: CrossAxisAlignment.center,
