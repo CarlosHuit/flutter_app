@@ -76,7 +76,8 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
  
     return AnimatedContainer(
       duration:  Duration(microseconds: 200),
-      margin:    EdgeInsets.symmetric(horizontal: 2.0),
+      margin: EdgeInsets.only(bottom: 8, left: 2, right: 2.0),
+      // margin:    EdgeInsets.symmetric(horizontal: 2.0, vertical: 10.0),
       alignment: Alignment.center,
       constraints: BoxConstraints(
 

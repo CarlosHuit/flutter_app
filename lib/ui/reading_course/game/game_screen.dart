@@ -13,7 +13,7 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return StoreConnector<AppState, GameViewModel>(
-      // TODO dispose 
+      // TODO onDispose reset data 
       onInit:    (store) => store.dispatch(RCSetInitialDataG()),
       converter: (store) => GameViewModel.fromStore(store),
       builder:   (_, viewModel) {
