@@ -59,6 +59,7 @@ class _SwipperCardsState extends State<SwipperCards> {
           letters:       vm.data[index].letters,
           urlImg:        vm.data[index].imgUrl,
           correctLetter: vm.data[index].letter,
+          viewModel:     vm,
         )
 
       ),

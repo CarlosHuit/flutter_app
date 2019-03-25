@@ -4,11 +4,13 @@ class ItemLetterButton extends StatefulWidget {
 
   final String letter;
   final String correctLetter;
+  final Function(String sel) onSelect;
 
   const ItemLetterButton({
     Key key,
     @required this.letter,
-    @required this.correctLetter
+    @required this.correctLetter,
+    @required this.onSelect,
   }) : super(key: key);
 
   @override
@@ -20,9 +22,12 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
 
   String get letter => widget.letter;
   String get correctLetter => widget.correctLetter;
+  Function(String sel) get onSelect => widget.onSelect; 
+
   Color color;
   Color colorShadow;
   bool  wasPressed;
+
 
   @override
   void initState() {
@@ -39,10 +44,13 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
 
     if (wasPressed == false) {
 
-      if (letter == correctLetter)
+      onSelect(letter);
+
+      if (letter == correctLetter) {
         changeToSuccessColor();
-      else
+      } else {
         changeToWrongColor();
+      }
 
     }
 
@@ -75,10 +83,10 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
   Widget build(BuildContext context) {
  
     return AnimatedContainer(
-      duration:  Duration(microseconds: 200),
-      margin: EdgeInsets.only(bottom: 8, left: 2, right: 2.0),
-      // margin:    EdgeInsets.symmetric(horizontal: 2.0, vertical: 10.0),
-      alignment: Alignment.center,
+
+      margin:      EdgeInsets.only(bottom: 8, left: 1.5, right: 1.5),
+      duration:    Duration(microseconds: 200),
+      alignment:   Alignment.center,
       constraints: BoxConstraints(
 
         maxWidth:  50.0,
@@ -110,7 +118,6 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
             ),
           ),
 
-
           Container(
             child: Material(
 
@@ -130,6 +137,7 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
 
         ],
       ),
+
     );
 
   }

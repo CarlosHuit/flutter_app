@@ -1,26 +1,32 @@
+import 'package:app19022019/core/src/viewmodels/reading_course/find_letters_view_model.dart';
 import 'package:flutter/material.dart';
 import './item_letter_button.dart';
 
 class CardItemFL extends StatelessWidget {
 
-  final String urlImg;
-  final List<String> letters;
-  final String correctLetter;
+  final String               urlImg;
+  final List<String>         letters;
+  final String               correctLetter;
+  final FindLettersViewModel viewModel;
 
   const CardItemFL({
     Key key,
     @required this.urlImg,
     @required this.letters,
-    @required this.correctLetter
+    @required this.correctLetter,
+    @required this.viewModel
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final intRadius = 25.0;
+
     return Container(
       decoration: BoxDecoration(
 
         color:        Colors.white,
-        borderRadius: BorderRadius.circular(25.0),
+        borderRadius: BorderRadius.circular(intRadius),
         boxShadow:  [ BoxShadow( color: Colors.black54, blurRadius: 3.0 ) ],
         border:       Border.all( color: Colors.yellow[200], width: 4.0 )
 
@@ -32,13 +38,14 @@ class CardItemFL extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
 
+
           Expanded(
             
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.0),
-                  topRight: Radius.circular(25.0),
+                  topLeft: Radius.circular(intRadius),
+                  topRight: Radius.circular(intRadius),
                 ),
               ),
               padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
@@ -76,13 +83,16 @@ class CardItemFL extends StatelessWidget {
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
+
                         mainAxisAlignment: MainAxisAlignment.center,
                         children:List.generate(
                           letters.length, (i) => ItemLetterButton(
                             correctLetter: correctLetter,
-                            letter: letters[i],
+                            onSelect:      viewModel.selectLetter,
+                            letter:        letters[i],
                           )
                         )
+
                       ),
                     ),
                   )
@@ -93,32 +103,60 @@ class CardItemFL extends StatelessWidget {
             ),
           ),
 
+
           Container(
             height: 60.0,
             decoration: BoxDecoration(
 
               color: Colors.yellow[100],
               borderRadius: BorderRadius.only(
-                bottomLeft:  Radius.circular(25.0),
-                bottomRight: Radius.circular(25.0)
+                bottomLeft:  Radius.circular(intRadius - 5.0),
+                bottomRight: Radius.circular(intRadius - 5.0)
               ),
 
             ),
-            child: Row(
-              mainAxisAlignment:  MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'SIGUIENTE',
-                  style: TextStyle(
-                    color:      Colors.blueGrey[800],
-                    fontWeight: FontWeight.bold,
-                    fontSize:   22.0,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.only(
+                  bottomLeft:  Radius.circular(intRadius - 5.0),
+                  bottomRight: Radius.circular(intRadius - 5.0)
+                ),
+                onTap: viewModel.listenInstructions,
+                splashColor:    Colors.orange[200],
+                splashFactory:  InkRipple.splashFactory,
+                highlightColor: Colors.transparent,
+
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment:  MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+
+                      Text(
+                        'AYUDA',
+                        style: TextStyle(
+                          color:      Colors.blueGrey[800],
+                          fontWeight: FontWeight.bold,
+                          fontSize:   22.0,
+                        ),
+                      ),
+
+                      SizedBox(width: 5.0),
+
+                      Icon(
+                        Icons.volume_up,
+                        size:  28.0,
+                        color: Colors.blueGrey[800]
+                      )
+
+                    ],
                   ),
-                )
-              ],
+                ),
+              ),
             ),
           ),
+
 
         ],
       ),

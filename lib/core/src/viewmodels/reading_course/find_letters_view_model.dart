@@ -1,6 +1,7 @@
 
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_find_letters/rc_find_letters_state.dart';
+import 'package:app19022019/core/src/services/audio_service.dart';
 import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
@@ -52,9 +53,27 @@ class FindLettersViewModel {
 
   }
 
-  selectLetter() {
-    
+
+  void selectLetter(String selection) {
+
+    if (selection == currentLetter) {
+
+      tts.speak(term: selection);
+
+    } else {
+
+      AudioService.playAsset(AudioType.incorrect);
+
+    }
+
   }
+
+
+  void listenInstructions() {
+    final msg = 'Encuentra las letras ${currentData.letter} de la palabra ${currentData.word}';
+    tts.speak(term: msg);
+  }
+
 
   @override 
   bool operator == (Object other) =>
@@ -73,7 +92,7 @@ class FindLettersViewModel {
 
   @override
   int get hashCode =>
-    data.hashCode ^
+    data.hashCode      ^
     disableAll.hashCode ^
     currentData.hashCode ^
     currentIndex.hashCode ^
