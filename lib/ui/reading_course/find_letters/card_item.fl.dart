@@ -135,6 +135,7 @@ class CardItemFL extends StatelessWidget {
 
                 ],
               ),
+ 
             ),
           ),
 
