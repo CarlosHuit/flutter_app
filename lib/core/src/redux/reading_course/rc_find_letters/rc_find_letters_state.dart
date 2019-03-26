@@ -176,4 +176,20 @@ class FLData {
 
   }
 
+  FLData subtractPendings() {
+    return FLData(
+      type:              this.type,
+      word:              this.word,
+      imgUrl:            this.imgUrl,
+      letter:            this.letter,
+      letters:           this.letters,
+      corrects:          this.corrects,
+      pendings:          this.pendings - 1,
+      selections:        this.selections,
+      soundLetter:       this.soundLetter,
+      wrongSelections:   this.wrongSelections,
+      correctSelections: this.correctSelections,
+    );
+  }
+
 }

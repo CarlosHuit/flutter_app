@@ -10,6 +10,13 @@ RCFindLettersState readingCourseFindLettersReducer(ReadingCourseState state, dyn
     return RCFindLettersState.fromStore(state);
   }
 
+  if (action is  RCSubtractCorrectFL) {
+
+    return state.findLetters.copyWith(
+      currentData: state.findLetters.currentData.subtractPendings()
+    );
+
+  }
 
   return state.findLetters;
 
