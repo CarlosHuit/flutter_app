@@ -40,6 +40,7 @@ class _FindLettersScreenState extends State<FindLettersScreen> {
 
     return StoreConnector<AppState, FindLettersViewModel>(
 
+      distinct:  true,
       onInit:    (store) => store.dispatch(RCSetInitialDataFL()),
       converter: (store) => FindLettersViewModel.fromStore(store),
       builder:   (_, vm) => SwipperCards(viewModel: vm),

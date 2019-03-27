@@ -1,5 +1,6 @@
 
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_find_letters/rc_find_letters_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_find_letters/rc_find_letters_state.dart';
 import 'package:app19022019/core/src/services/audio_service.dart';
 import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
@@ -22,6 +23,8 @@ class FindLettersViewModel {
   final int pendings;
   final String currentLetter;
 
+  final Function(dynamic action) dispatch;
+
   FindLettersViewModel({
     @required this.data,
     @required this.currentData,
@@ -33,22 +36,24 @@ class FindLettersViewModel {
     @required this.totalOfCorrects,
     @required this.pendings,
     @required this.currentLetter,
+    @required this.dispatch
   });
 
   factory FindLettersViewModel.fromStore(Store<AppState> store) {
 
     final path = store.state.readingCourseState.findLetters;
     return FindLettersViewModel(
+      data:              path.data,
+      pendings:          path.pendings,
+      disableAll:        path.disableAll,
       currentData:       path.currentData,
       currentIndex:      path.currentIndex,
-      data:              path.data,
-      disableAll:        path.disableAll,
       isSettingData:     path.isSettingData,
-      pendings:          path.pendings,
+      currentLetter:     path.currentData.letter,
+      totalOfCorrects:   path.totalOfCorrects,
       showCoincidences:  path.showCoincidences,
       showSuccessDialog: path.showSuccessDialog,
-      totalOfCorrects:   path.totalOfCorrects,
-      currentLetter:     path.currentData.letter
+      dispatch:          (action) => store.dispatch(action),
     );
 
   }
@@ -59,6 +64,7 @@ class FindLettersViewModel {
     if (selection == currentLetter) {
 
       tts.speak(term: selection);
+      dispatch( RCSubtractCorrectFL() );
 
     } else {
 
@@ -78,32 +84,33 @@ class FindLettersViewModel {
     tts.speak(term: currentData.word);
   }
 
-  @override 
-  bool operator == (Object other) =>
-    identical(this, other) || other is FindLettersViewModel
-      && runtimeType       == other.runtimeType
-      && data              == other.data
-      && currentData       == other.currentData
-      && currentIndex      == other.currentIndex
-      && isSettingData     == other.isSettingData
-      && showSuccessDialog == other.showSuccessDialog
-      && showCoincidences  == other.showCoincidences
-      && disableAll        == other.disableAll
-      && totalOfCorrects   == other.totalOfCorrects
-      && currentLetter     == other.currentLetter
-      && pendings          == other.pendings;
 
   @override
-  int get hashCode =>
-    data.hashCode      ^
-    disableAll.hashCode ^
+  bool operator == (Object other) => 
+    identical(this, other) || other is FindLettersViewModel
+      && runtimeType == other.runtimeType
+      && data == other.data
+      && currentData == other.currentData
+      && currentIndex == other.currentIndex
+      && isSettingData == other.isSettingData
+      && showSuccessDialog == other.showSuccessDialog
+      && showCoincidences == other.showCoincidences
+      && disableAll == other.disableAll
+      && totalOfCorrects == other.totalOfCorrects
+      && pendings == other.pendings
+      && currentLetter == other.currentLetter;
+
+  @override
+  int get hashCode => 
+    data.hashCode ^
     currentData.hashCode ^
     currentIndex.hashCode ^
-    currentLetter.hashCode ^
-    isSettingData.hashCode  ^
-    totalOfCorrects.hashCode ^
-    showCoincidences.hashCode ^
+    isSettingData.hashCode ^
     showSuccessDialog.hashCode ^
-    pendings.hashCode;
+    showCoincidences.hashCode ^
+    disableAll.hashCode ^
+    totalOfCorrects.hashCode ^
+    pendings.hashCode ^
+    currentLetter.hashCode;
 
 }

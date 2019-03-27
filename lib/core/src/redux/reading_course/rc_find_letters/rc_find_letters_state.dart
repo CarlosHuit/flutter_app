@@ -97,33 +97,36 @@ class RCFindLettersState {
 
 
   @override
-  bool operator == (Object other) => 
+  bool operator == (Object other) =>
     identical(this, other) || other is RCFindLettersState
-      && runtimeType       == other.runtimeType
-      && data              == other.data
-      && currentData       == other.currentData
-      && currentIndex      == other.currentIndex
+      && runtimeType == other.runtimeType
+      && data         == other.data
+      && pendings      == other.pendings
+      && disableAll     == other.disableAll
+      && currentData     == other.currentData
+      && currentIndex     == other.currentIndex
       && isSettingData     == other.isSettingData
-      && showSuccessDialog == other.showSuccessDialog
-      && showCoincidences  == other.showCoincidences
-      && disableAll        == other.disableAll
-      && totalOfCorrects   == other.totalOfCorrects
-      && pendings          == other.pendings;
+      && totalOfCorrects    == other.totalOfCorrects
+      && showCoincidences    == other.showCoincidences
+      && showSuccessDialog    == other.showSuccessDialog;
 
   @override
   int get hashCode => 
     data.hashCode ^
-    disableAll.hashCode ^
     currentData.hashCode ^
     currentIndex.hashCode ^
     isSettingData.hashCode ^
-    totalOfCorrects.hashCode ^
-    showCoincidences.hashCode ^
     showSuccessDialog.hashCode ^
+    showCoincidences.hashCode ^
+    disableAll.hashCode ^
+    totalOfCorrects.hashCode ^
     pendings.hashCode;
 
 }
 
+// TODO 54294617 m
+
+@immutable
 class FLData {
 
   final int corrects;
@@ -161,19 +164,47 @@ class FLData {
     letters.forEach((l) => l == letter ? corrects ++ : null);
 
     return FLData(
-      word:        word,
-      imgUrl:      urlImg,
-      letter:      letter,
-      letters:     letters,
-      corrects:    corrects,
-      pendings:    corrects,
-      soundLetter: soundLetter, 
-      type:        'minúscula',
+      word:              word,
+      type:              'minúscula',
+      imgUrl:            urlImg,
+      letter:            letter,
+      letters:           letters,
+      corrects:          corrects,
+      pendings:          corrects,
+      soundLetter:       soundLetter, 
       selections:        {},
       wrongSelections:   {},
       correctSelections: {},
     );
 
+  }
+
+  FLData copyWith({
+    int corrects,
+    int pendings,
+    String word,
+    String type,
+    String imgUrl,
+    String letter,
+    String soundLetter,
+    List<String> letters,
+    Map<String, dynamic> selections,
+    Map<String, dynamic> wrongSelections,
+    Map<String, dynamic> correctSelections,
+  }) {
+    return FLData(
+      word: word ?? this.word,
+      type: type ?? this.type,
+      letter: letter ?? this.letter,
+      imgUrl: imgUrl ?? this.imgUrl,
+      letters: letters ?? this.letters,
+      corrects: corrects ?? this.corrects,
+      pendings: pendings ?? this.pendings,
+      selections: selections ?? this.selections,
+      soundLetter: soundLetter ?? this.soundLetter,
+      wrongSelections: wrongSelections ?? this.wrongSelections,
+      correctSelections: correctSelections ?? this.correctSelections,
+    );
   }
 
   FLData subtractPendings() {

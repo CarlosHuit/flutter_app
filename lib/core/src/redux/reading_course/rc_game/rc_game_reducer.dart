@@ -13,18 +13,20 @@ RCGameState readingCourseGameReducer(ReadingCourseState state, dynamic action) {
   if (action is RCRegisterCorrectSelectionG) {
     return state.game.copyWith(
       currentData: state.game.currentData.copyWith(
-        countCorrects: state.game.currentData.countCorrects + 1,
+        countCorrects:      state.game.currentData.countCorrects + 1,
         correctsValidation: state.game.currentData.correctsValidation - 1,
       )
     );
   }
 
   if (action is RCRegisterWrongSelectionG) {
+
     return state.game.copyWith(
-      currentData: state.game.currentData.copyWith(
+      currentData:       state.game.currentData.copyWith(
         countIncorrects: state.game.currentData.countIncorrects + 1
       )
     );
+
   }
 
   if (action is RCShowWellDoneDialogG) {

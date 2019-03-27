@@ -36,6 +36,7 @@ class RCGameState {
     final slLowerCase = path.data.similarLetters.firstWhere((el) => el.l == letterLC).sl;
     final slUpperCase = path.data.similarLetters.firstWhere((el) => el.l == letterUC).sl;
 
+    // TODO change the screnWidth
     final dataLC = RCGameData.initialize(slLowerCase, letterLC, 411.42857142857144, 'minúscula');
     final dataUC = RCGameData.initialize(slUpperCase, letterUC, 411.42857142857144, 'mayúscula');
     final data = [dataLC, dataUC];
