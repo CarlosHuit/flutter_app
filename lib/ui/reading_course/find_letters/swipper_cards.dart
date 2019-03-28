@@ -34,9 +34,7 @@ class _SwipperCardsState extends State<SwipperCards> {
     super.dispose();
   }
 
-  nextPage() {
-    controller.next();
-  }
+  nextPage() =>  controller.next();
 
   @override
   Widget build(BuildContext context) {
@@ -46,24 +44,29 @@ class _SwipperCardsState extends State<SwipperCards> {
       backgroundColor: Colors.red,
       body: Swiper(
         
-        outer:       true,
-        scale:       0.85,
-        controller:  controller,
-        itemCount:   vm.data.length,
-        // physics:     NeverScrollableScrollPhysics(),
+        outer:      true,
+        scale:      0.85,
+        controller: controller,
+        itemCount:  vm.data.length,
+        physics:     NeverScrollableScrollPhysics(),
         viewportFraction: 0.95,
 
         pagination:  SwiperPagination(
           alignment: Alignment.topCenter,
-          builder:   SwiperPagination.dots
+          builder:   SwiperPagination.dots,
+          margin:    EdgeInsets.only(bottom: 5.0)
         ),
 
-        itemBuilder: (_, index) => CardItemFL(
-          letters:       vm.data[index].letters,
-          urlImg:        vm.data[index].imgUrl,
-          correctLetter: vm.data[index].letter,
-          viewModel:     vm,
-        )
+        itemBuilder: (_, index) {
+
+          return CardItemFL(
+            letters:       vm.data[index].letters,
+            urlImg:        vm.data[index].imgUrl,
+            correctLetter: vm.data[index].letter,
+            viewModel:     vm,
+          );
+
+        }
 
       ),
 

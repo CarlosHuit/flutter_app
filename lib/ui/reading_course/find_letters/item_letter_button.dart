@@ -5,12 +5,15 @@ class ItemLetterButton extends StatefulWidget {
   final String letter;
   final String correctLetter;
   final Function(String sel) onSelect;
+  final Size size;
+
 
   const ItemLetterButton({
     Key key,
     @required this.letter,
     @required this.correctLetter,
     @required this.onSelect,
+    @required this.size
   }) : super(key: key);
 
   @override
@@ -24,6 +27,8 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
   String get correctLetter => widget.correctLetter;
   Function(String sel) get onSelect => widget.onSelect; 
 
+  Size get size => widget.size; 
+
   Color color;
   Color colorShadow;
   bool  wasPressed;
@@ -34,8 +39,8 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
 
     super.initState();
     color       = Colors.lightBlue;
-    wasPressed  = false;
     colorShadow = Colors.lightBlue[700];
+    wasPressed  = false;
 
   }
 
@@ -89,10 +94,10 @@ class _ItemLetterButtonState extends State<ItemLetterButton> {
       alignment:   Alignment.center,
       constraints: BoxConstraints(
 
-        maxWidth:  50.0,
-        minWidth:  48.0,
-        minHeight: 80.0,
-        maxHeight: 80.0
+        minWidth:  size.width - 10,
+        maxWidth:  size.width,
+        minHeight: size.height - 10,
+        maxHeight: size.height
 
       ),
       decoration: BoxDecoration(
