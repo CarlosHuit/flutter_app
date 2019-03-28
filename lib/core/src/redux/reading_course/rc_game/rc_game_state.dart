@@ -79,7 +79,7 @@ class RCGameState {
   }) {
     return RCGameState(
       data:               data     ?? this.data,
-      selections:          selections  ?? this.selections,
+      selections:         selections  ?? this.selections,
       currentData:        currentData  ?? this.currentData,
       currentIndex:       currentIndex   ?? this.currentIndex,
       isSettingData:      isSettingData    ?? this.isSettingData,

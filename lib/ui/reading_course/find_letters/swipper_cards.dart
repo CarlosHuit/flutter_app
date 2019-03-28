@@ -38,6 +38,8 @@ class _SwipperCardsState extends State<SwipperCards> {
   @override
   Widget build(BuildContext context) {
 
+    print('viewModelPendings: ${vm.currentData.pendings}');
+
     return Scaffold(
 
       backgroundColor: Colors.red,
