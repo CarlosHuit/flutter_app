@@ -49,7 +49,7 @@ class _SwipperCardsState extends State<SwipperCards> {
         scale:      0.85,
         controller: controller,
         itemCount:  vm.data.length,
-        // physics:     NeverScrollableScrollPhysics(),
+        physics:     NeverScrollableScrollPhysics(),
         viewportFraction: 0.95,
 
         pagination:  SwiperPagination(
