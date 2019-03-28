@@ -41,7 +41,7 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(RCSetInitialDataLD(action.letter));
 
       // TODO -> dispacth action to start course
-      // next(NavigatorPushRCLetterDetail());
+
       next(NavigatorPushWithTransition(
         screen: FindLettersScreen(),
         transition: PageTransitionType.rightToLeft

@@ -57,7 +57,7 @@ class RCGameState {
   factory RCGameState.initialState() {
     return RCGameState(
       data:     null,
-      selections:  null,
+      selections: null,
       currentData:  null,
       currentIndex:   null,
       isSettingData:    null,
@@ -205,14 +205,14 @@ class RCGameData {
     int opportunities,
   }) {
     return RCGameData(
+      data:               data ?? this.data,
+      type:               type ?? this.type,
       letter:             letter ?? this.letter,
-      data:               data   ?? this.data,
-      type:               type   ?? this.type,
+      totalCorrects:      totalCorrects ?? this.totalCorrects,
+      countCorrects:      countCorrects ?? this.countCorrects,
+      opportunities:      opportunities ?? this.opportunities,
+      countIncorrects:    countIncorrects ?? this.countIncorrects,
       correctsValidation: correctsValidation ?? this.correctsValidation,
-      totalCorrects:      totalCorrects      ?? this.totalCorrects,
-      countCorrects:      countCorrects      ?? this.countCorrects,
-      countIncorrects:    countIncorrects    ?? this.countIncorrects,
-      opportunities:      opportunities      ?? this.opportunities,
     );
   }
 

@@ -6,13 +6,12 @@ import './card_item.fl.dart';
 class SwipperCards extends StatefulWidget {
 
   final FindLettersViewModel viewModel;
-  SwipperCards({
-    Key key,
-    this.viewModel
-  }) : super(key: key);
+
+  SwipperCards({ Key key, this.viewModel }) : super(key: key);
 
   @override
   _SwipperCardsState createState() => _SwipperCardsState();
+
 }
 
 class _SwipperCardsState extends State<SwipperCards> {

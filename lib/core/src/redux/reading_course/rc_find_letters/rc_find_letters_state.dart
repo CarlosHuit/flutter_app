@@ -1,7 +1,7 @@
 import 'package:app19022019/core/src/redux/reading_course/reading_course_state.dart';
 import 'package:meta/meta.dart';
 
-@immutable
+// @immutable
 class RCFindLettersState {
 
   final List<FLData> data;
@@ -94,39 +94,38 @@ class RCFindLettersState {
 
   }
 
-
-
   @override
   bool operator == (Object other) =>
-    identical(this, other) || other is RCFindLettersState
+    identical( this, other) || other is RCFindLettersState
       && runtimeType == other.runtimeType
-      && data         == other.data
-      && pendings      == other.pendings
-      && disableAll     == other.disableAll
-      && currentData     == other.currentData
-      && currentIndex     == other.currentIndex
-      && isSettingData     == other.isSettingData
-      && totalOfCorrects    == other.totalOfCorrects
-      && showCoincidences    == other.showCoincidences
-      && showSuccessDialog    == other.showSuccessDialog;
+      && data == other.data
+      && pendings == other.pendings
+      && disableAll == other.disableAll
+      && currentData == other.currentData
+      && currentIndex == other.currentIndex
+      && isSettingData == other.isSettingData
+      && totalOfCorrects == other.totalOfCorrects
+      && showCoincidences == other.showCoincidences
+      && showSuccessDialog == other.showSuccessDialog;
 
   @override
   int get hashCode => 
     data.hashCode ^
+    pendings.hashCode ^
+    disableAll.hashCode ^
     currentData.hashCode ^
     currentIndex.hashCode ^
     isSettingData.hashCode ^
-    showSuccessDialog.hashCode ^
-    showCoincidences.hashCode ^
-    disableAll.hashCode ^
     totalOfCorrects.hashCode ^
-    pendings.hashCode;
+    showCoincidences.hashCode ^
+    showSuccessDialog.hashCode;
+
 
 }
 
 // TODO 54294617 m
 
-@immutable
+// @immutable
 class FLData {
 
   final int corrects;
@@ -193,16 +192,16 @@ class FLData {
     Map<String, dynamic> correctSelections,
   }) {
     return FLData(
-      word: word ?? this.word,
-      type: type ?? this.type,
-      letter: letter ?? this.letter,
-      imgUrl: imgUrl ?? this.imgUrl,
-      letters: letters ?? this.letters,
-      corrects: corrects ?? this.corrects,
-      pendings: pendings ?? this.pendings,
-      selections: selections ?? this.selections,
-      soundLetter: soundLetter ?? this.soundLetter,
-      wrongSelections: wrongSelections ?? this.wrongSelections,
+      word:    word ?? this.word,
+      type:     type ?? this.type,
+      letter:    letter ?? this.letter,
+      imgUrl:     imgUrl ?? this.imgUrl,
+      letters:     letters ?? this.letters,
+      corrects:     corrects ?? this.corrects,
+      pendings:      pendings ?? this.pendings,
+      selections:     selections ?? this.selections,
+      soundLetter:     soundLetter ?? this.soundLetter,
+      wrongSelections:  wrongSelections ?? this.wrongSelections,
       correctSelections: correctSelections ?? this.correctSelections,
     );
   }

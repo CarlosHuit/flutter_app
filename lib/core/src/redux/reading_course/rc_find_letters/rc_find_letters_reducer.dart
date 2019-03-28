@@ -12,9 +12,12 @@ RCFindLettersState readingCourseFindLettersReducer(ReadingCourseState state, dyn
 
   if (action is  RCSubtractCorrectFL) {
 
-    print('Hello World: ${state.findLetters.pendings}');
+    print('Hello World:Pendings ${state.findLetters.pendings}');
+
     return state.findLetters.copyWith(
-      currentData: state.findLetters.currentData.subtractPendings()
+      currentData: state.findLetters.currentData.copyWith(
+        pendings: 0
+      )
     );
 
   }

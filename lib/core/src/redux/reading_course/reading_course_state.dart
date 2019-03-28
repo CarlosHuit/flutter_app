@@ -47,6 +47,7 @@ class ReadingCourseState {
       letterDetail:  letterDetail ?? this.letterDetail,
       findLetters:   findLetters  ?? this.findLetters,
     );
+
   }
 
   
@@ -55,16 +56,16 @@ class ReadingCourseState {
   bool operator == (Object other) => 
     identical(this, other) || other is ReadingCourseState
       && runtimeType   == other.runtimeType
-      && data          ==  other.data
-      && game          ==  other.game
-      && findLetters   ==  other.findLetters
-      && letterDetail  ==  other.letterDetail;
+      && data == other.data
+      && game == other.game
+      && letterDetail == other.letterDetail
+      && findLetters == other.findLetters;
 
   @override
   int get hashCode =>
     data.hashCode ^
     game.hashCode ^
-    findLetters.hashCode ^
-    letterDetail.hashCode;
+    letterDetail.hashCode ^
+    findLetters.hashCode;
 
 }

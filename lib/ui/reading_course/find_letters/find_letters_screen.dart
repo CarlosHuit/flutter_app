@@ -1,5 +1,6 @@
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_find_letters/rc_find_letters_actions.dart';
+import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/find_letters_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -14,17 +15,16 @@ class FindLettersScreen extends StatefulWidget {
 
 class _FindLettersScreenState extends State<FindLettersScreen> {
 
+  final SpeechSynthesisService tts = SpeechSynthesisService();
 
   PageController pageController;
 
   @override
   void initState() {
+
     super.initState();
     pageController = PageController();
-
-    pageController.addListener(() {
-      print('Current page: ${pageController.page}');
-    });
+    pageController.addListener(() => print('Current page: ${pageController.page}') );
 
   }
 
@@ -42,11 +42,14 @@ class _FindLettersScreenState extends State<FindLettersScreen> {
 
       distinct:  true,
       onInit:    (store) => store.dispatch(RCSetInitialDataFL()),
+      onDispose: (store) => tts.cancel(),
       converter: (store) => FindLettersViewModel.fromStore(store),
       builder:   (_, vm) => SwipperCards(viewModel: vm),
 
     );
 
   }
+
+
 }
 

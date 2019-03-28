@@ -225,8 +225,11 @@ class _CardItemListOptionsState extends State<CardItemListOptions> {
 
     final size = MediaQuery.of(ctx).size;
 
-    final cardWidth = size.width < maxWidth ? (size.width * 0.95) - 40 : maxCardWidth - 40;
-    final btnWidth  = (cardWidth  - (letters.length * 3)) / letters.length;
+    final cardWidth = size.width < maxWidth
+      ? (size.width * 0.95) - 40
+      : maxCardWidth - 40;
+
+    final btnWidth = (cardWidth  - (letters.length * 3)) / letters.length;
 
     btnSize = {
       1:  Size(50.0, 70.0),
@@ -292,10 +295,13 @@ class CardItemImage extends StatelessWidget {
 
     final maxWidth     = 400.0;
     final maxCardWidth = 380.0;
-    final width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
 
-    final circleSize = width < maxWidth ? width * 0.80 : maxCardWidth * 0.80;
-    final imgSize    = circleSize * 0.5625;
+    final circleSize = width < maxWidth
+      ? width * 0.80
+      : maxCardWidth * 0.80;
+
+    final imgSize = circleSize * 0.5625;
 
     return Container(
 
@@ -423,6 +429,8 @@ class CardItemButtonHelp extends StatelessWidget {
     );
 
   }
+
+
 }
 
 
