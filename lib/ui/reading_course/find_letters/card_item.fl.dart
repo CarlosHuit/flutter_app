@@ -51,7 +51,7 @@ class _CardItemFLState extends State<CardItemFL> {
     _boxDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(_intRadius),
       boxShadow:  [ BoxShadow( color: Colors.black54, blurRadius: 3.0 ) ],
-      border:       Border.all( color: Colors.yellow[200], width: 4.0 ),
+      border:       Border.all( color: Colors.yellow[100], width: 4.0 ),
       color:        Colors.white,
     );
 
@@ -132,7 +132,7 @@ class CardItemContent extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           // color: Colors.red[100],
-          color: Colors.yellow[100],
+          // color: Colors.yellow[100],
           borderRadius: BorderRadius.only(
             topLeft:  Radius.circular(intRadius - 5),
             topRight: Radius.circular(intRadius - 5),
@@ -241,8 +241,6 @@ class _CardItemListOptionsState extends State<CardItemListOptions> {
       10: Size(btnWidth, 70.0),
     };
 
-
-    print('width ${size.width} - cardWidth $cardWidth - btnWidth $btnWidth - length ${letters.length} - words ${letters.join()} - h: ${DateTime.now()}');
 
   }
 
