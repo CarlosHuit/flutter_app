@@ -76,11 +76,13 @@ class _SwipperCardsState extends State<SwipperCards> {
         
         outer:      true,
         scale:      0.85,
-        onIndexChanged: (i) => vm.listenInstructions(),
         controller: controller,
+        curve:      Curves.easeIn,
+        duration:   450,
         itemCount:  vm.data.length,
         physics:    NeverScrollableScrollPhysics(),
         viewportFraction: 0.95,
+        onIndexChanged:   (i) => vm.listenInstructions(),
 
         pagination:  SwiperPagination(
           alignment: Alignment.topCenter,
