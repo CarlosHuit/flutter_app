@@ -58,8 +58,7 @@ class _SwipperCardsState extends State<SwipperCards> {
 
     } else {
 
-      print('dispatch action to navigate to other screen');
-      Navigator.pop(context);
+      vm.redirection();
 
     }
 

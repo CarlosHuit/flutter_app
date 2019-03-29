@@ -1,10 +1,13 @@
 
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_find_letters/rc_find_letters_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_find_letters/rc_find_letters_state.dart';
 import 'package:app19022019/core/src/services/audio_service.dart';
 import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
+import 'package:app19022019/ui/reading_course/draw_letters/draw_letters_screen.dart';
 import 'package:meta/meta.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:redux/redux.dart';
 
 @immutable
@@ -82,6 +85,13 @@ class FindLettersViewModel {
     tts.speak(term: msg);
   }
 
+  void redirection() {
+    print('dispatch event to redirect');
+    dispatch(NavigatorPushReplaceWithTransition(
+      screen: DrawLettersScreen(),
+      transition: PageTransitionType.rightToLeft
+    ));
+  }
 
   void listenWord() {
     tts.speak(term: currentData.word);
@@ -89,7 +99,6 @@ class FindLettersViewModel {
 
 
   void changeCurrentData() {
-    print('dispatch Action to change current data');
     dispatch(RCChangeCurrentDataFL());
   }
 
