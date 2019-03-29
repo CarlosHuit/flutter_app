@@ -44,7 +44,7 @@ class FindLettersViewModel {
     final path = store.state.readingCourseState.findLetters;
     return FindLettersViewModel(
       data:              path.data,
-      pendings:          path.pendings,
+      pendings:          path.currentData.pendings,
       disableAll:        path.disableAll,
       currentData:       path.currentData,
       currentIndex:      path.currentIndex,
@@ -68,6 +68,7 @@ class FindLettersViewModel {
 
     } else {
 
+      tts.cancel();
       AudioService.playAsset(AudioType.incorrect);
 
     }
@@ -76,6 +77,7 @@ class FindLettersViewModel {
 
 
   void listenInstructions() {
+    tts.cancel();
     final msg = 'Encuentra las letras: ${currentData.soundLetter} ${currentData.type} de la palabra ${currentData.word}';
     tts.speak(term: msg);
   }
@@ -86,20 +88,26 @@ class FindLettersViewModel {
   }
 
 
+  void changeCurrentData() {
+    print('dispatch Action to change current data');
+    dispatch(RCChangeCurrentDataFL());
+  }
+
+
   @override
   bool operator == (Object other) => 
     identical(this, other) || other is FindLettersViewModel
-      && runtimeType == other.runtimeType
-      && data == other.data
-      && currentData == other.currentData
-      && currentIndex == other.currentIndex
-      && isSettingData == other.isSettingData
+      && runtimeType       == other.runtimeType
+      && data              == other.data
+      && currentData       == other.currentData
+      && currentIndex      == other.currentIndex
+      && isSettingData     == other.isSettingData
       && showSuccessDialog == other.showSuccessDialog
-      && showCoincidences == other.showCoincidences
-      && disableAll == other.disableAll
-      && totalOfCorrects == other.totalOfCorrects
-      && pendings == other.pendings
-      && currentLetter == other.currentLetter;
+      && showCoincidences  == other.showCoincidences
+      && disableAll        == other.disableAll
+      && totalOfCorrects   == other.totalOfCorrects
+      && pendings          == other.pendings
+      && currentLetter     == other.currentLetter;
 
   @override
   int get hashCode => 

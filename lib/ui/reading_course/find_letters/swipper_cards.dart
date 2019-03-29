@@ -22,23 +22,53 @@ class _SwipperCardsState extends State<SwipperCards> {
 
   @override
   void initState() {
+
     super.initState();
     controller = SwiperController();
+    vm.listenInstructions();
   }
 
+  @override
+  void didUpdateWidget(SwipperCards oldWidget) {
+
+    super.didUpdateWidget(oldWidget);
+
+
+    if (vm.currentData.pendings == 0) {
+      Future.delayed(Duration(milliseconds: 1300), nextPage);
+    }
+
+  }
 
   @override
   void dispose() {
+
     controller.dispose();
     super.dispose();
+
   }
 
-  nextPage() =>  controller.next();
+
+  void nextPage() {
+
+    if (vm.currentIndex < vm.data.length - 1) {
+
+      vm.changeCurrentData();
+      controller.next();
+
+    } else {
+
+      print('dispatch action to navigate to other screen');
+      Navigator.pop(context);
+
+    }
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
-    print('viewModelPendings: ${vm.currentData.pendings}');
 
     return Scaffold(
 
@@ -47,9 +77,10 @@ class _SwipperCardsState extends State<SwipperCards> {
         
         outer:      true,
         scale:      0.85,
+        onIndexChanged: (i) => vm.listenInstructions(),
         controller: controller,
         itemCount:  vm.data.length,
-        physics:     NeverScrollableScrollPhysics(),
+        physics:    NeverScrollableScrollPhysics(),
         viewportFraction: 0.95,
 
         pagination:  SwiperPagination(
