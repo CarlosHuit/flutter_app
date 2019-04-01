@@ -1,9 +1,10 @@
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
-import 'package:app19022019/ui/components/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import './blackboard_controls/custom_pop_up_menu.dart';
 import './blackboard_controls/stroke_color_selector.dart';
 import './blackboard_controls/stroke_size_selector.dart';
+import './blackboard_controls/blackboard_top_control_bar.dart';
+import './blackboard_controls/blackboard_bottom_control_bar.dart';
 import './handwriting.dart';
 import './blackboard.dart';
 
@@ -26,56 +27,21 @@ class DrawLettersBody extends StatefulWidget {
 class _DrawLettersBodyState extends State<DrawLettersBody> {
 
   List<Offset> _points = <Offset>[];
-  double val;
-  bool showStrokeSizeSelector;
-  bool showStrokeColorSelector;
-  bool showGuideLines;
 
   DrawLettersViewModel get vm => widget.vm;
-
-  void showMenuI() {
-
-    showMenu(
-      context: context,
-      items: [PopupMenuItem(child: Text('data'),)],
-    );
-
-  }
-
 
   @override
   void initState() {
     super.initState();
-    val = 12.0;
-    showStrokeSizeSelector = false;
-    showStrokeColorSelector = false;
-    showGuideLines = true;
   }
 
-
-  void changeValue(double v) {
+  handlePanUpdate(DragUpdateDetails details) {
     setState(() {
-      val = v;
+      RenderBox object = context.findRenderObject();
+      Offset _localPosition = object.globalToLocal(details.globalPosition);
+      _points = List.from(_points)..add(_localPosition);
     });
   }
-
-
-  void toggleGuideLines() {
-    setState(() {
-      showGuideLines = !showGuideLines;
-    });
-  }
-
-
-  void toggleStrokeSizeSelector() => setState(() {
-    showStrokeSizeSelector = !showStrokeSizeSelector;
-  });
-
-
-  void toggleStrokeColorSelector() => setState(() {
-    showStrokeColorSelector =!showStrokeColorSelector;
-  });
-
 
   @override
   Widget build(BuildContext context) {
@@ -88,16 +54,10 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
         children: <Widget>[
 
 
-          /// Background + Handwriting + Blackboard
           Container(
+            color: Colors.grey[100],
             child: Stack(
               children: <Widget>[
-
-
-                /// Background
-                Container(
-                  color: Colors.grey[100],
-                ),
 
 
                 /// HandWrinting
@@ -120,15 +80,8 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
 
                 /// Blackboard
                 Container(
-                  // color: Colors.grey[100],
                   child: GestureDetector(
-                    onPanUpdate: (DragUpdateDetails details) {
-                      setState(() {
-                        RenderBox object = context.findRenderObject();
-                        Offset _localPosition = object.globalToLocal(details.globalPosition);
-                        _points = List.from(_points)..add(_localPosition);
-                      });
-                    },
+                    onPanUpdate: handlePanUpdate,
                     onPanEnd: (DragEndDetails details) => _points.add(null),
                     onPanCancel: () => _points.add(null),
                     child: CustomPaint(
@@ -144,143 +97,41 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
           ),
 
 
-
-
           /// TopControlBar
-          PositionedDirectional(
-            start: 0,
-            end:   0,
-            top:   0,
-            child: Container(
-              height: 60.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: <BoxShadow> [
-                  BoxShadow(color: Colors.black45, blurRadius: 3.0)
-                ]
-              ),
-              child: Row(
-                children: <Widget>[
-
-
-                  /// FontSizeIcon
-                  CustomIconButton(
-                    icon: Icon(Icons.create, size: 28.0),
-                    height: 50,
-                    width: 50,
-                    onTap: toggleStrokeSizeSelector,
-                  ),
-
-
-                  /// ColorsSelectorIcon
-                  CustomIconButton(
-                    icon: Icon(Icons.format_color_fill, size: 28.0,),
-                    height: 50,
-                    width: 50,
-                    onTap: toggleStrokeColorSelector,
-                  ),
-
-
-                    /// ShowGuideLinesIcon
-                  CustomIconButton(
-                    height: 50.0,
-                    width: 50.0,
-                    icon: Icon(
-                      showGuideLines == true
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                        size: 28.0,
-                    ),
-                    onTap: toggleGuideLines,
-                  ),
-
-
-                ],
-              ),
-            ),
-            
-          ),
+          BlackboardTopControlBar( vm ),
 
 
           /// BottomControls
-          Positioned(
-            bottom: 15.0,
-            left: (size.width / 2) - 60,
-            child: Container(
-              width: 120.0,
-              height: 45.0,
-              decoration: BoxDecoration(
-                color:        Colors.white,
-                border:       Border.all(width: 0.8, color: Colors.black26),
-                borderRadius: BorderRadius.circular(100.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow( color: Colors.black26, blurRadius: 6.0, offset: Offset(0, 3) )
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-
-
-                  CustomIconButton(
-                    width: 45.0,
-                    height: 45.0,
-                    icon: Icon(Icons.replay, color: Colors.red),
-                    onTap: () => print('icon replay onTap'),
-                    splashColor: Colors.red[50],
-                  ),
-
-
-                  CustomIconButton(
-                    width: 45.0,
-                    height: 45.0,
-                    icon: Icon(Icons.clear, color: Colors.red),
-                    onTap: () => _points.clear(),
-                    splashColor: Colors.red[50],
-                  ),
-
-
-                ],
-              ),
-            ), 
+          BlackboardBottomControlBar(
+            onTapIconClear: () => _points.clear(),
+            onTapIconReplay: () => print('replay'),
           ),
 
 
           /// Stroke Size Selector
-          showStrokeSizeSelector == true 
+          vm.topControlBar.showStrokeSizeSelector == true 
             ? CustomPopUpMenu(
-              onTapOutside: toggleStrokeSizeSelector,
+              onTapOutside: vm.toggleStrokeSizeSelector,
               position: Offset(10.0, 70.0),
               item: StrokeSizeSelector(
-                min:      6.0,
-                max:      18.0,
-                value:    val,
-                onChange: changeValue,
+                min:      vm.configData.minLineWidth,
+                max:      vm.configData.maxLineWidth,
+                value:    vm.preferences.lineWidth,
+                onChange: vm.changeStrokeSize
               ),
             )
             : SizedBox(),
 
 
           /// Stroke Color Selector
-          showStrokeColorSelector == true
+          vm.topControlBar.showStrokeColorSelector ==  true
             ? CustomPopUpMenu(
-              onTapOutside: toggleStrokeColorSelector,
+              onTapOutside: vm.toggleStrokeColorSelector,
               position: Offset(50.0, 65.0),
               item: StrokeColorSelector(
-                currentColor: Colors.blue,
-                colors: [
-                  Colors.red,
-                  Colors.blue,
-                  Colors.deepOrange,
-                  Colors.pink,
-                  Colors.yellow,
-                  Colors.green,
-                  Colors.orange,
-                  Colors.purple,
-                  Colors.indigo,
-                  Colors.black
-                ],
-                onSelect: (Color color) => print('Color selected is ${color.value}'),
+                currentColor: vm.preferences.lineColor,
+                colors: vm.configData.colors,
+                onSelect: (Color color) => vm.changeStrokeColor,
               ),
             )
             : SizedBox(),

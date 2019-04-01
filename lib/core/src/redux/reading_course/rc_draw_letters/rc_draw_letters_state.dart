@@ -135,6 +135,32 @@ class RCDrawLettersState {
     );
   }
 
+  RCDrawLettersState copyWith({
+    List<RCDrawLetterData> data,
+    RCDrawLetterData currrentData,
+    bool isSettingData,
+    bool showWellDoneDialog,
+    RCDrawLetterPreferences preferences,
+    RCDrawLetterConfigData configData,
+    int currentIndex,
+    bool showHandWriting,
+    RCDrawLettersTopControlBar topControlBar,
+  }) {
+
+    return RCDrawLettersState(
+      data: data ?? this.data,
+      currrentData: currrentData ?? this.currrentData,
+      isSettingData: isSettingData ?? this.isSettingData,
+      showWellDoneDialog: showWellDoneDialog ?? this.showWellDoneDialog,
+      preferences: preferences ?? this.preferences,
+      configData: configData ?? this.configData,
+      currentIndex: currentIndex ?? this.currentIndex,
+      showHandWriting: showHandWriting ?? this.showHandWriting,
+      topControlBar: topControlBar ?? this.topControlBar,
+    );
+
+  }
+
   @override
   bool operator ==(Object other) =>
     identical(this, other) || other is RCDrawLettersState
@@ -195,6 +221,22 @@ class RCDrawLetterPreferences {
     @required this.styleLine
   });
 
+  RCDrawLetterPreferences copyWith({
+    double lineWidth,
+    Color lineColor,
+    bool showGuideLines,
+    StrokeCap styleLine,
+  }) {
+
+    return RCDrawLetterPreferences(
+      lineWidth: lineWidth ?? this.lineWidth,
+      lineColor: lineColor ?? this.lineColor,
+      showGuideLines: showGuideLines ?? this.showGuideLines,
+      styleLine: styleLine ?? this.styleLine,
+    );
+
+  }
+
 }
 
 class RCDrawLetterConfigData {
@@ -225,10 +267,10 @@ class RCDrawLettersTopControlBar {
     @required this.showStrokeColorSelector
   });
 
-  RCDrawLettersTopControlBar copyWith(
+  RCDrawLettersTopControlBar copyWith({
     bool showStrokeSizeSelector,
     bool showStrokeColorSelector
-  ) {
+  }) {
 
     return RCDrawLettersTopControlBar(
       showStrokeColorSelector: showStrokeColorSelector ?? this.showStrokeColorSelector,

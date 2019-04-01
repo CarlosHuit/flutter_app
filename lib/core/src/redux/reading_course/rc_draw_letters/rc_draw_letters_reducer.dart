@@ -13,6 +13,48 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
     return RCDrawLettersState.initialState();
   }
 
+  if (action is RCToggleStrokeSizeSelectorDL) {
+    return state.drawLetters.copyWith(
+      topControlBar: state.drawLetters.topControlBar.copyWith(
+        showStrokeSizeSelector: !state.drawLetters.topControlBar.showStrokeSizeSelector
+      )
+    );
+  }
+
+  if (action is RCToggleStrokeColorSelectorDL) {
+
+    return state.drawLetters.copyWith(
+      topControlBar: state.drawLetters.topControlBar.copyWith(
+        showStrokeColorSelector: !state.drawLetters.topControlBar.showStrokeColorSelector
+      )
+    );
+
+  }
+
+
+  if (action is RCChangeStrokeSizeDL) {
+    return state.drawLetters.copyWith(
+      preferences: state.drawLetters.preferences.copyWith(
+        lineWidth: action.width
+      )
+    );
+  }
+
+  if (action is RCChangeStrokeColorDL) {
+    return state.drawLetters.copyWith(
+      preferences: state.drawLetters.preferences.copyWith(
+        lineColor: action.color
+      )
+    );
+  }
+
+  if (action is RCToggleGuideLines) {
+    return state.drawLetters.copyWith(
+      preferences: state.drawLetters.preferences.copyWith(
+        showGuideLines: !state.drawLetters.preferences.showGuideLines
+      )
+    );
+  }
 
   return state.drawLetters;
 

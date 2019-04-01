@@ -1,5 +1,6 @@
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
@@ -47,6 +48,25 @@ class DrawLettersViewModel {
       topControlBar:      path.topControlBar,
       dispatch:           (action) => store.dispatch(action),
     );
+  }
+
+  void toggleStrokeSizeSelector() {
+    dispatch(RCToggleStrokeSizeSelectorDL());
+  }
+  void toggleStrokeColorSelector() {
+    dispatch(RCToggleStrokeColorSelectorDL());
+  }
+
+  void toggleGuideLines() {
+    dispatch(RCToggleGuideLines());
+  }
+
+  void changeStrokeSize(double width) {
+    dispatch(RCChangeStrokeSizeDL(width));
+  }
+
+  void changeStrokeColor(Color color) {
+    dispatch(RCChangeStrokeColorDL(color));
   }
 
   @override
