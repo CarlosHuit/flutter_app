@@ -113,23 +113,14 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
             child: Stack(
               children: <Widget>[
 
-                /* BackGround */
+
+                /// Background
                 Container(
                   color: Colors.grey[100],
                 ),
 
-                /// handWriting
-                // Container(
-                //   // color: Colors.red,
-                //   child: CustomPaint(
-                //     size: Size.infinite,
-                //     painter: Handwriting(
-                //       vm.currrentData.coordinates,
-                //       vm.preferences
-                //     ),
-                //   ),
-                // ),
 
+                /// HandWrinting
                 Container(
                   alignment: Alignment.center,
                   // color: Colors.red,
@@ -145,6 +136,7 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
                     ),
                   ),
                 ),
+
 
                 /// Blackboard
                 Container(
@@ -165,6 +157,7 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
                     ),
                   ),
                 ),
+
 
               ],
             ),
@@ -341,13 +334,18 @@ class MyCurve extends CustomPainter {
   ];
 
 
-  Offset calcControlPoint(List<Offset> el, int a, int b) {
+  Offset calcControlPoint(List<Offset> el, int currentIndex, int nextIndex) {
 
-    Offset pc = Offset(
-      (el[a].dx + el[b].dx) / 2,
-      (el[a].dy + el[b].dy) / 2,
-    );
-    return pc;
+    final currentEP = el[currentIndex];
+    final nextEp = el[nextIndex];
+    final pcX = (currentEP.dx + nextEp.dx) / 2;
+    final pcY = (currentEP.dy + nextEp.dy) / 2;
+
+    // Offset pc = Offset(
+    //   (el[currentIndex].dx + el[nextIndex].dx) / 2,
+    //   (el[currentIndex].dy + el[nextIndex].dy) / 2,
+    // );
+    return Offset(pcX, pcY);
 
   }
 
@@ -410,13 +408,15 @@ class Handwriting extends CustomPainter {
 
   Handwriting(this.coordinates, this.prefs);
 
-  Offset calcControlPoint(List<Offset> el, int a, int b) {
+  Offset calcControlPoint(List<Offset> el, int currentIndex, int nextIndex) {
 
-    Offset pc = Offset(
-      (el[a].dx + el[b].dx / 2),
-      (el[a].dy + el[b].dy / 2)
-    );
-    return pc;
+    final currentEP = el[currentIndex];
+    final nextEP = el[nextIndex];
+
+    final cpX = (currentEP.dx + nextEP.dx) / 2;
+    final cpY = (currentEP.dy + nextEP.dy) / 2;
+
+    return Offset(cpX, cpY);
 
   }
 
@@ -424,9 +424,10 @@ class Handwriting extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
+
     Paint paint   = Paint()
-    ..strokeWidth = 3.0
-    ..color     = Colors.red
+    ..strokeWidth = 16.0
+    ..color     = Colors.red[200]
     ..style     = PaintingStyle.stroke
     ..strokeCap = StrokeCap.round;
 
@@ -438,18 +439,20 @@ class Handwriting extends CustomPainter {
       double prevY = pointsGroup[0].dy;
 
       for (var i = 0; i < pointsGroup.length - 1; i++) {
+
         final pc = calcControlPoint(pointsGroup, i, i + 1);
-        // path.moveTo(prevX, prevY);
-        // path.quadraticBezierTo(
-        //   pointsGroup[i].dx,
-        //   pointsGroup[i].dy,
-        //   pc.dx,
-        //   pc.dy
-        // );
-        // canvas.drawPath(path, paint);
-        canvas.drawLine(pointsGroup[i], pointsGroup[i + 1], paint);
+
+        path.moveTo(prevX, prevY);
+        path.quadraticBezierTo(
+          pointsGroup[i].dx,
+          pointsGroup[i].dy,
+          pc.dx,
+          pc.dy,
+        );
+        canvas.drawPath(path, paint);
         prevX = pc.dx;
         prevY = pc.dy;
+
       }
 
     }
