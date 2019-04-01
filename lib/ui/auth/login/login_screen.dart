@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter/services.dart';
 import './login_text.dart';
 import '../../../core/core.dart';
 import '../../../utils/on_back_pressed.dart';
@@ -26,8 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle( statusBarColor: Colors.transparent ));
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   SystemUiOverlayStyle( statusBarColor: Colors.transparent ));
     providerBackgroundImage = AssetImage('assets/background.jpg');
     providerBackgroundImage.resolve(ImageConfiguration()).addListener((i, b){});
     super.initState();
@@ -90,29 +87,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-  Future hideStatusBar() {
+  // Future hideStatusBar() {
 
-    return Future.delayed(Duration(milliseconds: 10), () {
+  //   return Future.delayed(Duration(milliseconds: 10), () {
 
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent
-        )
-      );
+  //     SystemChrome.setSystemUIOverlayStyle(
+  //       SystemUiOverlayStyle(
+  //         statusBarColor: Colors.transparent
+  //       )
+  //     );
 
-    });
+  //   });
 
-  }
+  // }
 
-  void showStatusBar() {
+  // void showStatusBar() {
 
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarColor: Colors.black
-        )
-      );
+  //     SystemChrome.setSystemUIOverlayStyle(
+  //       SystemUiOverlayStyle(
+  //         statusBarColor: Colors.black
+  //       )
+  //     );
 
-  }
+  // }
 
 
 

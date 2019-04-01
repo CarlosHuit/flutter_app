@@ -4,6 +4,7 @@ import './rc_game/rc_game_state.dart';
 import './rc_data/rc_data_state.dart';
 import './rc_find_letters/rc_find_letters_state.dart';
 import './rc_letter_detail/rc_letter_detail_state.dart';
+import './rc_draw_letters/rc_draw_letters_state.dart';
 
 @immutable
 class ReadingCourseState {
@@ -12,12 +13,14 @@ class ReadingCourseState {
   final RCGameState         game;
   final RCLetterDetailState letterDetail;
   final RCFindLettersState  findLetters;
+  final RCDrawLettersState  drawLetters;
 
   ReadingCourseState({
     @required this.data,
     @required this.letterDetail,
     @required this.game,
     @required this.findLetters,
+    @required this.drawLetters,
   });
 
 
@@ -28,6 +31,7 @@ class ReadingCourseState {
       game:          RCGameState.initialState(),
       letterDetail:  RCLetterDetailState.initialState(),
       findLetters:   RCFindLettersState.initialState(),
+      drawLetters:   RCDrawLettersState.initialState(),
     );
 
   }
@@ -38,7 +42,8 @@ class ReadingCourseState {
     RCDataState data,
     RCGameState game,
     RCLetterDetailState letterDetail,
-    RCFindLettersState  findLetters
+    RCFindLettersState  findLetters,
+    RCDrawLettersState  drawLetters,
   }) {
 
     return ReadingCourseState(
@@ -46,6 +51,7 @@ class ReadingCourseState {
       game: game ?? this.game,
       letterDetail:  letterDetail ?? this.letterDetail,
       findLetters:   findLetters  ?? this.findLetters,
+      drawLetters:   drawLetters ?? this.drawLetters,
     );
 
   }
@@ -59,13 +65,15 @@ class ReadingCourseState {
       && data == other.data
       && game == other.game
       && letterDetail == other.letterDetail
-      && findLetters == other.findLetters;
+      && findLetters == other.findLetters
+      && drawLetters ==other.drawLetters;
 
   @override
   int get hashCode =>
     data.hashCode ^
     game.hashCode ^
     letterDetail.hashCode ^
-    findLetters.hashCode;
+    findLetters.hashCode ^
+    drawLetters.hashCode;
 
 }

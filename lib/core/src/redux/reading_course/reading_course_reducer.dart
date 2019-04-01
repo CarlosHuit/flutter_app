@@ -3,6 +3,7 @@ import './rc_letter_detail/rc_letter_detail_reducer.dart';
 import './rc_game/rc_game_reducer.dart';
 import './rc_data/rc_data_reducer.dart';
 import './reading_course_state.dart';
+import './rc_draw_letters/rc_draw_letters_reducer.dart';
 
 
 
@@ -13,6 +14,7 @@ ReadingCourseState readingCourseReducer(ReadingCourseState state, dynamic action
     data:         readingCourseDataReducer(state.data, action),
     findLetters:  readingCourseFindLettersReducer(state, action),
     letterDetail: readingCourseLetterDetailReducer(state, action),
+    drawLetters:  readingCourseDrawLettersReducer(state, action),
   );
 
 }
