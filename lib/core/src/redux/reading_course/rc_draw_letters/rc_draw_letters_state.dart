@@ -13,6 +13,7 @@ class RCDrawLettersState {
   final RCDrawLetterConfigData configData;
   final int currentIndex;
   final bool showHandWriting;
+  final RCDrawLettersTopControlBar topControlBar;
 
   RCDrawLettersState({
     @required this.data,
@@ -22,7 +23,8 @@ class RCDrawLettersState {
     @required this.preferences,
     @required this.configData,
     @required this.currentIndex,
-    @required this.showHandWriting
+    @required this.showHandWriting,
+    @required this.topControlBar
   });
 
   factory RCDrawLettersState.fromStateData(ReadingCourseState state) {
@@ -101,6 +103,11 @@ class RCDrawLettersState {
       showGuideLines: true,
     );
 
+    final topControlBar = RCDrawLettersTopControlBar(
+      showStrokeColorSelector: false,
+      showStrokeSizeSelector: false,
+    );
+
     return RCDrawLettersState(
       data:               coordinatesData,
       configData:         configData,
@@ -110,6 +117,7 @@ class RCDrawLettersState {
       isSettingData:      false,
       showHandWriting:    true,
       showWellDoneDialog: false,
+      topControlBar:      topControlBar,
     );
   }
 
@@ -122,7 +130,8 @@ class RCDrawLettersState {
       isSettingData: null,
       preferences: null,
       showHandWriting: null,
-      showWellDoneDialog: null
+      showWellDoneDialog: null,
+      topControlBar: null,
     );
   }
 
@@ -137,7 +146,8 @@ class RCDrawLettersState {
       && preferences        == other.preferences
       && configData         == other.configData
       && currentIndex       == other.currentIndex
-      && showHandWriting    == other.showHandWriting;
+      && showHandWriting    == other.showHandWriting
+      && topControlBar      == other.topControlBar;
 
   @override
   int get hashCode =>
@@ -148,7 +158,8 @@ class RCDrawLettersState {
     preferences.hashCode ^
     configData.hashCode ^
     currentIndex.hashCode ^
-    showHandWriting.hashCode;
+    showHandWriting.hashCode ^
+    topControlBar.hashCode;
 
 }
 
@@ -204,7 +215,28 @@ class RCDrawLetterConfigData {
 
 }
 
+class RCDrawLettersTopControlBar {
 
+  final bool showStrokeSizeSelector;
+  final bool showStrokeColorSelector;
+
+  RCDrawLettersTopControlBar({
+    @required this.showStrokeSizeSelector,
+    @required this.showStrokeColorSelector
+  });
+
+  RCDrawLettersTopControlBar copyWith(
+    bool showStrokeSizeSelector,
+    bool showStrokeColorSelector
+  ) {
+
+    return RCDrawLettersTopControlBar(
+      showStrokeColorSelector: showStrokeColorSelector ?? this.showStrokeColorSelector,
+      showStrokeSizeSelector: showStrokeSizeSelector ?? this.showStrokeSizeSelector,
+    );
+
+  }
+}
 
 
 

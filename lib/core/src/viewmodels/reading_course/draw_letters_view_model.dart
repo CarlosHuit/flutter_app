@@ -14,6 +14,7 @@ class DrawLettersViewModel {
   final RCDrawLetterConfigData configData;
   final int currentIndex;
   final bool showHandWriting;
+  final RCDrawLettersTopControlBar topControlBar;
 
   final Function(dynamic action) dispatch;
 
@@ -27,6 +28,7 @@ class DrawLettersViewModel {
     @required this.currentIndex,
     @required this.showHandWriting,
     @required this.dispatch,
+    @required this.topControlBar,
   });
 
   factory DrawLettersViewModel.fromStore(Store<AppState> store) {
@@ -42,6 +44,7 @@ class DrawLettersViewModel {
       isSettingData:      path.isSettingData,
       showHandWriting:    path.showHandWriting,
       showWellDoneDialog: path.showWellDoneDialog,
+      topControlBar:      path.topControlBar,
       dispatch:           (action) => store.dispatch(action),
     );
   }
@@ -57,7 +60,8 @@ class DrawLettersViewModel {
       && preferences        == other.preferences
       && configData         == other.configData
       && currentIndex       == other.currentIndex
-      && showHandWriting    == other.showHandWriting;
+      && showHandWriting    == other.showHandWriting
+      && topControlBar    == other.topControlBar;
 
   @override
   int get hashCode =>
@@ -68,6 +72,7 @@ class DrawLettersViewModel {
     preferences.hashCode ^
     configData.hashCode ^
     currentIndex.hashCode ^
-    showHandWriting.hashCode;
+    showHandWriting.hashCode ^
+    topControlBar.hashCode;
 
 }

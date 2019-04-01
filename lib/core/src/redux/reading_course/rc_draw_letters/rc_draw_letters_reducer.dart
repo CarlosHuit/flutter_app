@@ -15,5 +15,6 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
 
 
   return state.drawLetters;
+
 }
 

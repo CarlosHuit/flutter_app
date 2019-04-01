@@ -88,6 +88,7 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
         children: <Widget>[
 
 
+          /// Background + Handwriting + Blackboard
           Container(
             child: Stack(
               children: <Widget>[
@@ -142,11 +143,10 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
             ),
           ),
 
-          /// Blackboard
 
 
 
-          /// TopControls
+          /// TopControlBar
           PositionedDirectional(
             start: 0,
             end:   0,
@@ -181,7 +181,7 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
                   ),
 
 
-                  /// ShowGuideLinesIcon
+                    /// ShowGuideLinesIcon
                   CustomIconButton(
                     height: 50.0,
                     width: 50.0,
