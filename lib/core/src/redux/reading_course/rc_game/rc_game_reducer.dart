@@ -10,6 +10,10 @@ RCGameState readingCourseGameReducer(ReadingCourseState state, dynamic action) {
     return RCGameState.fromStore(state);
   }
 
+  if (action is RCResetDataG) {
+    return RCGameState.initialState();
+  }
+
   if (action is RCRegisterCorrectSelectionG) {
     return state.game.copyWith(
       currentData: state.game.currentData.copyWith(

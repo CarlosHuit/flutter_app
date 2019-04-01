@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 class RCSetInitialDataG {}
+class RCResetDataG {}
 
 class RCRegisterCorrectSelectionG {
   final String letter;
