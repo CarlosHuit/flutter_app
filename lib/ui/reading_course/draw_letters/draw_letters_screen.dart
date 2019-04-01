@@ -1,12 +1,14 @@
 
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_actions.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 
 class DrawLettersScreen extends StatelessWidget {
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,25 +109,53 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
         children: <Widget>[
 
 
-          /// Blackboard
           Container(
-            color: Colors.grey[100],
-            child: GestureDetector(
-              onPanUpdate: (DragUpdateDetails details) {
-                setState(() {
-                  RenderBox object = context.findRenderObject();
-                  Offset _localPosition = object.globalToLocal(details.globalPosition);
-                  _points = List.from(_points)..add(_localPosition);
-                });
-              },
-              onPanEnd: (DragEndDetails details) => _points.add(null),
-              onPanCancel: () => _points.add(null),
-              child: CustomPaint(
-                painter: Signature(points: _points),
-                size:    Size.infinite,
-              ),
+            child: Stack(
+              children: <Widget>[
+
+                /* BackGround */
+                Container(
+                  color: Colors.grey[100],
+                ),
+
+                /// handWriting
+                Container(
+                  // color: Colors.red,
+                  child: CustomPaint(
+                    size: Size.infinite,
+                    painter: Handwriting(
+                      vm.currrentData.coordinates,
+                      vm.preferences
+                    ),
+                  ),
+                ),
+
+                /// Blackboard
+                Container(
+                  // color: Colors.grey[100],
+                  child: GestureDetector(
+                    onPanUpdate: (DragUpdateDetails details) {
+                      setState(() {
+                        RenderBox object = context.findRenderObject();
+                        Offset _localPosition = object.globalToLocal(details.globalPosition);
+                        _points = List.from(_points)..add(_localPosition);
+                      });
+                    },
+                    onPanEnd: (DragEndDetails details) => _points.add(null),
+                    onPanCancel: () => _points.add(null),
+                    child: CustomPaint(
+                      painter: Signature(points: _points),
+                      size:    Size.infinite,
+                    ),
+                  ),
+                ),
+
+              ],
             ),
           ),
+
+          /// Blackboard
+
 
 
           /// TopControls
@@ -298,12 +328,14 @@ class MyCurve extends CustomPainter {
   Offset calcControlPoint(List<Offset> el, int a, int b) {
 
     Offset pc = Offset(
-      (el[a].dx + el[b].dx / 2),
-      (el[a].dy + el[b].dy / 2)
+      (el[a].dx + el[b].dx) / 2,
+      (el[a].dy + el[b].dy) / 2,
     );
     return pc;
 
   }
+
+
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -326,13 +358,18 @@ class MyCurve extends CustomPainter {
       for (var i = 0; i < pointsGroup.length - 1; i++) {
 
         final pc = calcControlPoint(pointsGroup, i, i + 1);
-        path.moveTo(prevX, prevY);
-        path.quadraticBezierTo(
-          pointsGroup[i].dx,
-          pointsGroup[i].dy,
-          pc.dx,
-          pc.dy
-        );
+
+        // path.moveTo(prevX, prevY);
+        // path.addOval(Rect.fromCircle(radius: 10, center: Offset(50, 120)));
+        // path.quadraticBezierTo(
+        //   pointsGroup[i].dx,
+        //   pointsGroup[i].dy,
+        //   pc.dx,
+        //   pc.dy
+        // );
+
+        // path.close();
+
         canvas.drawPath(path, paint);
         prevX = pc.dx;
         prevY = pc.dy;
@@ -350,7 +387,66 @@ class MyCurve extends CustomPainter {
 }
 
 
+class Handwriting extends CustomPainter {
 
+  final List<List<Offset>> coordinates;
+  final RCDrawLetterPreferences prefs;
+
+  Handwriting(this.coordinates, this.prefs);
+
+  Offset calcControlPoint(List<Offset> el, int a, int b) {
+
+    Offset pc = Offset(
+      (el[a].dx + el[b].dx / 2),
+      (el[a].dy + el[b].dy / 2)
+    );
+    return pc;
+
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+
+    Paint paint   = Paint()
+    ..strokeWidth = 3.0
+    ..color     = Colors.red
+    ..style     = PaintingStyle.stroke
+    ..strokeCap = StrokeCap.round;
+
+    Path path = Path();
+    for (var n = 0; n < coordinates.length; n++) {
+
+      final pointsGroup = coordinates[n];
+      double prevX = pointsGroup[0].dx;
+      double prevY = pointsGroup[0].dy;
+
+      for (var i = 0; i < pointsGroup.length - 1; i++) {
+        final pc = calcControlPoint(pointsGroup, i, i + 1);
+        // path.moveTo(prevX, prevY);
+        // path.quadraticBezierTo(
+        //   pointsGroup[i].dx,
+        //   pointsGroup[i].dy,
+        //   pc.dx,
+        //   pc.dy
+        // );
+        // canvas.drawPath(path, paint);
+        canvas.drawLine(pointsGroup[i], pointsGroup[i + 1], paint);
+        prevX = pc.dx;
+        prevY = pc.dy;
+      }
+
+    }
+
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+
+    return false;
+  }
+
+
+}
 
 class Signature extends CustomPainter {
   List<Offset> points;
