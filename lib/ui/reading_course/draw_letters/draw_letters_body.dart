@@ -63,7 +63,6 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
                 /// HandWrinting
                 Container(
                   alignment: Alignment.center,
-                  // color: Colors.red,
                   child: Container(
                     width: 300.0,
                     height: 300.0,
@@ -85,7 +84,7 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
                     onPanEnd: (DragEndDetails details) => _points.add(null),
                     onPanCancel: () => _points.add(null),
                     child: CustomPaint(
-                      painter: Blackboard(points: _points),
+                      painter: Blackboard(points: _points, prefs: vm.preferences),
                       size:    Size.infinite,
                     ),
                   ),
@@ -130,8 +129,8 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
               position: Offset(50.0, 65.0),
               item: StrokeColorSelector(
                 currentColor: vm.preferences.lineColor,
-                colors: vm.configData.colors,
-                onSelect: (Color color) => vm.changeStrokeColor,
+                colors:       vm.configData.colors,
+                onSelect: vm.changeStrokeColor,
               ),
             )
             : SizedBox(),

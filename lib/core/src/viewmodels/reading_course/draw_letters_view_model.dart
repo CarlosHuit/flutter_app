@@ -66,6 +66,7 @@ class DrawLettersViewModel {
   }
 
   void changeStrokeColor(Color color) {
+    print('changeStrokeCOlor');
     dispatch(RCChangeStrokeColorDL(color));
   }
 
