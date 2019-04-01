@@ -119,13 +119,29 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
                 ),
 
                 /// handWriting
+                // Container(
+                //   // color: Colors.red,
+                //   child: CustomPaint(
+                //     size: Size.infinite,
+                //     painter: Handwriting(
+                //       vm.currrentData.coordinates,
+                //       vm.preferences
+                //     ),
+                //   ),
+                // ),
+
                 Container(
+                  alignment: Alignment.center,
                   // color: Colors.red,
-                  child: CustomPaint(
-                    size: Size.infinite,
-                    painter: Handwriting(
-                      vm.currrentData.coordinates,
-                      vm.preferences
+                  child: Container(
+                    width: 300.0,
+                    height: 300.0,
+                    color: Colors.white,
+                    child: CustomPaint(
+                      painter: Handwriting(
+                        vm.currrentData.coordinates,
+                        vm.preferences
+                      ),
                     ),
                   ),
                 ),
@@ -404,6 +420,7 @@ class Handwriting extends CustomPainter {
 
   }
 
+
   @override
   void paint(Canvas canvas, Size size) {
 
@@ -438,6 +455,7 @@ class Handwriting extends CustomPainter {
     }
 
   }
+
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
