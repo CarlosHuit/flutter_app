@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:app19022019/core/src/redux/login/login_actions.dart';
 import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/signup/signup_actions.dart';
+import 'package:app19022019/ui/auth/login/login_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:page_transition/page_transition.dart';
 import '../../redux/app/app_state.dart';
 import 'package:redux/redux.dart';
 import './auth_actions.dart';
@@ -58,7 +60,17 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
         print(e);
       }
     }
-    
+
+    if (action is InvalidAuthCredentials) {
+
+      await secureStorage.deleteAll();
+
+      next(NavigatorPushReplaceWithTransition(
+        screen: LoginScreen(),
+        transition: PageTransitionType.leftToRight
+      ));
+
+    }    
 
   }
   

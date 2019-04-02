@@ -7,6 +7,8 @@ import './blackboard_controls/blackboard_top_control_bar.dart';
 import './blackboard_controls/blackboard_bottom_control_bar.dart';
 import './handwriting.dart';
 import './blackboard.dart';
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controls.dart';
 
 
 class DrawLettersContent extends StatefulWidget {
@@ -29,10 +31,17 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   List<Offset> _points = <Offset>[];
 
   DrawLettersViewModel get vm => widget.vm;
+  FlareControls flareControl;
 
   @override
   void initState() {
     super.initState();
+    flareControl = FlareControls();
+
+  }
+
+  restart() {
+    flareControl.play('Untitled');
   }
 
   handlePanUpdate(DragUpdateDetails details) {
@@ -44,13 +53,18 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         mini: true,
-        onPressed: () {},
+        onPressed: restart,
         backgroundColor: Colors.green[600],
         child: Icon(Icons.check, color: Colors.white,),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -65,22 +79,19 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
               children: <Widget>[
 
 
-                /// HandWrinting
+                /// HandWrinting animation
                 Container(
                   alignment: Alignment.center,
-                  child: Container(
-                    width: 300.0,
-                    height: 300.0,
-                    color: Colors.white,
-                    child: CustomPaint(
-                      painter: Handwriting(
-                        vm.currrentData.coordinates,
-                        vm.preferences
-                      ),
-                    ),
+                  child: FlareActor(
+                    'assets/alphabet/letter_R.flr',
+                    alignment: Alignment.center,
+                    animation: 'Untitled',
+                    fit: BoxFit.fitWidth,
+                    color: Colors.blue[100],
+                    callback: (d) => print('$d successfully'),
+                    controller: flareControl,
                   ),
                 ),
-
 
                 /// Blackboard
                 Container(

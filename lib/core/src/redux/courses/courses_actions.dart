@@ -26,3 +26,5 @@ class FetchCoursesFailed {
 class FetchCourses {}
 
 
+class FetchCoursesFailedNoInternet {}
+

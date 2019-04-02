@@ -12,3 +12,5 @@ class PersistAuth {
 class Logout {}
 
 class RemoveAuth {}
+
+class InvalidAuthCredentials {}

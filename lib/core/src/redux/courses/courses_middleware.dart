@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:app19022019/core/src/redux/auth/auth_actions.dart';
 import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:redux/redux.dart';
 import '../../networking/courses_api.dart';
@@ -24,10 +26,19 @@ class CoursesMiddleware extends MiddlewareClass<AppState> {
 
         final List<Course> courses = await api.fetchCourses();
         store.dispatch(FetchCoursesSuccess(courses: courses));
+        print('getCourse success');
 
       } catch (e) {
 
-        store.dispatch(FetchCoursesFailed(error: e.toString()));
+        if (e is SocketException) {
+          print('no connection');
+          store.dispatch(FetchCoursesFailedNoInternet());
+        }
+        if (e == 'Token invalido') {
+          print('Tu sesión ha expirado, vuelve a iniciar sesión');
+          store.dispatch(InvalidAuthCredentials());
+        }
+
 
       }
 
