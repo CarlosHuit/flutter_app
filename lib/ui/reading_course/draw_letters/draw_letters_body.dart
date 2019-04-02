@@ -49,7 +49,13 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-
+      floatingActionButton: FloatingActionButton(
+        mini: true,
+        onPressed: () {},
+        backgroundColor: Colors.green[600],
+        child: Icon(Icons.check, color: Colors.white,),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       body: Stack(
         children: <Widget>[
 
