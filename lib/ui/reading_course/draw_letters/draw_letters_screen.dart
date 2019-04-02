@@ -4,7 +4,8 @@ import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_dra
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import './draw_letters_body.dart';
+
+import './draw_letters_content.dart';
 
 class DrawLettersScreen extends StatelessWidget {
 
@@ -17,7 +18,7 @@ class DrawLettersScreen extends StatelessWidget {
       onInit:    (store) => store.dispatch(RCSetInitialDataDL()),
       onDispose: (store) => store.dispatch(RCResetStateDL()),
       converter: (store) => DrawLettersViewModel.fromStore(store),
-      builder:   (_, vm) => DrawLettersBody(vm: vm),
+      builder:   (_, vm) => DrawLettersContent(vm: vm),
 
     );
   }

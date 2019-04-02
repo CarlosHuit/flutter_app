@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:app19022019/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+
 import './signup_text.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
 
-    hideStatusBar();
 
     return StoreConnector<AppState, SignupViewModel>(
       distinct: true,
@@ -55,20 +53,6 @@ class _SignupScreenState extends State<SignupScreen> {
   TextStyle hintStyle  = TextStyle( color: Colors.white54 );
 
 
-
-  Future hideStatusBar() {
-
-    return Future.delayed(Duration(milliseconds: 10), () {
-
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent
-        )
-      );
-
-    });
-
-  }
 
 
 

@@ -23,8 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   SystemUiOverlayStyle( statusBarColor: Colors.transparent ));
     providerBackgroundImage = AssetImage('assets/background.jpg');
     providerBackgroundImage.resolve(ImageConfiguration()).addListener((i, b){});
     super.initState();
@@ -87,29 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-  // Future hideStatusBar() {
-
-  //   return Future.delayed(Duration(milliseconds: 10), () {
-
-  //     SystemChrome.setSystemUIOverlayStyle(
-  //       SystemUiOverlayStyle(
-  //         statusBarColor: Colors.transparent
-  //       )
-  //     );
-
-  //   });
-
-  // }
-
-  // void showStatusBar() {
-
-  //     SystemChrome.setSystemUIOverlayStyle(
-  //       SystemUiOverlayStyle(
-  //         statusBarColor: Colors.black
-  //       )
-  //     );
-
-  // }
 
 
 

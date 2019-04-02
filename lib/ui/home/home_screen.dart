@@ -4,8 +4,8 @@ import 'package:app19022019/ui/components/loading_indicator.dart';
 import 'package:app19022019/ui/home/home_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+
 import '../../utils/utils.dart';
 
 
@@ -29,9 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     providerBackgroundDrawer =AssetImage('assets/background-drawer.jpg');
     providerBackgroundDrawer.resolve(ImageConfiguration()).addListener((i, b) {});
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle( statusBarColor: Colors.black12 )
-    );
 
     super.initState();
   }

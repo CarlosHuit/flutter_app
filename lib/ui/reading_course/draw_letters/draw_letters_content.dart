@@ -9,22 +9,22 @@ import './handwriting.dart';
 import './blackboard.dart';
 
 
-class DrawLettersBody extends StatefulWidget {
+class DrawLettersContent extends StatefulWidget {
 
   final DrawLettersViewModel vm;
 
-  const DrawLettersBody({
+  const DrawLettersContent({
     Key key,
     @required this.vm
   }) : super(key: key);
 
   @override
-  _DrawLettersBodyState createState() => _DrawLettersBodyState();
+  _DrawLettersContentState createState() => _DrawLettersContentState();
 
 }
 
 
-class _DrawLettersBodyState extends State<DrawLettersBody> {
+class _DrawLettersContentState extends State<DrawLettersContent> {
 
   List<Offset> _points = <Offset>[];
 
@@ -46,7 +46,6 @@ class _DrawLettersBodyState extends State<DrawLettersBody> {
   @override
   Widget build(BuildContext context) {
 
-    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
