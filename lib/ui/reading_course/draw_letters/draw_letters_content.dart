@@ -37,20 +37,15 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   void initState() {
 
     super.initState();
-    Future.delayed(
-      Duration(milliseconds: 0),
-      showHandwritingModal
-    );
+    Future.delayed( Duration.zero, showHandwritingModal );
 
   }
 
   void showHandwritingModal() {
     showDialog(
-      context: context,
       barrierDismissible: false,
-      builder: (context) {
-        return Handwriting();
-      }
+      context: context,
+      builder: (context) => Handwriting()
     );
 
   }
