@@ -22,7 +22,7 @@ void main() async {
     keyValueStore: keyValueStore,
     secureStorage: secureStorage,
   );
-  
+
   final state = store.state;
 
   if (state.coursesState.courses.length == 0 && state.authState.isLoggedIn) {
@@ -34,4 +34,4 @@ void main() async {
 
 }
 
-
+//  3198-3118

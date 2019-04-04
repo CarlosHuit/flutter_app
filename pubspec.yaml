@@ -358,6 +358,7 @@ flutter:
    - assets/img100X100/zoológico-min.png
    - assets/img100X100/zorro-min.png
 
+   - assets/alphabet/letter_h.flr
    - assets/alphabet/letter_R.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see

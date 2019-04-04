@@ -39,8 +39,8 @@ class CoursesMiddleware extends MiddlewareClass<AppState> {
           store.dispatch(InvalidAuthCredentials());
         }
 
-
       }
+
 
     }
 

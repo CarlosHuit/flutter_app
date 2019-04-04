@@ -1,3 +1,4 @@
+import 'package:app19022019/utils/set_prefered_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import './login_text.dart';
@@ -23,9 +24,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+
     providerBackgroundImage = AssetImage('assets/background.jpg');
     providerBackgroundImage.resolve(ImageConfiguration()).addListener((i, b){});
+
     super.initState();
+
   }
 
 
@@ -35,6 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
     loginPasswordController.dispose();
     super.dispose();
   }
+
+
 
 
   @override
@@ -201,7 +207,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         ),
 
-        onPressed:  viewModel.isValidData == true && viewModel.isLoading == false ? () {
+        onPressed:  viewModel.isValidData == true && viewModel.isLoading == false ? () async {
+          await setOrientationAndSetUIOverlays();
           FocusScope.of(context).requestFocus(new FocusNode());
           viewModel.login();
         } : null
