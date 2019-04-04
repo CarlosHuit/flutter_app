@@ -125,7 +125,6 @@ class RCFindLettersState {
 
 // TODO 54294617 m
 
-// @immutable
 class FLData {
 
   final int corrects;
