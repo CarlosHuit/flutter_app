@@ -15,20 +15,6 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
   final SpeechSynthesisService tts = SpeechSynthesisService();
 
   @override
-  void initState() {
-
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     return StoreConnector<AppState, LetterDetailViewModel>(
@@ -43,10 +29,3 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
 
 }
-
-
-// floatingActionButton: FloatingActionButton(
-//   onPressed: () => _showModalSheet(vm.data),
-//   child:     Icon(Icons.arrow_upward, size: 28.0,),
-//   mini:      true,
-// ),
