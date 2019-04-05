@@ -38,12 +38,12 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   }
 
   void showHandwritingModal() {
+
     showDialog(
-      barrierDismissible: false,
       context: context,
       builder: (context) => Handwriting(
-        context: context,
-        onInit: vm.handWrintingMessage,
+        context:   context,
+        onInit:    vm.handWrintingMessage,
         onDispose: vm.blackboardInstructions,
       )
     );
