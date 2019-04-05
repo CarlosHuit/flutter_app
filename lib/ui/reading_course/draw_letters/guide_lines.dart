@@ -10,10 +10,10 @@ class GuideLines extends CustomPainter {
     // print('s');
     // print('W: ${size.width} - H: ${size.height} - VW ${MediaQuery.of(context).size.width}');
     Paint paint = Paint()
-      ..color = Colors.red[200]
+      ..color = Colors.blueAccent[700]
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 1.0;
+      ..strokeWidth = 1.5;
 
     Path path = Path();
     path.moveTo(0, size.height * 0.05);
@@ -33,9 +33,7 @@ class GuideLines extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(GuideLines oldDelegate) {
-    return false;
-  }
+  bool shouldRepaint(GuideLines oldDelegate) => false;
 
 }
 

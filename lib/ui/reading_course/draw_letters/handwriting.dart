@@ -8,52 +8,87 @@ import './guide_lines.dart';
 
 class Handwriting extends StatefulWidget {
 
+  final BuildContext context;
+
+  const Handwriting({Key key, @required this.context}) : super(key: key);
+
   @override
   _HandwritingState createState() => _HandwritingState();
 }
 
 class _HandwritingState extends State<Handwriting> {
 
-  FlareControls flareControl;
-  double positionY;
-  bool pause;
-  Duration animationDuration;
+  BuildContext get context => widget.context;
 
-  Timer futureSub;
+  FlareControls flareControl;
+  Duration animationDuration;
   String animationName;
+  double positionY;
+  Timer futureSub;
+  bool pause;
+
+  Duration animatedContainerDuration;
 
   @override
   void initState() {
+
     super.initState();
+    animatedContainerDuration =Duration(milliseconds: 500);
     animationDuration = Duration(seconds: 6);
-    animationName = 'Untitled';
     flareControl  =  FlareControls();
-    positionY = 0;
-    pause = false;
+    animationName = 'draw';
+    positionY = MediaQuery.of(context).size.height;
+    pause     = true;
+
+    Future.delayed(Duration(milliseconds: 200), showModalH);
+    Future.delayed(animatedContainerDuration, playAnimation);
+
   }
+
 
   showModalH() {
     setState(() => positionY = 0 );
   }
 
+
   pauseAnimation() {
     setState(() => pause = true );
   }
+
 
   playAnimation() {
     setState(() => pause = false);
   }
 
-  
+
+  replayAnimation() {
+
+    if (futureSub != null) {
+
+      print('cancelFuture');
+      futureSub.cancel();
+      pauseAnimation();
+
+    }
+
+    playAnimation();
+    flareControl.play(animationName);
+    setState(() => futureSub = Timer(animationDuration, pauseAnimation) );
+
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
+    print(MediaQuery.of(context).size.height);
 
-    return Container(
-      // duration: Duration(milliseconds: 300),
-      // transform: Matrix4.translationValues(0, positionY, 0),
+    return AnimatedContainer(
+      curve: Curves.easeOutCubic,
+      duration: animatedContainerDuration,
+      transform: Matrix4.translationValues(0, positionY, 0),
       alignment: Alignment.center,
       child:     Container(
         constraints: BoxConstraints(
@@ -79,6 +114,7 @@ class _HandwritingState extends State<Handwriting> {
             Expanded(
               
               child:Container(
+                margin: EdgeInsets.only(top: 60),
                 alignment: Alignment.center,
                 child: Container(
                   width:  size.width > 340.0 ? 300.0 : 280.0,
@@ -96,7 +132,7 @@ class _HandwritingState extends State<Handwriting> {
                       Container(
                         alignment: Alignment.center,
                         child: FlareActor(
-                          'assets/alphabet/letter_R.flr',
+                          'assets/alphabet/letter_h.flr',
                           fit:        BoxFit.fitWidth,
                           color:      Colors.blue,
                           callback:   (s) => pauseAnimation(),
@@ -126,40 +162,21 @@ class _HandwritingState extends State<Handwriting> {
                     top: 10.0,
                     right: 10.0,
                     child: CustomIconButton(
-                      height: 60.0,
-                      width: 60.0,
                       splashColor: Colors.red[50],
-                      icon: Icon(Icons.replay, color: Colors.red),
-                      onTap: () {
-
-                        if (futureSub != null) {
-
-                          print('cancelFuture');
-                          futureSub.cancel();
-                          pauseAnimation();
-
-                        }
-
-
-                        playAnimation();
-                        flareControl.play(animationName);
-                        setState(() => futureSub = Timer(animationDuration, pauseAnimation) );
-
-                      },
+                      height: 60.0,
+                      width:  60.0,
+                      icon:   Icon(Icons.replay, color: Colors.red),
+                      onTap:  replayAnimation,
                     ),
                   ),
 
                   Container(
                     alignment: Alignment.center,
                     child: RaisedButton(
-                      child: Text(
-                        'Siguiente',
-                        style: TextStyle(
-                          fontSize: 16.0
-                        ),
+                      child: Text( 'Siguiente', style: TextStyle( fontSize: 16.0 ),
                       ),
-                      color: Colors.red,
-                      padding: EdgeInsets.symmetric(horizontal: 35),
+                      color:     Colors.red,
+                      padding:   EdgeInsets.symmetric(horizontal: 35),
                       textColor: Colors.white,
                       onPressed: () => Navigator.pop(context),
                     ),

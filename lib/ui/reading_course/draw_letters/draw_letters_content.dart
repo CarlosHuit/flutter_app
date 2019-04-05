@@ -29,8 +29,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
   DrawLettersViewModel get vm => widget.vm;
 
-
-
   @override
   void initState() {
 
@@ -43,7 +41,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => Handwriting()
+      builder: (context) => Handwriting(context: context)
     );
 
   }
@@ -63,15 +61,15 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+
       backgroundColor: Colors.grey[100],
-      floatingActionButton: FloatingActionButton(
-        mini: true,
-        child: Icon(Icons.check, color: Colors.white,),
-        onPressed: () {},
-        backgroundColor: Colors.green[600],
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+
+      floatingActionButton: ButtonValidation(
+        onTap: () => print('validate stroke'),
       ),
+
       body: Stack(
+        alignment: Alignment.center,
         children: <Widget>[
 
 
@@ -86,6 +84,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             ),
           ),
 
+
           /// TopControlBar
           BlackboardTopControlBar( vm ),
 
@@ -95,7 +94,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             onTapIconClear: () => _points.clear(),
             onTapIconReplay: showHandwritingModal,
           ),
-
 
 
           /// Stroke Size Selector
@@ -113,7 +111,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             : SizedBox(),
 
 
-
           /// Stroke Color Selector
           vm.topControlBar.showStrokeColorSelector ==  true
             ? CustomPopUpMenu(
@@ -128,7 +125,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             : SizedBox(),
 
 
-
         ],
       ),
 
@@ -141,3 +137,26 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
 }
 
+class ButtonValidation extends StatelessWidget {
+
+
+  final Function() onTap;
+
+  ButtonValidation({ Key key, @required this.onTap }) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    return FloatingActionButton(
+      mini:            true,
+      child:           Icon(Icons.check, color: Colors.white,),
+      onPressed:       onTap,
+      backgroundColor: Colors.green[600],
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    );
+
+  }
+
+
+}

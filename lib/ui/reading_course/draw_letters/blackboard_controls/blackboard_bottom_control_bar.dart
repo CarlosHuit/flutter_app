@@ -16,14 +16,12 @@ class BlackboardBottomControlBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final size = MediaQuery.of(context).size;
 
     return Positioned(
       bottom: 15.0,
-      left: (size.width / 2) - 60,
       child: Container(
-        width: 120.0,
-        height: 45.0,
+        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        height:  45.0,
         decoration: BoxDecoration(
           color:        Colors.white,
           border:       Border.all(width: 0.8, color: Colors.black26),
@@ -50,9 +48,19 @@ class BlackboardBottomControlBar extends StatelessWidget {
               width: 45.0,
               height: 45.0,
               icon: Icon(Icons.clear, color: Colors.red),
-              // onTap: () => _points.clear(),
               onTap: onTapIconClear,
               splashColor: Colors.red[50],
+            ),
+
+            Transform.rotate(
+              angle: 45,
+              child: CustomIconButton(
+                width: 45.0,
+                height: 45.0,
+                icon: Icon(Icons.smartphone, color: Colors.red),
+                onTap: onTapIconClear,
+                splashColor: Colors.red[50],
+              ),
             ),
 
 
