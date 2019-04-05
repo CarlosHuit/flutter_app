@@ -25,7 +25,8 @@ class DrawLettersContent extends StatefulWidget {
 
 class _DrawLettersContentState extends State<DrawLettersContent> {
 
-  List<Offset> _points = <Offset>[];
+  StrokeData strokeData;
+  List<StrokeData> strokes;
 
   DrawLettersViewModel get vm => widget.vm;
 
@@ -33,6 +34,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   void initState() {
 
     super.initState();
+    strokes = [];
     Future.delayed( Duration.zero, showHandwritingModal );
 
   }
@@ -52,11 +54,27 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
   handlePanUpdate(DragUpdateDetails details) {
 
-    setState(() {
-      RenderBox object = context.findRenderObject();
-      Offset _localPosition = object.globalToLocal(details.globalPosition);
-      _points = List.from(_points)..add(_localPosition);
-    });
+    RenderBox _object  = context.findRenderObject();
+    Offset _localPoint = _object.globalToLocal(details.globalPosition);
+
+    final i = strokes.length - 1;
+    setState(() => strokes[i].points.add(_localPoint) );
+
+  }
+
+  handlePanStart(DragStartDetails detail) {
+
+    final el = StrokeData(
+      vm.preferences.lineColor,
+      vm.preferences.lineWidth,
+      []
+    );
+
+    setState(() => strokes.add(el));
+
+  }
+
+  handlePanEnd(DragEndDetails detail) {
 
   }
 
@@ -79,12 +97,17 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
           /// Blackboard
           GestureDetector(
+            onPanStart:  handlePanStart,
             onPanUpdate: handlePanUpdate,
-            onPanEnd: (DragEndDetails details) => _points.add(null),
-            onPanCancel: () => _points.add(null),
+            onPanEnd:    handlePanEnd,
+            // onPanCancel: () => _points.add(null),
             child: CustomPaint(
-              painter: Blackboard(points: _points, prefs: vm.preferences),
               size:    Size.infinite,
+              painter: Blackboard(
+                points: [],
+                prefs:  vm.preferences,
+                data:   strokes
+              ),
             ),
           ),
 
@@ -95,7 +118,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
           /// BottomControls
           BlackboardBottomControlBar(
-            onTapIconClear: () => _points.clear(),
+            onTapIconClear: () => strokes.clear(),
             onTapIconReplay: showHandwritingModal,
           ),
 
@@ -162,5 +185,17 @@ class ButtonValidation extends StatelessWidget {
 
   }
 
+
+}
+
+
+
+class StrokeData {
+
+  final Color color;
+  final double width;
+  final List<Offset> points;
+
+  StrokeData(this.color, this.width, this.points);
 
 }
