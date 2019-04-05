@@ -12,6 +12,7 @@ import './handwriting.dart';
 
 import 'dart:async';
 
+
 class DrawLettersContent extends StatefulWidget {
 
   final DrawLettersViewModel vm;
@@ -26,10 +27,11 @@ class DrawLettersContent extends StatefulWidget {
 
 class _DrawLettersContentState extends State<DrawLettersContent> {
 
+  DrawLettersViewModel get vm => widget.vm;
+
   StrokeData strokeData;
   List<StrokeData> strokes;
 
-  DrawLettersViewModel get vm => widget.vm;
 
   @override
   void initState() {
@@ -39,6 +41,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
     Future.delayed( Duration.zero, showHandwritingModal );
 
   }
+
 
   void showHandwritingModal() {
 
@@ -53,7 +56,8 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
   }
 
-  handlePanUpdate(DragUpdateDetails details) {
+
+  void handlePanUpdate(DragUpdateDetails details) {
 
     RenderBox _object  = context.findRenderObject();
     Offset _localPoint = _object.globalToLocal(details.globalPosition);
@@ -63,7 +67,8 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
   }
 
-  handlePanStart(DragStartDetails detail) {
+
+  void handlePanStart(DragStartDetails detail) {
 
     final el = StrokeData(
       vm.preferences.lineColor,
@@ -75,7 +80,8 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
   }
 
-  handlePanEnd(DragEndDetails detail) {
+
+  void handlePanEnd(DragEndDetails detail) {
 
   }
 
@@ -161,9 +167,8 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   }
 
 
-
-
 }
+
 
 class ButtonValidation extends StatelessWidget {
 
