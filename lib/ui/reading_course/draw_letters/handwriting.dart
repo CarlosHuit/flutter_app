@@ -85,7 +85,6 @@ class _HandwritingState extends State<Handwriting> {
 
     if (futureSub != null) {
 
-      print('cancelFuture');
       futureSub.cancel();
       pauseAnimation();
 
@@ -104,7 +103,6 @@ class _HandwritingState extends State<Handwriting> {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
-    print(MediaQuery.of(context).size.height);
 
     return AnimatedContainer(
       curve: Curves.easeOutCubic,

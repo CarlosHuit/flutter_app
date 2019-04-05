@@ -36,7 +36,7 @@ class _GameBodyState extends State<GameBody> {
 
   void nextPage() async{
     if (pageController.page < 1) {
-      print('nextPage');
+
       await pageController.nextPage(
         duration: Duration(milliseconds: 800),
         curve: Curves.decelerate

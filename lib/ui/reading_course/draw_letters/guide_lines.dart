@@ -6,9 +6,9 @@ class GuideLines extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+
     print('repaiting');
-    // print('s');
-    // print('W: ${size.width} - H: ${size.height} - VW ${MediaQuery.of(context).size.width}');
+
     Paint paint = Paint()
       ..color = Colors.blueAccent[700]
       ..style = PaintingStyle.stroke
