@@ -139,7 +139,8 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
                 min:      vm.configData.minLineWidth,
                 max:      vm.configData.maxLineWidth,
                 value:    vm.preferences.lineWidth,
-                onChange: vm.changeStrokeSize
+                onChange: vm.changeStrokeSize,
+                prefs:    vm.preferences,
               ),
             )
             : SizedBox(),

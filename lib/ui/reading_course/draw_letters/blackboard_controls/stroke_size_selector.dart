@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_state.dart';
 import 'package:flutter/material.dart';
 
 class StrokeSizeSelector extends StatefulWidget {
@@ -6,13 +7,16 @@ class StrokeSizeSelector extends StatefulWidget {
   final Function(double val) onChange;
   final double min;
   final double max;
+  final RCDrawLetterPreferences prefs;
+
 
   const StrokeSizeSelector({
     Key key,
     @required this.value,
     @required this.onChange,
     @required this.min,
-    @required this.max
+    @required this.max,
+    @required this.prefs
   }) : super(key: key);
 
   @override
@@ -23,10 +27,11 @@ class StrokeSizeSelector extends StatefulWidget {
 
 class _StrokeSizeSelectorState extends State<StrokeSizeSelector> {
 
-  double get value => widget.value;
   Function(double val) get cb => widget.onChange;
+  double get value => widget.value;
   double get min => widget.min;
   double get max => widget.max;
+  RCDrawLetterPreferences get prefs => widget.prefs;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +39,8 @@ class _StrokeSizeSelectorState extends State<StrokeSizeSelector> {
     return Card(
       elevation: 0,
       margin: EdgeInsets.all(0),
+      
       child: Container(
-        height: 100.0,
-        width: 220.0,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(4.0),
@@ -51,33 +55,26 @@ class _StrokeSizeSelectorState extends State<StrokeSizeSelector> {
 
             Container(
               height: 40.0,
+              width: 220.0,
               child: Slider(
                 value: value,
-                min: min,
-
-                max: max,
-                inactiveColor: Colors.blue[200],
-                onChanged: cb,
+                min:   min,
+                max:   max,
                 label: value.toString(),
+                onChanged: cb,
                 divisions: 12,
+                inactiveColor: prefs.lineColor[200],
+                activeColor:   prefs.lineColor,
               ),
             ),
 
-
-            Expanded(
-              child: Container(
-                alignment: Alignment.center,
-                child: Container(
-                  height: value,
-                  margin: EdgeInsets.symmetric(horizontal: 15.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.0),
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              )
-            )
-
+            Container(
+              height: 60.0,
+              width: 200.0,
+              child: CustomPaint(
+                painter: StrokeSizeItem( prefs: prefs ),
+              ),
+            ),
 
           ],
         ),
@@ -88,3 +85,39 @@ class _StrokeSizeSelectorState extends State<StrokeSizeSelector> {
 }
 
 
+class StrokeSizeItem extends CustomPainter {
+
+  final RCDrawLetterPreferences prefs;
+
+  StrokeSizeItem({ @required this.prefs });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+
+    print('${prefs.lineWidth}');
+    Paint paint = Paint()
+    ..strokeCap = prefs.styleLine
+    ..color     = prefs.lineColor
+    ..style     = PaintingStyle.stroke
+    ..strokeWidth = prefs.lineWidth;
+
+    Path path = Path();
+    path.moveTo(prefs.lineWidth, size.height / 2);
+
+    final firstCP = Offset(size.width * 0.25, size.height * 0.80);
+    final firstEP = Offset(size.width * 0.50, size.height * 0.50);
+
+    path.quadraticBezierTo(firstCP.dx, firstCP.dy, firstEP.dx, firstEP.dy);
+
+    final secondCP = Offset(size.width * 0.75, size.height * 0.20);
+    final secondEP = Offset(size.width - prefs.lineWidth, size.height - 20);
+    path.quadraticBezierTo(secondCP.dx, secondCP.dy, secondEP.dx, secondEP.dy);
+
+    canvas.drawPath(path, paint);
+
+  }
+
+  @override
+  bool shouldRepaint(StrokeSizeItem oldDelegate) => false;
+
+}

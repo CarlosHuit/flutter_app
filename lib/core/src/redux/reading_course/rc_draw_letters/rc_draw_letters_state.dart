@@ -210,7 +210,7 @@ class RCDrawLetterData {
 class RCDrawLetterPreferences {
 
   final double lineWidth;
-  final Color lineColor; 
+  final MaterialColor lineColor; 
   final bool showGuideLines;
   final StrokeCap styleLine;
 
@@ -223,7 +223,7 @@ class RCDrawLetterPreferences {
 
   RCDrawLetterPreferences copyWith({
     double lineWidth,
-    Color lineColor,
+    MaterialColor lineColor,
     bool showGuideLines,
     StrokeCap styleLine,
   }) {
@@ -283,7 +283,7 @@ class RCDrawLettersTopControlBar {
 
 class StrokeData {
 
-  final Color color;
+  final MaterialColor color;
   final double width;
   final List<Offset> points;
 
