@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -190,12 +191,3 @@ class ButtonValidation extends StatelessWidget {
 
 
 
-class StrokeData {
-
-  final Color color;
-  final double width;
-  final List<Offset> points;
-
-  StrokeData(this.color, this.width, this.points);
-
-}

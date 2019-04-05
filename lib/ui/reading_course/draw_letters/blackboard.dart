@@ -1,5 +1,4 @@
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_state.dart';
-import 'package:app19022019/ui/reading_course/draw_letters/draw_letters_content.dart';
 import 'package:flutter/material.dart';
 
 class Blackboard extends CustomPainter {
@@ -32,16 +31,6 @@ class Blackboard extends CustomPainter {
       }
 
     }
-    // Paint paint = Paint()
-    //   ..color = prefs.lineColor
-    //   ..strokeCap = prefs.styleLine
-    //   ..strokeWidth = prefs.lineWidth;
-
-    // for (int i = 0; i < points.length - 1; i++) {
-    //   if (points[i] != null && points[i + 1] != null) {
-    //     canvas.drawLine(points[i], points[i + 1], paint);
-    //   }
-    // }
 
   }
 
