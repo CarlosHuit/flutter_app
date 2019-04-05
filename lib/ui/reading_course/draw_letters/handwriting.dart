@@ -9,16 +9,27 @@ import './guide_lines.dart';
 class Handwriting extends StatefulWidget {
 
   final BuildContext context;
+  final Function() onInit;
+  final Function() onDispose;
 
-  const Handwriting({Key key, @required this.context}) : super(key: key);
+  Handwriting({
+    Key key,
+    @required this.onInit,
+    @required this.context,
+    @required this.onDispose,
+  }) : super(key: key);
 
   @override
   _HandwritingState createState() => _HandwritingState();
+
 }
+
 
 class _HandwritingState extends State<Handwriting> {
 
   BuildContext get context => widget.context;
+  Function() get onInit => widget.onInit;
+  Function() get onDispose  => widget.onDispose;
 
   FlareControls flareControl;
   Duration animationDuration;
@@ -28,6 +39,7 @@ class _HandwritingState extends State<Handwriting> {
   bool pause;
 
   Duration animatedContainerDuration;
+
 
   @override
   void initState() {
@@ -46,6 +58,13 @@ class _HandwritingState extends State<Handwriting> {
   }
 
 
+  @override
+  void dispose() {
+    onDispose();
+    super.dispose();
+  }
+
+
   showModalH() {
     setState(() => positionY = 0 );
   }
@@ -57,6 +76,7 @@ class _HandwritingState extends State<Handwriting> {
 
 
   playAnimation() {
+    onInit();
     setState(() => pause = false);
   }
 
@@ -78,6 +98,7 @@ class _HandwritingState extends State<Handwriting> {
 
   }
 
+  
 
   @override
   Widget build(BuildContext context) {

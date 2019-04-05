@@ -41,7 +41,11 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => Handwriting(context: context)
+      builder: (context) => Handwriting(
+        context: context,
+        onInit: vm.handWrintingMessage,
+        onDispose: vm.blackboardInstructions,
+      )
     );
 
   }

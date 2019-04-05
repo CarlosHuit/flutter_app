@@ -1,5 +1,6 @@
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters.dart';
+import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
@@ -7,6 +8,8 @@ import 'package:redux/redux.dart';
 @immutable
 class DrawLettersViewModel {
   
+  final SpeechSynthesisService tts = SpeechSynthesisService();
+
   final List<RCDrawLetterData> data;
   final RCDrawLetterData currrentData;
   final bool isSettingData;
@@ -50,25 +53,44 @@ class DrawLettersViewModel {
     );
   }
 
-  void toggleStrokeSizeSelector() {
-    dispatch(RCToggleStrokeSizeSelectorDL());
-  }
-  void toggleStrokeColorSelector() {
-    dispatch(RCToggleStrokeColorSelectorDL());
+
+  void toggleStrokeSizeSelector() => dispatch(RCToggleStrokeSizeSelectorDL());
+
+
+  void toggleStrokeColorSelector() => dispatch(RCToggleStrokeColorSelectorDL());
+
+
+  void toggleGuideLines() => dispatch(RCToggleGuideLines());
+
+
+  void changeStrokeSize(double width) => dispatch(RCChangeStrokeSizeDL(width));
+
+
+  void changeStrokeColor(Color color) => dispatch(RCChangeStrokeColorDL(color));
+
+
+  void handWrintingMessage() {
+
+    final letter = currrentData.soundLetter;
+    final type   = currrentData.type;
+    final message = ' Mira atentamente, así se escribe la letra: $letter $type';
+
+    tts.speak(term: message);
+
   }
 
-  void toggleGuideLines() {
-    dispatch(RCToggleGuideLines());
+
+  void blackboardInstructions() {
+
+    final letter = currrentData.soundLetter;
+    final type = currrentData.type;
+    final message = 'Bien, ahora practica escribir la letra: $letter $type';
+
+    tts.speak(term: message);
+
   }
 
-  void changeStrokeSize(double width) {
-    dispatch(RCChangeStrokeSizeDL(width));
-  }
 
-  void changeStrokeColor(Color color) {
-    print('changeStrokeCOlor');
-    dispatch(RCChangeStrokeColorDL(color));
-  }
 
   @override
   bool operator ==(Object other) =>
@@ -82,7 +104,7 @@ class DrawLettersViewModel {
       && configData         == other.configData
       && currentIndex       == other.currentIndex
       && showHandWriting    == other.showHandWriting
-      && topControlBar    == other.topControlBar;
+      && topControlBar      == other.topControlBar;
 
   @override
   int get hashCode =>
