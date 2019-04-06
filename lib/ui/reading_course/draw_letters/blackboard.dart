@@ -15,7 +15,6 @@ class Blackboard extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    print('dada');
     Paint paint = Paint()
     ..strokeCap = prefs.styleLine;
 

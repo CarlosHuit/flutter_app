@@ -21,3 +21,6 @@ class RCToggleGuideLines {}
 class RCToggleStrokeSizeSelectorDL {}
 
 class RCToggleStrokeColorSelectorDL {}
+
+class RCChangeCurrentDataDL {}
+

@@ -94,7 +94,10 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
       backgroundColor: Colors.grey[100],
 
       floatingActionButton: ButtonValidation(
-        onTap: () => print('validate stroke'),
+        onTap: () { 
+          vm.onCompleteTraces();
+          strokes.clear();
+        }
       ),
 
       body: Stack(

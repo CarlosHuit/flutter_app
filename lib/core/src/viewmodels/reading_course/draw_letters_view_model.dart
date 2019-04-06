@@ -1,8 +1,11 @@
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters.dart';
 import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
+import 'package:app19022019/ui/reading_course/select_words/select_words_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:redux/redux.dart';
 
 @immutable
@@ -60,13 +63,13 @@ class DrawLettersViewModel {
   void toggleStrokeColorSelector() => dispatch(RCToggleStrokeColorSelectorDL());
 
 
-  void toggleGuideLines() => dispatch(RCToggleGuideLines());
-
-
   void changeStrokeSize(double width) => dispatch(RCChangeStrokeSizeDL(width));
 
 
   void changeStrokeColor(Color color) => dispatch(RCChangeStrokeColorDL(color));
+
+
+  void toggleGuideLines() => dispatch(RCToggleGuideLines());
 
 
   void handWrintingMessage() {
@@ -90,6 +93,36 @@ class DrawLettersViewModel {
 
   }
 
+
+  void onCompleteTraces() {
+
+    // 0 => 1 - 1
+    // 1 => 2 - 1
+    print(currentIndex);
+    if ( currentIndex < data.length - 1 ) {
+      changeCurrentData();
+    } else {
+      redirect();
+    }
+
+  }
+
+
+  void changeCurrentData() {
+    dispatch(RCChangeCurrentDataDL());
+    print('changeCurrentData');
+  }
+
+
+  void redirect() {
+    dispatch(
+      NavigatorPushReplaceWithTransition(
+        screen: SelectWordsScreen(),
+        transition: PageTransitionType.rightToLeft
+      )
+    );
+    print('redirection');
+  }
 
 
   @override

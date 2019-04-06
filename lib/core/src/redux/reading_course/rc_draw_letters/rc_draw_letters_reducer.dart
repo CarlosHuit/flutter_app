@@ -13,6 +13,15 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
     return RCDrawLettersState.initialState();
   }
 
+  if (action is RCChangeCurrentDataDL) {
+    final index  = state.drawLetters.currentIndex + 1;
+
+    return state.drawLetters.copyWith(
+      currrentData: state.drawLetters.data[index],
+      currentIndex: index
+    );
+  }
+
   if (action is RCToggleStrokeSizeSelectorDL) {
     return state.drawLetters.copyWith(
       topControlBar: state.drawLetters.topControlBar.copyWith(
