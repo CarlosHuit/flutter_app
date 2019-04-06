@@ -5,6 +5,8 @@ import 'package:meta/meta.dart';
 
 class SpeechSynthesisService {
 
+  static final Function() stop = () => FlutterTts().stop();
+
   FlutterTts _flutterTts = FlutterTts();
 
 /// [Future] method to speech a term and return a FlutterTts to add event listeners
