@@ -1,6 +1,7 @@
 import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/reading_course_view_model.dart';
 import 'package:app19022019/ui/components/loading_indicator.dart';
+import 'package:app19022019/utils/my_behavior.dart';
 import 'package:flutter/material.dart';
 
 
@@ -80,7 +81,6 @@ class LearnedLettersView extends StatelessWidget {
         itemCount:   vm.learnedLetters.length,
         itemBuilder: (BuildContext context, int i) {
 
-          // return itemLearnedLetter( learnedLetter: vm.learnedLetters[i], viewModel: vm);
           return ItemLearnedLetter( learnedLetter: vm.learnedLetters[i], viewModel: vm);
 
         },
@@ -110,11 +110,18 @@ class ItemLearnedLetter extends StatelessWidget {
       margin:    EdgeInsets.symmetric(vertical: 4.0),
       child: ExpansionTile(
 
-        leading: Icon(Icons.favorite, color: Colors.red,),
+        
+        leading: Container(
+          height: 40.0,
+          width: 30.0,
+          // color: Colors.red,
+          child: Icon(Icons.favorite, color: Colors.red,),
+        ),
         title:   Row(
-
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+
 
             Container(
               child: Row(
@@ -139,6 +146,7 @@ class ItemLearnedLetter extends StatelessWidget {
               ),
             ),
 
+
             Container(
               margin: EdgeInsets.symmetric(vertical: 20.0),
               child: Row(
@@ -159,25 +167,51 @@ class ItemLearnedLetter extends StatelessWidget {
 
         children: <Widget>[
 
-
           Container(
-            margin:  EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            padding: EdgeInsets.all(15.0),
+            height: 80.0,
+            margin: EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
-              color:  Colors.grey[100],
-              border: Border.all(width: 1.0, color: Colors.grey[300]),
-              borderRadius: BorderRadius.all(Radius.circular(3.0))
+              color: Colors.grey[50],
+              border: Border.all(color: Colors.grey[200], width: 1.2),
+              borderRadius: BorderRadius.circular(5.0)
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+            child: Container(
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Row(),
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    direction: Axis.horizontal,
+                    runSpacing: 0.0,
+                    spacing: 5.0,
+                    runAlignment: WrapAlignment.center,
 
-                IndividualLetterBtn(letter: learnedLetter.letter.toUpperCase(), typeLetter: 'mayúscula', vm: viewModel),
-                IndividualLetterBtn(letter: learnedLetter.letter.toLowerCase(), typeLetter: 'minúscula', vm: viewModel),
+                    children: <Widget>[
 
-              ],
+                      /// Todo add methods to listen letters
+                      CustomButton(
+                        letter: learnedLetter.letter.toUpperCase(),
+                        color: Theme.of(context).primaryColor,
+                        onTap: ( ) => print('pressed'),
+                      ),
+
+                      CustomButton(
+                        letter: learnedLetter.letter.toLowerCase(),
+                        color: Theme.of(context).primaryColor,
+                        onTap: ( ) => print('pressed'),
+                      ),
+
+
+                    ],
+                  )
+                ]
+              ),
             ),
           ),
+
+
 
 
           Container(
@@ -254,37 +288,6 @@ class ItemLearnedLetter extends StatelessWidget {
 
 
 
-class IndividualLetterBtn extends StatelessWidget {
-
-
-  final String letter;
-  final String typeLetter;
-  final ReadingCourseViewModel vm;
-
-  const IndividualLetterBtn({Key key, this.letter, this.typeLetter, this.vm}) : super(key: key);
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
-      width:  120.0,
-      height: 50.0,
-      child: RaisedButton(
-        highlightElevation: 4.0,
-        color:     Colors.lightBlue,
-        textColor: Colors.white,
-        onPressed: () => vm.speak(term: '$letter $typeLetter', rate: 1.0),
-        child:     Text(
-          letter,
-          style: TextStyle( fontWeight: FontWeight.bold, fontSize: 32.0 ),
-        ),
-      ),
-    );
-  }
-}
-
-
 
 class TabLearnedLetters extends StatelessWidget {
   @override
@@ -308,3 +311,68 @@ class TabLearnedLetters extends StatelessWidget {
   }
 }
 
+class CustomButton extends StatelessWidget {
+
+  final String letter;
+  final Function() onTap;
+  final MaterialColor color;
+
+  const CustomButton({
+    Key key,
+    @required this.letter,
+    @required this.onTap,
+    @required this.color
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width:      120.0,
+      height:     45.0,
+      alignment:  Alignment.center,
+      margin:     EdgeInsets.symmetric(
+        horizontal: 2.0,
+        vertical:   6.0
+      ),
+      decoration: BoxDecoration(
+        color:        color,
+        borderRadius: BorderRadius.circular(3.0),
+        boxShadow: [
+
+          BoxShadow(
+            color: color[700],
+            offset: Offset(0, 6)
+          )
+
+        ],
+      ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              
+              splashFactory: InkRipple.splashFactory,
+              onTap: onTap,
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  letter,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26.0
+
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
