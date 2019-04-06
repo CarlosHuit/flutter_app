@@ -79,16 +79,17 @@ class LearnedLettersView extends StatelessWidget {
         shrinkWrap:  true,
         physics:     BouncingScrollPhysics(),
         itemCount:   vm.learnedLetters.length,
-        itemBuilder: (BuildContext context, int i) {
+        itemBuilder: (_, i) => ItemLearnedLetter(
+          viewModel: vm,
+          learnedLetter: vm.learnedLetters[i],
+        )
 
-          return ItemLearnedLetter( learnedLetter: vm.learnedLetters[i], viewModel: vm);
-
-        },
 
       )
 
     );
   }
+
 }
 
 
@@ -102,6 +103,12 @@ class ItemLearnedLetter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final _decoration = BoxDecoration(
+      color: Colors.grey[50],
+      border: Border.all(color: Colors.grey[200], width: 1.2),
+      borderRadius: BorderRadius.circular(5.0)
+    );
 
     return Card(
 
@@ -168,60 +175,49 @@ class ItemLearnedLetter extends StatelessWidget {
         children: <Widget>[
 
           Container(
-            height: 80.0,
             margin: EdgeInsets.symmetric(horizontal: 10.0),
-            decoration: BoxDecoration(
-              color: Colors.grey[50],
-              border: Border.all(color: Colors.grey[200], width: 1.2),
-              borderRadius: BorderRadius.circular(5.0)
-            ),
-            child: Container(
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Row(),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    direction: Axis.horizontal,
-                    runSpacing: 0.0,
-                    spacing: 5.0,
-                    runAlignment: WrapAlignment.center,
+            padding: EdgeInsets.only(bottom: 17.0, top: 10.0),
+            decoration: _decoration,
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Row(),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  direction: Axis.horizontal,
+                  runSpacing: 0.0,
+                  spacing: 5.0,
+                  runAlignment: WrapAlignment.center,
 
-                    children: <Widget>[
+                  children: <Widget>[
 
-                      /// Todo add methods to listen letters
-                      CustomButton(
-                        letter: learnedLetter.letter.toUpperCase(),
-                        color: Theme.of(context).primaryColor,
-                        onTap: ( ) => print('pressed'),
-                      ),
+                    /// Todo add methods to listen letters
+                    CustomButton(
+                      term: learnedLetter.letter.toUpperCase(),
+                      color: Theme.of(context).primaryColor,
+                      onTap: ( ) => print('pressed'),
+                    ),
 
-                      CustomButton(
-                        letter: learnedLetter.letter.toLowerCase(),
-                        color: Theme.of(context).primaryColor,
-                        onTap: ( ) => print('pressed'),
-                      ),
+                    CustomButton(
+                      term: learnedLetter.letter.toLowerCase(),
+                      color: Theme.of(context).primaryColor,
+                      onTap: ( ) => print('pressed'),
+                    ),
 
 
-                    ],
-                  )
-                ]
-              ),
+                  ],
+                )
+              ]
             ),
           ),
 
 
-
-
           Container(
-            margin:  EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            padding: EdgeInsets.all(15.0),
-            decoration: BoxDecoration(
-              color:        Colors.grey[100],
-              border:       Border.all(width: 1.0, color: Colors.grey[300]),
-              borderRadius: BorderRadius.all(Radius.circular(3.0))
-            ),
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(top: 10.0, bottom: 17.0),
+            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            decoration: _decoration,
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
@@ -229,58 +225,41 @@ class ItemLearnedLetter extends StatelessWidget {
                 Wrap(
 
                   alignment: WrapAlignment.center,
-                  spacing:    7.0,
-                  runSpacing: 10.0,
                   children: List.generate(
                     learnedLetter.combinations.length,
-                    (i) => Container(
-                      width: 90.0,
-                      height: 40.0,
-                      child: RaisedButton(
-                        color:     Colors.red,
-                        textColor: Colors.white,
-                        highlightElevation: 4.0,
-                        onPressed: () => viewModel.speak(term: learnedLetter.combinations[i].p),
-                        child: Text(
+                    (i) => CustomButton(
+                      term: learnedLetter.combinations[i].w,
+                      color: Colors.red,
+                      onTap: () => viewModel.speak(term: learnedLetter.combinations[i].p),
+                      height: 36.0,
+                      width: 80.0,
+                      fontSize: 24,
+                    )  
+                  ),
 
-                          learnedLetter.combinations[i].w,
-
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.0,
-                            fontSize: 24.0
-                          ),
-                        ),
-                      )
-                    )
-                  )
-                ),
+                )
               ],
             ),
           ),
 
-
           Container(
-            margin: EdgeInsets.only(top: 20.0, bottom: 30.0),
-            child: Container(
-              width: 225.0,
+            margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+            child: CustomButton(
+              width: 200.0,
               height: 40.0,
-              child: RaisedButton(
-                highlightElevation: 6.0,
-                color: Colors.green,
-                textColor: Colors.white,
-                child: Text(
-                  'Volver a praticar',
-                  style: TextStyle( fontWeight: FontWeight.bold, fontSize: 19.0, letterSpacing: 0.8 ),
-                ),
-                onPressed: () => viewModel.startCourse(learnedLetter.letter) ,
-              ),
-            )
-          )
+              term: 'Volver a practicar',
+              color: Colors.green,
+              onTap: () => viewModel.startCourse(learnedLetter.letter),
+              fontSize: 18.0,
+            ),
+          ),
 
 
         ],
+
+
       )
+
     );
   }
 
@@ -313,22 +292,28 @@ class TabLearnedLetters extends StatelessWidget {
 
 class CustomButton extends StatelessWidget {
 
-  final String letter;
+  final String term;
   final Function() onTap;
   final MaterialColor color;
+  final double width;
+  final double height;
+  final double fontSize;
 
   const CustomButton({
     Key key,
-    @required this.letter,
+    @required this.term,
     @required this.onTap,
-    @required this.color
+    @required this.color,
+    this.width = 120.0,
+    this.height = 45.0,
+    this.fontSize = 26.0
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width:      120.0,
-      height:     45.0,
+      width:      width,
+      height:     height,
       alignment:  Alignment.center,
       margin:     EdgeInsets.symmetric(
         horizontal: 2.0,
@@ -358,13 +343,13 @@ class CustomButton extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  letter,
+                  term,
                   textAlign: TextAlign.center,
                   style: TextStyle(
 
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 26.0
+                    fontSize: fontSize
 
                   ),
                 ),
