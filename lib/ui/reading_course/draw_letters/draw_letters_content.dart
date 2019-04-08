@@ -170,7 +170,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
           vm.showWellDoneDialog == true
             ? WellDoneDialogApp(
               onStart: vm.speakOnWellDone,
-              onEnd:   vm.hideWellDoneDialog,
+              onEnd:   vm.onHideWellDoneDialog,
             )
             : SizedBox(),
 

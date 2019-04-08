@@ -19,7 +19,6 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
     return state.drawLetters.copyWith(
       currrentData: state.drawLetters.data[index],
       currentIndex: index,
-      showWellDoneDialog: true
     );
   }
 

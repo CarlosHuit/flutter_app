@@ -112,14 +112,11 @@ class DrawLettersViewModel {
 
   }
 
-  void hideWellDoneDialog() {
-    dispatch(RCHideWellDoneDialogDL());
-  }
 
-  void onHideWellDoneDialog() {
+  void onHideWellDoneDialog() async{
 
-    // 0 => 1 - 1
-    // 1 => 2 - 1
+    await dispatch(RCHideWellDoneDialogDL());
+
     if ( currentIndex < data.length - 1 )
       changeCurrentData();
     else
