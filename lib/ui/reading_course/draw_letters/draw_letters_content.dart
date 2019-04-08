@@ -85,6 +85,10 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
   }
 
+  void validateTraces() {
+    vm.validateTraces();
+    strokes.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +98,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
       backgroundColor: Colors.grey[100],
 
       floatingActionButton: ButtonValidation(
-        onTap: () { 
-          vm.validateTraces();
-          strokes.clear();
-        }
+        onTap: validateTraces
       ),
 
       body: Stack(
