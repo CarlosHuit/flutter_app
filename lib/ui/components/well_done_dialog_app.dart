@@ -105,6 +105,7 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
 
                   ),
                   child: Row(
+
                     children: <Widget>[
 
 
@@ -161,6 +162,7 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
 
 
                     ],
+
                   ),
                 ),
               ),
