@@ -83,7 +83,6 @@ class DrawLettersViewModel {
   }
 
 
-
   void blackboardInstructions() {
 
     final letter = currrentData.soundLetter;
@@ -93,6 +92,7 @@ class DrawLettersViewModel {
     tts.speak(term: message);
 
   }
+
 
   void validateTraces() {
 
@@ -125,7 +125,6 @@ class DrawLettersViewModel {
   }  
 
 
-
   void changeCurrentData() {
     dispatch(RCChangeCurrentDataDL());
   }
@@ -139,6 +138,7 @@ class DrawLettersViewModel {
       )
     );
   }
+
 
   void speakOnWellDone() {
     tts.speak(term: 'Bien Hecho');
