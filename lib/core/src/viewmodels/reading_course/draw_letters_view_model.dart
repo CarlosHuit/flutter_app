@@ -99,11 +99,11 @@ class DrawLettersViewModel {
     // 0 => 1 - 1
     // 1 => 2 - 1
     print(currentIndex);
-    if ( currentIndex < data.length - 1 ) {
+
+    if ( currentIndex < data.length - 1 )
       changeCurrentData();
-    } else {
+    else
       redirect();
-    }
 
   }
 
