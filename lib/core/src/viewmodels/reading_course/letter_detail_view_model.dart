@@ -128,10 +128,10 @@ class LetterDetailViewModel {
   void changeCurrentData() {
 
     if (currentIndex < dataLength - 1) {
-      print('Change CurrentData');
+
       dispatch(RCChangeCurrentDataLD());
     } else {
-      print('redirect');
+
       dispatch(NavigatorPushReplaceRigthToLeft(GameScreen()));
     }
 

@@ -24,3 +24,5 @@ class RCToggleStrokeColorSelectorDL {}
 
 class RCChangeCurrentDataDL {}
 
+class RCShowWellDoneDialogDL {}
+class RCHideWellDoneDialogDL {}

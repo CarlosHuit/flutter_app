@@ -66,6 +66,18 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
     );
   }
 
+  if (action is RCShowWellDoneDialogDL) {
+    return state.drawLetters.copyWith(
+      showWellDoneDialog: true
+    );
+  }
+
+  if (action is RCHideWellDoneDialogDL) {
+    return state.drawLetters.copyWith(
+      showWellDoneDialog: false
+    );
+  }
+
   return state.drawLetters;
 
 }

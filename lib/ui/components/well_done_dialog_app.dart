@@ -56,6 +56,13 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
 
   }
 
+  @override
+  void dispose() {
+    print('Ocultado');
+    controller.dispose();
+    super.dispose();
+  }
+
   void show() {
     showDialog(
       barrierDismissible: false,
@@ -66,8 +73,10 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
 
   void hide() async{
     await controller.reverse();
+    Navigator.pop(context);
     onEnd();
   }
+
 
   Widget buildWellDoneDialog(BuildContext context) {
 

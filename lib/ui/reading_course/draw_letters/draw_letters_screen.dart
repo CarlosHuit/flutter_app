@@ -22,6 +22,7 @@ class DrawLettersScreen extends StatelessWidget {
         store.dispatch(RCResetStateDL());
         SpeechSynthesisService.stop();
       },
+
       builder:   (_, vm) => DrawLettersContent(vm: vm),
 
     );

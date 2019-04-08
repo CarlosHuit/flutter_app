@@ -83,6 +83,7 @@ class DrawLettersViewModel {
   }
 
 
+
   void blackboardInstructions() {
 
     final letter = currrentData.soundLetter;
@@ -95,45 +96,41 @@ class DrawLettersViewModel {
 
   void validateTraces() {
 
-    print(currentIndex);
     final isCorrect = true;
 
     if (isCorrect) {
 
-      // 0 => 1 - 1
-      // 1 => 2 - 1
-      if ( currentIndex < data.length - 1 )
-        changeCurrentData();
-      else
-        redirect();
+      dispatch(RCShowWellDoneDialogDL());
 
     }
 
     if(!isCorrect) {
-
-      print('Invalid data');
-
+      /// retry strokes
     }
 
 
 
   }
 
+  void hideWellDoneDialog() {
+    dispatch(RCHideWellDoneDialogDL());
+  }
 
-/* 
-  validate traces
+  void onHideWellDoneDialog() {
 
-    -> correct : showDialog
-      -> onHideDialog -> changeCurrentData || redirection
+    // 0 => 1 - 1
+    // 1 => 2 - 1
+    if ( currentIndex < data.length - 1 )
+      changeCurrentData();
+    else
+      redirect();
 
-    -> incorrect : repeat
-      -> replay handwriting animation
- */
+  }  
+
 
 
   void changeCurrentData() {
     dispatch(RCChangeCurrentDataDL());
-    print('changeCurrentData');
   }
 
 
@@ -144,16 +141,13 @@ class DrawLettersViewModel {
         transition: PageTransitionType.rightToLeft
       )
     );
-    print('redirection');
   }
 
   void speakOnWellDone() {
     tts.speak(term: 'Bien Hecho');
   }
 
-  void hideWellDoneDialog() {
-    print('Hide well done dialog');
-  }
+
 
   @override
   bool operator ==(Object other) =>

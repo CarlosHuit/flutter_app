@@ -85,23 +85,25 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
   }
 
+
   void validateTraces() {
     vm.validateTraces();
     strokes.clear();
   }
 
+
   @override
   Widget build(BuildContext context) {
+
 
     return Scaffold(
 
       backgroundColor: Colors.grey[100],
 
-      floatingActionButton: ButtonValidation(
-        onTap: validateTraces
-      ),
+      floatingActionButton: ButtonValidation( onTap: validateTraces ),
 
       body: Stack(
+
         alignment: Alignment.center,
         children: <Widget>[
 
@@ -138,8 +140,8 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
           vm.topControlBar.showStrokeSizeSelector == true 
             ? CustomPopUpMenu(
               onTapOutside: vm.toggleStrokeSizeSelector,
-              position: Offset(10.0, 70.0),
-              item: StrokeSizeSelector(
+              position:     Offset(10.0, 70.0),
+              item:         StrokeSizeSelector(
                 min:      vm.configData.minLineWidth,
                 max:      vm.configData.maxLineWidth,
                 value:    vm.preferences.lineWidth,
@@ -165,15 +167,16 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
 
           /// WellDoneDialog
-          vm.showHandWriting == true
+          vm.showWellDoneDialog == true
             ? WellDoneDialogApp(
               onStart: vm.speakOnWellDone,
-              onEnd: () => Navigator.pop(context),
+              onEnd:   vm.hideWellDoneDialog,
             )
             : SizedBox(),
 
 
         ],
+
       ),
 
     );

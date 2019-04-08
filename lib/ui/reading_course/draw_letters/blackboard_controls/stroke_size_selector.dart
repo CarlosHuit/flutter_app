@@ -94,7 +94,6 @@ class StrokeSizeItem extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
-    print('${prefs.lineWidth}');
     Paint paint = Paint()
     ..strokeCap = prefs.styleLine
     ..color     = prefs.lineColor
