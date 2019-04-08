@@ -93,19 +93,42 @@ class DrawLettersViewModel {
 
   }
 
+  void validateTraces() {
 
-  void onCompleteTraces() {
-
-    // 0 => 1 - 1
-    // 1 => 2 - 1
     print(currentIndex);
+    final isCorrect = true;
 
-    if ( currentIndex < data.length - 1 )
-      changeCurrentData();
-    else
-      redirect();
+    if (isCorrect) {
+
+      // 0 => 1 - 1
+      // 1 => 2 - 1
+      if ( currentIndex < data.length - 1 )
+        changeCurrentData();
+      else
+        redirect();
+
+    }
+
+    if(!isCorrect) {
+
+      print('Invalid data');
+
+    }
+
+
 
   }
+
+
+/* 
+  validate traces
+
+    -> correct : showDialog
+      -> onHideDialog -> changeCurrentData || redirection
+
+    -> incorrect : repeat
+      -> replay handwriting animation
+ */
 
 
   void changeCurrentData() {

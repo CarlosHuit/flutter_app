@@ -95,7 +95,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
       floatingActionButton: ButtonValidation(
         onTap: () { 
-          vm.onCompleteTraces();
+          vm.validateTraces();
           strokes.clear();
         }
       ),
@@ -195,10 +195,10 @@ class ButtonValidation extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return FloatingActionButton(
-      mini:            true,
-      child:           Icon(Icons.check, color: Colors.white,),
-      onPressed:       onTap,
-      backgroundColor: Colors.green[600],
+      mini:                  true,
+      onPressed:             onTap,
+      backgroundColor:       Colors.green[600],
+      child:                 Icon(Icons.check, color: Colors.white),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
 
