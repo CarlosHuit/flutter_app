@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
+import 'package:app19022019/ui/components/dialog_well_done.dart';
 import 'package:flutter/material.dart';
 
 import './blackboard.dart';
@@ -9,8 +12,6 @@ import './blackboard_controls/custom_pop_up_menu.dart';
 import './blackboard_controls/stroke_color_selector.dart';
 import './blackboard_controls/stroke_size_selector.dart';
 import './handwriting.dart';
-
-import 'dart:async';
 
 
 class DrawLettersContent extends StatefulWidget {
@@ -29,7 +30,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
   DrawLettersViewModel get vm => widget.vm;
 
-  StrokeData strokeData;
   List<StrokeData> strokes;
 
 
@@ -162,6 +162,12 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             )
             : SizedBox(),
 
+          vm.showWellDoneDialog == true
+            ? DialogWellDone(
+              callBack: () => print('callback'),
+              speak: () => print('speak'),
+            )
+            : SizedBox(),
 
         ],
       ),
