@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
+import 'package:app19022019/ui/components/well_done_dialog_app.dart';
 import 'package:flutter/material.dart';
 
 import './blackboard.dart';
@@ -161,17 +162,15 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             )
             : SizedBox(),
 
-/*           vm.showWellDoneDialog == true
-            ? DialogWellDone(
-              callBack: () => print('callback'),
-              speak: () => print('speak'),
+
+          /// WellDoneDialog
+          vm.showHandWriting == true
+            ? WellDoneDialogApp(
+              onStart: vm.speakOnWellDone,
+              onEnd: () => Navigator.pop(context),
             )
             : SizedBox(),
 
- */
-          vm.showHandWriting == true
-            ? WellDoneNotification()
-            : SizedBox(),
 
         ],
       ),
@@ -209,154 +208,3 @@ class ButtonValidation extends StatelessWidget {
 }
 
 
-class WellDoneNotification extends StatefulWidget {
-
-  final Duration duration;
-
-  WellDoneNotification({
-    Key key,
-    this.duration = const Duration(milliseconds: 600)
-  }) : super(key: key);
-
-  @override
-  _WellDoneNotificationState createState() => _WellDoneNotificationState();
-}
-
-class _WellDoneNotificationState extends State<WellDoneNotification> with SingleTickerProviderStateMixin {
-
-  Duration get _duration => widget.duration;
-  AnimationController controller;
-  Animation<double> animation;
-  double iconSize;
-
-  @override
-  void initState() {
-    super.initState();
-    iconSize = 60.0;
-    Future.delayed(Duration(milliseconds: 0), show);
-
-    controller = AnimationController(duration: _duration, vsync: this)
-      ..addListener(() {
-        print(animation.value);
-        setState(() {  });
-
-      });
-
-    animation = Tween<double>(begin: -100, end: 10).chain(CurveTween(curve: Curves.bounceInOut)).animate(controller);
-    animation = Tween<double>(begin: -100, end: 10).animate(controller);
-
-    controller.forward();
-
-  }
-
-  void show() {
-    showDialog(
-      context: context,
-      builder: (context) => buildWellDoneDialog(context)
-    );
-  }
-
-  Widget buildWellDoneDialog(BuildContext context) {
-
-
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (_, child) => Container(
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-
-
-            Positioned(
-              bottom: animation.value,
-              height: 100.0,
-              width: MediaQuery.of(context).size.width * 0.90,
-              child: Container(
-                decoration: BoxDecoration(
-
-                  boxShadow: <BoxShadow>[
-                    BoxShadow( color: Colors.black54, blurRadius: 10.0 )
-                  ],
-
-
-                  color: Colors.greenAccent[100],
-                  borderRadius: BorderRadius.only(
-                    bottomLeft:  Radius.circular(100.0),
-                    topLeft:     Radius.circular(100.0),
-                    bottomRight: Radius.circular(10.0),
-                    topRight:    Radius.circular(10.0)
-                  )
-
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: 100.0,
-                      height: 100.0,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50.0)
-                      ),
-                      child: Container(
-
-                        width:  iconSize + 2.0,
-                        height: iconSize + 2.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.circular(100.0)
-                        ),
-                        child: Icon(
-                          Icons.check_circle_outline,
-                          color: Colors.greenAccent[700],
-                          size: iconSize,
-                        ),
-
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(right: (100 - iconSize) /2 ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Bien Hecho',
-                          maxLines:  1,
-                          textAlign: TextAlign.center,
-                          overflow:  TextOverflow.ellipsis,
-                          style: TextStyle(
-
-                            // color:      Colors.teal,
-                            color:      Colors.greenAccent[700],
-                            fontSize:   32.0,
-                            fontFamily: 'Roboto',
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.bold,
-                            shadows: <Shadow> [
-                              // Shadow(color: Colors.yellow, blurRadius: 1.0)
-                            ]
-
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )
-
-
-          ],
-        ),
-      ),
-      child: SizedBox(),
-    );
-
-
-  }
-
-  buildWellDoneAnimation() {}
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox();
-  }
-}

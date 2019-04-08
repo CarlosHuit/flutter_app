@@ -124,6 +124,13 @@ class DrawLettersViewModel {
     print('redirection');
   }
 
+  void speakOnWellDone() {
+    tts.speak(term: 'Bien Hecho');
+  }
+
+  void hideWellDoneDialog() {
+    print('Hide well done dialog');
+  }
 
   @override
   bool operator ==(Object other) =>
