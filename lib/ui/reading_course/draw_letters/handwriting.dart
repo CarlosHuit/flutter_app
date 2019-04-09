@@ -27,8 +27,8 @@ class ModalHandwriting extends StatefulWidget {
     @required this.speechAtTheEnd,
     @required this.speechAtTheStart,
 
-    this.curve = Curves.fastLinearToSlowEaseIn,
-    this.duration = const Duration(milliseconds: 1300),
+    this.curve = Curves.elasticOut,
+    this.duration = const Duration(milliseconds: 1500),
     this.animationName = 'draw',
   }) : super(key: key);
 
@@ -38,7 +38,7 @@ class ModalHandwriting extends StatefulWidget {
 
 
 
-class _ModalHandwritingState extends State<ModalHandwriting> {
+class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerProviderStateMixin {
 
   Duration get _duration  =>   widget.duration;
   Curve get _curve => widget.curve;
@@ -54,7 +54,9 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   FlareControls flareControl;
   Timer futureSub;
   bool pause;
-  double positionX;
+
+  Animation<double> animation;
+  AnimationController animationController;
 
   BoxConstraints _constraints = BoxConstraints(
 
@@ -80,16 +82,28 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
 
     super.initState();
 
-    pause = false;
+    final width = MediaQuery.of(_context).size.width;
+
+    animationController = AnimationController( duration: _duration, vsync: this );
+
+    animation = Tween<double>( begin: width, end: 0 )
+      .chain( CurveTween( curve: _curve ) )
+      .animate(animationController);
+
+    pause = true;
     flareControl = FlareControls();
     animationDuration = Duration(seconds: 6);
 
-    final width = MediaQuery.of(_context).size.width;
-    positionX = width;
 
     print('ShowMe');
-    Future.delayed(Duration.zero, show);
-    Future.delayed(Duration(milliseconds: 200), playAnimation);
+
+    final delayToShowDialog = 300;
+
+    Future.delayed(Duration(milliseconds: delayToShowDialog), show);
+    Future.delayed(
+      Duration(milliseconds: delayToShowDialog + 200),
+      () => animationController.forward()
+    ).whenComplete(playAnimation);
 
 
   }
@@ -97,6 +111,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
 
   /// Show hanwriting dialog
   void show() {
+
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -108,6 +123,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
         },
       )
     );
+
   }
 
   /// Remove dialog in the stack of routes and execte the onHide callBack before dispose componente
@@ -152,27 +168,32 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
     final size = MediaQuery.of(_context).size;
 
 
-    return AnimatedContainer(
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        return Transform(
+          transform: Matrix4.translationValues(animation.value, 0, 0),
+          child: Container(
 
-      curve:     _curve,
-      duration:  _duration,
-      alignment: Alignment.center,
-      transform: Matrix4.translationValues(positionX, 0, 0),
-      child: Container(
+            alignment: Alignment.center,
+            child: Container(
 
-        width:       size.width  - 20,
-        height:      size.height - 20,
-        constraints: _constraints,
-        decoration:  _decoration,
-        child: Column(
-          children: [
-            handwriting(size),
-            bottomBar()
-          ],
-        ),
+              width:       size.width  - 20,
+              height:      size.height - 20,
+              constraints: _constraints,
+              decoration:  _decoration,
+              child: Column(
+                children: [
+                  handwriting(size),
+                  bottomBar()
+                ],
+              ),
 
-      ),
+            )
 
+          ),
+        );
+      },
     );
 
 
@@ -306,6 +327,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   void dispose() {
     print('closed');
     speechAtTheEnd();
+    animationController.dispose();
     super.dispose();
   }
 
