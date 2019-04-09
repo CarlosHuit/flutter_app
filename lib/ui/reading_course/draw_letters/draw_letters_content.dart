@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
 import 'package:app19022019/ui/components/well_done_dialog_app.dart';
@@ -66,11 +64,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   }
 
 
-  void handlePanEnd(DragEndDetails detail) {
-
-  }
-
-
   void validateTraces() {
     vm.validateTraces();
     strokes.clear();
@@ -97,8 +90,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
           GestureDetector(
             onPanStart:  handlePanStart,
             onPanUpdate: handlePanUpdate,
-            onPanEnd:    handlePanEnd,
-            // onPanCancel: () => _points.add(null),
             child: CustomPaint(
               size:    Size.infinite,
               painter: Blackboard(
@@ -150,18 +141,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             )
             : SizedBox(),
 
-          /// Handwriting
-          // vm.showHandWriting == true
-          //   ? Container(
-          //     color: Colors.black26,
-          //     child: ModalHandwriting(
-          //       context: context,
-          //       onEnd: () {},
-          //       onStart: () {},
-          //       duration: Duration(milliseconds: 1200),
-          //     ),
-          //   )
-          //   : SizedBox(),
 
           /// Handwriting
           vm.showHandWriting == true
