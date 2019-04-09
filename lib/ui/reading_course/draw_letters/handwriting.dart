@@ -54,7 +54,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   FlareControls flareControl;
   Timer futureSub;
   bool pause;
-
+  double positionX;
 
   BoxConstraints _constraints = BoxConstraints(
 
@@ -85,7 +85,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
     animationDuration = Duration(seconds: 6);
 
     final width = MediaQuery.of(_context).size.width;
-
+    positionX = width;
 
     print('ShowMe');
     Future.delayed(Duration.zero, show);
@@ -145,7 +145,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
-  /// Build dialog content
+  /// Build content dialog
   Widget buildHandwrinting() {
 
 
@@ -157,7 +157,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
       curve:     _curve,
       duration:  _duration,
       alignment: Alignment.center,
-      transform: Matrix4.translationValues(size.width * 0, 0, 0),
+      transform: Matrix4.translationValues(positionX, 0, 0),
       child: Container(
 
         width:       size.width  - 20,
@@ -179,6 +179,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
+  /// Build container that contain: guide lines component and animation component
   Widget handwriting(Size size) {
 
     return Expanded(
@@ -208,6 +209,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
+  /// Build guide lines of letter animation
   Widget guideLines() {
 
     return Container(
@@ -219,6 +221,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
+  /// Build handwriting animation of the current letter
   Widget letterAnimation() {
 
     return Container(
@@ -238,6 +241,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
+  /// Build bottom bar than contain: Button to hide Dialog - Button to retry animation
   Widget bottomBar() {
 
     return Container(
@@ -257,6 +261,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
+  /// Buil button "Next" that hide the current dialog
   Widget buttonNext() {
 
     return Container(
@@ -279,6 +284,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
+  /// Build custom button that restart animation
   Widget buttonReplayAnimation() {
     
     return Positioned(
@@ -299,7 +305,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   @override
   void dispose() {
     print('closed');
-    // onHide();
     speechAtTheEnd();
     super.dispose();
   }
