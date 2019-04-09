@@ -265,6 +265,26 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   Timer futureSub;
   bool pause;
 
+
+  BoxConstraints _constraints = BoxConstraints(
+
+    minWidth:  300.0,
+    maxWidth:  380.0,
+    minHeight: 400.0,
+    maxHeight: 480.0
+
+  );
+
+
+  BoxDecoration _decoration = BoxDecoration(
+
+    color:        Colors.white,
+    borderRadius: BorderRadius.circular(4.0),
+    boxShadow: [  BoxShadow(color: Colors.black54, blurRadius: 5.0)]
+
+  );
+
+
   @override
   void initState() {
     super.initState();
@@ -275,6 +295,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
     Future.delayed(Duration.zero, show);
     Future.delayed(Duration(milliseconds: 200), playAnimation);
   }
+
 
   void show() {
     showDialog(
@@ -287,14 +308,17 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
     );
   }
 
+
   void hide() {
     Navigator.pop(context);
     onHide();
   }
 
+
   void pauseAnimation() {
     setState(() => pause = true );
   }
+
 
   void playAnimation() {
     speechAtTheStart();
@@ -360,25 +384,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
     );
 
   }
-
-
-  BoxConstraints _constraints = BoxConstraints(
-
-    minWidth:  300.0,
-    maxWidth:  380.0,
-    minHeight: 400.0,
-    maxHeight: 480.0
-
-  );
-
-
-  BoxDecoration _decoration = BoxDecoration(
-
-    color:        Colors.white,
-    borderRadius: BorderRadius.circular(4.0),
-    boxShadow: [  BoxShadow(color: Colors.black54, blurRadius: 5.0)]
-
-  );
 
 
   Widget handwriting(Size size) {
@@ -480,6 +485,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
 
   }
 
+
   Widget buttonReplayAnimation() {
     
     return Positioned(
@@ -505,6 +511,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return SizedBox();
@@ -513,10 +520,3 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
 
 }
 
-
-/// initialMessageToSpeak
-/// finalMessageToSpeak
-/// 
-/// onDispose -> hideHandwriting
-/// speechAtTheEnd
-/// speechAtTheStart
