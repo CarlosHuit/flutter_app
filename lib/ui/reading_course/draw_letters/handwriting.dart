@@ -507,14 +507,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
 
   @override
   Widget build(BuildContext context) {
-    // return SizedBox();
-    return WillPopScope(
-      onWillPop: () async {
-        print('0');
-        Navigator.pop(context, false );
-      },
-      child: SizedBox(),
-    );
+    return SizedBox();
   }
 
 
