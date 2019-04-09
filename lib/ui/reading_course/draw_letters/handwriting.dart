@@ -10,23 +10,33 @@ import './guide_lines.dart';
 
 class ModalHandwriting extends StatefulWidget {
 
+  /// [ Duration ] duration to use in the animation of handwriting container. Default: Duration(milliseconds: 420)
   final Duration duration;
+
+  /// [ BuildContext ] context to get size of screen
   final BuildContext context;
+
+  /// [ String ] name of the animation to use. Default: 'draw'
   final String animationName;
+
+  /// [ Curve ] curve to apply to the animation of handwriting  container. Default Curves.fastOutSlowIn
   final Curve curve;
 
+  /// [ Function() ] Function to execute when the animation begins.
   final Function() speechAtTheStart;
+
+  /// [ Function() ] Function to execute on dipose this component
   final Function() speechAtTheEnd;
+
+  /// [ Function() ] Function to remove this component of the tree
   final Function() onHide;
 
   ModalHandwriting({
     Key key,
-    @required this.context,
-
     @required this.onHide,
+    @required this.context,
     @required this.speechAtTheEnd,
     @required this.speechAtTheStart,
-
     this.curve = Curves.fastOutSlowIn,
     this.duration = const Duration(milliseconds: 420),
     this.animationName = 'draw',
@@ -40,24 +50,46 @@ class ModalHandwriting extends StatefulWidget {
 
 class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerProviderStateMixin {
 
-  Duration get _duration  =>   widget.duration;
+  /// Getter of animation curve
   Curve get _curve => widget.curve;
 
+  /// Getter of animation duration
+  Duration get _duration => widget.duration;
+
+  /// Getter of BuildContext
   BuildContext get _context => widget.context;
 
+  /// Getter of animation name
   String     get animationName => widget.animationName;
+
+  /// Getter of function speechAtTheStart
   Function() get speechAtTheStart => widget.speechAtTheStart;
+
+  /// Getter of function speechAtTheEnd 
   Function() get speechAtTheEnd => widget.speechAtTheEnd;
+
+  /// Get of function onHide
   Function() get onHide => widget.onHide;
   
+  /// Total of animation duration
   Duration animationDuration;
+
+  /// Controllers of current animation
   FlareControls flareControl;
+
+  /// [Future] Timer to pause the animation. Is Cancelable
   Timer futureSub;
+
+  /// Controller that handle animation pause
   bool pause;
 
+  /// Animation of handwriting container
   Animation<double> animation;
+
+  /// Controller of handwriting container animation
   AnimationController animationController;
 
+  /// constraits of handwriting container
   BoxConstraints _constraints = BoxConstraints(
 
     minWidth:  300.0,
@@ -67,7 +99,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
   );
 
-
+  /// decoration of handwriting container
   BoxDecoration _decoration = BoxDecoration(
 
     color:        Colors.white,
@@ -82,6 +114,11 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
     super.initState();
 
+    
+    animationDuration = Duration(seconds: 6);
+    flareControl = FlareControls();
+    pause = true;
+
     final height = MediaQuery.of(_context).size.height;
 
     animationController = AnimationController( duration: _duration, vsync: this );
@@ -90,16 +127,12 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
       .chain( CurveTween( curve: _curve ) )
       .animate(animationController);
 
-    pause = true;
-    flareControl = FlareControls();
-    animationDuration = Duration(seconds: 6);
-
-
     print('ShowMe');
 
     final delayToShowDialog = 300;
 
-    Future.delayed(Duration(milliseconds: delayToShowDialog), show);
+    Future.delayed( Duration(milliseconds: delayToShowDialog), show );
+
     Future.delayed(
       Duration(milliseconds: delayToShowDialog + 200),
       () => animationController.forward()
@@ -158,6 +191,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
     playAnimation();
     flareControl.play(animationName);
+    ///
     setState(() => futureSub = Timer(animationDuration, pauseAnimation) );
 
 
