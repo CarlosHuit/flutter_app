@@ -13,6 +13,7 @@ class ModalHandwriting extends StatefulWidget {
   final Duration duration;
   final BuildContext context;
   final String animationName;
+  final Curve curve;
 
   final Function() speechAtTheStart;
   final Function() speechAtTheEnd;
@@ -26,7 +27,8 @@ class ModalHandwriting extends StatefulWidget {
     @required this.speechAtTheEnd,
     @required this.speechAtTheStart,
 
-    this.duration = const Duration(milliseconds: 600),
+    this.curve = Curves.fastLinearToSlowEaseIn,
+    this.duration = const Duration(milliseconds: 1300),
     this.animationName = 'draw',
   }) : super(key: key);
 
@@ -39,10 +41,11 @@ class ModalHandwriting extends StatefulWidget {
 class _ModalHandwritingState extends State<ModalHandwriting> {
 
   Duration get _duration  =>   widget.duration;
+  Curve get _curve => widget.curve;
+
   BuildContext get _context => widget.context;
 
-  String get animationName => widget.animationName;
-
+  String     get animationName => widget.animationName;
   Function() get speechAtTheStart => widget.speechAtTheStart;
   Function() get speechAtTheEnd => widget.speechAtTheEnd;
   Function() get onHide => widget.onHide;
@@ -74,16 +77,25 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
 
   @override
   void initState() {
+
     super.initState();
+
+    pause = false;
     flareControl = FlareControls();
     animationDuration = Duration(seconds: 6);
-    pause = false;
+
+    final width = MediaQuery.of(_context).size.width;
+
+
     print('ShowMe');
     Future.delayed(Duration.zero, show);
     Future.delayed(Duration(milliseconds: 200), playAnimation);
+
+
   }
 
 
+  /// Show hanwriting dialog
   void show() {
     showDialog(
       barrierDismissible: false,
@@ -98,24 +110,24 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
     );
   }
 
-
+  /// Remove dialog in the stack of routes and execte the onHide callBack before dispose componente
   void hide() {
     Navigator.pop(context);
     onHide();
   }
 
-
+  /// Set the state to pause the current state
   void pauseAnimation() {
     setState(() => pause = true );
   }
 
-
+  /// Execute [speechAtTheStart] and set the state to play the current state 
   void playAnimation() {
     speechAtTheStart();
     setState(() => pause = false);
   }
 
-
+  /// Cancel previous animation and restart the animation
   void replayAnimation() {
 
     if (futureSub != null) {
@@ -133,45 +145,36 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
+  /// Build dialog content
   Widget buildHandwrinting() {
+
 
     final size = MediaQuery.of(_context).size;
 
-    return Container(
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
 
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              alignment: Alignment.center,
-              child: Container(
+    return AnimatedContainer(
 
-                constraints: _constraints,
-                decoration:  _decoration,
-                width:  size.width  - 20.0,
-                height: size.height - 20.0,
+      curve:     _curve,
+      duration:  _duration,
+      alignment: Alignment.center,
+      transform: Matrix4.translationValues(size.width * 0, 0, 0),
+      child: Container(
 
-                child:  Column(
-                  children: <Widget>[
+        width:       size.width  - 20,
+        height:      size.height - 20,
+        constraints: _constraints,
+        decoration:  _decoration,
+        child: Column(
+          children: [
+            handwriting(size),
+            bottomBar()
+          ],
+        ),
 
-                    handwriting(size),
-                    bottomBar(),
-
-                  ],
-                ),
-
-              ),
-            ),
-          )
-
-        ],
       ),
+
     );
+
 
   }
 
@@ -192,7 +195,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
             fit:      StackFit.expand,
             children: [
               guideLines(),
-              animation()
+              letterAnimation()
             ],
           ),
 
@@ -216,7 +219,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   }
 
 
-  Widget animation() {
+  Widget letterAnimation() {
 
     return Container(
       alignment: Alignment.center,
