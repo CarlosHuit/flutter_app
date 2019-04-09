@@ -23,7 +23,10 @@ class OnBackPressed {
       return FlatButton(
         child: Text(
           'NO',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0
+          ),
         ),
         onPressed: () => Navigator.pop(context, false),
 

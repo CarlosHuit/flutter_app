@@ -26,3 +26,7 @@ class RCChangeCurrentDataDL {}
 
 class RCShowWellDoneDialogDL {}
 class RCHideWellDoneDialogDL {}
+
+
+class RCShowHandwritingDL {}
+class RCHideHandwritingDL {}

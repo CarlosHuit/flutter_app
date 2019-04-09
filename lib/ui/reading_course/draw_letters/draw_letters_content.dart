@@ -38,21 +38,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
     super.initState();
     strokes = [];
-    Future.delayed( Duration.zero, showHandwritingModal );
-
-  }
-
-
-  void showHandwritingModal() {
-
-    showDialog(
-      context: context,
-      builder: (context) => Handwriting(
-        context:   context,
-        onInit:    vm.handWrintingMessage,
-        onDispose: vm.blackboardInstructions,
-      )
-    );
 
   }
 
@@ -132,7 +117,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
           /// BottomControls
           BlackboardBottomControlBar(
             onTapIconClear: () => strokes.clear(),
-            onTapIconReplay: showHandwritingModal,
+            onTapIconReplay: vm.showHandwriting,
           ),
 
 
@@ -162,6 +147,30 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
                 colors:       vm.configData.colors,
                 onSelect: vm.changeStrokeColor,
               ),
+            )
+            : SizedBox(),
+
+          /// Handwriting
+          // vm.showHandWriting == true
+          //   ? Container(
+          //     color: Colors.black26,
+          //     child: ModalHandwriting(
+          //       context: context,
+          //       onEnd: () {},
+          //       onStart: () {},
+          //       duration: Duration(milliseconds: 1200),
+          //     ),
+          //   )
+          //   : SizedBox(),
+
+          /// Handwriting
+          vm.showHandWriting == true
+            ? ModalHandwriting(
+              onHide: vm.hideHandwriting,
+              speechAtTheStart: vm.handWrintingMessage,
+              speechAtTheEnd:   vm.blackboardInstructions,
+
+              context: context,
             )
             : SizedBox(),
 

@@ -77,6 +77,15 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
     );
   }
 
+  if (action is RCShowHandwritingDL) {
+    return state.drawLetters.copyWith( showHandWriting: true );
+  }
+
+  if (action is RCHideHandwritingDL) {
+    return state.drawLetters.copyWith( showHandWriting: false );
+  }
+
+
   return state.drawLetters;
 
 }

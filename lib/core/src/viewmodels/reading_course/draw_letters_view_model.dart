@@ -144,6 +144,14 @@ class DrawLettersViewModel {
     tts.speak(term: 'Bien Hecho');
   }
 
+  void showHandwriting() {
+    dispatch(RCShowHandwritingDL());
+  }
+
+  void hideHandwriting() {
+    dispatch(RCHideHandwritingDL());
+  }
+
 
 
   @override
