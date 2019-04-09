@@ -27,8 +27,8 @@ class ModalHandwriting extends StatefulWidget {
     @required this.speechAtTheEnd,
     @required this.speechAtTheStart,
 
-    this.curve = Curves.elasticOut,
-    this.duration = const Duration(milliseconds: 1500),
+    this.curve = Curves.fastOutSlowIn,
+    this.duration = const Duration(milliseconds: 420),
     this.animationName = 'draw',
   }) : super(key: key);
 
@@ -82,11 +82,11 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
     super.initState();
 
-    final width = MediaQuery.of(_context).size.width;
+    final height = MediaQuery.of(_context).size.height;
 
     animationController = AnimationController( duration: _duration, vsync: this );
 
-    animation = Tween<double>( begin: width, end: 0 )
+    animation = Tween<double>( begin: height, end: 0 )
       .chain( CurveTween( curve: _curve ) )
       .animate(animationController);
 
@@ -172,7 +172,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
       animation: animation,
       builder: (context, child) {
         return Transform(
-          transform: Matrix4.translationValues(animation.value, 0, 0),
+          transform: Matrix4.translationValues(0, animation.value, 0),
           child: Container(
 
             alignment: Alignment.center,
