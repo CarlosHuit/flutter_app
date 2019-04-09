@@ -34,9 +34,6 @@ class Blackboard extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(Blackboard oldDelegate) {
-    // return oldDelegate.points != points;
-    return oldDelegate.data != data;
-  }
+  bool shouldRepaint(Blackboard oldDelegate) => oldDelegate.data != data;
 
 }
