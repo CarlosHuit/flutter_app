@@ -302,8 +302,11 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
       barrierDismissible: false,
       context: context,
       builder: (context) => WillPopScope(
-        onWillPop: () {},
         child: buildHandwrinting(),
+        onWillPop: () async{
+          onHide();
+          return true;
+        },
       )
     );
   }
@@ -506,7 +509,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> {
   @override
   void dispose() {
     print('closed');
-    onHide();
+    // onHide();
     speechAtTheEnd();
     super.dispose();
   }
