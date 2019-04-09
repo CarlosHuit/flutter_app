@@ -128,8 +128,11 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
   /// Remove dialog in the stack of routes and execte the onHide callBack before dispose componente
   void hide() {
-    Navigator.pop(context);
-    onHide();
+    animationController.reverse();
+    Future.delayed(_duration, () {
+      Navigator.pop(context);
+      onHide();
+    });
   }
 
   /// Set the state to pause the current state
