@@ -148,8 +148,8 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
               onHide: vm.hideHandwriting,
               speechAtTheStart: vm.handWrintingMessage,
               speechAtTheEnd:   vm.blackboardInstructions,
-
               context: context,
+              direction: Axis.horizontal,
             )
             : SizedBox(),
 

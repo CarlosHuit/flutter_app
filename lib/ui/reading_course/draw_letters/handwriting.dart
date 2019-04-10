@@ -31,12 +31,17 @@ class ModalHandwriting extends StatefulWidget {
   /// [ Function() ] Function to remove this component of the tree
   final Function() onHide;
 
+  /// [ Axis ] Define animation direction
+  final Axis direction;
+
   ModalHandwriting({
     Key key,
     @required this.onHide,
     @required this.context,
     @required this.speechAtTheEnd,
     @required this.speechAtTheStart,
+
+    this.direction = Axis.vertical,
     this.curve = Curves.fastOutSlowIn,
     this.duration = const Duration(milliseconds: 420),
     this.animationName = 'draw',
@@ -68,8 +73,11 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   /// Getter of function speechAtTheEnd 
   Function() get speechAtTheEnd => widget.speechAtTheEnd;
 
-  /// Get of function onHide
+  /// Getter of function onHide
   Function() get onHide => widget.onHide;
+
+  /// Getter of animation direction
+  Axis get _direction => widget.direction;
   
   /// Total of animation duration
   Duration animationDuration;
@@ -119,11 +127,13 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     flareControl = FlareControls();
     pause = true;
 
-    final height = MediaQuery.of(_context).size.height;
+    final _size = MediaQuery.of(_context).size;
+    print('vertical: ${_direction == Axis.vertical}');
+    final _begin = _direction == Axis.vertical ? _size.height : _size.width;
 
     animationController = AnimationController( duration: _duration, vsync: this );
 
-    animation = Tween<double>( begin: height, end: 0 )
+    animation = Tween<double>( begin: _begin, end: 0 )
       .chain( CurveTween( curve: _curve ) )
       .animate(animationController);
 
@@ -209,7 +219,11 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
       animation: animation,
       builder: (context, child) {
         return Transform(
-          transform: Matrix4.translationValues(0, animation.value, 0),
+          transform: Matrix4.translationValues(
+            _direction == Axis.horizontal ? animation.value : 0,
+            _direction == Axis.vertical ? animation.value : 0,
+            0
+          ),
           child: Container(
 
             alignment: Alignment.center,

@@ -40,6 +40,23 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
 
   Timer futureSub;
 
+  BoxDecoration _decoration = BoxDecoration(
+
+    color: Colors.greenAccent[100],
+
+    boxShadow: <BoxShadow>[
+      BoxShadow( color: Colors.black54, blurRadius: 10.0 )
+    ],
+
+    borderRadius: BorderRadius.only(
+      bottomLeft:  Radius.circular(100.0),
+      topLeft:     Radius.circular(100.0),
+      bottomRight: Radius.circular(10.0),
+      topRight:    Radius.circular(10.0)
+    )
+
+  );
+
   @override
   void initState() {
 
@@ -77,121 +94,119 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
     );
   }
 
+
   void hide() async {
+
     futureSub.cancel();
     await controller.reverse();
     Navigator.pop(context);
     await Future.delayed(Duration(milliseconds: 500));
     onEnd();
+
   }
 
 
   Widget buildWellDoneDialog(BuildContext context) {
 
-    final width = MediaQuery.of(context).size.width;
-
     return AnimatedBuilder(
+
       animation: animation,
       builder: (_, child) => Container(
         child: Stack(
           alignment: Alignment.center,
-          children: <Widget>[
-
-
-            Positioned(
-              height: 100.0,
-              width:  width * 0.90,
-              bottom: animation.value,
-              child:  GestureDetector(
-                onTap: hide,
-                child: Container(
-                  decoration: BoxDecoration(
-
-                    boxShadow: <BoxShadow>[
-                      BoxShadow( color: Colors.black54, blurRadius: 10.0 )
-                    ],
-
-
-                    color: Colors.greenAccent[100],
-                    borderRadius: BorderRadius.only(
-                      bottomLeft:  Radius.circular(100.0),
-                      topLeft:     Radius.circular(100.0),
-                      bottomRight: Radius.circular(10.0),
-                      topRight:    Radius.circular(10.0)
-                    )
-
-                  ),
-                  child: Row(
-
-                    children: <Widget>[
-
-
-                      Container(
-
-                        width:     100.0,
-                        height:    100.0,
-                        alignment: Alignment.center,
-
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0)
-                        ),
-
-                        child: Container(
-
-                          width:  iconSize + 2.0,
-                          height: iconSize + 2.0,
-                          decoration: BoxDecoration(
-                            color: Colors.white70,
-                            borderRadius: BorderRadius.circular(100.0)
-                          ),
-                          child: Icon(
-                            Icons.check_circle_outline,
-                            color: Colors.greenAccent[700],
-                            size: iconSize,
-                          ),
-
-                        ),
-
-                      ),
-
-
-                      Expanded(
-                        child: Container(
-                          margin:    EdgeInsets.only(right: (100 - iconSize) /2 ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Bien Hecho',
-                            maxLines:  1,
-                            textAlign: TextAlign.center,
-                            overflow:  TextOverflow.ellipsis,
-                            style: TextStyle(
-
-                              color:      Colors.greenAccent[700],
-                              fontSize:   32.0,
-                              fontFamily: 'Roboto',
-                              decoration: TextDecoration.none,
-                              fontWeight: FontWeight.bold,
-
-                            ),
-                          ),
-                        ),
-                      )
-
-
-                    ],
-
-                  ),
-                ),
-              ),
-            )
-
-
-          ],
+          children: [ buildPosisionatedDialog() ],
         ),
       ),
-      child: SizedBox(),
+
     );
 
+  }
+
+
+  Widget buildPosisionatedDialog() {
+
+    final width = MediaQuery.of(context).size.width;
+
+    return Positioned(
+
+      height: 100.0,
+      width:  width * 0.90,
+      bottom: animation.value,
+      child:  GestureDetector(
+
+        onTap: hide,
+        child: Container(
+          decoration: _decoration,
+          child: Row(
+
+            children: [ buildIcon(), buildText() ],
+
+          ),
+        ),
+
+      ),
+
+    );
+
+  }
+
+
+  Widget buildIcon() {
+
+    return Container(
+
+      width:     100.0,
+      height:    100.0,
+      alignment: Alignment.center,
+
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50.0)
+      ),
+
+      child: Container(
+
+        width:  iconSize + 2.0,
+        height: iconSize + 2.0,
+        decoration: BoxDecoration(
+          color: Colors.white70,
+          borderRadius: BorderRadius.circular(100.0)
+        ),
+        child: Icon(
+          Icons.check_circle_outline,
+          color: Colors.greenAccent[700],
+          size: iconSize,
+        ),
+
+      ),
+
+    );
+
+  }
+
+
+  Widget buildText() {
+
+    return Expanded(
+      child: Container(
+        margin:    EdgeInsets.only(right: (100 - iconSize) /2 ),
+        alignment: Alignment.center,
+        child: Text(
+          'Bien Hecho',
+          maxLines:  1,
+          textAlign: TextAlign.center,
+          overflow:  TextOverflow.ellipsis,
+          style: TextStyle(
+
+            color:      Colors.greenAccent[700],
+            fontSize:   32.0,
+            fontFamily: 'Roboto',
+            decoration: TextDecoration.none,
+            fontWeight: FontWeight.bold,
+
+          ),
+        ),
+      ),
+    );
 
   }
 
