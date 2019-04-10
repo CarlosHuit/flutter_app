@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import './rc_draw_letters_state.dart';
 import '../reading_course_state.dart';
 import './rc_draw_letters_actions.dart';
@@ -14,76 +16,43 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
   }
 
   if (action is RCChangeCurrentDataDL) {
-    final index  = state.drawLetters.currentIndex + 1;
-
-    return state.drawLetters.copyWith(
-      currrentData:    state.drawLetters.data[index],
-      currentIndex:    index,
-      showHandWriting: true
-    );
+    return changeCurrentData(state);
   }
 
   if (action is RCToggleStrokeSizeSelectorDL) {
-    return state.drawLetters.copyWith(
-      topControlBar: state.drawLetters.topControlBar.copyWith(
-        showStrokeSizeSelector: !state.drawLetters.topControlBar.showStrokeSizeSelector
-      )
-    );
+    return toggleStrokeSizeSelector(state);
   }
 
   if (action is RCToggleStrokeColorSelectorDL) {
-
-    return state.drawLetters.copyWith(
-      topControlBar: state.drawLetters.topControlBar.copyWith(
-        showStrokeColorSelector: !state.drawLetters.topControlBar.showStrokeColorSelector
-      )
-    );
-
+    return toggleStrokeColorSelector(state);
   }
 
-
   if (action is RCChangeStrokeSizeDL) {
-    return state.drawLetters.copyWith(
-      preferences: state.drawLetters.preferences.copyWith(
-        lineWidth: action.width
-      )
-    );
+    return changeStrokeSize(state, action.width);
   }
 
   if (action is RCChangeStrokeColorDL) {
-    return state.drawLetters.copyWith(
-      preferences: state.drawLetters.preferences.copyWith(
-        lineColor: action.color
-      )
-    );
+    return changeStrokeColor(state, action.color);
   }
 
   if (action is RCToggleGuideLines) {
-    return state.drawLetters.copyWith(
-      preferences: state.drawLetters.preferences.copyWith(
-        showGuideLines: !state.drawLetters.preferences.showGuideLines
-      )
-    );
+    return toggleGuideLines(state);
   }
 
   if (action is RCShowWellDoneDialogDL) {
-    return state.drawLetters.copyWith(
-      showWellDoneDialog: true
-    );
+    return showWellDoneDialog(state);
   }
 
   if (action is RCHideWellDoneDialogDL) {
-    return state.drawLetters.copyWith(
-      showWellDoneDialog: false
-    );
+    return hideWellDoneDialog(state);
   }
 
   if (action is RCShowHandwritingDL) {
-    return state.drawLetters.copyWith( showHandWriting: true );
+    return showHandwriting(state);
   }
 
   if (action is RCHideHandwritingDL) {
-    return state.drawLetters.copyWith( showHandWriting: false );
+    return hideHandwriting(state);
   }
 
 
@@ -91,3 +60,81 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
 
 }
 
+
+RCDrawLettersState hideWellDoneDialog(ReadingCourseState state) {
+  return state.drawLetters.copyWith(
+    showWellDoneDialog: false
+  );
+}
+
+
+RCDrawLettersState showHandwriting(ReadingCourseState state) {
+  return state.drawLetters.copyWith(
+    showHandWriting: true
+  );
+
+}
+
+RCDrawLettersState hideHandwriting(ReadingCourseState state) {
+  return state.drawLetters.copyWith(
+    showHandWriting: false
+  );
+}
+
+RCDrawLettersState changeStrokeColor(ReadingCourseState state, MaterialColor color) {
+  return state.drawLetters.copyWith(
+    preferences: state.drawLetters.preferences.copyWith(
+      lineColor: color
+    )
+  );
+}
+
+RCDrawLettersState changeStrokeSize(ReadingCourseState state, double width) {
+  return state.drawLetters.copyWith(
+    preferences: state.drawLetters.preferences.copyWith(
+      lineWidth: width
+    )
+  );
+}
+
+RCDrawLettersState toggleStrokeColorSelector(ReadingCourseState state) {
+  return state.drawLetters.copyWith(
+    topControlBar: state.drawLetters.topControlBar.copyWith(
+      showStrokeColorSelector: !state.drawLetters.topControlBar.showStrokeColorSelector
+    )
+  );
+}
+
+RCDrawLettersState toggleStrokeSizeSelector(ReadingCourseState state) {
+  return state.drawLetters.copyWith(
+    topControlBar: state.drawLetters.topControlBar.copyWith(
+      showStrokeSizeSelector: !state.drawLetters.topControlBar.showStrokeSizeSelector
+    )
+  );
+}
+
+RCDrawLettersState changeCurrentData(ReadingCourseState state) {
+
+  final index  = state.drawLetters.currentIndex + 1;
+
+  return state.drawLetters.copyWith(
+    currrentData:    state.drawLetters.data[index],
+    currentIndex:    index,
+    showHandWriting: true
+  );
+
+}
+
+RCDrawLettersState showWellDoneDialog(ReadingCourseState state) {
+  return state.drawLetters.copyWith(
+    showWellDoneDialog: true
+  );
+}
+
+RCDrawLettersState toggleGuideLines(ReadingCourseState state) {
+  return state.drawLetters.copyWith(
+    preferences: state.drawLetters.preferences.copyWith(
+      showGuideLines: !state.drawLetters.preferences.showGuideLines
+    )
+  );
+}
