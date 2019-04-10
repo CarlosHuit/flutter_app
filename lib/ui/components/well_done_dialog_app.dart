@@ -80,7 +80,6 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
 
   @override
   void dispose() {
-    print('Ocultado');
     controller.dispose();
     super.dispose();
   }

@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
       onInit:    (store) {
 
         if (store.state.coursesState.courses.length < 1) {
-          print('(root) => fetch all courses');
           store.dispatch(FetchCourses());
         }
 

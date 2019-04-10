@@ -31,11 +31,9 @@ class CoursesMiddleware extends MiddlewareClass<AppState> {
       } catch (e) {
 
         if (e is SocketException) {
-          print('no connection');
           store.dispatch(FetchCoursesFailedNoInternet());
         }
         if (e == 'Token invalido') {
-          print('Tu sesión ha expirado, vuelve a iniciar sesión');
           store.dispatch(InvalidAuthCredentials());
         }
 

@@ -128,7 +128,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     pause = true;
 
     final _size = MediaQuery.of(_context).size;
-    print('vertical: ${_direction == Axis.vertical}');
     final _begin = _direction == Axis.vertical ? _size.height : _size.width;
 
     animationController = AnimationController( duration: _duration, vsync: this );
@@ -137,7 +136,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
       .chain( CurveTween( curve: _curve ) )
       .animate(animationController);
 
-    print('ShowMe');
 
     final delayToShowDialog = 300;
 
@@ -376,7 +374,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
   @override
   void dispose() {
-    print('closed');
     speechAtTheEnd();
     animationController.dispose();
     super.dispose();
