@@ -17,8 +17,9 @@ RCDrawLettersState readingCourseDrawLettersReducer(ReadingCourseState state, dyn
     final index  = state.drawLetters.currentIndex + 1;
 
     return state.drawLetters.copyWith(
-      currrentData: state.drawLetters.data[index],
-      currentIndex: index,
+      currrentData:    state.drawLetters.data[index],
+      currentIndex:    index,
+      showHandWriting: true
     );
   }
 

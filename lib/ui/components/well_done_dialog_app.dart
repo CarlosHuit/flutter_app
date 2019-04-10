@@ -1,16 +1,24 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class WellDoneDialogApp extends StatefulWidget {
 
+  final Duration durationToShow;
+
   final Duration duration;
   final Function() onEnd;
   final Function() onStart;
+  final Curve curve;
 
   WellDoneDialogApp({
     Key key,
     @required this.onEnd,
     @required this.onStart,
+
+    this.durationToShow = const Duration(seconds: 2),
+    this.curve = Curves.fastLinearToSlowEaseIn,
     this.duration = const Duration(milliseconds: 600)
   }) : super(key: key);
 
@@ -20,39 +28,35 @@ class WellDoneDialogApp extends StatefulWidget {
 
 class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProviderStateMixin {
 
-  Duration get _duration => widget.duration;
+  Curve      get curve   => widget.curve;
+  Function() get onEnd   => widget.onEnd;
   Function() get onStart => widget.onStart;
-  Function() get onEnd => widget.onEnd;
+  Duration get duration  => widget.duration;
+  Duration get durationToShow => widget.durationToShow;
 
   AnimationController controller;
   Animation<double> animation;
   double iconSize;
 
+  Timer futureSub;
+
   @override
   void initState() {
+
     super.initState();
     iconSize = 60.0;
     Future.delayed(Duration(milliseconds: 0), show);
 
-    controller = AnimationController(duration: _duration, vsync: this);
+    controller = AnimationController(duration: duration, vsync: this);
 
-    animation = TweenSequence(
-      <TweenSequenceItem<double>> [
-
-        TweenSequenceItem(
-          weight: 100.0,
-          tween: Tween( begin: -100.0, end: 10.0 )
-          .chain( CurveTween(
-            curve: Curves.fastLinearToSlowEaseIn
-          ))
-        )
-
-      ]
-    )
-    .animate(controller);
+    animation = Tween<double>( begin: -100, end: 10.0 )
+      .chain( CurveTween( curve: curve ) )
+      .animate( controller );
 
     controller.forward();
     Future.delayed(Duration(milliseconds: 200), onStart);
+
+    futureSub = Timer(durationToShow, hide);
 
   }
 
@@ -73,9 +77,11 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
     );
   }
 
-  void hide() async{
+  void hide() async {
+    futureSub.cancel();
     await controller.reverse();
     Navigator.pop(context);
+    await Future.delayed(Duration(milliseconds: 500));
     onEnd();
   }
 
@@ -189,11 +195,11 @@ class _WellDoneDialogApp extends State<WellDoneDialogApp> with SingleTickerProvi
 
   }
 
-  buildWellDoneAnimation() {}
 
   @override
   Widget build(BuildContext context) {
     return SizedBox();
   }
+
 
 }
