@@ -145,11 +145,12 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
           /// Handwriting
           vm.showHandWriting == true
             ? ModalHandwriting(
-              onHide: vm.hideHandwriting,
+              context:          context,
+              direction:        Axis.horizontal,
+              onHide:           vm.hideHandwriting,
               speechAtTheStart: vm.handWrintingMessage,
               speechAtTheEnd:   vm.blackboardInstructions,
-              context: context,
-              direction: Axis.horizontal,
+              curve: Curves.linearToEaseOut,
             )
             : SizedBox(),
 
