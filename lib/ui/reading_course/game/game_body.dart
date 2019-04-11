@@ -1,9 +1,9 @@
 import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/game_view_model.dart';
 import 'package:app19022019/ui/components/dialog_well_done.dart';
+import 'package:app19022019/ui/components/progress_bar_indicator.dart';
 import 'package:app19022019/utils/my_behavior.dart';
 import './block.dart';
-import './progress_bar_indicator.dart';
 import './counter.dart';
 import 'package:flutter/material.dart';
 

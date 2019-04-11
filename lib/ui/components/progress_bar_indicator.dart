@@ -3,16 +3,32 @@ import 'package:flutter/material.dart';
 
 class ProgressBarIndicator extends StatelessWidget {
 
+  /// [double] width of progress bar indicator
   final double w;
+
+  /// [double] height of progress bar indicator
   final double h;
+
+  /// [double] percente advantave - 0.0 to 1.0
   final double p;
+
+  /// [double] border radius of progress bar indicator. Default: 0.0
   final double radius;
+
+  /// [Alignment] alignment of progress bar in parent container
+  final Alignment alignment;
+
+  /// [MaterialColor] color to set principal and secondary color. Default: Red
+  final MaterialColor color;
+
   const ProgressBarIndicator({
     Key key,
     @required this.w,
     @required this.h,
     @required this.p,
-    this.radius,
+    this.radius = 0.0, 
+    this.alignment = Alignment.bottomCenter,
+    this.color = Colors.red
   }) : super(key: key);
 
 
@@ -21,13 +37,13 @@ class ProgressBarIndicator extends StatelessWidget {
 
     return Container(
       width: w,
-      alignment: Alignment.bottomCenter,
+      alignment: alignment,
       child: Container(
         height: h,
         width:  w,
         decoration: BoxDecoration(
-          color: Colors.red[100],
-          borderRadius: BorderRadius.circular( radius ?? 0.0 )
+          color: color[100],
+          borderRadius: BorderRadius.circular( radius )
         ),
         child: Row(
           children: <Widget>[
@@ -36,8 +52,8 @@ class ProgressBarIndicator extends StatelessWidget {
               curve:    Curves.easeOut,
               duration: Duration(milliseconds: 400),
               decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(radius ?? 0.0)
+                color: color,
+                borderRadius: BorderRadius.circular(radius)
               ),
             )
           ],

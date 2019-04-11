@@ -12,6 +12,7 @@ class RCSelectWordsState {
   final bool isSettingData;
   final bool showWellDoneDialog;
   final int currentIndex;
+  final String sound;
 
   RCSelectWordsState({
     @required this.data,
@@ -19,6 +20,7 @@ class RCSelectWordsState {
     @required this.isSettingData,
     @required this.showWellDoneDialog,
     @required this.currentIndex,
+    @required this.sound,
   });
 
 
@@ -28,7 +30,8 @@ class RCSelectWordsState {
       currentData: null,
       currentIndex: null,
       isSettingData: null,
-      showWellDoneDialog: null
+      showWellDoneDialog: null,
+      sound: null,
     );
   }
 
@@ -36,11 +39,12 @@ class RCSelectWordsState {
 
     final String letter = state.data.currentLetter.toLowerCase();
     final List<String> words = [];
+    final String sound = state.data.soundLetters[letter];
 
     state.data.words.forEach((e) => e.w.forEach((w) => words.add(w)));
 
-    final List<String> correctWords = words.where((w) => w.contains(letter));
-    final List<String> incorrectWords = words.where((w) => !w.contains(letter));
+    final  correctWords = words.where((w) => w.contains(letter)).toList();
+    final  incorrectWords = words.where((w) => !w.contains(letter)).toList();
 
     final dataLC = RCSelectWordsData.generate(correctWords, incorrectWords, 'minúscula', 10, letter.toLowerCase());
     final dataUC = RCSelectWordsData.generate(correctWords, incorrectWords, 'mayúscula', 10, letter.toUpperCase());
@@ -49,6 +53,7 @@ class RCSelectWordsState {
 
     return RCSelectWordsState(
       data:               data,
+      sound:              sound,
       currentData:        dataLC,
       currentIndex:       0,
       isSettingData:      false,
@@ -63,14 +68,16 @@ class RCSelectWordsState {
     bool isSettingData,
     bool showWellDoneDialog,
     int currentIndex,
+    String sound,
   }) {
 
     return RCSelectWordsState(
-      data:     this.data ?? data,
-      currentData:  this.currentData ?? currentData,
-      currentIndex:   this.currentIndex ?? currentIndex,
-      isSettingData:    this.isSettingData ?? isSettingData,
-      showWellDoneDialog: this.showWellDoneDialog ?? showWellDoneDialog,
+      sound: sound ?? this.sound,
+      data:     data ?? this.data,
+      currentData:  currentData ?? this.currentData,
+      currentIndex:   currentIndex ?? this.currentIndex,
+      isSettingData:    isSettingData ?? this.isSettingData,
+      showWellDoneDialog: showWellDoneDialog ?? this.showWellDoneDialog,
     );
 
   }
@@ -83,7 +90,8 @@ class RCSelectWordsState {
       && this.currentData == other.currentData
       && this.isSettingData == other.isSettingData
       && this.showWellDoneDialog == other.showWellDoneDialog
-      && this.currentIndex == other.currentIndex;
+      && this.currentIndex == other.currentIndex
+      && this.sound == other.sound;
 
   @override
   int get hashCode =>
@@ -91,7 +99,8 @@ class RCSelectWordsState {
     currentData.hashCode ^
     isSettingData.hashCode ^
     showWellDoneDialog.hashCode ^
-    currentIndex.hashCode;
+    currentIndex.hashCode ^
+    sound.hashCode;
 
 }
 
@@ -142,7 +151,7 @@ class RCSelectWordsData {
     final correctWords = randomWords(corrects, totalCorrects);
     final incorrectWords = randomWords(incorrects, totalIncorrects);
 
-    final words = []..addAll(correctWords)..addAll(incorrectWords);
+    final List<String> words = []..addAll(correctWords)..addAll(incorrectWords);
     words.shuffle();
 
     return RCSelectWordsData(

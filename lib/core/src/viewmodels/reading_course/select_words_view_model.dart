@@ -1,4 +1,6 @@
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/services/audio_service.dart';
+import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
@@ -7,6 +9,7 @@ import '../../redux/reading_course/rc_select_words/rc_select_words_state.dart';
 @immutable
 class SelectWordsViewModel {
 
+  final SpeechSynthesisService tts = SpeechSynthesisService();
   final List<RCSelectWordsData> data;
   final RCSelectWordsData currentData;
   final bool isSettingData;
@@ -31,6 +34,22 @@ class SelectWordsViewModel {
       showWellDoneDialog: path.showWellDoneDialog
     );
   }
+
+
+  void onSelectWord(String word) {
+
+    if (word.contains(currentData.letter)) {
+      tts.speak(term: word);
+    } else {
+      AudioService.playAsset(AudioType.incorrect);
+    }
+
+  }
+
+  void speakInstructions() {
+    final msg = 'Encuentra las palabras que al menos tengan una letra: ${currentData.letter} ${currentData.type}';
+  }
+
 
   @override
   bool operator == (Object other) => 
