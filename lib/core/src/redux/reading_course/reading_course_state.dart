@@ -5,6 +5,7 @@ import './rc_data/rc_data_state.dart';
 import './rc_find_letters/rc_find_letters_state.dart';
 import './rc_letter_detail/rc_letter_detail_state.dart';
 import './rc_draw_letters/rc_draw_letters_state.dart';
+import './rc_select_words/rc_select_words_state.dart';
 
 @immutable
 class ReadingCourseState {
@@ -14,6 +15,7 @@ class ReadingCourseState {
   final RCLetterDetailState letterDetail;
   final RCFindLettersState  findLetters;
   final RCDrawLettersState  drawLetters;
+  final RCSelectWordsState  selectWords;
 
   ReadingCourseState({
     @required this.data,
@@ -21,6 +23,7 @@ class ReadingCourseState {
     @required this.game,
     @required this.findLetters,
     @required this.drawLetters,
+    @required this.selectWords
   });
 
 
@@ -32,6 +35,7 @@ class ReadingCourseState {
       letterDetail:  RCLetterDetailState.initialState(),
       findLetters:   RCFindLettersState.initialState(),
       drawLetters:   RCDrawLettersState.initialState(),
+      selectWords:   RCSelectWordsState.initialState()
     );
 
   }
@@ -44,14 +48,16 @@ class ReadingCourseState {
     RCLetterDetailState letterDetail,
     RCFindLettersState  findLetters,
     RCDrawLettersState  drawLetters,
+    RCSelectWordsState  selectWords
   }) {
 
     return ReadingCourseState(
-      data: data ?? this.data,
-      game: game ?? this.game,
+      data:          data ?? this.data,
+      game:          game ?? this.game,
       letterDetail:  letterDetail ?? this.letterDetail,
       findLetters:   findLetters  ?? this.findLetters,
       drawLetters:   drawLetters ?? this.drawLetters,
+      selectWords:   selectWords ?? this.selectWords,
     );
 
   }
@@ -66,7 +72,8 @@ class ReadingCourseState {
       && game == other.game
       && letterDetail == other.letterDetail
       && findLetters == other.findLetters
-      && drawLetters ==other.drawLetters;
+      && drawLetters ==other.drawLetters
+      && selectWords == other.selectWords;
 
   @override
   int get hashCode =>
@@ -74,6 +81,7 @@ class ReadingCourseState {
     game.hashCode ^
     letterDetail.hashCode ^
     findLetters.hashCode ^
-    drawLetters.hashCode;
+    drawLetters.hashCode ^
+    selectWords.hashCode;
 
 }
