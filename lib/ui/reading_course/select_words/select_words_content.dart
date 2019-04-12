@@ -35,6 +35,12 @@ class _SelectWordsContentState extends State<SelectWordsContent> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   void didUpdateWidget(SelectWordsContent oldWidget) {
     super.didUpdateWidget(oldWidget);
 
