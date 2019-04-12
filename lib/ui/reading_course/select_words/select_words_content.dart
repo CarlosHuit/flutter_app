@@ -62,9 +62,12 @@ class _SelectWordsContentState extends State<SelectWordsContent> {
       controller.nextPage(
         duration: Duration(milliseconds: 1500),
         curve: Curves.fastLinearToSlowEaseIn
+      ).whenComplete(() {
+        print(viewModel.currentData.type);
+        viewModel.speakInstructions();
+      }
       );
 
-      Future.delayed(Duration(milliseconds: 1000), viewModel.speakInstructions);
 
     } else {
       viewModel.redirection();

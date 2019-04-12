@@ -15,7 +15,7 @@ RCSelectWordsState readingCourseSelectWordsReducer(ReadingCourseState state, dyn
   if (action is RCChangeCurrentDataSW) {
 
     final nextIndex = state.selectWords.currentIndex + 1;
-    return state.selectWords.copyWith(
+    return  state.selectWords.copyWith(
       currentData: state.selectWords.data[nextIndex],
       currentIndex: nextIndex
     );

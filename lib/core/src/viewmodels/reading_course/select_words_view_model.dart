@@ -22,6 +22,7 @@ class SelectWordsViewModel {
   final double percentPendings;
 
   final Function(dynamic action) dispatch;
+  final String sound;
 
   SelectWordsViewModel({
     @required this.data,
@@ -30,7 +31,9 @@ class SelectWordsViewModel {
     @required this.showWellDoneDialog,
     @required this.currentIndex,
     @required this.dispatch,
-    @required this.percentPendings
+    @required this.percentPendings,
+    @required this.sound,
+
   });
 
   factory SelectWordsViewModel.fromStore(Store<AppState> store) {
@@ -48,6 +51,7 @@ class SelectWordsViewModel {
       showWellDoneDialog: path.showWellDoneDialog,
       percentPendings:    percentPendings,
       dispatch:           (action) => store.dispatch(action),
+      sound: path.sound
     );
   }
 
@@ -67,7 +71,9 @@ class SelectWordsViewModel {
   }
 
   void speakInstructions() {
-    final msg = 'Encuentra las palabras que al menos tengan una letra: ${currentData.letter} ${currentData.type}';
+    final typeLetter = currentData.type;
+    final soundletter = sound;
+    final msg = 'Encuentra las palabras que al menos tengan una letra: $soundletter $typeLetter';
     tts.speak(term: msg);
   }
 
@@ -102,7 +108,8 @@ class SelectWordsViewModel {
       && isSettingData == other.isSettingData 
       && showWellDoneDialog == other.showWellDoneDialog 
       && currentIndex == other.currentIndex
-      && percentPendings == other.percentPendings;
+      && percentPendings == other.percentPendings
+      && sound == other.sound;
 
   @override
   int get hashCode => 
@@ -111,6 +118,7 @@ class SelectWordsViewModel {
     isSettingData.hashCode ^
     showWellDoneDialog.hashCode ^
     currentIndex.hashCode ^
-    percentPendings.hashCode;
+    percentPendings.hashCode ^
+    sound.hashCode;
 
 } 
