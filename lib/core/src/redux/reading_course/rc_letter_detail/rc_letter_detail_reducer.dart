@@ -10,7 +10,9 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
     return RCLetterDetailState.fromStore(state);
   }
 
-
+  if (action is RCResetDataLD) {
+    return RCLetterDetailState.initialState();
+  }
 
   if (action is RCAddFirstSelectionLD) {
     return state.letterDetail.copyWith(

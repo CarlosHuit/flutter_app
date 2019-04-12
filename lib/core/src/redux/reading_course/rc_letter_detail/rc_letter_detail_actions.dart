@@ -10,6 +10,8 @@ class RCSetInitialDataLD {
   RCSetInitialDataLD(this.letter);
 }
 
+class RCResetDataLD { }
+
 class RCAddFirstSelectionLD {
   final String selection;
   RCAddFirstSelectionLD(this.selection);
