@@ -147,6 +147,8 @@ class SelectWordsPage extends StatelessWidget {
         ),
 
         Container(
+          // color: Colors.red
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
           alignment: Alignment.center,
           child: Wrap(
             alignment: WrapAlignment.center,
