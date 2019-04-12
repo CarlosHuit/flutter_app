@@ -66,9 +66,7 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
 
     if (waitingForPermission) {
 
-      return Scaffold(
-        body: Container( ),
-      );
+      return Scaffold( body: Container( ) );
 
     }
 
