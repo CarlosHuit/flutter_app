@@ -27,7 +27,10 @@ class _SelectWordsContentState extends State<SelectWordsContent> {
 
     super.initState();
     controller = PageController();
-    viewModel.speakInstructions();
+    Future.delayed(
+      Duration(milliseconds: 500),
+      viewModel.speakInstructions
+    );
 
   }
 
