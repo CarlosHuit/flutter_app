@@ -63,19 +63,15 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
   @override
   Widget build(BuildContext context) {
 
+
     if (waitingForPermission) {
 
       return Scaffold(
-
-        body: Container(
-          color: Colors.red,
-          alignment: Alignment.center,
-          child: Text('PronounceLetter'),
-        ),
-
+        body: Container( ),
       );
 
     }
+
 
     return Scaffold(
       body: Container(
@@ -83,5 +79,8 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
       ),
     );
 
+
   }
+
+
 }

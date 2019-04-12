@@ -5,7 +5,6 @@ import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_action
 import 'package:app19022019/core/src/redux/reading_course/rc_letter_detail/rc_letter_detail_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/reading_course_actions.dart';
 import 'package:app19022019/ui/reading_course/pronounce_letters/pronounce_letters_screen.dart';
-import 'package:app19022019/ui/reading_course/select_words/select_words_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:redux/redux.dart';
 
