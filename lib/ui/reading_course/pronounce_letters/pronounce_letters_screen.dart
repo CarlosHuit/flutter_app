@@ -1,5 +1,10 @@
+import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_pronounce_letters/rc_pronounce_letters_actions.dart';
+import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:permission_handler/permission_handler.dart';
+import './pronounce_letters_content.dart';
 
 class PronounceLettersScreen extends StatefulWidget {
   @override
@@ -71,10 +76,11 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
     }
 
 
-    return Scaffold(
-      body: Container(
-        color: Colors.blue,
-      ),
+    return StoreConnector<AppState, PronounceLettersViewModel>(
+      distinct:  true,
+      converter: (store) => PronounceLettersViewModel.fromStore(store),
+      onInit:    (store) => store.dispatch(RCSetInitialDataPL()),
+      builder:   (_, vm) => PronounceLettersContent(vm: vm),
     );
 
 
