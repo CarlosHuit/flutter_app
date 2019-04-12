@@ -36,7 +36,6 @@ class _SelectWordsContentState extends State<SelectWordsContent> {
     super.didUpdateWidget(oldWidget);
 
     if (viewModel.currentData.totalOfPending == 0) {
-      // Future.delayed(Duration(milliseconds: 500), next);
       Future.delayed(Duration(milliseconds: 800), viewModel.showWellDoneDialogApp);
     }
 

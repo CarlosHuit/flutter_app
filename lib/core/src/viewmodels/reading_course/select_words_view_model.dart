@@ -76,7 +76,6 @@ class SelectWordsViewModel {
   }
 
   void redirection() {
-    print('Redirection');
     dispatch(
       NavigatorPushReplaceWithTransition(
         screen: PronounceLettersScreen(),
