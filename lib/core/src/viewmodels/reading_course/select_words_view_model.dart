@@ -102,15 +102,15 @@ class SelectWordsViewModel {
 
   @override
   bool operator == (Object other) => 
-    identical(this, other) || other is SelectWordsViewModel
-      && runtimeType == other.runtimeType
-      && data == other.data
-      && currentData == other.currentData 
-      && isSettingData == other.isSettingData 
+    identical(this, other)  || other is SelectWordsViewModel
+      && runtimeType        == other.runtimeType
+      && data               == other.data
+      && currentData        == other.currentData 
+      && isSettingData      == other.isSettingData 
       && showWellDoneDialog == other.showWellDoneDialog 
-      && currentIndex == other.currentIndex
-      && percentPendings == other.percentPendings
-      && sound == other.sound;
+      && currentIndex       == other.currentIndex
+      && percentPendings    == other.percentPendings
+      && sound              == other.sound;
 
   @override
   int get hashCode => 
