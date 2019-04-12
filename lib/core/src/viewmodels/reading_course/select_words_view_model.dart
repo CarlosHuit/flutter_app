@@ -65,6 +65,7 @@ class SelectWordsViewModel {
       dispatch(RCCorrectSelectionSW());
       tts.speak(term: word);
     } else {
+      tts.cancel();
       AudioService.playAsset(AudioType.incorrect);
     }
 

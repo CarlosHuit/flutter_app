@@ -65,8 +65,7 @@ class _SelectWordsContentState extends State<SelectWordsContent> {
       ).whenComplete(() {
         print(viewModel.currentData.type);
         viewModel.speakInstructions();
-      }
-      );
+      });
 
 
     } else {
