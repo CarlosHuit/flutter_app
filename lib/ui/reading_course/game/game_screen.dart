@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
@@ -13,7 +14,10 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return StoreConnector<AppState, GameViewModel>(
-      onDispose: (store) => store.dispatch(RCResetDataG()),
+      onDispose: (store) {
+        store.dispatch(RCResetDataG());
+        SpeechSynthesisService.stop();
+      },
       onInit:    (store) => store.dispatch(RCSetInitialDataG()),
       converter: (store) => GameViewModel.fromStore(store),
       builder:   (_, viewModel) {
