@@ -44,8 +44,9 @@ class _SelectWordsContentState extends State<SelectWordsContent> {
 
 
   void next() {
-    print('next');
+
     viewModel.hideWellDoneDialog();
+
     if (viewModel.currentIndex < viewModel.data.length - 1) {
 
       viewModel.changeCurrentData();
@@ -54,6 +55,8 @@ class _SelectWordsContentState extends State<SelectWordsContent> {
         duration: Duration(milliseconds: 1500),
         curve: Curves.fastLinearToSlowEaseIn
       );
+
+      Future.delayed(Duration(milliseconds: 1000), viewModel.speakInstructions);
 
     } else {
       viewModel.redirection();
@@ -125,7 +128,7 @@ class SelectWordsPage extends StatelessWidget {
           left:   00.0,
           top:    25.0,
           child: ProgressBarIndicator(
-            p:      00.5,
+            p:      vm.percentPendings,
             h:      10.0,
             w:      size.width * 0.90,
             radius: 50.0,

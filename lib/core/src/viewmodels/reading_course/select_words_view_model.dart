@@ -19,6 +19,7 @@ class SelectWordsViewModel {
   final bool isSettingData;
   final bool showWellDoneDialog;
   final int currentIndex;
+  final double percentPendings;
 
   final Function(dynamic action) dispatch;
 
@@ -29,16 +30,23 @@ class SelectWordsViewModel {
     @required this.showWellDoneDialog,
     @required this.currentIndex,
     @required this.dispatch,
+    @required this.percentPendings
   });
 
   factory SelectWordsViewModel.fromStore(Store<AppState> store) {
+
     final path = store.state.readingCourseState.selectWords;
+    final totalCorrects   = path.currentData.totalOfCorrect;
+    final totalPendings   = path.currentData.totalOfPending;
+    final percentPendings = (100 - ((totalPendings * 100) / totalCorrects)) * 0.01;
+
     return SelectWordsViewModel(
       data:               path.data,
       currentData:        path.currentData,
       currentIndex:       path.currentIndex,
       isSettingData:      path.isSettingData,
       showWellDoneDialog: path.showWellDoneDialog,
+      percentPendings:    percentPendings,
       dispatch:           (action) => store.dispatch(action),
     );
   }
@@ -94,7 +102,8 @@ class SelectWordsViewModel {
       && currentData == other.currentData 
       && isSettingData == other.isSettingData 
       && showWellDoneDialog == other.showWellDoneDialog 
-      && currentIndex == other.currentIndex;
+      && currentIndex == other.currentIndex
+      && percentPendings == other.percentPendings;
 
   @override
   int get hashCode => 
@@ -102,6 +111,7 @@ class SelectWordsViewModel {
     currentData.hashCode ^
     isSettingData.hashCode ^
     showWellDoneDialog.hashCode ^
-    currentIndex.hashCode;
+    currentIndex.hashCode ^
+    percentPendings.hashCode;
 
 } 
