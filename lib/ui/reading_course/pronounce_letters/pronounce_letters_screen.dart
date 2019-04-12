@@ -1,5 +1,6 @@
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_pronounce_letters/rc_pronounce_letters_actions.dart';
+import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -80,6 +81,10 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
       distinct:  true,
       converter: (store) => PronounceLettersViewModel.fromStore(store),
       onInit:    (store) => store.dispatch(RCSetInitialDataPL()),
+      onDispose: (store) {
+        store.dispatch(RCResetDataPL());
+        SpeechSynthesisService.stop();
+      },
       builder:   (_, vm) => PronounceLettersContent(vm: vm),
     );
 
