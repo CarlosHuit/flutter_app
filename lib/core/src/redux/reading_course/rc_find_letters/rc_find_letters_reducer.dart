@@ -10,6 +10,10 @@ RCFindLettersState readingCourseFindLettersReducer(ReadingCourseState state, dyn
     return RCFindLettersState.fromStore(state);
   }
 
+  if (action is RCResetDataFL) {
+    return RCFindLettersState.initialState();
+  }
+
   if (action is  RCSubtractCorrectFL) {
     return subtractPendings(state);
   }

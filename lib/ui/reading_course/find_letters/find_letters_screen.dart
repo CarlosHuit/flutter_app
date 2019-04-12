@@ -15,7 +15,6 @@ class FindLettersScreen extends StatefulWidget {
 
 class _FindLettersScreenState extends State<FindLettersScreen> {
 
-  final SpeechSynthesisService tts = SpeechSynthesisService();
 
   PageController pageController;
 
@@ -24,7 +23,6 @@ class _FindLettersScreenState extends State<FindLettersScreen> {
 
     super.initState();
     pageController = PageController();
-    pageController.addListener(() => print('Current page: ${pageController.page}') );
 
   }
 
@@ -42,7 +40,10 @@ class _FindLettersScreenState extends State<FindLettersScreen> {
 
       distinct:  true,
       onInit:    (store) => store.dispatch(RCSetInitialDataFL()),
-      onDispose: (store) => tts.cancel(),
+      onDispose: (store) {
+        store.dispatch(RCResetDataFL());
+        SpeechSynthesisService.stop();
+      },
       converter: (store) => FindLettersViewModel.fromStore(store),
       builder:   (_, vm) => SwipperCards(viewModel: vm),
 

@@ -1,4 +1,5 @@
 class RCSetInitialDataFL {}
+class RCResetDataFL {}
 
 class RCSubtractCorrectFL {}
 
