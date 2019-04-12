@@ -75,12 +75,12 @@ class RCPronounceLettersState {
   }) {
 
     return RCPronounceLettersState(
-      data: data ?? this.data,
-      currentData: currentData ?? this.currentData,
-      currentIndex: currentIndex ?? this.currentIndex,
+      data:               data ?? this.data,
+      currentData:        currentData ?? this.currentData,
+      currentIndex:       currentIndex ?? this.currentIndex,
       showWellDoneDialog: showWellDoneDialog ?? this.showWellDoneDialog,
-      isRecording: isRecording ?? this.isRecording,
-      isSettingData: isSettingData ?? this.isSettingData,
+      isRecording:        isRecording ?? this.isRecording,
+      isSettingData:      isSettingData ?? this.isSettingData,
     );
 
   }
@@ -88,13 +88,13 @@ class RCPronounceLettersState {
   @override
   bool operator == (Object other) =>
     identical(this, other) || other is RCPronounceLettersState
-    && runtimeType == other.runtimeType
-    && data == other.data
-    && currentData == other.currentData
-    && currentIndex == other.currentIndex
-    && showWellDoneDialog == other.showWellDoneDialog
-    && isRecording == other.isRecording
-    && isSettingData == other.isSettingData;
+    && runtimeType         == other.runtimeType
+    && data                == other.data
+    && currentData         == other.currentData
+    && currentIndex        == other.currentIndex
+    && showWellDoneDialog  == other.showWellDoneDialog
+    && isRecording         == other.isRecording
+    && isSettingData       == other.isSettingData;
 
   @override
   int get hashCode => 
@@ -128,10 +128,10 @@ class RCPronounceLettersData {
     int attempts,
   }) {
     return  RCPronounceLettersData(
-      letterSound: letterSound?? this.letterSound,
-      letterType: letterType?? this.letterType,
-      letter: letter?? this.letter,
-      attempts: attempts?? this.attempts,
+      letterSound: letterSound ?? this.letterSound,
+      letterType:  letterType ?? this.letterType,
+      letter:      letter ?? this.letter,
+      attempts:    attempts ?? this.attempts,
     );
   }
 
