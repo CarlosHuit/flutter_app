@@ -38,8 +38,9 @@ class RCSelectWordsState {
   factory RCSelectWordsState.fromStore(ReadingCourseState state) {
 
     final String letter = state.data.currentLetter.toLowerCase();
+    final String sound  = state.data.soundLetters[letter];
+
     final List<String> words = [];
-    final String sound = state.data.soundLetters[letter];
 
     state.data.words.forEach((e) => e.w.forEach((w) => words.add(w)));
 
@@ -47,7 +48,7 @@ class RCSelectWordsState {
     final  incorrectWords = words.where((w) => !w.contains(letter)).toList();
 
     final dataLC = RCSelectWordsData.generate(correctWords, incorrectWords, 'minúscula', 10, letter.toLowerCase());
-    final dataUC = RCSelectWordsData.generate(correctWords, incorrectWords, 'mayúscula', 10, letter.toUpperCase());
+    final dataUC = RCSelectWordsData.genUpperCase(correctWords, incorrectWords, 'mayúscula', 10, letter.toUpperCase());
 
     final data = [ dataLC, dataUC ];
 
@@ -160,6 +161,45 @@ class RCSelectWordsData {
       letter: letter,
       selections:   {},
       correctWords: correctWords,
+      incorrectWords: incorrectWords,
+      totalOfCorrect: totalCorrects,
+      totalOfPending: totalCorrects,
+      wrongSelections:   {},
+      correctSelections: {},
+    );
+  }
+
+  factory RCSelectWordsData.genUpperCase( List<String> corrects, List<String> incorrects, String type, int max, String letter ) {
+
+
+    int random(int min, int maxi, int length) {
+      final maximum = maxi > length ? length + 1 : maxi + 1;
+      return min + Random().nextInt(maximum - min);
+    }
+
+    List<String> randomWords(List<String> words, int max) {
+      final messyWords = List.from(words);
+      messyWords.shuffle();
+      return List.generate(max, (i) => messyWords[i]);
+    }
+
+    final maxOpts = 10;
+    final totalCorrects = random(2, 6, corrects.length);
+    final totalIncorrects = maxOpts - totalCorrects;
+
+    final correctWords = randomWords(corrects, totalCorrects);
+    final incorrectWords = randomWords(incorrects, totalIncorrects);
+
+    final List<String> words = []..addAll(correctWords)..addAll(incorrectWords);
+    final data = List.generate(words.length, (i) =>words[i].toUpperCase());
+    words.shuffle();
+
+    return RCSelectWordsData(
+      type:   type,
+      words:  data,
+      letter: letter,
+      selections:   {},
+      correctWords:   correctWords,
       incorrectWords: incorrectWords,
       totalOfCorrect: totalCorrects,
       totalOfPending: totalCorrects,

@@ -1,8 +1,10 @@
+import 'package:app19022019/core/src/redux/reading_course/rc_select_words/rc_select_words_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/select_words_view_model.dart';
 import 'package:app19022019/ui/components/progress_bar_indicator.dart';
+import 'package:app19022019/ui/components/well_done_dialog_app.dart';
 import 'package:flutter/material.dart';
 
-class SelectWordsContent extends StatelessWidget {
+class SelectWordsContent extends StatefulWidget {
 
   final SelectWordsViewModel viewModel;
 
@@ -12,48 +14,142 @@ class SelectWordsContent extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  _SelectWordsContentState createState() => _SelectWordsContentState();
+}
 
-    final size = MediaQuery.of(context).size;
+class _SelectWordsContentState extends State<SelectWordsContent> {
+
+  PageController controller;
+  SelectWordsViewModel get viewModel => widget.viewModel;
+
+  @override
+  void initState() {
+
+    super.initState();
+    controller = PageController();
+    viewModel.speakInstructions();
+
+  }
+
+  @override
+  void didUpdateWidget(SelectWordsContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (viewModel.currentData.totalOfPending == 0) {
+      // Future.delayed(Duration(milliseconds: 500), next);
+      Future.delayed(Duration(milliseconds: 800), viewModel.showWellDoneDialogApp);
+    }
+
+  }
+
+
+  void next() {
+    print('next');
+    viewModel.hideWellDoneDialog();
+    if (viewModel.currentIndex < viewModel.data.length - 1) {
+
+      viewModel.changeCurrentData();
+
+      controller.nextPage(
+        duration: Duration(milliseconds: 1500),
+        curve: Curves.fastLinearToSlowEaseIn
+      );
+
+    } else {
+      viewModel.redirection();
+    }
+
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Stack(
-        alignment: Alignment.center,
-        fit: StackFit.expand,
         children: <Widget>[
-
-          Positioned(
-            height: 10.0,
-            right:  00.0,
-            left:   00.0,
-            top:    25.0,
-            child: ProgressBarIndicator(
-              p:      00.5,
-              h:      10.0,
-              w:      size.width * 0.90,
-              radius: 50.0,
-            ),
+          PageView(
+            controller: controller,
+            physics: NeverScrollableScrollPhysics(),
+            children: List.generate(
+              viewModel.data.length,
+              (i) => SelectWordsPage(
+                data: viewModel.data[i],
+                vm: viewModel,
+              )
+            )
           ),
+          
 
-          Container(
-            alignment: Alignment.center,
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              children:  List.generate(
-                viewModel.currentData.words.length,
-                (i) => SelectWordsButton(
-                  word:      viewModel.currentData.words[i],
-                  letter:    viewModel.currentData.letter,
-                  context:   context,
-                  onPressed: viewModel.onSelectWord,
-                )
-              ),
-            ),
-          ),
+          viewModel.showWellDoneDialog
+          ? WellDoneDialogApp(
+            onEnd: next,
+            onStart: viewModel.speakWellDone,
+            durationToShow: Duration(seconds: 2),
+          )
+          : SizedBox()
+
         ],
       ),
     );
+
+
+  }
+}
+
+
+class SelectWordsPage extends StatelessWidget {
+
+  final RCSelectWordsData data;
+  final SelectWordsViewModel vm;
+  SelectWordsPage({
+    Key key,
+    @required this.data,
+    @required this.vm
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+
+    return Stack(
+      alignment: Alignment.center,
+      fit: StackFit.expand,
+      children: <Widget>[
+
+        Positioned(
+          height: 10.0,
+          right:  00.0,
+          left:   00.0,
+          top:    25.0,
+          child: ProgressBarIndicator(
+            p:      00.5,
+            h:      10.0,
+            w:      size.width * 0.90,
+            radius: 50.0,
+          ),
+        ),
+
+        Container(
+          alignment: Alignment.center,
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            children:  List.generate(
+              data.words.length,
+              (i) => SelectWordsButton(
+                word:      data.words[i],
+                letter:    data.letter,
+                context:   context,
+                onPressed: vm.onSelectWord,
+              )
+            ),
+          ),
+        ),
+      ],
+    );
+
   }
 
 }
