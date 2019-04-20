@@ -183,7 +183,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   Widget buildButtonRecord() {
 
     return Container(
-      padding: EdgeInsets.only(bottom: 30.0),
+      padding: EdgeInsets.only(bottom: 40.0),
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment:   MainAxisAlignment.end,
@@ -199,17 +199,19 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
           InkWell(
             onTap: !isRecording ? startRecognition : null,
             child: Container(
-              width:  60.0,
-              height: 60.0,
+              width:  80.0,
+              height: 80.0,
               decoration: BoxDecoration(
+              // color: Colors.red,
 
                 color:        Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(50.0)
+                borderRadius: BorderRadius.circular(50.0),
+                border: Border.all(color: Colors.blue[600], width: 5 )
 
               ),
               child: Icon(
                 Icons.mic,
-                size: 36.0,
+                size: 48.0,
                 color: Colors.white,
               )
             ),
