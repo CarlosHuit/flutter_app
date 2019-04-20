@@ -182,44 +182,70 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
   Widget buildButtonRecord() {
 
+    final Size _size = Size( 80.0, 80.0 );
+    final BorderRadius _radius = BorderRadius.circular(100.0);
+    final MaterialColor _color = Theme.of(context).primaryColor;
+
+    final _decoration = BoxDecoration(
+      borderRadius: _radius,
+      color: _color,
+      boxShadow: [
+        BoxShadow(
+          blurRadius: 5.0, color: Colors.black54, offset: Offset(0, 1.5)
+        )
+      ]
+    );
+
     return Container(
-      padding: EdgeInsets.only(bottom: 40.0),
+
+
+      padding:   EdgeInsets.only(bottom: 30.0),
       alignment: Alignment.center,
       child: Column(
-        mainAxisAlignment:   MainAxisAlignment.end,
+        mainAxisAlignment:  MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
 
-          Text( isRecording
-            ? 'Grabando.!!'
-            : ''
-          ),
+          Container(
 
+            width:      _size.width,
+            height:     _size.height,
+            decoration: _decoration,
 
-          InkWell(
-            onTap: !isRecording ? startRecognition : null,
-            child: Container(
-              width:  80.0,
-              height: 80.0,
-              decoration: BoxDecoration(
-              // color: Colors.red,
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
 
-                color:        Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(50.0),
-                border: Border.all(color: Colors.blue[600], width: 5 )
+                Material(
+                  borderRadius: _radius,
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius:  _radius,
+                    splashFactory: InkRipple.splashFactory,
+                    onTap: () => print('Hola Mundo!') ,
+                    child: Container(
 
-              ),
-              child: Icon(
-                Icons.mic,
-                size: 48.0,
-                color: Colors.white,
-              )
+                      child: Icon(
+                        Icons.mic,
+                        color: Colors.white,
+                        size: _size.height * .50
+                      ),
+
+                    ),
+                  ),
+                )
+
+              ],
             ),
-          ),
 
+          )
+          
         ],
-      )
+      ),
+
+
     );
+
 
   }
 
