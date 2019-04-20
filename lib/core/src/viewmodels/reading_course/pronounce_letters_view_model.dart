@@ -1,11 +1,14 @@
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
+import 'package:app19022019/core/src/redux/reading_course/rc_pronounce_letters/rc_pronounce_letters_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_pronounce_letters/rc_pronounce_letters_state.dart';
+import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
 @immutable
 class PronounceLettersViewModel {
-
+  final SpeechSynthesisService  tts = SpeechSynthesisService();
   final List<RCPronounceLettersData> data;
   final RCPronounceLettersData currentData;
   final int currentIndex;
@@ -39,6 +42,30 @@ class PronounceLettersViewModel {
 
     );
 
+  }
+
+
+  void speakInstructions() {
+    final msg = 'Presiona el micrófono y di cuál es esta letra.';
+    tts.speak(term: msg);
+  }
+
+  void speakMessageTryAgain() {
+    final msg = 'Inténtalo nuevamente, si necesitas ayuda presiona el botón azul.';
+    tts.speak(term: msg);
+  }
+
+  void speakMessageWrongRecogntion() {
+    final msg = 'Si dijiste algo no se escuchó, Inténtalo nuevamente';
+    tts.speak(term: msg);
+  }
+
+  void changeCurrentData() {
+    dispatch(RCChangeCurrentDataPL());
+  }
+
+  void navigateToReadingCourseHome() {
+    dispatch(NavigatorPop());
   }
 
 
