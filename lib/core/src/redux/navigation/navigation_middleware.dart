@@ -1,4 +1,5 @@
 
+import 'package:app19022019/ui/home/home_screen.dart';
 import 'package:redux/redux.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/login/login_actions.dart';
@@ -15,7 +16,13 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
     if (action is NavigatorReplaceHome) {
       next(LoginRestartData());
       next(SignupRestartData());
-      NavigationKey.key.currentState.pushReplacementNamed('/home');
+      // NavigationKey.key.currentState.pushReplacementNamed('/home');
+      NavigationKey.key.currentState.pushReplacement(
+        PageTransition(
+          child: HomeScreen(),
+          type: PageTransitionType.rightToLeft
+        )
+      );
     }
 
     if (action is NavigatorReplaceSignin) {
