@@ -2,6 +2,7 @@ import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
+
 class PronounceLettersContent extends StatefulWidget {
 
   final PronounceLettersViewModel vm;
@@ -14,6 +15,7 @@ class PronounceLettersContent extends StatefulWidget {
   @override
   _PronounceLettersContentState createState() => _PronounceLettersContentState();
 }
+
 
 class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
@@ -61,7 +63,6 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
       .activate()
       .then((res) {
 
-        print(res);
         setState(() {
           recognitionAvailable = res;
         });
@@ -170,9 +171,9 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
       child: Text(
         letter,
         style: TextStyle(
-          fontSize: 160.0,
+          color:      Theme.of(context).primaryColor,
+          fontSize:   160.0,
           fontWeight: FontWeight.bold,
-          color: Theme.of(context).primaryColor
         ),
       ),
     );
