@@ -169,7 +169,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
       child: Text(
         letter,
         style: TextStyle(
-          fontSize: 150.0,
+          fontSize: 160.0,
           fontWeight: FontWeight.bold,
           color: Theme.of(context).primaryColor
         ),
@@ -233,22 +233,3 @@ class Language {
 
 }
 
-
-
-class Person {
-
-  final String name;
-  final String age;
-  final String city;
-
-  Person({
-    @required this.name,
-    @required this.age,
-    @required this.city
-  });
-
-  String greet() {
-    return 'Hola me llamo: $name';
-  }
-
-}
