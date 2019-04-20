@@ -43,6 +43,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     recognitionAvailable = false;
 
     activateSpeechRecognition();
+    vm.speakInstructions();
 
   }
 
