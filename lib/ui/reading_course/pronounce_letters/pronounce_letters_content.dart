@@ -1,4 +1,5 @@
 import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters_view_model.dart';
+import 'package:app19022019/ui/components/custom_icon_button.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
@@ -152,19 +153,44 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
     return Scaffold(
       body: Stack(
+        fit: StackFit.expand,
         children: <Widget>[
-
-          Positioned( top: 10, child: Text(transcription) ),
           buildLetter(vm.currentData.letter),
-          RecordingAnimation(),
-          buildButtonRecord()
-
+          buildButtonRecord(),
         ],
-      )
+      ),
     );
 
   }
 
+/* 
+            Container(
+              // color: Colors.green,
+              height: 140.0,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: RecordingAnimation(),
+                  ),
+                  Container(
+                    width: 60.0,
+                    height: 60.0,
+                    margin: EdgeInsets.symmetric(vertical: 15.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(100.0)
+                    ),
+                    child: Icon(
+                      Icons.mic,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
+            )
+
+
+ */
 
   Widget buildLetter(String letter) {
 
@@ -200,54 +226,78 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     );
 
     return Container(
-
-
-      padding:   EdgeInsets.only(bottom: 30.0),
-      alignment: Alignment.center,
+      margin: EdgeInsets.only(bottom: 10.0),
       child: Column(
-        mainAxisAlignment:  MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
 
-          Container(
-
-            width:      _size.width,
-            height:     _size.height,
-            decoration: _decoration,
-
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-
-                Material(
-                  borderRadius: _radius,
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius:  _radius,
-                    splashFactory: InkRipple.splashFactory,
-                    onTap: () => print('Hola Mundo!') ,
-                    child: Container(
-
-                      child: Icon(
-                        Icons.mic,
-                        color: Colors.white,
-                        size: _size.height * .50
-                      ),
-
-                    ),
-                  ),
-                )
-
-              ],
+          CustomIconButton(
+            onTap:  () => print('pressed'),
+            height: 68.0,
+            width:  68.0,
+            color:  _color,
+            elevation:   3.0,
+            splashColor: Colors.white12,
+            icon: Icon(
+              Icons.mic,
+              color: Colors.white,
+              size: 34.0,
             ),
-
           )
-          
+
         ],
       ),
-
-
     );
+
+    // return Container(
+
+
+    //   padding:   EdgeInsets.only(bottom: 30.0),
+    //   alignment: Alignment.center,
+    //   child: Column(
+    //     mainAxisAlignment:  MainAxisAlignment.end,
+    //     crossAxisAlignment: CrossAxisAlignment.center,
+    //     children: <Widget>[
+
+    //       Container(
+
+    //         width:      _size.width,
+    //         height:     _size.height,
+    //         decoration: _decoration,
+
+    //         child: Stack(
+    //           fit: StackFit.expand,
+    //           children: <Widget>[
+
+    //             Material(
+    //               borderRadius: _radius,
+    //               color: Colors.transparent,
+    //               child: InkWell(
+    //                 borderRadius:  _radius,
+    //                 splashFactory: InkRipple.splashFactory,
+    //                 onTap: () => print('Hola Mundo!') ,
+    //                 child: Container(
+
+    //                   child: Icon(
+    //                     Icons.mic,
+    //                     color: Colors.white,
+    //                     size: _size.height * .50
+    //                   ),
+
+    //                 ),
+    //               ),
+    //             )
+
+    //           ],
+    //         ),
+
+    //       )
+          
+    //     ],
+    //   ),
+
+
+    // );
 
 
   }
@@ -276,7 +326,7 @@ class _RecordingAnimationState extends State<RecordingAnimation> {
   Widget build(BuildContext context) {
     print('animating');
     return Container(
-      height: 80,
+      height: 50,
       child: FlareActor(
         'assets/flare/recording.flr',
         fit:        BoxFit.fitHeight,

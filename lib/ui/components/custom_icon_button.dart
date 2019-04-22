@@ -9,6 +9,7 @@ class CustomIconButton extends StatelessWidget {
   final Color highlightColor;
   final Color color;
   final Function() onTap;
+  final double elevation;
 
   const CustomIconButton({
     Key key,
@@ -19,26 +20,35 @@ class CustomIconButton extends StatelessWidget {
     this.color = Colors.transparent,
     this.splashColor = Colors.black12,
     this.highlightColor = Colors.transparent,
+    this.elevation = 0.0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
     return Material(
-      color: color,
+
+      color:        color,
+      elevation:    elevation,
+      shadowColor:  Colors.black,
       borderRadius: BorderRadius.circular(100.0),
+
       child: InkWell(
-        splashColor: splashColor,
-        borderRadius: BorderRadius.circular(100.0),
-        splashFactory: InkRipple.splashFactory,
-        onTap: onTap,
+
+        onTap:          onTap,
+        splashColor:    splashColor,
+        borderRadius:   BorderRadius.circular(100.0),
+        splashFactory:  InkRipple.splashFactory,
         highlightColor: highlightColor,
+
         child: Container(
-          width: width,
+          width:  width,
           height: height,
-          child: icon,
+          child:  icon,
         ),
+
       ),
+
     );
 
   }
