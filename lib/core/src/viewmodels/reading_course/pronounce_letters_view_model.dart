@@ -6,6 +6,7 @@ import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
+
 @immutable
 class PronounceLettersViewModel {
 
@@ -42,7 +43,6 @@ class PronounceLettersViewModel {
       isSettingData:      path.isSettingData,
       showWellDoneDialog: path.showWellDoneDialog,
       dispatch:           (action) => store.dispatch(action),
-
     );
 
   }

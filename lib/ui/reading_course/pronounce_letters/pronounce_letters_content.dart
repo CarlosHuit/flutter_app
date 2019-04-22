@@ -1,4 +1,5 @@
 import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters_view_model.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
@@ -155,6 +156,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
           Positioned( top: 10, child: Text(transcription) ),
           buildLetter(vm.currentData.letter),
+          RecordingAnimation(),
           buildButtonRecord()
 
         ],
@@ -263,3 +265,24 @@ class Language {
 
 }
 
+
+class RecordingAnimation extends StatefulWidget {
+  @override
+  _RecordingAnimationState createState() => _RecordingAnimationState();
+}
+
+class _RecordingAnimationState extends State<RecordingAnimation> {
+  @override
+  Widget build(BuildContext context) {
+    print('animating');
+    return Container(
+      height: 80,
+      child: FlareActor(
+        'assets/flare/recording.flr',
+        fit:        BoxFit.fitHeight,
+        animation: 'record',
+        color:     Colors.orange[300],
+      ),
+    );
+  }
+}
