@@ -8,6 +8,7 @@ import 'package:redux/redux.dart';
 
 @immutable
 class PronounceLettersViewModel {
+
   final SpeechSynthesisService  tts = SpeechSynthesisService();
   final List<RCPronounceLettersData> data;
   final RCPronounceLettersData currentData;
@@ -16,6 +17,7 @@ class PronounceLettersViewModel {
   final bool isRecording;
   final bool isSettingData;
   final Function(dynamic action) dispatch;
+
 
   PronounceLettersViewModel({
     @required this.data,
@@ -26,6 +28,7 @@ class PronounceLettersViewModel {
     @required this.isSettingData,
     @required this.dispatch,
   });
+
 
   factory PronounceLettersViewModel.fromStore(Store<AppState> store) {
 
@@ -50,19 +53,29 @@ class PronounceLettersViewModel {
     tts.speak(term: msg);
   }
 
+
+  void speakHelp() {
+    final msg = 'Esta es la letra: ${currentData.letterSound} ${currentData.letterType}';
+    tts.speak(term: msg);
+  }
+
+
   void speakMessageTryAgain() {
     final msg = 'Inténtalo nuevamente, si necesitas ayuda presiona el botón azul.';
     tts.speak(term: msg);
   }
+
 
   void speakMessageWrongRecogntion() {
     final msg = 'Si dijiste algo no se escuchó, Inténtalo nuevamente';
     tts.speak(term: msg);
   }
 
+
   void changeCurrentData() {
     dispatch(RCChangeCurrentDataPL());
   }
+
 
   void navigateToReadingCourseHome() {
     dispatch(NavigatorPop());
