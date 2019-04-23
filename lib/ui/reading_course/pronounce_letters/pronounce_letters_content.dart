@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters_view_model.dart';
 import 'package:app19022019/ui/components/custom_icon_button.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -60,6 +62,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     speechRecognition.setRecognitionStartedHandler(onRecognitionStart);
     speechRecognition.setRecognitionResultHandler(onRecognitionResult);
     speechRecognition.setRecognitionCompleteHandler(onRecognitionComplete);
+    speechRecognition.setRecognitionErrorHandler(onRecognitionError);
 
     speechRecognition
       .activate()
@@ -70,6 +73,46 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
         });
 
       });
+
+  }
+
+
+  void onRecognitionError(dynamic s) {
+
+    setState(() {
+      isRecording = false;
+    });
+
+    final androidErrorCodes = {
+      1: 'ERROR_NETWORK_ERROR',
+      2: 'ERROR_NETWORK',
+      3: 'ERROR_AUDIO',
+      4: 'ERROR_SERVER',
+      5: 'ERROR_CLIENT',
+      6: 'ERROR_SPEECH_TIMEOUT',
+      7: 'ERROR_NO_MATCH',
+      8: 'ERROR_RECOGNIZER_BUSY',
+      9: 'ERROR_INSUFICIENT_PERMISSIONS'
+    };
+
+    final code = s != null ? int.parse('$s') : null;
+    
+    // If platform is Android handle SpeechRecognizer error 
+    if (Theme.of(context).platform == TargetPlatform.android) {
+
+      print(androidErrorCodes[code]);
+
+      if (code == 7 || code == 6) {
+        vm.speakMessageWrongRecogntion();
+      }
+
+    }
+
+    // If platform is IOS handle Speech API error
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      vm.speakInstructions();
+    }
+
 
   }
 
@@ -93,24 +136,31 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
 
   void onRecognitionStart() {
+
     setState(() {
       isRecording = true;
     });
+
   }
 
 
   void onRecognitionResult(String txt) {
-    print('result is......: txt');
+
+    print('result is......: $txt');
     setState(() {
       transcription = txt;
     });
+
   }
 
 
   void onRecognitionComplete() {
+
+    print('1234567890123456789012345678901234567890: $transcription');
     setState(() {
       isRecording = false;
     });
+
   }
 
 
@@ -148,9 +198,13 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   }
 
 
+  String generateUrl(String name) => 'assets/flare/$name.flr';
+
+
   @override
   Widget build(BuildContext context) {
-
+    final s = Theme.of(context).platform;
+    print('platfotm: $s - ${Platform.isAndroid}');
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -163,47 +217,28 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
   }
 
-/* 
-            Container(
-              // color: Colors.green,
-              height: 140.0,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: RecordingAnimation(),
-                  ),
-                  Container(
-                    width: 60.0,
-                    height: 60.0,
-                    margin: EdgeInsets.symmetric(vertical: 15.0),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(100.0)
-                    ),
-                    child: Icon(
-                      Icons.mic,
-                      color: Colors.white,
-                    ),
-                  )
-                ],
-              ),
-            )
-
-
- */
 
   Widget buildLetter(String letter) {
 
     return Container(
+
       alignment: Alignment.center,
       child: Text(
         letter,
         style: TextStyle(
-          color:      Theme.of(context).primaryColor,
-          fontSize:   160.0,
+          color:  Colors.red,
+          fontSize: 160.0,
           fontWeight: FontWeight.bold,
+          shadows: [
+            Shadow(
+              color: Colors.black26,
+              blurRadius: 5.0,
+              offset: Offset(-1, 4)
+            )
+          ]
         ),
       ),
+
     );
 
   }
@@ -211,93 +246,54 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
   Widget buildButtonRecord() {
 
-    final Size _size = Size( 80.0, 80.0 );
-    final BorderRadius _radius = BorderRadius.circular(100.0);
-    final MaterialColor _color = Theme.of(context).primaryColor;
-
-    final _decoration = BoxDecoration(
-      borderRadius: _radius,
-      color: _color,
-      boxShadow: [
-        BoxShadow(
-          blurRadius: 5.0, color: Colors.black54, offset: Offset(0, 1.5)
-        )
-      ]
-    );
-
     return Container(
-      margin: EdgeInsets.only(bottom: 10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
 
-          CustomIconButton(
-            onTap:  () => print('pressed'),
-            height: 68.0,
-            width:  68.0,
-            color:  _color,
-            elevation:   3.0,
-            splashColor: Colors.white12,
-            icon: Icon(
-              Icons.mic,
-              color: Colors.white,
-              size: 34.0,
+          isRecording
+            ? Container(
+              height: 45.0,
+              child:  FlareActor(
+                generateUrl('recording'),
+                fit: BoxFit.fitHeight,
+                color: Colors.orange[300],
+                animation: 'record',
+              ),
+            )
+            : Container(
+              height: 45.0,
+              child: FlareActor(
+                generateUrl('points'),
+                fit: BoxFit.fitHeight,
+                color: Colors.orange[300],
+              ),
             ),
+
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only( bottom: 20.0, top: 10.0 ),
+            child: CustomIconButton(
+              onTap: isRecording ? null : startRecognition,
+              color: Theme.of(context).primaryColor,
+              width:  68.0,
+              height: 68.0,
+              elevation: 3.0,
+              splashColor: Colors.white12,
+              icon: Icon(
+                isRecording ? Icons.hearing : Icons.mic,
+                color: Colors.white,
+                size:  34.0,
+              ),
+            )
+
           )
+
 
         ],
       ),
     );
 
-    // return Container(
-
-
-    //   padding:   EdgeInsets.only(bottom: 30.0),
-    //   alignment: Alignment.center,
-    //   child: Column(
-    //     mainAxisAlignment:  MainAxisAlignment.end,
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-    //     children: <Widget>[
-
-    //       Container(
-
-    //         width:      _size.width,
-    //         height:     _size.height,
-    //         decoration: _decoration,
-
-    //         child: Stack(
-    //           fit: StackFit.expand,
-    //           children: <Widget>[
-
-    //             Material(
-    //               borderRadius: _radius,
-    //               color: Colors.transparent,
-    //               child: InkWell(
-    //                 borderRadius:  _radius,
-    //                 splashFactory: InkRipple.splashFactory,
-    //                 onTap: () => print('Hola Mundo!') ,
-    //                 child: Container(
-
-    //                   child: Icon(
-    //                     Icons.mic,
-    //                     color: Colors.white,
-    //                     size: _size.height * .50
-    //                   ),
-
-    //                 ),
-    //               ),
-    //             )
-
-    //           ],
-    //         ),
-
-    //       )
-          
-    //     ],
-    //   ),
-
-
-    // );
 
 
   }
@@ -313,26 +309,4 @@ class Language {
 
   Language(this.name, this.code);
 
-}
-
-
-class RecordingAnimation extends StatefulWidget {
-  @override
-  _RecordingAnimationState createState() => _RecordingAnimationState();
-}
-
-class _RecordingAnimationState extends State<RecordingAnimation> {
-  @override
-  Widget build(BuildContext context) {
-    print('animating');
-    return Container(
-      height: 50,
-      child: FlareActor(
-        'assets/flare/recording.flr',
-        fit:        BoxFit.fitHeight,
-        animation: 'record',
-        color:     Colors.orange[300],
-      ),
-    );
-  }
 }
