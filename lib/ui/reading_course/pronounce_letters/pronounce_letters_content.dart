@@ -224,24 +224,21 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     );
   }
 
-  
+  Future<bool> validateIfIsRecording() async {
+
+    if (vm.isRecording) {
+      setState(() => popScopeInProgress = true );
+      cancelRecognition();
+    }
+
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
 
     return WillPopScope(
-      onWillPop: () async{
-
-        setState(() => popScopeInProgress = true );
-
-        if (vm.isRecording) {
-          cancelRecognition();
-          return true;
-        }
-
-        return true;
-
-      },
+      onWillPop: validateIfIsRecording,
       child: Scaffold(
         body: Stack(
           fit: StackFit.expand,
