@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters_view_model.dart';
 import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
+import 'package:app19022019/ui/components/well_done_dialog_app.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
@@ -28,8 +27,6 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   SpeechRecognition speechRecognition;
   List<Language> languages;
   Language    language;
-  String   transcription;
-  bool   isRecording;
   bool recognitionAvailable;
 
 
@@ -44,8 +41,6 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     ];
 
     language = languages[0];
-    isRecording = false;
-    transcription = '';
     recognitionAvailable = false;
 
     activateSpeechRecognition();
@@ -77,11 +72,14 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   }
 
 
+  /// Handle Recognition Error
   void onRecognitionError(dynamic s) {
 
-    setState(() {
-      isRecording = false;
-    });
+    vm.setRecordingState(false);
+
+    final code = s != null
+      ? int.parse('$s')
+      : null;
 
     final androidErrorCodes = {
       1: 'ERROR_NETWORK_ERROR',
@@ -95,9 +93,8 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
       9: 'ERROR_INSUFICIENT_PERMISSIONS'
     };
 
-    final code = s != null ? int.parse('$s') : null;
     
-    // If platform is Android handle SpeechRecognizer error 
+    /// If platform is Android handle SpeechRecognizer error 
     if (Theme.of(context).platform == TargetPlatform.android) {
 
       print(androidErrorCodes[code]);
@@ -108,7 +105,8 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
     }
 
-    // If platform is IOS handle Speech API error
+
+    /// If platform is IOS handle Speech API error
     if (Theme.of(context).platform == TargetPlatform.android) {
       vm.speakMessageWrongRecogntion();
     }
@@ -117,6 +115,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   }
 
 
+  /// CallBack to handle the speech availability 
   void onSpeechAvailability(bool result) {
     setState(() {
       recognitionAvailable = result;
@@ -124,6 +123,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   }
 
 
+  /// Set Current Locale Language
   void onCurrentLocale(String locale) {
 
     setState(() {
@@ -135,45 +135,39 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   }
 
 
+  /// Callback to handle the start of speech recognition
   void onRecognitionStart() {
 
-    setState(() {
-      isRecording = true;
-    });
+    vm.setRecordingState(true);
 
   }
 
 
+  /// Callback that is called when the speech recognition return a partial transcription
   void onRecognitionResult(String txt) {
 
-    print('result is......: $txt');
-    setState(() {
-      transcription = txt;
-    });
+    print('Partial transcription: $txt');
 
   }
 
 
-  void onRecognitionComplete() {
+  /// [ void ] Callback that is called when a successful voice recognition is completed
+  /// or when speech recognition stops for some error or when speech recognition is cancelled
+  void onRecognitionComplete(String term) {
 
-    print('123456789012345678901234567890123456789012345678901234567890..........: $transcription');
+    print('______________________________________________..........: $term - ${term.length}');
 
-    if (transcription.trim().length > 0) {
+    vm.setRecordingState(false);
 
-      // if (transcription == vm.pronunciation) {
-      if (transcription.contains(vm.pronunciation)) {
+    final transcriptionNormalized = term.trim().toLowerCase();
 
-        vm.speakWellDone();
+    if (transcriptionNormalized.length > 0) {
 
-      } else {
-
-        vm.speakMessageTryAgain();
-
-      }
+      final isCorrect = vm.validateResult(transcriptionNormalized);
+      print(isCorrect ? 'Wooooow bien Hecho' : 'Pffffffffff vuelve a intentarlo');
 
     }
 
-    setState(() => isRecording = false );
 
   }
 
@@ -182,7 +176,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
     vm.stopTts();
 
-    setState(() => isRecording = true );
+    vm.setRecordingState(true);
 
     speechRecognition
       .listen(locale: language.code)
@@ -196,9 +190,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     speechRecognition
       .cancel()
       .then((result) {
-        setState(() {
-          isRecording = result;
-        });
+        vm.setRecordingState(result);
       });
 
   }
@@ -209,9 +201,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     speechRecognition
       .stop()
       .then((result) {
-        setState(() {
-          isRecording = result;
-        });
+        vm.setRecordingState(result);
       });
 
   }
@@ -223,15 +213,21 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   @override
   Widget build(BuildContext context) {
 
-    final s = Theme.of(context).platform;
-    print('platfotm: $s - ${Platform.isAndroid}');
-
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
+
           buildLetter(vm.currentData.letter),
           buildButtonRecord(),
+          
+          vm.showWellDoneDialog
+          ? WellDoneDialogApp(
+            onEnd: vm.speakWellDone,
+            onStart: vm.speakWellDone,
+          )
+          : Offstage()
+
         ],
       ),
     );
@@ -276,51 +272,47 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
             child: Container(
               padding: EdgeInsets.all(15.0),
               alignment: Alignment.topRight,
-              child: CustomCircularIconButton(
-                icon: Icon(
-                  Icons.help_outline,
-                  color: Colors.orange[400],
-                  size: 42.0,
-                ),
-                onTap: vm.speakHelp,
-                height: 56.0,
-                width: 56.0,
-                splashColor: Colors.orange[50],
-              ),
+              child: vm.currentData.attempts >= 3
+                ? buildButtonHelp()
+                : Offstage(),
             ),
           ),
 
-          isRecording
-            ? Container(
-              height: 45.0,
-              child:  FlareActor(
-                generateUrl('recording'),
-                fit: BoxFit.fitHeight,
-                color: Colors.orange[300],
-                animation: 'record',
-              ),
-            )
-            : Container(
-              height: 45.0,
-              child: FlareActor(
-                generateUrl('points'),
-                fit: BoxFit.fitHeight,
-                color: Colors.orange[300],
-              ),
+          vm.isRecording
+          ? Container(
+            height: 45.0,
+            child:  FlareActor(
+
+              generateUrl('recording'),
+              animation: 'record',
+              fit:        BoxFit.fitHeight,
+              color:      Colors.orange[300],
+
             ),
+          )
+          : Container(
+            height: 45.0,
+            child: FlareActor(
+
+              generateUrl('points'),
+              fit:   BoxFit.fitHeight,
+              color: Colors.orange[300],
+
+            ),
+          ),
 
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.only( bottom: 20.0, top: 10.0 ),
             child: CustomCircularIconButton(
-              onTap: isRecording ? null : startRecognition,
+              onTap: vm.isRecording ? null : startRecognition,
               color: Theme.of(context).primaryColor,
               width:  68.0,
               height: 68.0,
               elevation: 3.0,
               splashColor: Colors.white12,
               icon: Icon(
-                isRecording ? Icons.hearing : Icons.mic,
+                vm.isRecording ? Icons.hearing : Icons.mic,
                 color: Colors.white,
                 size:  34.0,
               ),
@@ -334,6 +326,23 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     );
 
 
+
+  }
+
+
+  Widget buildButtonHelp() {
+
+    return CustomCircularIconButton(
+      icon: Icon(
+        Icons.help_outline,
+        color: Colors.orange[400],
+        size: 42.0,
+      ),
+      onTap:  vm.speakHelp,
+      width:  56.0,
+      height: 56.0,
+      splashColor: Colors.orange[50],
+    );
 
   }
 

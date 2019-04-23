@@ -53,46 +53,76 @@ class PronounceLettersViewModel {
 
 
   void speakInstructions() {
+
     final msg = 'Presiona el micrófono y di cuál es esta letra.';
     tts.speak(msg);
+
   }
 
 
   void speakHelp() {
+
     final msg = 'Esta es la letra: ${currentData.letterSound} ${currentData.letterType}';
-    tts.speak(msg);
+    tts.speak(msg, rate: 0.85);
+
   }
 
 
   void stopTts() {
+
     tts.cancel();
+
   }
+
 
   void speakWellDone() {
+
     final msg = 'Bien Hecho';
     tts.speak(msg, rate: 0.8);
+
   }
 
+
   void speakMessageTryAgain() {
+
     final msg = 'Inténtalo nuevamente... Si necesitas ayuda presiona el botón azul.';
     tts.speak(msg);
+
   }
 
 
   void speakMessageWrongRecogntion() {
+
     final msg = 'Si dijiste algo no se escuchó... Inténtalo nuevamente';
     tts.speak(msg);
+
   }
 
 
-  void changeCurrentData() {
-    dispatch(RCChangeCurrentDataPL());
+  bool validateResult(String term) {
+
+    if (term.contains(pronunciation)) {
+      speakWellDone();
+      return true;
+    }
+
+    speakMessageTryAgain();
+    return false;
+
+
   }
 
 
-  void navigateToReadingCourseHome() {
-    dispatch(NavigatorPop());
-  }
+  void setRecordingState(bool state) => dispatch(RCToggleRecordingStatePL(state));
+
+
+  void changeCurrentData() => dispatch(RCChangeCurrentDataPL());
+
+
+  void navigateToReadingCourseHome() => dispatch(NavigatorPop());
+
+
+  void registerAttempt() => dispatch(RCRegisterAttemptPL());
 
 
   @override

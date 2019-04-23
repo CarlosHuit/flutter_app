@@ -12,6 +12,24 @@ RCPronounceLettersState readingCoursePronounceLettersReducer(ReadingCourseState 
     return RCPronounceLettersState.initialState();
   }
 
+  if (action is RCRegisterAttemptPL) {
+    return registerAttempt(state.pronounceLetters);
+  }
+
+  if (action is RCToggleRecordingStatePL) {
+    return state.pronounceLetters.copyWith(
+      isRecording: action.state
+    );
+  }
+
   return state.pronounceLetters;
+
+}
+
+RCPronounceLettersState registerAttempt(RCPronounceLettersState state) {
+
+  return state.copyWith(
+    currentData: state.currentData.copyWith( attempts: state.currentData.attempts + 1 )
+  );
 
 }
