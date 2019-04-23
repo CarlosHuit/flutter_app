@@ -39,6 +39,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
     super.initState();
 
+    popScopeInProgress = false;
     _pageController = PageController();
 
     languages = [
