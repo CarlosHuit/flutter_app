@@ -66,6 +66,13 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
     return status;
   }
 
+  Future<bool> validataIfIsRecording(bool isRecording) async{
+    if (!isRecording) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -85,7 +92,11 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
         store.dispatch(RCResetDataPL());
         SpeechSynthesisService.stop();
       },
-      builder:   (_, vm) => PronounceLettersContent(vm: vm),
+      // builder:   (_, vm) => PronounceLettersContent(vm: vm),
+      builder:   (_, vm) => WillPopScope(
+        onWillPop: () => validataIfIsRecording(vm.isRecording),
+        child: PronounceLettersContent(vm: vm),
+      ),
     );
 
 
