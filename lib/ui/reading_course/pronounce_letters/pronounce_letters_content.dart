@@ -31,6 +31,8 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   Language    language;
   bool recognitionAvailable;
 
+  bool popScopeInProgress;
+
 
   @override
   void initState() {
@@ -147,7 +149,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
     final transcription = term.trim().toLowerCase();
 
-    if (transcription.length > 0) {
+    if (transcription.length > 0 && !popScopeInProgress) {
       vm.validateResult(transcription);
     }
 
@@ -222,38 +224,54 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     );
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
+    return WillPopScope(
+      onWillPop: () async{
+
+        setState(() => popScopeInProgress = true );
+
+        if (vm.isRecording) {
+          cancelRecognition();
+          return true;
+        }
+
+        return true;
+
+      },
+      child: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
 
 
-          ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: PageView.builder(
-              physics:     NeverScrollableScrollPhysics(),
-              itemCount:   vm.data.length,
-              controller:  _pageController,
-              itemBuilder: (_, i) => buildLetter(vm.data[i].letter) ,
+            ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: PageView.builder(
+                physics:     NeverScrollableScrollPhysics(),
+                itemCount:   vm.data.length,
+                controller:  _pageController,
+                itemBuilder: (_, i) => buildLetter(vm.data[i].letter) ,
+              ),
             ),
-          ),
 
-          buildButtonRecord(),
-          
-          vm.showWellDoneDialog
-          ? Container(
-              child: WellDoneDialogApp(
-              onStart: vm.speakWellDone,
-              onEnd: next,
+            buildButtonRecord(),
+            
+            vm.showWellDoneDialog
+            ? Container(
+                child: WellDoneDialogApp(
+                onStart: vm.speakWellDone,
+                onEnd: next,
+              )
             )
-          )
-          : Offstage(),
+            : Offstage(),
 
 
-        ],
+          ],
+        ),
       ),
     );
 

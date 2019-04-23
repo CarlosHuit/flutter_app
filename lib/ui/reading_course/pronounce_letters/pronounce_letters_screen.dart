@@ -92,11 +92,7 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
         store.dispatch(RCResetDataPL());
         SpeechSynthesisService.stop();
       },
-      // builder:   (_, vm) => PronounceLettersContent(vm: vm),
-      builder:   (_, vm) => WillPopScope(
-        onWillPop: () => validataIfIsRecording(vm.isRecording),
-        child: PronounceLettersContent(vm: vm),
-      ),
+      builder:   (_, vm) => PronounceLettersContent(vm: vm),
     );
 
 
