@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters_view_model.dart';
-import 'package:app19022019/ui/components/custom_icon_button.dart';
+import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
@@ -162,9 +162,13 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
       // if (transcription == vm.pronunciation) {
       if (transcription.contains(vm.pronunciation)) {
+
         vm.speakWellDone();
+
       } else {
+
         vm.speakMessageTryAgain();
+
       }
 
     }
@@ -268,6 +272,20 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
 
+          Expanded(
+            child: Container(
+              // color: Colors.lime,
+              alignment: Alignment.topCenter,
+              child: RawMaterialButton(
+                fillColor: Theme.of(context).primaryColor,
+                child: Text('Ayuda', style: TextStyle(
+                  color: Colors.white
+                )),
+                onPressed: () => 'helpMe!!',
+              ),
+            ),
+          ),
+
           isRecording
             ? Container(
               height: 45.0,
@@ -290,7 +308,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.only( bottom: 20.0, top: 10.0 ),
-            child: CustomIconButton(
+            child: CustomCircularIconButton(
               onTap: isRecording ? null : startRecognition,
               color: Theme.of(context).primaryColor,
               width:  68.0,

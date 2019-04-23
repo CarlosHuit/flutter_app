@@ -1,4 +1,4 @@
-import 'package:app19022019/ui/components/custom_icon_button.dart';
+import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:flutter/material.dart';
 
 
@@ -35,7 +35,7 @@ class BlackboardBottomControlBar extends StatelessWidget {
           children: <Widget>[
 
 
-            CustomIconButton(
+            CustomCircularIconButton(
               width: 45.0,
               height: 45.0,
               icon: Icon(Icons.replay, color: Colors.red),
@@ -44,7 +44,7 @@ class BlackboardBottomControlBar extends StatelessWidget {
             ),
 
 
-            CustomIconButton(
+            CustomCircularIconButton(
               width: 45.0,
               height: 45.0,
               icon: Icon(Icons.clear, color: Colors.red),
@@ -54,7 +54,7 @@ class BlackboardBottomControlBar extends StatelessWidget {
 
             Transform.rotate(
               angle: 45,
-              child: CustomIconButton(
+              child: CustomCircularIconButton(
                 width: 45.0,
                 height: 45.0,
                 icon: Icon(Icons.smartphone, color: Colors.red),

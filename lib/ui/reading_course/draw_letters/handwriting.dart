@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:app19022019/ui/components/custom_icon_button.dart';
+import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
+
 import './guide_lines.dart';
 
 
@@ -360,7 +361,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     return Positioned(
       top: 10.0,
       right: 10.0,
-      child: CustomIconButton(
+      child: CustomCircularIconButton(
         splashColor: Colors.red[50],
         height: 60.0,
         width:  60.0,

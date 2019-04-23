@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomIconButton extends StatelessWidget {
+class CustomCircularIconButton extends StatelessWidget {
 
   final double width;
   final double height;
@@ -11,7 +11,7 @@ class CustomIconButton extends StatelessWidget {
   final Function() onTap;
   final double elevation;
 
-  const CustomIconButton({
+  const CustomCircularIconButton({
     Key key,
     @required this.width,
     @required this.height,

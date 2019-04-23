@@ -1,5 +1,5 @@
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
-import 'package:app19022019/ui/components/custom_icon_button.dart';
+import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class BlackboardTopControlBar extends StatelessWidget {
@@ -29,7 +29,7 @@ class BlackboardTopControlBar extends StatelessWidget {
 
 
             /// FontSizeIcon
-            CustomIconButton(
+            CustomCircularIconButton(
               icon: Icon(Icons.create, size: 28.0),
               height: 50,
               width: 50,
@@ -38,7 +38,7 @@ class BlackboardTopControlBar extends StatelessWidget {
 
 
             /// ColorsSelectorIcon
-            CustomIconButton(
+            CustomCircularIconButton(
               icon: Icon(Icons.format_color_fill, size: 28.0,),
               height: 50,
               width: 50,
@@ -47,7 +47,7 @@ class BlackboardTopControlBar extends StatelessWidget {
 
 
               /// ShowGuideLinesIcon
-            CustomIconButton(
+            CustomCircularIconButton(
               height: 50.0,
               width: 50.0,
               icon: Icon(
