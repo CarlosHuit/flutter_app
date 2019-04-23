@@ -92,7 +92,7 @@ class GameViewModel {
       if (letter == correctLetter) {
 
         dispatch( RCRegisterCorrectSelectionG(letter: letter) );
-        tts.speak(term: '$letter $type');
+        tts.speak('$letter $type');
 
         if (p == 0) {
           Future.delayed(
@@ -122,7 +122,7 @@ class GameViewModel {
     final type = currentData.type;
     final msg = 'Encuentra todas las letras: $letter $type';
 
-    tts.speak( term: msg );
+    tts.speak(msg );
 
     dispatch(RCShowCoincidencesG());
 
@@ -164,7 +164,7 @@ class GameViewModel {
 
   void speakWellDoneMsg() {
     const msg = 'Bien Hecho';
-    tts.speak(term: msg);
+    tts.speak(msg);
   }
 
   @override

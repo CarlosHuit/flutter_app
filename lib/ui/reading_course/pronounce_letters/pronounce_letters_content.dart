@@ -274,14 +274,18 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
           Expanded(
             child: Container(
-              // color: Colors.lime,
-              alignment: Alignment.topCenter,
-              child: RawMaterialButton(
-                fillColor: Theme.of(context).primaryColor,
-                child: Text('Ayuda', style: TextStyle(
-                  color: Colors.white
-                )),
-                onPressed: () => 'helpMe!!',
+              padding: EdgeInsets.all(15.0),
+              alignment: Alignment.topRight,
+              child: CustomCircularIconButton(
+                icon: Icon(
+                  Icons.help_outline,
+                  color: Colors.orange[400],
+                  size: 42.0,
+                ),
+                onTap: vm.speakHelp,
+                height: 56.0,
+                width: 56.0,
+                splashColor: Colors.orange[50],
               ),
             ),
           ),

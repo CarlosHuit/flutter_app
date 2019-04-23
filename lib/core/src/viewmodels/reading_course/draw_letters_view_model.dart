@@ -78,7 +78,7 @@ class DrawLettersViewModel {
     final type   = currrentData.type;
     final message = ' Mira atentamente, así se escribe la letra: $letter $type';
 
-    tts.speak(term: message);
+    tts.speak(message);
 
   }
 
@@ -89,7 +89,7 @@ class DrawLettersViewModel {
     final type = currrentData.type;
     final message = 'Bien, ahora practica escribir la letra: $letter $type';
 
-    tts.speak(term: message);
+    tts.speak(message);
 
   }
 
@@ -141,7 +141,7 @@ class DrawLettersViewModel {
 
 
   void speakOnWellDone() {
-    tts.speak(term: 'Bien Hecho');
+    tts.speak('Bien Hecho');
   }
 
   void showHandwriting() {

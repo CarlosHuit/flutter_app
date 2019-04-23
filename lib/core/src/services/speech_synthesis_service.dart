@@ -10,7 +10,13 @@ class SpeechSynthesisService {
   FlutterTts _flutterTts = FlutterTts();
 
 /// [Future] method to speech a term and return a FlutterTts to add event listeners
-  Future<FlutterTts> speak({@required String term, String lang, double rate, double volume, double pitch }) async {
+  Future<FlutterTts> speak(String term, {
+    // @required String term,
+    String lang,
+    double rate,
+    double volume,
+    double pitch
+  }) async {
 
     final String language    = lang   ?? 'es-US';
     final double speechRate  = rate   ?? 1.0;

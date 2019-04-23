@@ -54,13 +54,13 @@ class PronounceLettersViewModel {
 
   void speakInstructions() {
     final msg = 'Presiona el micrófono y di cuál es esta letra.';
-    tts.speak(term: msg);
+    tts.speak(msg);
   }
 
 
   void speakHelp() {
     final msg = 'Esta es la letra: ${currentData.letterSound} ${currentData.letterType}';
-    tts.speak(term: msg);
+    tts.speak(msg);
   }
 
 
@@ -70,18 +70,18 @@ class PronounceLettersViewModel {
 
   void speakWellDone() {
     final msg = 'Bien Hecho';
-    tts.speak(term: msg, rate: 0.8);
+    tts.speak(msg, rate: 0.8);
   }
 
   void speakMessageTryAgain() {
     final msg = 'Inténtalo nuevamente... Si necesitas ayuda presiona el botón azul.';
-    tts.speak(term: msg);
+    tts.speak(msg);
   }
 
 
   void speakMessageWrongRecogntion() {
     final msg = 'Si dijiste algo no se escuchó... Inténtalo nuevamente';
-    tts.speak(term: msg);
+    tts.speak(msg);
   }
 
 

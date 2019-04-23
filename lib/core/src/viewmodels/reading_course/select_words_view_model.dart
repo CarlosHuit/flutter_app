@@ -56,14 +56,14 @@ class SelectWordsViewModel {
   }
 
   void speakWellDone() {
-    tts.speak(term: 'Bien Hecho');
+    tts.speak('Bien Hecho');
   }
 
   void onSelectWord(String word) {
 
     if (word.contains(currentData.letter)) {
       dispatch(RCCorrectSelectionSW());
-      tts.speak(term: word);
+      tts.speak(word);
     } else {
       tts.cancel();
       AudioService.playAsset(AudioType.incorrect);
@@ -75,7 +75,7 @@ class SelectWordsViewModel {
     final typeLetter = currentData.type;
     final soundletter = sound;
     final msg = 'Encuentra las palabras que al menos tengan una letra: $soundletter $typeLetter';
-    tts.speak(term: msg);
+    tts.speak(msg);
   }
 
   void changeCurrentData() {

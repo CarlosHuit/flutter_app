@@ -66,7 +66,7 @@ class FindLettersViewModel {
 
     if (selection == currentLetter) {
 
-      tts.speak(term: selection);
+      tts.speak(selection);
       dispatch( RCSubtractCorrectFL() );
 
     } else {
@@ -82,7 +82,7 @@ class FindLettersViewModel {
   void listenInstructions() {
     tts.cancel();
     final msg = 'Encuentra las letras: ${currentData.soundLetter} ${currentData.type} de la palabra ${currentData.word}';
-    tts.speak(term: msg);
+    tts.speak(msg);
   }
 
   void redirection() {
@@ -94,7 +94,7 @@ class FindLettersViewModel {
   }
 
   void listenWord() {
-    tts.speak(term: currentData.word);
+    tts.speak(currentData.word);
   }
 
 

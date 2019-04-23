@@ -2,13 +2,28 @@ import 'package:flutter/material.dart';
 
 class CustomCircularIconButton extends StatelessWidget {
 
+  /// [ double ] define the with of the icon button. Width is @required
   final double width;
+
+  /// [ double ] define the height of the icon button. Height is @required
   final double height;
+
+  /// [ Icon ] set the icon of the buttons, you can add icon custimatization
   final Icon icon;
+
+  /// [ MaterialColor ] Define the color of the splach efect. By Default is Colors.black12
   final Color splashColor;
+
+  /// [ Color ] Define the color of the highlight effect. By default is Colors.transparent 
   final Color highlightColor;
+
+  /// [ Color ] define the background color of the icon button, by default is Colors.transparent
   final Color color;
+
+  /// [ Function() ] CallBack that is called when the button is pressed. Callback is @required
   final Function() onTap;
+
+  /// [ double ] Define the elevation 'BoxShadow' of the button, by default is 0.0
   final double elevation;
 
   const CustomCircularIconButton({

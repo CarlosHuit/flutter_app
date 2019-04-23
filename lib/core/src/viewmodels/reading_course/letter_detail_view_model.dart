@@ -84,7 +84,7 @@ class LetterDetailViewModel {
 
 
     if (option[0] == letter) {
-      tts.speak(term: '$letterSound $typeLetter', rate: 1.0);
+      tts.speak('$letterSound $typeLetter', rate: 1.0);
     } else {
       tts.cancel();
       AudioService.playAsset(AudioType.incorrect);
@@ -110,11 +110,11 @@ class LetterDetailViewModel {
   }
 
   void listenCorrectMsg() {
-    tts.speak(term: 'Bien Hecho');
+    tts.speak('Bien Hecho');
   }
 
   void listenIncorrectMsg() {
-    tts.speak(term: 'Inténtalo nuevamente');
+    tts.speak('Inténtalo nuevamente');
   }
 
   void hideTryAgainDialog() {
@@ -148,12 +148,12 @@ class LetterDetailViewModel {
 
   void modalSheetIMsg() {
     final iMsg = 'Esta es la letra: ${data.letterSound} ${data.type}';
-    tts.speak(term: iMsg);
+    tts.speak(iMsg);
   }
 
   void modalSheetFMsg() {
     final fMsg   = 'Encuentra la pareja de letras: ${data.letterSound} ${data.type}';
-    tts.speak(term: fMsg);
+    tts.speak(fMsg);
   }
 
   @override
