@@ -18,6 +18,7 @@ class PronounceLettersViewModel {
   final bool isRecording;
   final bool isSettingData;
   final Function(dynamic action) dispatch;
+  final String pronunciation;
 
 
   PronounceLettersViewModel({
@@ -28,12 +29,14 @@ class PronounceLettersViewModel {
     @required this.isRecording,
     @required this.isSettingData,
     @required this.dispatch,
+    @required this.pronunciation,
   });
 
 
   factory PronounceLettersViewModel.fromStore(Store<AppState> store) {
 
     final path = store.state.readingCourseState.pronounceLetters;
+    final pr = '${path.currentData.letter} ${path.currentData.letterType}'.toLowerCase();
 
     return PronounceLettersViewModel(
       currentData:        path.currentData,
@@ -43,6 +46,7 @@ class PronounceLettersViewModel {
       isSettingData:      path.isSettingData,
       showWellDoneDialog: path.showWellDoneDialog,
       dispatch:           (action) => store.dispatch(action),
+      pronunciation:      pr,
     );
 
   }
@@ -60,14 +64,23 @@ class PronounceLettersViewModel {
   }
 
 
+  void stopTts() {
+    tts.cancel();
+  }
+
+  void speakWellDone() {
+    final msg = 'Bien Hecho';
+    tts.speak(term: msg, rate: 0.8);
+  }
+
   void speakMessageTryAgain() {
-    final msg = 'Inténtalo nuevamente, si necesitas ayuda presiona el botón azul.';
+    final msg = 'Inténtalo nuevamente... Si necesitas ayuda presiona el botón azul.';
     tts.speak(term: msg);
   }
 
 
   void speakMessageWrongRecogntion() {
-    final msg = 'Si dijiste algo no se escuchó, Inténtalo nuevamente';
+    final msg = 'Si dijiste algo no se escuchó... Inténtalo nuevamente';
     tts.speak(term: msg);
   }
 
@@ -91,7 +104,8 @@ class PronounceLettersViewModel {
       && currentIndex       == other.currentIndex
       && showWellDoneDialog == other.showWellDoneDialog
       && isRecording        == other.isRecording
-      && isSettingData      == other.isSettingData;
+      && isSettingData      == other.isSettingData
+      && pronunciation      == other.pronunciation;
 
   @override
   int get hashCode =>
@@ -100,6 +114,7 @@ class PronounceLettersViewModel {
     currentIndex.hashCode ^
     showWellDoneDialog.hashCode ^
     isRecording.hashCode ^
-    isSettingData.hashCode;
+    isSettingData.hashCode ^
+    pronunciation.hashCode;
 
 }

@@ -110,7 +110,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
     // If platform is IOS handle Speech API error
     if (Theme.of(context).platform == TargetPlatform.android) {
-      vm.speakInstructions();
+      vm.speakMessageWrongRecogntion();
     }
 
 
@@ -156,27 +156,39 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
   void onRecognitionComplete() {
 
-    print('1234567890123456789012345678901234567890: $transcription');
-    setState(() {
-      isRecording = false;
-    });
+    print('123456789012345678901234567890123456789012345678901234567890..........: $transcription');
+
+    if (transcription.trim().length > 0) {
+
+      // if (transcription == vm.pronunciation) {
+      if (transcription.contains(vm.pronunciation)) {
+        vm.speakWellDone();
+      } else {
+        vm.speakMessageTryAgain();
+      }
+
+    }
+
+    setState(() => isRecording = false );
 
   }
 
 
   void startRecognition() {
 
-    setState(() {
-      isRecording = true;
-    });
+    vm.stopTts();
+
+    setState(() => isRecording = true );
 
     speechRecognition
       .listen(locale: language.code)
       .then((result) => print('Recognition: $result') ); 
+
   }
 
 
   void cancelRecognition() {
+
     speechRecognition
       .cancel()
       .then((result) {
@@ -184,10 +196,12 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
           isRecording = result;
         });
       });
+
   }
 
 
   void stopRecognition() {
+
     speechRecognition
       .stop()
       .then((result) {
@@ -195,6 +209,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
           isRecording = result;
         });
       });
+
   }
 
 
@@ -203,8 +218,10 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
   @override
   Widget build(BuildContext context) {
+
     final s = Theme.of(context).platform;
     print('platfotm: $s - ${Platform.isAndroid}');
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
