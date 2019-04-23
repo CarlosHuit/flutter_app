@@ -1,6 +1,7 @@
 import 'package:app19022019/core/src/viewmodels/reading_course/pronounce_letters_view_model.dart';
 import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:app19022019/ui/components/well_done_dialog_app.dart';
+import 'package:app19022019/utils/my_behavior.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
@@ -22,6 +23,7 @@ class PronounceLettersContent extends StatefulWidget {
 
 class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
+  PageController _pageController;
 
   PronounceLettersViewModel get vm => widget.vm;
   SpeechRecognition speechRecognition;
@@ -32,7 +34,10 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
   @override
   void initState() {
+
     super.initState();
+
+    _pageController = PageController();
 
     languages = [
       Language('Español', 'es_US'),
@@ -48,6 +53,13 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
   }
 
+  @override
+  void dispose() {
+
+    _pageController.dispose();
+    super.dispose();
+
+  }
 
   void activateSpeechRecognition() {
 
@@ -180,7 +192,35 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   String generateUrl(String name) => 'assets/flare/$name.flr';
 
 
+  void next() async {
 
+    final nextIndex = vm.currentIndex + 1;
+
+    if (nextIndex == vm.data.length) {
+      vm.navigateToReadingCourseHome();
+      return;
+    }
+
+
+
+    if (nextIndex < vm.data.length) {
+      print('Changedata');
+      vm.changeCurrentData();
+      vm.hideDialog();
+      await nextPage();
+      vm.speakInstructions();
+    }
+
+
+
+  }
+
+  Future<void> nextPage() {
+    return _pageController.nextPage(
+      duration: Duration(milliseconds: 1300),
+      curve: Curves.fastLinearToSlowEaseIn,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,15 +230,28 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
         fit: StackFit.expand,
         children: <Widget>[
 
-          buildLetter(vm.currentData.letter),
+
+          ScrollConfiguration(
+            behavior: MyBehavior(),
+            child: PageView.builder(
+              physics:     NeverScrollableScrollPhysics(),
+              itemCount:   vm.data.length,
+              controller:  _pageController,
+              itemBuilder: (_, i) => buildLetter(vm.data[i].letter) ,
+            ),
+          ),
+
           buildButtonRecord(),
           
           vm.showWellDoneDialog
-          ? WellDoneDialogApp(
-            onEnd: vm.speakWellDone,
-            onStart: vm.speakWellDone,
+          ? Container(
+              child: WellDoneDialogApp(
+              onStart: vm.speakWellDone,
+              onEnd: next,
+            )
           )
-          : Offstage()
+          : Offstage(),
+
 
         ],
       ),

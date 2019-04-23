@@ -34,6 +34,17 @@ RCPronounceLettersState readingCoursePronounceLettersReducer(ReadingCourseState 
     );
   }
 
+  if (action is RCChangeCurrentDataPL) {
+
+    final nextIndex = state.pronounceLetters.currentIndex + 1;
+
+    return state.pronounceLetters.copyWith(
+      currentData: state.pronounceLetters.data[nextIndex],
+      currentIndex: nextIndex
+    );
+
+  }
+
 
   return state.pronounceLetters;
 
