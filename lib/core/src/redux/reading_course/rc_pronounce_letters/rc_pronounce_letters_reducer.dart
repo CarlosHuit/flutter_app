@@ -22,6 +22,19 @@ RCPronounceLettersState readingCoursePronounceLettersReducer(ReadingCourseState 
     );
   }
 
+  if ( action is RCShowWellDoneDilalogPL ) {
+    return state.pronounceLetters.copyWith(
+      showWellDoneDialog: true
+    );
+  }
+
+  if ( action is RCHideWellDoneDialogPL ) {
+    return state.pronounceLetters.copyWith(
+      showWellDoneDialog: false
+    );
+  }
+
+
   return state.pronounceLetters;
 
 }

@@ -63,67 +63,41 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
       .activate()
       .then((res) {
 
-        setState(() {
-          recognitionAvailable = res;
-        });
+        setState(() => recognitionAvailable = res );
 
       });
 
   }
 
 
-  /// Handle Recognition Error
-  void onRecognitionError(dynamic s) {
+  /// [ void ] Handle Recognition Error
+  void onRecognitionError(dynamic n) {
 
     vm.setRecordingState(false);
 
-    final code = s != null
-      ? int.parse('$s')
-      : null;
+    final platform = Theme.of(context).platform;
 
-    final androidErrorCodes = {
-      1: 'ERROR_NETWORK_ERROR',
-      2: 'ERROR_NETWORK',
-      3: 'ERROR_AUDIO',
-      4: 'ERROR_SERVER',
-      5: 'ERROR_CLIENT',
-      6: 'ERROR_SPEECH_TIMEOUT',
-      7: 'ERROR_NO_MATCH',
-      8: 'ERROR_RECOGNIZER_BUSY',
-      9: 'ERROR_INSUFICIENT_PERMISSIONS'
-    };
-
+    if (platform == TargetPlatform.iOS) {
+      vm.handleIOSRecognitionError();
+    }
     
-    /// If platform is Android handle SpeechRecognizer error 
-    if (Theme.of(context).platform == TargetPlatform.android) {
-
-      print(androidErrorCodes[code]);
-
-      if (code == 7 || code == 6) {
-        vm.speakMessageWrongRecogntion();
-      }
-
+    if (platform == TargetPlatform.android) {
+      final code = n != null ? int.parse('$n') : null;
+      vm.handleAndroidRecognitionError(code);
     }
-
-
-    /// If platform is IOS handle Speech API error
-    if (Theme.of(context).platform == TargetPlatform.android) {
-      vm.speakMessageWrongRecogntion();
-    }
-
 
   }
 
-
-  /// CallBack to handle the speech availability 
+  
+  /// [ void ] CallBack to handle the speech availability 
   void onSpeechAvailability(bool result) {
-    setState(() {
-      recognitionAvailable = result;
-    });
+
+    setState(() => recognitionAvailable = result );
+
   }
 
 
-  /// Set Current Locale Language
+  /// [ void ] Set Current Locale Language
   void onCurrentLocale(String locale) {
 
     setState(() {
@@ -135,7 +109,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   }
 
 
-  /// Callback to handle the start of speech recognition
+  /// [ void ] Callback to handle the start of speech recognition
   void onRecognitionStart() {
 
     vm.setRecordingState(true);
@@ -143,10 +117,10 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   }
 
 
-  /// Callback that is called when the speech recognition return a partial transcription
+  /// [ void ] Callback that is called when the speech recognition return a partial transcription
   void onRecognitionResult(String txt) {
 
-    print('Partial transcription: $txt');
+    print('Partial Transcription: $txt');
 
   }
 
@@ -155,19 +129,15 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   /// or when speech recognition stops for some error or when speech recognition is cancelled
   void onRecognitionComplete(String term) {
 
-    print('______________________________________________..........: $term - ${term.length}');
+    print('______________________________________________: $term - ${term.length}');
 
     vm.setRecordingState(false);
 
-    final transcriptionNormalized = term.trim().toLowerCase();
+    final transcription = term.trim().toLowerCase();
 
-    if (transcriptionNormalized.length > 0) {
-
-      final isCorrect = vm.validateResult(transcriptionNormalized);
-      print(isCorrect ? 'Wooooow bien Hecho' : 'Pffffffffff vuelve a intentarlo');
-
+    if (transcription.length > 0) {
+      vm.validateResult(transcription);
     }
-
 
   }
 
@@ -208,6 +178,8 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
 
   String generateUrl(String name) => 'assets/flare/$name.flr';
+
+
 
 
   @override
@@ -345,6 +317,8 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
     );
 
   }
+
+
 
 
 }

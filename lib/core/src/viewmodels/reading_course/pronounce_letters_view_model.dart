@@ -99,30 +99,74 @@ class PronounceLettersViewModel {
   }
 
 
-  bool validateResult(String term) {
+  void handleAndroidRecognitionError(int code) {
 
-    if (term.contains(pronunciation)) {
-      speakWellDone();
-      return true;
+
+    final androidErrorCodes = {
+      1: 'ERROR_NETWORK_ERROR',
+      2: 'ERROR_NETWORK',
+      3: 'ERROR_AUDIO',
+      4: 'ERROR_SERVER',
+      5: 'ERROR_CLIENT',
+      6: 'ERROR_SPEECH_TIMEOUT',
+      7: 'ERROR_NO_MATCH',
+      8: 'ERROR_RECOGNIZER_BUSY',
+      9: 'ERROR_INSUFICIENT_PERMISSIONS'
+    };
+
+    print(androidErrorCodes[code]);
+
+    if (code == 7 || code == 6) {
+      speakMessageWrongRecogntion();
     }
-
-    speakMessageTryAgain();
-    return false;
 
 
   }
 
 
+  void handleIOSRecognitionError() {
+    speakMessageWrongRecogntion();
+  }
+
+
+  /// [ void ] validate result on succesful speech recognition
+  /// The argument `term` is required
+  void validateResult(String term) {
+
+    if (term.contains(pronunciation)) {
+      dispatch(RCShowWellDoneDilalogPL());
+      return;
+    }
+
+    speakMessageTryAgain();
+    return;
+
+
+  }
+
+
+  /// [ void ] Dispatch action to toggle state of speech recognition
   void setRecordingState(bool state) => dispatch(RCToggleRecordingStatePL(state));
 
 
+  /// [ void ] dispacth action to change current data
   void changeCurrentData() => dispatch(RCChangeCurrentDataPL());
 
 
+  /// [ void ] dispatch action to remove current page of tha stack of routes
   void navigateToReadingCourseHome() => dispatch(NavigatorPop());
 
 
+  /// [ void ] Dispatch action to register new attempt
   void registerAttempt() => dispatch(RCRegisterAttemptPL());
+
+
+  /// [ void ] Dispatch action to show well done dialog
+  void showDialog() => dispatch(RCShowWellDoneDilalogPL());
+
+
+  /// [ void ] Dispacth action to hide well done dialog
+  void hideDialog() => dispatch(RCHideWellDoneDialogPL());
 
 
   @override

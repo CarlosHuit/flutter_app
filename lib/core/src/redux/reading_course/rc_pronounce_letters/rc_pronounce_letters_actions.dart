@@ -9,3 +9,7 @@ class RCToggleRecordingStatePL {
   final bool state;
   RCToggleRecordingStatePL(this.state);
 }
+
+class RCShowWellDoneDilalogPL {}
+
+class RCHideWellDoneDialogPL {}

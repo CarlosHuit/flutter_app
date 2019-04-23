@@ -19,10 +19,10 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
 
   @override
   void initState() {
+
     super.initState();
     waitingForPermission = true;
     validatePermissions();
-
 
   }
 
