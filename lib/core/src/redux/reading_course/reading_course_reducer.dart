@@ -1,3 +1,5 @@
+import 'package:app19022019/core/src/redux/app/app_state.dart';
+
 import './rc_find_letters/rc_find_letters_reducer.dart';
 import './rc_letter_detail/rc_letter_detail_reducer.dart';
 import './rc_game/rc_game_reducer.dart';
@@ -8,10 +10,12 @@ import './rc_select_words/rc_select_words_reducer.dart';
 import './rc_pronounce_letters/rc_pronounce_letters_reducer.dart';
 
 
-ReadingCourseState readingCourseReducer(ReadingCourseState state, dynamic action) {
+ReadingCourseState readingCourseReducer(AppState store, dynamic action) {
+
+  final state = store.readingCourseState;
 
   return ReadingCourseState(
-    game:             readingCourseGameReducer(state, action),
+    game:             readingCourseGameReducer(store, action),
     data:             readingCourseDataReducer(state.data, action),
     findLetters:      readingCourseFindLettersReducer(state, action),
     letterDetail:     readingCourseLetterDetailReducer(state, action),

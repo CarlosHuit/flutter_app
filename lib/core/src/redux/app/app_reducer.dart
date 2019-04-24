@@ -14,7 +14,7 @@ AppState appReducer(AppState state, dynamic action) {
     loginState:         loginReducer(state.loginState, action),
     signupState:        signupReducer(state.signupState, action),
     coursesState:       coursesReducer(state.coursesState, action),
-    readingCourseState: readingCourseReducer(state.readingCourseState, action),
+    readingCourseState: readingCourseReducer(state, action),
     deviceState:        deviceReducer(state.deviceState, action)        
   );
 

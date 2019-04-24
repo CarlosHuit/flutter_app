@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:app19022019/core/src/redux/device/device_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/reading_course_state.dart';
 import 'package:meta/meta.dart';
 
@@ -27,19 +28,21 @@ class RCGameState {
     @required this.showCorrectLetters,
   });
 
-  factory RCGameState.fromStore(ReadingCourseState state) {
+  factory RCGameState.fromStore(ReadingCourseState state, DeviceState device) {
 
     final path = state;
-    // print('device width is: ${}')
+
+    final screenWidth = device.width;
+
     final letterLC = path.data.currentLetter.toLowerCase();
     final letterUC = path.data.currentLetter.toUpperCase();
 
     final slLowerCase = path.data.similarLetters.firstWhere((el) => el.l == letterLC).sl;
     final slUpperCase = path.data.similarLetters.firstWhere((el) => el.l == letterUC).sl;
 
-    // TODO change the screnWidth
-    final dataLC = RCGameData.initialize(slLowerCase, letterLC, 411.42857142857144, 'minúscula');
-    final dataUC = RCGameData.initialize(slUpperCase, letterUC, 411.42857142857144, 'mayúscula');
+    final dataLC = RCGameData.initialize(slLowerCase, letterLC, screenWidth, 'minúscula');
+    final dataUC = RCGameData.initialize(slUpperCase, letterUC, screenWidth, 'mayúscula');
+
     final data = [dataLC, dataUC];
 
     return RCGameState(

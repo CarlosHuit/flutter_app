@@ -1,13 +1,14 @@
 
+import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_game/rc_game_state.dart';
-import 'package:app19022019/core/src/redux/reading_course/reading_course_state.dart';
 import './rc_game_actions.dart';
 
-RCGameState readingCourseGameReducer(ReadingCourseState state, dynamic action) {
+RCGameState readingCourseGameReducer(AppState store, dynamic action) {
 
+  final state = store.readingCourseState;
 
   if (action is RCSetInitialDataG) {
-    return RCGameState.fromStore(state);
+    return RCGameState.fromStore(store.readingCourseState, store.deviceState);
   }
 
   if (action is RCResetDataG) {
