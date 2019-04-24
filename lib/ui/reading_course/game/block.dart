@@ -27,15 +27,17 @@ class Block extends StatefulWidget {
 
 class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
 
+  bool get highlight => widget.highlight;
   String get letter => widget.letter;
+
   double get columnWidth => widget.columnWidth;
   String get correctLetter => widget.correctLetter;
+
   Function(String letter) get callBack => widget.callBack;
-  bool get highlight => widget.highlight;
 
   bool isWrongSelection;
-  double height;
   bool   showLetter;
+  double height;
   double blockWidth;
   double blockHeight;
 
@@ -43,7 +45,7 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   void initState() {
 
     super.initState();
-    height = columnWidth;
+    height      = columnWidth;
     blockHeight = columnWidth;
     blockWidth  = columnWidth;
     showLetter  = true;
@@ -51,29 +53,30 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
 
   }
 
+
   void onTap() {
 
     pressEffect();
     callBack(letter);
 
-    if (letter == correctLetter) {
-      correctSelection();
-    } else {
-      wrongSelection();
-    }
+    final isCorrect = letter == correctLetter;
+
+    isCorrect ? correctSelection() : wrongSelection();
 
   }
+
 
   void wrongSelection() {
-    setState(() {
-      isWrongSelection = true;
-    });
-    Future.delayed(Duration(milliseconds: 500), () {
-      setState(() {
-        isWrongSelection = false;
-      });
-    });
+
+    setState(() => isWrongSelection = true );
+
+    Timer(
+      Duration(milliseconds: 500),
+      () => setState(() => isWrongSelection = false )
+    );
+
   }
+
 
   void pressEffect() {
 
@@ -82,7 +85,8 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
       blockWidth  = blockWidth - 10;
     });
 
-    Future.delayed(Duration( milliseconds: 300, ), 
+    Timer(
+      Duration( milliseconds: 300 ), 
       () => setState(() {
         blockHeight = blockHeight + 10;
         blockWidth = blockWidth + 10;
@@ -91,26 +95,6 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
 
   }
 
-  onTapDown(TapDownDetails ev) {
-    setState(() {
-      blockHeight = blockHeight - 10;
-      blockWidth  = blockWidth - 10;
-    });
-  }
-
-  onTapUp(TapUpDetails ev) {
-    setState(() {
-      blockHeight = blockHeight + 10;
-      blockWidth  = blockWidth + 10;
-    });
-  }
-
-  onTapCancel() {
-    setState(() {
-      blockHeight = blockHeight + 10;
-      blockWidth  = blockWidth + 10;
-    });
-  }
 
   void correctSelection() {
 
@@ -125,14 +109,11 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     final normalGradient = [ Colors.deepOrange[500], Colors.deepOrange[400] ];
+    final wrongGradient  = [ Colors.red, Colors.red ];
     final hightligthGradient = [ Colors.green, Colors.green ];
-    final wrongGradient = [ Colors.red, Colors.red ];
 
     return GestureDetector(
       onTap:       onTap,
-      // onTapUp:     onTapUp,
-      // onTapDown:   onTapDown,
-      // onTapCancel: onTapCancel,
       child: AnimatedContainer(
 
         width:    columnWidth,

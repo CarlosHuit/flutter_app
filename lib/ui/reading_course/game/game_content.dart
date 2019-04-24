@@ -17,6 +17,7 @@ class GameContent extends StatefulWidget {
 }
 
 class _GameContentState extends State<GameContent> {
+
   PageController pageController;
 
   GameViewModel get viewModel => widget.viewModel;
@@ -30,8 +31,8 @@ class _GameContentState extends State<GameContent> {
 
   @override
   void dispose() {
-    super.dispose();
     pageController.dispose();
+    super.dispose();
   }
 
   void nextPage() async{
