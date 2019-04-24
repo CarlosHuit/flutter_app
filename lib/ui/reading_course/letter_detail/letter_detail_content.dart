@@ -40,8 +40,18 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
   }
 
   void hideModalAndSpeakInstructions() {
+
     vm.hideLetterDetailModal();
     vm.modalSheetFMsg();
+
+    // vm.modalSheetFMsg();
+    vm.dispatchShowAllCards();
+
+    Future.delayed(
+      Duration(milliseconds: 3000),
+      vm.dispatchHideAllCards
+    );
+
   }
 
   @override
@@ -136,7 +146,7 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
             onPressIcon:  vm.modalSheetFMsg,
             useAnimation: useAnimation,
           )
-          : Offstage(),
+          : SizedBox(),
 
         ]
       ),
