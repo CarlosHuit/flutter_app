@@ -18,10 +18,8 @@ class _LetterDetailScreenState extends State<LetterDetailScreen> {
 
     return StoreConnector<AppState, LetterDetailViewModel>(
       distinct:  true,
-      onDispose: (store)  {
-        store.dispatch(RCResetDataLD());
-        SpeechSynthesisService.stop();
-      },
+      onInit:    (store) => store.dispatch(RCSetInitialDataLD()),
+      onDispose: (store) => store.dispatch(RCResetDataLD()),
       converter: (store) => LetterDetailViewModel.fromStore(store),
       builder:   (_, vm) => Scaffold( body: LetterDetailBody(vm: vm) )
 

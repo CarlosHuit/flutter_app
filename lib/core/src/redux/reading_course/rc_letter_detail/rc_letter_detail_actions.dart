@@ -5,10 +5,7 @@ class RCSelectionsAreIncorrectsLD {}
 
 class RCChangeCurrentDataLD {}
 
-class RCSetInitialDataLD {
-  final String letter;
-  RCSetInitialDataLD(this.letter);
-}
+class RCSetInitialDataLD { }
 
 class RCResetDataLD { }
 

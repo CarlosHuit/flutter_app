@@ -7,6 +7,7 @@ import 'package:app19022019/core/src/services/audio_service.dart';
 import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:app19022019/ui/reading_course/game/game_screen.dart';
 import 'package:meta/meta.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:redux/redux.dart';
 
 @immutable
@@ -132,7 +133,11 @@ class LetterDetailViewModel {
       dispatch(RCChangeCurrentDataLD());
     } else {
 
-      dispatch(NavigatorPushReplaceRigthToLeft(GameScreen()));
+      dispatch(NavigatorPushReplaceWithTransition(
+        screen: GameScreen(),
+        transition: PageTransitionType.rightToLeft
+      ));
+
     }
 
   }
