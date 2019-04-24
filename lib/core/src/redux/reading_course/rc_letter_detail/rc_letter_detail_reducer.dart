@@ -82,6 +82,19 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
     );
   }
 
+  if (action is RCShowModalLD) {
+    return state.letterDetail.copyWith(
+      showModal: true
+    );
+  }
+
+  if (action is RCHideModalLD) {
+    return state.letterDetail.copyWith(
+      showModal: false
+    );
+  }
+
+
   return state.letterDetail;
 
 }

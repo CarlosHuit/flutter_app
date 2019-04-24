@@ -23,3 +23,8 @@ class RCValidateSelectionsLD {}
 
 class RCHideTryAgainDialogLD {}
 class RCHideWellDoneDialogLD {}
+
+
+class RCShowModalLD {}
+
+class RCHideModalLD {}
