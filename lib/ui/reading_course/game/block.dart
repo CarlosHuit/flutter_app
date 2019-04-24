@@ -72,26 +72,27 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
 
     Timer(
       Duration(milliseconds: 500),
-      () => setState(() => isWrongSelection = false )
+      () => setState(() {
+        isWrongSelection = false;
+      })
     );
 
   }
 
 
-  void pressEffect() {
+  void pressEffect() async{
 
     setState(() {
       blockHeight = blockHeight - 10;
       blockWidth  = blockWidth - 10;
     });
 
-    Timer(
-      Duration( milliseconds: 300 ), 
-      () => setState(() {
-        blockHeight = blockHeight + 10;
-        blockWidth = blockWidth + 10;
-      })
-    );
+    await Future.delayed( Duration( milliseconds: 300 ) );
+
+    setState(() {
+      blockHeight = blockHeight + 10;
+      blockWidth = blockWidth + 10;
+    });
 
   }
 
