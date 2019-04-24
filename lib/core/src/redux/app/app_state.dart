@@ -1,12 +1,14 @@
-import 'package:app19022019/core/src/models/auth_login_response.dart';
-import 'package:app19022019/core/src/redux/reading_course/reading_course_state.dart';
-
-import '../auth/auth_state.dart';
+import 'package:flutter/material.dart';
 import 'package:key_value_store/key_value_store.dart';
 import 'package:meta/meta.dart';
+
+import '../reading_course/reading_course_state.dart';
+import '../../models/auth_login_response.dart';
 import '../courses/courses_state.dart';
 import '../signup/signup_state.dart';
+import '../auth/auth_state.dart';
 import '../login/login.dart';
+import '../device/device_state.dart';
 
 @immutable
 class AppState {
@@ -18,6 +20,7 @@ class AppState {
   final String             appName;
   final CoursesState       coursesState;
   final ReadingCourseState readingCourseState;
+  final DeviceState        deviceState;
 
   AppState({
     @required this.authState,
@@ -25,7 +28,8 @@ class AppState {
     @required this.loginState,
     @required this.signupState,
     @required this.coursesState,
-    @required this.readingCourseState
+    @required this.readingCourseState,
+    @required this.deviceState,
   });
 
 
@@ -36,6 +40,7 @@ class AppState {
       authState:          AuthState.initialState(auth: auth),
       loginState:         LoginState.initialState(),
       signupState:        SignupState.initialState(),
+      deviceState:        DeviceState.initialState(),
       coursesState:       CoursesState.initialState(),
       readingCourseState: ReadingCourseState.initialState(),
     );
@@ -47,16 +52,18 @@ class AppState {
     AuthState authState,
     LoginState loginState,
     SignupState signupState,
+    DeviceState deviceState,
     CoursesState coursesState,
-    ReadingCourseState readingCourseState
+    ReadingCourseState readingCourseState,
   }) {
     return AppState(
       appName:            'Weduc',
       authState:          authState ?? this.authState,
       loginState:         loginState ?? this.loginState,
       signupState:        signupState ?? this.signupState,
+      deviceState:        deviceState ?? this.deviceState,        
       coursesState:       coursesState ?? this.coursesState,
-      readingCourseState: readingCourseState ?? this.readingCourseState
+      readingCourseState: readingCourseState ?? this.readingCourseState,
     );
   }
 
@@ -69,7 +76,8 @@ class AppState {
       && loginState         == other.loginState
       && signupState        == other.signupState
       && coursesState       == other.coursesState
-      && readingCourseState == other.readingCourseState;
+      && readingCourseState == other.readingCourseState
+      && deviceState        == other.deviceState;
 
   @override
   int get hashCode =>
@@ -78,6 +86,7 @@ class AppState {
     loginState.hashCode ^
     coursesState.hashCode ^
     readingCourseState.hashCode ^
-    signupState.hashCode;
+    signupState.hashCode ^
+    deviceState.hashCode;
 
 }
