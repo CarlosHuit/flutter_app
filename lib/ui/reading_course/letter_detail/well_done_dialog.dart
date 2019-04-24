@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_view_model.dart';
-import 'package:app19022019/ui/reading_course/letter_detail/bottom_sheet_letter_detail.dart';
 import 'package:flutter/material.dart';
 
 class WellDoneDialog extends StatefulWidget {
@@ -123,7 +122,8 @@ class _WellDoneDialogState extends State<WellDoneDialog> {
     if (canShowModalSheet) {
       Future.delayed(
         Duration(milliseconds: 200) ,
-        () => showModalSheet(vm, context)
+        // () => showModalSheet(vm, context)
+        vm.showLetterDetailModal
       );
     }
 

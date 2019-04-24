@@ -53,6 +53,7 @@ class _LetterDetailModalState extends State<LetterDetailModal> {
 
     if (useAnimation) {
       Future.delayed(Duration(milliseconds: 100), showCard);
+      Future.delayed(translateDuration, onInit);
     }
 
     if (!useAnimation) {
@@ -74,6 +75,7 @@ class _LetterDetailModalState extends State<LetterDetailModal> {
   void showCard() {
     setState(() {
       positionX = 0;
+      opacity = Colors.black38;
     });
   }
 

@@ -44,7 +44,6 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
     vm.hideLetterDetailModal();
     vm.modalSheetFMsg();
 
-    // vm.modalSheetFMsg();
     vm.dispatchShowAllCards();
 
     Future.delayed(
