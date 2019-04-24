@@ -7,10 +7,9 @@ import 'package:flutter/material.dart';
 
 class LearnedLetters extends StatelessWidget {
 
-  final BuildContext context;
   final ReadingCourseViewModel viewModel;
 
-  const LearnedLetters({Key key, this.context, this.viewModel}) : super(key: key);
+  const LearnedLetters({Key key, this.viewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

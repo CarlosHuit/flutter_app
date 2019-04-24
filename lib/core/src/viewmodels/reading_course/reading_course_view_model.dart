@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:app19022019/core/core.dart';
 import 'package:app19022019/core/src/redux/reading_course/reading_course_actions.dart';
-import '../../redux/reading_course/rc_data/rc_data_state.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+
+import '../../redux/reading_course/rc_data/rc_data_state.dart';
 
 class ReadingCourseViewModel {
 
@@ -36,8 +34,28 @@ class ReadingCourseViewModel {
 
   }
 
-  Future<FlutterTts> speak({ @required String term, double rate }) {
-    return tts.speak(term, rate: rate ?? .80);
+  void speak({ @required String term, double rate }) {
+    tts.speak(term, rate: rate ?? .80);
+  }
+
+  void speakAlphabetMsg() {
+
+    final msg = 'Este es el abecedario. Selecciona una letra para continuar';
+    tts.speak(msg);
+
+  }
+
+
+  void speakLearnedLetterMsg() {
+
+    final hasLearnedLetters = learnedLetters.length > 0 ? true : false;
+
+    final msg1 = 'Aquí aparecerán las letras que vayas aprendiendo';
+    final msg2 = 'Estas son las letras que has aprendido';
+    final msg = hasLearnedLetters ? msg2 : msg1; 
+
+    tts.speak(msg);
+
   }
 
 

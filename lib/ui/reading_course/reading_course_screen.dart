@@ -1,35 +1,16 @@
+import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_actions.dart';
-import 'package:app19022019/ui/components/drawer/drawer.dart';
+import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
+import 'package:app19022019/core/src/viewmodels/reading_course/reading_course_view_model.dart';
+import 'package:app19022019/ui/reading_course/reading_course_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import './alphabet.dart';
-import './learned_letters.dart';
-import 'package:app19022019/core/core.dart';
 
+class ReadingCourseScreen extends StatelessWidget {
 
-
-class ReadingCourseScreen extends StatefulWidget {
-  @override
-  _ReadingCourseScreenState createState() => _ReadingCourseScreenState();
-}
-
-
-
-class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTickerProviderStateMixin {
-
-  TabController tabController;
-  final SpeechSynthesisService tts = SpeechSynthesisService();
-
-  @override
-  void initState() {
-    tabController = TabController(length: 2, vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
+  Future<bool> cancelTts() async {
+    SpeechSynthesisService.stop();
+    return true;
   }
 
   @override
@@ -39,52 +20,14 @@ class _ReadingCourseScreenState extends State<ReadingCourseScreen> with SingleTi
       distinct: true,
       onInit:    (store) => store.dispatch( RCFetchInitialData() ),
       converter: (store) => ReadingCourseViewModel.fromStore(store: store),
-      builder:   (BuildContext _, ReadingCourseViewModel viewModel) {
-
-
-          return Scaffold(
-            appBar:          readingCourseBar(),
-            drawer:          MyDrawer(),
-            backgroundColor: Colors.grey[100],
-            body:            TabBarView(
-
-
-              controller: tabController,
-              children: <Widget>[
-                Alphabet(viewModel: viewModel),
-                LearnedLetters(context: context, viewModel: viewModel)
-              ],
-
-
-            ),
-            
-          );
-
-      },
+      builder:   (_, viewModel) {
+        return WillPopScope(
+          onWillPop: cancelTts,
+          child: ReadingCourseContent(viewModel: viewModel),
+        );
+      }
     );
 
-  }
-
-  Widget readingCourseBar() {
-    return AppBar(
-
-      elevation: 3.0,
-      title:     Text(
-        'Weduc',
-        style: TextStyle( fontFamily: 'Pacifico', fontSize: 26.0 ),
-      ),
-      centerTitle: true,
-
-      bottom: TabBar(
-        indicatorColor:  Colors.red,
-        indicatorWeight: 4.0,
-        controller:      tabController,
-        tabs: <Widget>[
-          TabAlphabet(),
-          TabLearnedLetters()
-        ],
-      )
-    );
   }
 
 }
