@@ -20,15 +20,16 @@ class LetterModal extends StatelessWidget {
             Text(
               letter,
               style: TextStyle(
-                color:      Color.fromARGB(255, 255, 215, 0),
+                // color:      Color.fromARGB(255, 255, 215, 0),
+                color:      Colors.yellowAccent[700],
                 fontSize:   200.0,
                 fontWeight: FontWeight.bold,
                 shadows: <Shadow> [
-                  Shadow(color: Colors.black,   offset: Offset(-1.2, 1.2)),
-                  Shadow(color: Colors.black,   offset: Offset(1.2, -1.2)),
-                  Shadow(color: Colors.black,   offset: Offset(1.2, 1.2)),
-                  Shadow(color: Colors.black,   offset: Offset(-1.2, -1.2)),
-                  Shadow(color: Colors.black45, blurRadius: 12.0),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.65),
+                    blurRadius: 6.0,
+                    offset: Offset(-2, 2)
+                  ),
                 ]
               ),
             ),
