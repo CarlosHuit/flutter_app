@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:flutter/material.dart';
 
@@ -52,8 +54,9 @@ class _LetterDetailModalState extends State<LetterDetailModal> {
     positionX = useAnimation ? screenWidth : 0;
 
     if (useAnimation) {
-      Future.delayed(Duration(milliseconds: 100), showCard);
-      Future.delayed(translateDuration, onInit);
+      Timer(Duration.zero, showBackground );
+      Timer(Duration(milliseconds: 400), showCard);
+      Timer(translateDuration, onInit);
     }
 
     if (!useAnimation) {
@@ -73,10 +76,12 @@ class _LetterDetailModalState extends State<LetterDetailModal> {
 
 
   void showCard() {
-    setState(() {
-      positionX = 0;
-      opacity = Colors.black38;
-    });
+    setState(() => positionX = 0 );
+  }
+
+
+  void showBackground() {
+    setState(() => opacity = Colors.black38 );
   }
 
 
@@ -90,7 +95,7 @@ class _LetterDetailModalState extends State<LetterDetailModal> {
   void hideCard() async{
 
     setValuesTohideCard();
-    await Future.delayed(translateDuration);
+    await Future.delayed(translateDuration - Duration(milliseconds: 200));
     onEnd();
 
   }

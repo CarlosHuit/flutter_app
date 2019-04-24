@@ -142,7 +142,7 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
             letter: vm.letter,
             onEnd:  hideModalAndSpeakInstructions,
             onInit: vm.modalSheetIMsg,
-            onPressIcon:  vm.modalSheetFMsg,
+            onPressIcon:  vm.modalSheetIMsg,
             useAnimation: useAnimation,
           )
           : SizedBox(),
