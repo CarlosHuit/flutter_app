@@ -26,8 +26,6 @@ class OptionCard extends StatelessWidget {
       child: FlipCard(
         callBack:     () => vm.selectOption(letterId),
         direction:    FlipDirection.VERTICAL,
-        // back:         OptionCardBack(letter: letterId[0],),
-        // front:        OptionCardFront(),
         back:         cardBack(letterId[0]),
         front:        cardFront(),
         hideAllCards: hideAllCars,

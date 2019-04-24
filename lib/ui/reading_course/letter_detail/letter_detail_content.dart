@@ -26,9 +26,9 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
 
   @override
   void initState() {
+
     super.initState();
     useAnimation = false;
-    // showModalSheet(vm, context);
     Timer(Duration.zero, changeUseAnimationStatus );
 
   }
