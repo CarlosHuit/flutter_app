@@ -164,6 +164,17 @@ class LetterDetailViewModel {
     tts.speak(fMsg);
   }
 
+
+  void showLetterDetailModal() {
+    dispatch(RCShowModalLD());
+  }
+
+
+  void hideLetterDetailModal() {
+    dispatch(RCHideModalLD());
+  }
+
+
   @override
   bool operator == (Object other) => 
   identical(this, other) || other is LetterDetailViewModel
