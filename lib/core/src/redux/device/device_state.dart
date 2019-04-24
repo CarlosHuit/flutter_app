@@ -38,6 +38,24 @@ class DeviceState {
       height:   size.height,
       platform: platform
     );
+
   }
+
+
+  @override
+  bool operator == (Object other) =>
+    identical(this, other) || other is DeviceState
+    && runtimeType == other.runtimeType
+    && size == other.size
+    && width == other.width
+    && height == other.height
+    && platform == other.platform;
+
+  @override
+  int get hashCode => 
+    size.hashCode ^
+    width.hashCode ^
+    height.hashCode ^
+    platform.hashCode;
 
 }

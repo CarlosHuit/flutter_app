@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/redux/device/device_actions.dart';
 import 'package:app19022019/utils/set_prefered_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -49,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return StoreConnector<AppState, LoginViewModel>(
 
       distinct:  true,
+      onInit:    (store) => store.dispatch(SetDeviceData(context)),
       converter: (store) => LoginViewModel.fromStore( store: store ),
       builder:   (BuildContext _, LoginViewModel viewModel) {
 

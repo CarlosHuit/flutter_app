@@ -53,31 +53,27 @@ class _AppState extends State<App> {
       store: store,
       child: StoreConnector<AppState, AppViewModel>(
 
-        distinct: true,
+        distinct:  true,
         converter: (store) => AppViewModel.fromStore(store),
-        builder: (_, viewModel) {
+        builder:   (_, viewModel) => MaterialApp(
 
+          title:        'WeLearn',
+          theme:        ThemeData(
 
-          return MaterialApp(
-            title:        'WeLearn',
-            theme:        ThemeData(
+            hintColor:  Colors.white,
+            errorColor: Colors.orange,
+            fontFamily: 'Roboto'
 
-              hintColor:  Colors.white,
-              errorColor: Colors.orange,
-              fontFamily: 'Roboto'
+          ),
+          home:         viewModel.isLoggedIn ? HomeScreen() : LoginScreen(),
+          routes:       routes,
+          navigatorKey: NavigationKey.key,
+          debugShowCheckedModeBanner: false,
+          onUnknownRoute: (settings) => MaterialPageRoute(
+            builder: (context) => NotFoundScreen()
+          )
 
-            ),
-            home:         viewModel.isLoggedIn ? HomeScreen() : LoginScreen(),
-            routes:       routes,
-            navigatorKey: NavigationKey.key,
-            debugShowCheckedModeBanner: false,
-            onUnknownRoute: (RouteSettings settings) {
-              return MaterialPageRoute( builder: (context) => NotFoundScreen() );
-            }
-          );
-
-
-        },
+        )
 
       ),
 

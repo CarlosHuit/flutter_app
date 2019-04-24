@@ -30,6 +30,7 @@ class RCGameState {
   factory RCGameState.fromStore(ReadingCourseState state) {
 
     final path = state;
+    // print('device width is: ${}')
     final letterLC = path.data.currentLetter.toLowerCase();
     final letterUC = path.data.currentLetter.toUpperCase();
 

@@ -1,4 +1,5 @@
 import 'package:app19022019/core/core.dart';
+import 'package:app19022019/core/src/redux/device/device_actions.dart';
 import 'package:app19022019/ui/components/drawer/drawer.dart';
 import 'package:app19022019/ui/components/loading_indicator.dart';
 import 'package:app19022019/ui/home/home_app_bar.dart';
@@ -41,6 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       distinct:  true,
       onInit:    (store) {
+
+        store.dispatch(SetDeviceData(context));
 
         if (store.state.coursesState.courses.length < 1) {
           store.dispatch(FetchCourses());
