@@ -171,6 +171,7 @@ class LetterDetailViewModel {
 
 
   void hideLetterDetailModal() {
+    print('hide');
     dispatch(RCHideModalLD());
   }
 

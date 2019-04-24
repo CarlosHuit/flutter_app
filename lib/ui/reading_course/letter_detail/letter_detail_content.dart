@@ -39,6 +39,11 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
     });
   }
 
+  void hideModalAndSpeakInstructions() {
+    vm.hideLetterDetailModal();
+    vm.modalSheetFMsg();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -59,7 +64,7 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
     return Scaffold(
 
       body: Stack(
-
+        fit: StackFit.expand,
         children: <Widget>[
 
           Container(
@@ -126,9 +131,9 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
           ? LetterDetailModal(
             ctx:    context,
             letter: vm.letter,
-            onEnd:  vm.modalSheetFMsg,
+            onEnd:  hideModalAndSpeakInstructions,
             onInit: vm.modalSheetIMsg,
-            onPressIcon:  vm.modalSheetIMsg,
+            onPressIcon:  vm.modalSheetFMsg,
             useAnimation: useAnimation,
           )
           : Offstage(),
