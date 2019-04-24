@@ -7,16 +7,16 @@ import './block.dart';
 import './counter.dart';
 import 'package:flutter/material.dart';
 
-class GameBody extends StatefulWidget {
+class GameContent extends StatefulWidget {
   final GameViewModel viewModel;
 
-  const GameBody({Key key, this.viewModel}) : super(key: key);
+  const GameContent({Key key, this.viewModel}) : super(key: key);
 
   @override
-  _GameBodyState createState() => _GameBodyState();
+  _GameContentState createState() => _GameContentState();
 }
 
-class _GameBodyState extends State<GameBody> {
+class _GameContentState extends State<GameContent> {
   PageController pageController;
 
   GameViewModel get viewModel => widget.viewModel;
