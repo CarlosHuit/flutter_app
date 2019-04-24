@@ -15,6 +15,7 @@ class RCLetterDetailState {
   final bool   showSuccessScreen;
   final bool   showTryAgainDialog;
   final bool   showWellDoneDialog;
+  final bool   showModal;
 
   RCLetterDetailState({
     @required this.data,
@@ -28,18 +29,19 @@ class RCLetterDetailState {
     @required this.showSuccessScreen,
     @required this.showWellDoneDialog,
     @required this.showTryAgainDialog,
-
+    @required this.showModal,
   });
 
   factory RCLetterDetailState.initialState() {
     return RCLetterDetailState(
+      data:               null,
+      showModal:          null,
+      selections:         null,
       canPlayGame:        null,
       currentData:        null,
       currentIndex:       null,
-      data:               null,
       hideAllCards:       null,
       isSettingData:      null,
-      selections:         null,
       showAllCards:       null,
       showSuccessScreen:  null,
       showWellDoneDialog: null,
@@ -90,6 +92,7 @@ class RCLetterDetailState {
       showSuccessScreen:  false,
       showTryAgainDialog: false,
       showWellDoneDialog: false,
+      showModal:          true,
     );
 
   }
@@ -108,9 +111,11 @@ class RCLetterDetailState {
     int currentIndex,
     bool showTryAgainDialog,
     bool showWellDoneDialog,
+    bool showModal,
   }) {
     return RCLetterDetailState(
       data:               data               ?? this.data,
+      showModal:          showModal          ?? this.showModal,
       currentIndex:       currentIndex       ?? this.currentIndex,
       currentData:        currentData        ?? this.currentData,
       selections:         selections         ?? this.selections,
@@ -138,7 +143,8 @@ class RCLetterDetailState {
       && isSettingData      == other.isSettingData
       && showTryAgainDialog == other.showTryAgainDialog
       && showWellDoneDialog == other.showWellDoneDialog
-      && showSuccessScreen  == other.showSuccessScreen;
+      && showSuccessScreen  == other.showSuccessScreen
+      && showModal          == other.showModal;
 
   @override
   int get hashCode => 
@@ -152,7 +158,8 @@ class RCLetterDetailState {
     isSettingData.hashCode ^
     showTryAgainDialog.hashCode ^
     showWellDoneDialog.hashCode ^
-    showSuccessScreen.hashCode;
+    showSuccessScreen.hashCode ^
+    showModal.hashCode;
 
 }
 

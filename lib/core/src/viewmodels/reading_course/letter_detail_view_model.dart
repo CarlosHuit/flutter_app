@@ -31,6 +31,7 @@ class LetterDetailViewModel {
 
   final bool showTryAgainDialog;
   final bool showWellDoneDialog;
+  final bool showModal;
 
   final Function(dynamic action) dispatch;
 
@@ -52,6 +53,7 @@ class LetterDetailViewModel {
     @required this.showWellDoneDialog,
     @required this.currentIndex,
     @required this.dataLength,
+    @required this.showModal,
   });
 
 
@@ -76,6 +78,7 @@ class LetterDetailViewModel {
       dispatch:          (action) => store.dispatch(action),
       showTryAgainDialog: path.letterDetail.showTryAgainDialog,
       showWellDoneDialog: path.letterDetail.showWellDoneDialog,
+      showModal:          path.letterDetail.showModal
     );
 
   }
@@ -179,7 +182,8 @@ class LetterDetailViewModel {
     && showWellDoneDialog  == other.showWellDoneDialog
     && currentIndex        == other.currentIndex
     && dataLength          == other.dataLength
-    && typeLetter          == other.typeLetter;
+    && typeLetter          == other.typeLetter
+    && showModal           == other.showModal;
 
   @override
   int get hashCode =>
@@ -197,6 +201,7 @@ class LetterDetailViewModel {
     showWellDoneDialog.hashCode ^
     currentIndex.hashCode ^
     dataLength.hashCode ^
-    typeLetter.hashCode;
+    typeLetter.hashCode ^
+    showModal.hashCode;
 
 }
