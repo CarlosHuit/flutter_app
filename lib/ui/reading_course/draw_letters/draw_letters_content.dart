@@ -114,15 +114,12 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             right: 10.0,
             bottom: 10.0,
             child: CustomCircularIconButton(
-              height: 48.0,
-              width: 48.0,
-              color: Colors.green[600],
+              height:      48.0,
+              width:       48.0,
+              elevation:   6.0,
+              color:       Colors.green[600],
               splashColor: Colors.white12,
-              icon: Icon(
-                Icons.check,
-                color: Colors.white,
-                size: 32.0,
-              ),
+              icon: Icon( Icons.check, color: Colors.white, size: 32.0 ),
               onTap: validateTraces,
             )
           ),
