@@ -92,8 +92,10 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
                   image: AssetImage("assets/star-pattern.png"),
                 ),
                 gradient: LinearGradient(
-                  begin:  Alignment.bottomLeft,
-                  end:    Alignment.topRight,
+                  // begin: Alignment.bottomCenter,
+                  // end: Alignment.topCenter,
+                  begin:  Alignment.topLeft,
+                  end:    Alignment.bottomRight,
                   stops:  [ 0.0, 0.8 ],
                   colors: [ Color.fromARGB(255, 11, 62, 113), Color.fromARGB(255, 13, 100, 176) ]
                 )
