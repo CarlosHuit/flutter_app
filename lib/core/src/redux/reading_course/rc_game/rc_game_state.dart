@@ -196,7 +196,7 @@ class RCGameData {
       totalCorrects:      corrects,
       countCorrects:   0,
       countIncorrects: 0,
-      opportunities:   3
+      opportunities:   2
     );
   }
 

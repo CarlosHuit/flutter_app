@@ -57,7 +57,10 @@ RCGameState readingCourseGameReducer(AppState store, dynamic action) {
   if (action is RCShowCoincidencesG) {
     return state.game.copyWith(
       showCoincidences: true,
-      showCorrectLetters: true
+      showCorrectLetters: true,
+      currentData: state.game.currentData.copyWith(
+        opportunities: state.game.currentData.opportunities - 1,
+      )
     );
   }
 

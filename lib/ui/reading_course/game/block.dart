@@ -7,7 +7,7 @@ class Block extends StatefulWidget {
   final String correctLetter;
   final double columnWidth;
   final bool   highlight;
-
+  final int index;
   final Function(String letter) callBack;
 
   const Block({
@@ -17,6 +17,7 @@ class Block extends StatefulWidget {
     @required this.correctLetter,
     @required this.callBack,
     @required this.highlight,
+    @required this.index,
   }) : super(key: key);
 
   @override
@@ -33,6 +34,7 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   double get columnWidth => widget.columnWidth;
   String get correctLetter => widget.correctLetter;
 
+  int get index => widget.index;
   Function(String letter) get callBack => widget.callBack;
 
   bool isWrongSelection;
@@ -109,10 +111,11 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
+
     final normalGradient = [ Colors.deepOrange[500], Colors.deepOrange[400] ];
     final wrongGradient  = [ Colors.red, Colors.red ];
     final hightligthGradient = [ Colors.green, Colors.green ];
-
+    
     return GestureDetector(
       onTap:       onTap,
       child: AnimatedContainer(
@@ -122,6 +125,7 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
         curve:    Curves.bounceOut,
         height:   height,
         padding:  EdgeInsets.all(3.0),
+        margin:   EdgeInsets.only(top: index == 0 ? 2.0 : 0),
         duration: Duration(milliseconds: 920),
         child:    !showLetter ? SizedBox() : AnimatedContainer(
           
@@ -150,7 +154,7 @@ class _BlockState extends State<Block> with SingleTickerProviderStateMixin {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 36.0
+              fontSize: 40.0
             ),
           ),
 

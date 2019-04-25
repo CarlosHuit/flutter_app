@@ -118,20 +118,31 @@ class GameViewModel {
 
   void showAllCoincidences() {
 
-    final letter = currentData.letter;
-    final type = currentData.type;
-    final msg = 'Encuentra todas las letras: $letter $type';
+    // if (currentData.opportunities >= 1) {
 
-    tts.speak(msg );
+      final letter = currentData.letter;
+      final type = currentData.type;
+      final msg = 'Encuentra todas las letras: $letter $type';
 
-    dispatch(RCShowCoincidencesG());
+      tts.speak(msg);
 
-    Future.delayed(
-      Duration(milliseconds: 3000), () {
-        dispatch(RCHideCoincidencesG());
-      }
-    );
+      dispatch(RCShowCoincidencesG());
+
+      // Future.delayed(
+      //   Duration(milliseconds: 3000), () {
+      //     dispatch(RCHideCoincidencesG());
+      //   }
+      // );
+
+    // }
+// 
   }
+
+
+  void hideAllCoincidences() {
+    dispatch(RCHideCoincidencesG());
+  }
+
 
   void changeCurrentData() {
 
