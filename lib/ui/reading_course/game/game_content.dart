@@ -35,6 +35,7 @@ class _GameContentState extends State<GameContent> {
     
   }
 
+
   @override
   void dispose() {
     cancelSchedulehidingAllCoincidences();
@@ -59,6 +60,8 @@ class _GameContentState extends State<GameContent> {
   }
 
 
+  /// [ void ] Dispatch action to show all matches for 3 seconds.
+  /// This method Schedule the dispatching a action to hide all matches after three seconds
   void showAllCoincidences() {
 
     if (viewModel.currentData.opportunities >= 0) {
@@ -71,6 +74,8 @@ class _GameContentState extends State<GameContent> {
 
   }
 
+
+  /// if exist `timerHideConincidences` promises -> cancel timer
   void cancelSchedulehidingAllCoincidences() {
 
     if (timerHideConincidences != null) {
@@ -79,6 +84,8 @@ class _GameContentState extends State<GameContent> {
 
   }
 
+
+  /// schedule dispatching action to hide all matches
   void schedulehidingAllCoincidences() {
 
     setState(() {
@@ -197,6 +204,7 @@ class _GameContentState extends State<GameContent> {
 
   }
 
+
   Widget gameContent() {
 
     return Expanded(
@@ -215,7 +223,6 @@ class _GameContentState extends State<GameContent> {
     );
 
   }
-
 
 
 }
