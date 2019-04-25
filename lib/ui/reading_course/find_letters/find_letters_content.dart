@@ -1,4 +1,5 @@
 import 'package:app19022019/core/src/viewmodels/reading_course/find_letters_view_model.dart';
+import 'package:app19022019/ui/components/well_done_dialog_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import './card_item.fl.dart';
@@ -58,7 +59,8 @@ class _FIndLettersContentState extends State<FIndLettersContent> {
 
     } else {
 
-      vm.redirection();
+      vm.showWellDoneDialogApp();
+      // vm.redirection();
 
     }
 
@@ -71,36 +73,76 @@ class _FIndLettersContentState extends State<FIndLettersContent> {
 
     return Scaffold(
 
-      backgroundColor: Colors.red,
-      body: Swiper(
-        
-        outer:      true,
-        scale:      0.85,
-        controller: controller,
-        curve:      Curves.easeIn,
-        duration:   450,
-        itemCount:  vm.data.length,
-        physics:    NeverScrollableScrollPhysics(),
-        viewportFraction: 0.95,
-        onIndexChanged:   (i) => vm.listenInstructions(),
+      backgroundColor: Colors.grey[10],
 
-        pagination:  SwiperPagination(
-          alignment: Alignment.topCenter,
-          builder:   SwiperPagination.dots,
-          margin:    EdgeInsets.only(bottom: 5.0)
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit:   BoxFit.cover,
+            image: AssetImage("assets/star-pattern.png"),
+          ),
+          gradient: LinearGradient(
+            stops:    [0.0, 0.8],
+            // end: Alignment.topCenter,
+            // begin:   Alignment.bottomCenter,
+            begin: Alignment.topCenter,
+            end:   Alignment.bottomCenter,
+            // begin: Alignment.bottomLeft,
+            // end:   Alignment.topRight,
+            colors: [
+              Color.fromARGB(255, 11, 62, 113),
+              Color.fromARGB(255, 13, 100, 176)
+            ]
+          )
         ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
 
-        itemBuilder: (_, index) {
+            Swiper(
+              
+              outer:      true,
+              scale:      0.85,
+              controller: controller,
+              curve:      Curves.easeIn,
+              duration:   450,
+              itemCount:  vm.data.length,
+              physics:    NeverScrollableScrollPhysics(),
+              viewportFraction: 0.95,
+              onIndexChanged:   (i) => vm.listenInstructions(),
 
-          return CardItemFL(
-            letters:       vm.data[index].letters,
-            urlImg:        vm.data[index].imgUrl,
-            correctLetter: vm.data[index].letter,
-            viewModel:     vm,
-          );
+              pagination:  SwiperPagination(
+                alignment: Alignment.topCenter,
+                builder:   SwiperPagination.dots,
+                margin:    EdgeInsets.only(bottom: 10.0)
+              ),
 
-        }
+              itemBuilder: (_, index) {
 
+                return CardItemFL(
+                  letters:       vm.data[index].letters,
+                  urlImg:        vm.data[index].imgUrl,
+                  correctLetter: vm.data[index].letter,
+                  viewModel:     vm,
+                );
+
+              }
+
+            ),
+
+            vm.showSuccessDialog
+              ? WellDoneDialogApp(
+                onEnd: () {
+                  vm.hideWellDoneDialogApp();
+                  vm.redirection();
+                },
+                onStart: vm.speakWellDone,
+              )
+              : Offstage()
+
+
+          ],
+        ),
       ),
 
     );

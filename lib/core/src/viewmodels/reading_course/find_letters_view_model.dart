@@ -103,6 +103,18 @@ class FindLettersViewModel {
   }
 
 
+  void showWellDoneDialogApp() {
+    dispatch(RCShowWellDoneDialogFL());
+  }
+
+  void hideWellDoneDialogApp() {
+    dispatch(RCHideWellDoneDialogFL());
+  }
+
+  void speakWellDone() {
+    tts.speak('Bien Hecho');
+  }
+
   @override
   bool operator == (Object other) => 
     identical(this, other) || other is FindLettersViewModel

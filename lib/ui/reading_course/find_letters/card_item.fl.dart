@@ -46,13 +46,14 @@ class _CardItemFLState extends State<CardItemFL> {
 
     super.initState();
 
-    _intRadius = 25.0;
+    _intRadius = 10.0;
 
     _boxDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(_intRadius),
       boxShadow:  [ BoxShadow( color: Colors.black54, blurRadius: 3.0 ) ],
       border:       Border.all( color: Colors.yellow[100], width: 4.0 ),
       color:        Colors.white,
+      // color:        Colors.yellow[100],
     );
 
     _boxConstraints = BoxConstraints(

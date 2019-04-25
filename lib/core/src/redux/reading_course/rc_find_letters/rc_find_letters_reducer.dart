@@ -22,6 +22,19 @@ RCFindLettersState readingCourseFindLettersReducer(ReadingCourseState state, dyn
     return changeCurrentData(state);
   }
 
+  if (action is RCShowWellDoneDialogFL ) {
+    return state.findLetters.copyWith(
+      showSuccessDialog: true
+    );
+  }
+
+  if (action is RCHideWellDoneDialogFL ) {
+    return state.findLetters.copyWith(
+      showSuccessDialog: false
+    );
+  }
+
+
   return state.findLetters;
 
 }
