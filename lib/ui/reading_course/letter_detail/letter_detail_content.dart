@@ -88,17 +88,14 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
               alignment:  Alignment.center,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  fit:   BoxFit.fitHeight,
+                  fit:   BoxFit.cover,
                   image: AssetImage("assets/star-pattern.png"),
                 ),
                 gradient: LinearGradient(
-                  stops:    [0.0, 0.8],
-                  begin: Alignment.bottomLeft,
-                  end:   Alignment.topRight,
-                  colors: [
-                    Color.fromARGB(255, 11, 62, 113),
-                    Color.fromARGB(255, 13, 100, 176)
-                  ]
+                  begin:  Alignment.bottomLeft,
+                  end:    Alignment.topRight,
+                  stops:  [ 0.0, 0.8 ],
+                  colors: [ Color.fromARGB(255, 11, 62, 113), Color.fromARGB(255, 13, 100, 176) ]
                 )
               ),
 
