@@ -16,7 +16,10 @@ class DrawLettersContent extends StatefulWidget {
 
   final DrawLettersViewModel vm;
 
-  DrawLettersContent({ Key key, @required this.vm }) : super(key: key);
+  DrawLettersContent({
+    Key key,
+    @required this.vm
+  }) : super(key: key);
 
   @override
   _DrawLettersContentState createState() => _DrawLettersContentState();
@@ -107,7 +110,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
           /// BottomControls
           BlackboardBottomControlBar(
-            onTapIconClear: () => strokes.clear(),
+            onTapIconClear:  () => strokes.clear(),
             onTapIconReplay: vm.showHandwriting,
           ),
 

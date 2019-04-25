@@ -3,8 +3,7 @@ import 'package:app19022019/core/src/networking/reading_course_api.dart';
 import 'package:app19022019/core/src/redux/navigation/navigation_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/rc_data/rc_data_actions.dart';
 import 'package:app19022019/core/src/redux/reading_course/reading_course_actions.dart';
-import 'package:app19022019/ui/reading_course/find_letters/find_letters_screen.dart';
-import 'package:app19022019/ui/reading_course/letter_detail/letter_detail_screen.dart';
+import 'package:app19022019/ui/reading_course/draw_letters/draw_letters_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:redux/redux.dart';
 
@@ -43,8 +42,7 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
       // TODO -> Navigation to firstScreen course
 
       next(NavigatorPushWithTransition(
-        // screen: FindLettersScreen(),
-        screen: LetterDetailScreen(),
+        screen:     DrawLettersScreen(),
         transition: PageTransitionType.rightToLeft
       ));
 

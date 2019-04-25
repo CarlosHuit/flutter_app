@@ -13,19 +13,29 @@ class DrawLettersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return StoreConnector<AppState, DrawLettersViewModel>(
 
       distinct:  true,
       onInit:    (store) => store.dispatch(RCSetInitialDataDL()),
       converter: (store) => DrawLettersViewModel.fromStore(store),
-      onDispose: (store) {
-        store.dispatch(RCResetStateDL());
-        SpeechSynthesisService.stop();
-      },
+      onDispose: (store) => store.dispatch(RCResetStateDL()),
 
-      builder:   (_, vm) => DrawLettersContent(vm: vm),
+      builder: (_, vm) => WillPopScope(
+        onWillPop: cancelTts,
+        child:     DrawLettersContent(vm: vm),
+      )
 
     );
+
+  }
+
+
+  Future<bool> cancelTts() async {
+
+    SpeechSynthesisService.stop();
+    return true;
+
   }
 
 
