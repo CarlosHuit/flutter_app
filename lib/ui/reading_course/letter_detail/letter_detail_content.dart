@@ -33,11 +33,15 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
 
   }
 
-  changeUseAnimationStatus() {
+
+
+  void changeUseAnimationStatus() {
     setState(() {
       useAnimation = true;
     });
   }
+
+
 
   void hideModalAndSpeakInstructions() {
 
@@ -52,6 +56,8 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
     );
 
   }
+
+
 
   @override
   Widget build(BuildContext context) {
