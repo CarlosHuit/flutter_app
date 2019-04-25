@@ -4,6 +4,7 @@ import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import './guide_lines.dart';
 
@@ -11,6 +12,8 @@ import './guide_lines.dart';
 
 class ModalHandwriting extends StatefulWidget {
 
+  /// [ String ] Current letter to find animation handwriting
+  final String letter;
 
   /// [ BuildContext ] context to get size of screen
   final BuildContext context;
@@ -27,6 +30,9 @@ class ModalHandwriting extends StatefulWidget {
   /// [ Function() ] Function to execute on dipose this component
   final Function() speechAtTheEnd;
 
+  /// [ Function() ] Function to execute when the animation of the letter is not available
+  final Function() onError;
+
   /// [ Function() ] Function to remove this component of the tree
   final Function() onHide;
 
@@ -39,10 +45,12 @@ class ModalHandwriting extends StatefulWidget {
   ModalHandwriting({
 
     Key key,
+    @required this.letter,
     @required this.onHide,
     @required this.context,
     @required this.speechAtTheEnd,
     @required this.speechAtTheStart,
+    @required this.onError,
 
     this.curve =         Curves.fastOutSlowIn,
     this.direction =     Axis.vertical,
@@ -58,6 +66,9 @@ class ModalHandwriting extends StatefulWidget {
 
 
 class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerProviderStateMixin {
+
+  /// Getter of the current letter
+  String get letter => widget.letter;
 
   /// Getter of useAnimation property that control if show animation on start component
   bool get _useAnimation => widget.useAnimation;
@@ -79,6 +90,9 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
   /// Getter of function onHide
   Function() get onHide => widget.onHide;
+
+  /// Getter of function onHide
+  Function() get onError => widget.onError;
 
   /// Getter of animation direction
   Axis get _direction => widget.direction;
@@ -109,6 +123,9 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   Duration opacityDuration;
   Color colorOpacity;
 
+  bool existAnimation;
+  String animationPath;
+
   /// decoration of handwriting container
   BoxDecoration _decoration = BoxDecoration(
 
@@ -123,6 +140,8 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   void initState() {
 
     super.initState();
+    existAnimation = false;
+    loadAsset();
 
     handwritingDuration = Duration(seconds: 6);
     translateDuration   = Duration(milliseconds: 800);
@@ -137,8 +156,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     positionY = setInitialPositionY(screenSize);
     colorOpacity = setInitialOpacity();
 
-    print('use animation $_useAnimation - x: $positionX - y: $positionY');
-
     if (!_useAnimation) {
 
       Timer(Duration(milliseconds: 200), playAnimation);
@@ -152,8 +169,36 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
     }
 
+
+
   }
 
+  Future<void> loadAsset() async{
+
+
+    final path = 'assets/alphabet/letter_$letter.flr';
+
+    try {
+
+      await rootBundle.load(path);
+
+      setState(() {
+        existAnimation = true;
+        animationPath = path;
+      });
+
+    } catch (e) {
+      print(e);
+      setState(() {
+        existAnimation = false;
+        animationPath = '';
+      });
+    }
+
+    print('....checking');
+
+
+  }
 
   Color setInitialOpacity() {
 
@@ -220,9 +265,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   /// Set the state to pause the current state
   void pauseAnimation() {
 
-    setState(() {
-      pause = true;
-    });
+    setState(() => pause = true );
 
   }
 
@@ -230,8 +273,14 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   /// Execute [speechAtTheStart] and set the state to play the current state 
   void playAnimation() {
 
-    speechAtTheStart();
-    setState(() => pause = false);
+    if (existAnimation) {
+      speechAtTheStart();
+      setState(() => pause = false);
+    }
+
+    if (!existAnimation) {
+      onError();
+    }
 
   }
 
@@ -306,7 +355,9 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
             fit:      StackFit.expand,
             children: [
               guideLines(),
-              letterAnimation()
+              existAnimation
+                ? letterAnimation()
+                : SizedBox(),
             ],
           ),
 
@@ -405,7 +456,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
         height: 60.0,
         width:  60.0,
         icon:   Icon(Icons.replay, color: Colors.red),
-        onTap:  replayAnimation,
+        onTap:  existAnimation ? replayAnimation : onError,
       ),
     );
 

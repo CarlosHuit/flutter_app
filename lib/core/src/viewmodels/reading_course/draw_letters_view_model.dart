@@ -83,6 +83,15 @@ class DrawLettersViewModel {
   }
 
 
+  void handwritingErrorMessage() {
+    
+    final sound = currrentData.soundLetter;
+    final type = currrentData.type;
+    final msg = 'Por ahora no puedo mostrarte cómo se escribe la letra: $sound $type';
+    tts.speak(msg);
+  }
+
+
   void blackboardInstructions() {
 
     final letter = currrentData.soundLetter;
