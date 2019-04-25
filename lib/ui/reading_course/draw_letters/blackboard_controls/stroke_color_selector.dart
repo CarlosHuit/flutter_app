@@ -16,36 +16,55 @@ class StrokeColorSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final size =MediaQuery.of(context).size;
+    final w =MediaQuery.of(context).size.width;
 
     return Card(
+      elevation: 4.0,
       child: Container(
-        constraints: BoxConstraints(
-          maxWidth: size.width - 80.0
+        constraints: BoxConstraints( maxWidth: w - 80.0 ),
+        margin:      EdgeInsets.symmetric(
+          vertical: 6.0,
+          horizontal: 10.0
         ),
-        margin: EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
-        child: Wrap(
-          children: List.generate(colors.length, (i) => GestureDetector(
-            onTap: () => onSelect(colors[i]),
-            child: Container(
-              width: 35.0,
-              height: 35.0,
-              margin: EdgeInsets.symmetric(horizontal: 3.0, vertical: 3.0),
-              decoration: BoxDecoration(
-                color: colors[i],
-                borderRadius: BorderRadius.circular(50.0),
-                border: Border.all(width: 0.8, color: Colors.grey[300])
-              ),
-              child: colors[i] == currentColor
-                ? Icon(Icons.done, color: Colors.white)
-                : SizedBox(),
-            ),
-
-          )),
-
-        ),
+        child: Wrap( children: generateColorList() ),
       ),
     );
+
+
+  }
+
+  List<Widget> generateColorList() {
+
+    return List.generate(
+      colors.length, (i) => GestureDetector(
+        onTap: () => onSelect(colors[i]),
+        child: Container(
+          width:  35.0,
+          height: 35.0,
+          margin: EdgeInsets.symmetric(
+
+            horizontal: 3.0,
+            vertical: 3.0
+
+          ),
+          decoration: BoxDecoration(
+
+            color:        colors[i],
+            border:       Border.all(width: 0.8, color: Colors.grey[300]),
+            borderRadius: BorderRadius.circular(50.0),
+
+          ),
+          child: colors[i] == currentColor
+            ? Icon(
+                Icons.done,
+                color: Colors.white
+              )
+            : SizedBox(),
+        ),
+
+      )
+    );
+
   }
 
 }

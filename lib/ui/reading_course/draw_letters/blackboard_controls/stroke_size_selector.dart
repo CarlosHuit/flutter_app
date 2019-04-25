@@ -37,16 +37,13 @@ class _StrokeSizeSelectorState extends State<StrokeSizeSelector> {
   Widget build(BuildContext context) {
 
     return Card(
-      elevation: 0,
+      elevation: 4.0,
       margin: EdgeInsets.all(0),
       
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(4.0),
-          boxShadow: <BoxShadow> [
-            BoxShadow(color: Colors.black45, blurRadius: 10)
-          ]
         ),
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
         child: Column(
