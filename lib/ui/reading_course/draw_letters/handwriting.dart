@@ -35,17 +35,23 @@ class ModalHandwriting extends StatefulWidget {
   /// [ Axis ] Define animation direction
   final Axis direction;
 
+  /// [ bool ] define if modal start with animation
+  final useAnimation;
+
   ModalHandwriting({
+
     Key key,
     @required this.onHide,
     @required this.context,
     @required this.speechAtTheEnd,
     @required this.speechAtTheStart,
 
-    this.direction = Axis.vertical,
-    this.curve = Curves.fastOutSlowIn,
-    this.duration = const Duration(milliseconds: 420),
+    this.curve =         Curves.fastOutSlowIn,
+    this.duration =      const Duration(milliseconds: 420),
+    this.direction =     Axis.vertical,
+    this.useAnimation =  true,
     this.animationName = 'draw',
+
   }) : super(key: key);
 
   @override
