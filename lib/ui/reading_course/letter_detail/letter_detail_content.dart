@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app19022019/core/src/viewmodels/reading_course/letter_detail_view_model.dart';
+import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:app19022019/ui/reading_course/letter_detail/letter_detail_modal.dart';
 import 'package:flutter/material.dart';
 
@@ -64,16 +65,7 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
 
     final size    = MediaQuery.of(context).size;
     final width90 = size.width * 0.90;
-    final options = List.generate(
-      widget.vm.options.length,
-      (i) => OptionCard(
-        vm: widget.vm,
-        letterId: '${widget.vm.options[i]}$i',
-        hideAllCars: widget.vm.hideAllCards,
-        showAllCards: widget.vm.showAllCards,
-      )
-    );
-
+    // final options = 
 
 
     return Scaffold(
@@ -105,12 +97,11 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
                 width:  width90,
                 height: (width90 / 3) * 4,
                 child:  GridView.count(
-
                   crossAxisCount: 3,
                   shrinkWrap: true,
                   physics:    NeverScrollableScrollPhysics(),
                   padding:    EdgeInsets.all(1.0),
-                  children:   options,
+                  children:   buildOptions(),
 
                 ),
               ),
@@ -119,27 +110,43 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
 
           ),
 
-          Positioned(
-            child: vm.showWellDoneDialog
-              ? WellDoneDialog(
-                viewModel:  vm,
-                speak:      vm.listenCorrectMsg,
-                hideDialog: vm.hideWellDoneDialog,
-                canShowModalSheet: vm.currentIndex < vm.dataLength -1 ? true : false,
-                callBack: () => print('Change Current Data'),
-              )
-              : SizedBox()
-          ),
+          /// Button Help
+          vm.data.helpCounter < 2
+          ? Positioned(
+            bottom: 10.0,
+            left: 10.0,
+            child: CustomCircularIconButton(
+              height: 48.0,
+              width:  48.0,
+              onTap:  vm.showLetterDetailModal,
+              splashColor: Colors.white12,
+              icon: Icon(
+                Icons.help_outline,
+                color: Colors.white,
+                size: 32.0,
+              ),
+            ),
+          )
+          : Offstage(),
 
-          Positioned(
-            child: vm.showTryAgainDialog
-              ? TryAgainDialog(
-                speak:      vm.listenIncorrectMsg,
-                hideDialog: vm.hideTryAgainDialog,
-                callBack: () => print('CallBack executed'),
-              )
-              : SizedBox(),
-          ),
+          vm.showWellDoneDialog
+            ? WellDoneDialog(
+              viewModel:  vm,
+              speak:      vm.listenCorrectMsg,
+              hideDialog: vm.hideWellDoneDialog,
+              canShowModalSheet: vm.currentIndex < vm.dataLength -1 ? true : false,
+              callBack: () {},
+            )
+            : SizedBox(),
+
+
+          vm.showTryAgainDialog
+            ? TryAgainDialog(
+              speak:      vm.listenIncorrectMsg,
+              callBack:   () {},
+              hideDialog: vm.hideTryAgainDialog,
+            )
+            : SizedBox(),
 
           vm.showModal
           ? LetterDetailModal(
@@ -155,6 +162,27 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
         ]
       ),
 
+    );
+
+  }
+
+
+  List<Widget> buildOptions() {
+
+    return List.generate(
+      vm.options.length,
+      (int i) {
+
+        final letterId = '${vm.options[i]}$i';
+
+        return OptionCard(
+          vm:           vm,
+          letterId:     letterId,
+          hideAllCars:  vm.hideAllCards,
+          showAllCards: vm.showAllCards,
+        );
+
+      }
     );
 
   }

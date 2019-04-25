@@ -84,7 +84,10 @@ RCLetterDetailState readingCourseLetterDetailReducer(ReadingCourseState state, d
 
   if (action is RCShowModalLD) {
     return state.letterDetail.copyWith(
-      showModal: true
+      showModal: true,
+      currentData: state.letterDetail.currentData.copyWith(
+        helpCounter: state.letterDetail.currentData.helpCounter + 1
+      )
     );
   }
 

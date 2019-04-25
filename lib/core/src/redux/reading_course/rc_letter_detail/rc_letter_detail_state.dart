@@ -75,8 +75,9 @@ class RCLetterDetailState {
     slLowerCase.shuffle();
     slUpperCase.shuffle();
 
-    final dataLowerCase = SLData(letterLC, slLowerCase, 'minúscula', letterSound);
-    final dataUpperCase = SLData(letterUC, slUpperCase, 'mayúscula', letterSound);
+    final dataLowerCase = SLData(letter: letterLC, data: slLowerCase, type: 'minúscula', letterSound: letterSound, helpCounter: 1);
+    final dataUpperCase = SLData(letter: letterUC, data: slUpperCase, type: 'mayúscula', letterSound: letterSound, helpCounter: 0);
+
     final selections    = SLSelections(selection1: null, selection2: null);
     final data          = [ dataLowerCase, dataUpperCase ];
 
@@ -171,16 +172,39 @@ class SLData {
   final List<String> data;
   final String type;
   final String letterSound;
+  final int helpCounter;
 
-  SLData(this.letter, this.data, this.type, this.letterSound);
+  SLData({
+    @required this.letter,
+    @required this.data,
+    @required this.type,
+    @required this.letterSound,
+    @required this.helpCounter,
+  });
 
+  SLData copyWith({
+    String letter,
+    List<String> data,
+    String type,
+    String letterSound,
+    int helpCounter
+  }) {
+    return SLData(
+      data:        data ?? this.data,
+      type:        type ?? this.type,
+      letter:      letter ?? this.letter,
+      letterSound: letterSound ?? this.letterSound,
+      helpCounter: helpCounter ?? this.helpCounter,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
       'letter':      letter,
       'data':        data,
       'type':        type,
-      'letterSound': letterSound
+      'letterSound': letterSound,
+      'helpCounter': helpCounter,
     };
   }
 
