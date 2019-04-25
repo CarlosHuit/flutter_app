@@ -4,7 +4,7 @@ import 'package:app19022019/core/src/services/speech_synthesis_service.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/find_letters_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import './swipper_cards.dart';
+import './find_letters_content.dart';
 
 class FindLettersScreen extends StatefulWidget {
 
@@ -40,15 +40,23 @@ class _FindLettersScreenState extends State<FindLettersScreen> {
 
       distinct:  true,
       onInit:    (store) => store.dispatch(RCSetInitialDataFL()),
-      onDispose: (store) {
-        store.dispatch(RCResetDataFL());
-        SpeechSynthesisService.stop();
-      },
+      onDispose: (store) => store.dispatch(RCResetDataFL()),
       converter: (store) => FindLettersViewModel.fromStore(store),
-      builder:   (_, vm) => SwipperCards(viewModel: vm),
+      builder:   (_, vm) {
+        return WillPopScope(
+          onWillPop: cancelTts,
+          child: FIndLettersContent(viewModel: vm),
+        );
+
+      }
 
     );
 
+  }
+
+  Future<bool> cancelTts() async{
+    SpeechSynthesisService.stop();
+    return true;
   }
 
 

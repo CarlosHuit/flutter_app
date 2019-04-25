@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import './card_item.fl.dart';
 
-class SwipperCards extends StatefulWidget {
+class FIndLettersContent extends StatefulWidget {
 
   final FindLettersViewModel viewModel;
 
-  SwipperCards({ Key key, this.viewModel }) : super(key: key);
+  FIndLettersContent({ Key key, this.viewModel }) : super(key: key);
 
   @override
-  _SwipperCardsState createState() => _SwipperCardsState();
+  _FIndLettersContentState createState() => _FIndLettersContentState();
 
 }
 
-class _SwipperCardsState extends State<SwipperCards> {
+class _FIndLettersContentState extends State<FIndLettersContent> {
 
   FindLettersViewModel get vm => widget.viewModel;
 
@@ -29,7 +29,7 @@ class _SwipperCardsState extends State<SwipperCards> {
   }
 
   @override
-  void didUpdateWidget(SwipperCards oldWidget) {
+  void didUpdateWidget(FIndLettersContent oldWidget) {
 
     super.didUpdateWidget(oldWidget);
 
