@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:app19022019/core/src/redux/reading_course/rc_draw_letters/rc_draw_letters_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/draw_letters_view_model.dart';
+import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:app19022019/ui/components/well_done_dialog_app.dart';
 import 'package:flutter/material.dart';
 
@@ -32,16 +35,23 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
   DrawLettersViewModel get vm => widget.vm;
 
   List<StrokeData> strokes;
-
+  bool useModalAnimation;
 
   @override
   void initState() {
 
     super.initState();
     strokes = [];
+    useModalAnimation = false;
+    Timer(Duration.zero, changeStatusAnimationModal);
 
   }
 
+  void changeStatusAnimationModal() {
+    setState(() {
+      useModalAnimation = true;
+    });
+  }
 
   void handlePanUpdate(DragUpdateDetails details) {
 
@@ -80,9 +90,6 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
     return Scaffold(
 
       backgroundColor: Colors.grey[100],
-
-      floatingActionButton: ButtonValidation( onTap: validateTraces ),
-
       body: Stack(
 
         alignment: Alignment.center,
@@ -103,6 +110,22 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
             ),
           ),
 
+          Positioned(
+            right: 10.0,
+            bottom: 10.0,
+            child: CustomCircularIconButton(
+              height: 48.0,
+              width: 48.0,
+              color: Colors.green[600],
+              splashColor: Colors.white12,
+              icon: Icon(
+                Icons.check,
+                color: Colors.white,
+                size: 32.0,
+              ),
+              onTap: validateTraces,
+            )
+          ),
 
           /// TopControlBar
           BlackboardTopControlBar( vm ),
@@ -153,8 +176,8 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
               onHide:           vm.hideHandwriting,
               speechAtTheStart: vm.handWrintingMessage,
               speechAtTheEnd:   vm.blackboardInstructions,
-              curve: Curves.linearToEaseOut,
-              useAnimation: false,
+              curve:            Curves.linearToEaseOut,
+              useAnimation:     useModalAnimation,
             )
             : SizedBox(),
 
@@ -178,30 +201,3 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
 
 
 }
-
-
-class ButtonValidation extends StatelessWidget {
-
-
-  final Function() onTap;
-
-  ButtonValidation({ Key key, @required this.onTap }) : super(key: key);
-
-
-  @override
-  Widget build(BuildContext context) {
-
-    return FloatingActionButton(
-      mini:                  true,
-      onPressed:             onTap,
-      backgroundColor:       Colors.green[600],
-      child:                 Icon(Icons.check, color: Colors.white),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-    );
-
-  }
-
-
-}
-
-

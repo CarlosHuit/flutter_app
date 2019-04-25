@@ -11,8 +11,6 @@ import './guide_lines.dart';
 
 class ModalHandwriting extends StatefulWidget {
 
-  /// [ Duration ] duration to use in the animation of handwriting container. Default: Duration(milliseconds: 420)
-  final Duration duration;
 
   /// [ BuildContext ] context to get size of screen
   final BuildContext context;
@@ -47,7 +45,6 @@ class ModalHandwriting extends StatefulWidget {
     @required this.speechAtTheStart,
 
     this.curve =         Curves.fastOutSlowIn,
-    this.duration =      const Duration(milliseconds: 420),
     this.direction =     Axis.vertical,
     this.useAnimation =  true,
     this.animationName = 'draw',
@@ -68,9 +65,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   /// Getter of animation curve
   Curve get _curve => widget.curve;
 
-  /// Getter of animation duration
-  Duration get _duration => widget.duration;
-
   /// Getter of BuildContext
   BuildContext get _context => widget.context;
 
@@ -90,7 +84,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   Axis get _direction => widget.direction;
   
   /// Total of animation handwrinting duration
-  Duration animationDuration;
+  Duration handwritingDuration;
 
   /// Controllers of current animation
   FlareControls flareControl;
@@ -111,7 +105,9 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
   double positionX;
   double positionY;
-  Duration translationDuration;
+  Duration translateDuration;
+  Duration opacityDuration;
+  Color colorOpacity;
 
   /// decoration of handwriting container
   BoxDecoration _decoration = BoxDecoration(
@@ -128,37 +124,58 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
     super.initState();
 
-    
-    animationDuration = Duration(seconds: 6);
+    handwritingDuration = Duration(seconds: 6);
+    translateDuration   = Duration(milliseconds: 800);
+    opacityDuration     = Duration(milliseconds: 400);
+
     flareControl = FlareControls();
     pause = true;
 
     final screenSize = MediaQuery.of(_context).size;
-    translationDuration = Duration(milliseconds: 1200);
+
     positionX = setInitialPositionX(screenSize);
     positionY = setInitialPositionY(screenSize);
+    colorOpacity = setInitialOpacity();
 
-
-    if (_useAnimation) {
-
-      Timer(Duration(milliseconds: 100), show);
-      Timer(translationDuration, playAnimation);
-
-    }
-
+    print('use animation $_useAnimation - x: $positionX - y: $positionY');
 
     if (!_useAnimation) {
 
-      Timer(Duration.zero, () {
-        show();
-        playAnimation();
-      });
+      Timer(Duration(milliseconds: 200), playAnimation);
 
     }
 
+    if (_useAnimation) {
 
+      Timer(Duration.zero, show);
+      Timer(translateDuration - Duration(milliseconds: 300), playAnimation);
+
+    }
 
   }
+
+
+  Color setInitialOpacity() {
+
+    if (_useAnimation) {
+      return Colors.transparent;
+    }
+
+    return Colors.black45;
+
+  }
+
+
+  void show() {
+
+    setState(() {
+      positionX = 0;
+      positionY = 0;
+      colorOpacity = Colors.black45;
+    });
+
+  }
+
 
   double setInitialPositionX(Size screenSize) {
 
@@ -168,6 +185,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     return 0.0;
 
   }
+
 
   double setInitialPositionY(Size screenSize) {
 
@@ -179,34 +197,21 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
   }
 
-  /// Show hanwriting dialog
-  void show() {
-
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-
-         return WillPopScope(
-          child: buildHandwrinting(),
-          onWillPop: () async{
-            onHide();
-            return true;
-          },
-        );
-
-      }
-    );
-
-  }
-
 
   /// Remove dialog in the stack of routes and execte the onHide callBack before dispose componente
   void hide() {
 
-    Timer(_duration, () {
-      Navigator.pop(context);
+    final screenSize = MediaQuery.of(context).size;
+
+    setState(() {
+      positionX = setInitialPositionX(screenSize);
+      positionY = setInitialPositionY(screenSize);
+      colorOpacity = Colors.transparent;
+    });
+
+    Timer(translateDuration - Duration(milliseconds: 200), () {
       onHide();
+      speechAtTheEnd();
     });
 
   }
@@ -214,14 +219,20 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
   /// Set the state to pause the current state
   void pauseAnimation() {
-    setState(() => pause = true );
+
+    setState(() {
+      pause = true;
+    });
+
   }
 
 
   /// Execute [speechAtTheStart] and set the state to play the current state 
   void playAnimation() {
+
     speechAtTheStart();
     setState(() => pause = false);
+
   }
 
 
@@ -237,9 +248,9 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
     playAnimation();
     flareControl.play(animationName);
-    ///
+
     setState(() {
-      futureSub = Timer(animationDuration, pauseAnimation);
+      futureSub = Timer(handwritingDuration, pauseAnimation);
     });
 
 
@@ -255,25 +266,8 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
       duration: Duration(milliseconds: 1300),
       child: buildCard(),
     );
-
-    // return AnimatedBuilder(
-    //   animation: animation,
-    //   builder: (context, child) {
-    //     return Transform(
-    //       transform: _useAnimation
-    //         ? Matrix4.translationValues(
-    //           _direction == Axis.horizontal ? animation.value : 0,
-    //           _direction == Axis.vertical ? animation.value : 0,
-    //           0
-    //         )
-    //         : Matrix4.translationValues(0, 0, 0),
-    //       ),
-    //     );
-    //   },
-    // );
-
-
   }
+
 
   Widget buildCard() {
 
@@ -285,11 +279,15 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
       constraints: _constraints,
       decoration:  _decoration,
         child: Column(
-          children: [ handwriting(size), bottomBar() ],
+          children: [
+            handwriting(size),
+            bottomBar()
+          ],
         ),
     );
 
   }
+
 
   /// Build container that contain: guide lines component and animation component
   Widget handwriting(Size size) {
@@ -415,15 +413,21 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
 
   @override
-  void dispose() {
-    speechAtTheEnd();
-    super.dispose();
-  }
-
-
-  @override
   Widget build(BuildContext context) {
-    return SizedBox();
+
+    return AnimatedContainer(
+      duration:  opacityDuration,
+      color:     colorOpacity,
+      alignment: Alignment.center,
+      child: AnimatedContainer(
+        curve:     _curve,
+        alignment: Alignment.center,
+        duration:  translateDuration,
+        transform: Matrix4.translationValues(positionX, positionY, 0),
+        child: buildCard(),
+      ),
+    );
+
   }
 
 
