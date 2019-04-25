@@ -62,6 +62,9 @@ class ModalHandwriting extends StatefulWidget {
 
 class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerProviderStateMixin {
 
+  /// Getter of useAnimation property that control if show animation on start component
+  bool get _useAnimation => widget.useAnimation;
+
   /// Getter of animation curve
   Curve get _curve => widget.curve;
 
@@ -86,7 +89,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   /// Getter of animation direction
   Axis get _direction => widget.direction;
   
-  /// Total of animation duration
+  /// Total of animation handwrinting duration
   Duration animationDuration;
 
   /// Controllers of current animation
@@ -98,21 +101,17 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   /// Controller that handle animation pause
   bool pause;
 
-  /// Animation of handwriting container
-  Animation<double> animation;
-
-  /// Controller of handwriting container animation
-  AnimationController animationController;
-
   /// constraits of handwriting container
   BoxConstraints _constraints = BoxConstraints(
 
-    minWidth:  300.0,
+    maxHeight: 560.0,
     maxWidth:  380.0,
-    minHeight: 400.0,
-    maxHeight: 480.0
 
   );
+
+  double positionX;
+  double positionY;
+  Duration translationDuration;
 
   /// decoration of handwriting container
   BoxDecoration _decoration = BoxDecoration(
@@ -134,28 +133,51 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     flareControl = FlareControls();
     pause = true;
 
-    final _size = MediaQuery.of(_context).size;
-    final _begin = _direction == Axis.vertical ? _size.height : _size.width;
-
-    animationController = AnimationController( duration: _duration, vsync: this );
-
-    animation = Tween<double>( begin: _begin, end: 0 )
-      .chain( CurveTween( curve: _curve ) )
-      .animate(animationController);
+    final screenSize = MediaQuery.of(_context).size;
+    translationDuration = Duration(milliseconds: 1200);
+    positionX = setInitialPositionX(screenSize);
+    positionY = setInitialPositionY(screenSize);
 
 
-    final delayToShowDialog = 300;
+    if (_useAnimation) {
 
-    Future.delayed( Duration(milliseconds: delayToShowDialog), show );
+      Timer(Duration(milliseconds: 100), show);
+      Timer(translationDuration, playAnimation);
 
-    Future.delayed(
-      Duration(milliseconds: delayToShowDialog + 200),
-      () => animationController.forward()
-    ).whenComplete(playAnimation);
+    }
+
+
+    if (!_useAnimation) {
+
+      Timer(Duration.zero, () {
+        show();
+        playAnimation();
+      });
+
+    }
+
 
 
   }
 
+  double setInitialPositionX(Size screenSize) {
+
+    if ( _useAnimation && _direction == Axis.horizontal ) {
+      return screenSize.width;
+    }
+    return 0.0;
+
+  }
+
+  double setInitialPositionY(Size screenSize) {
+
+    if ( _useAnimation && _direction == Axis.vertical ) {
+      return screenSize.height;
+    }
+
+    return 0.0;
+
+  }
 
   /// Show hanwriting dialog
   void show() {
@@ -163,36 +185,45 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => WillPopScope(
-        child: buildHandwrinting(),
-        onWillPop: () async{
-          onHide();
-          return true;
-        },
-      )
+      builder: (context) {
+
+         return WillPopScope(
+          child: buildHandwrinting(),
+          onWillPop: () async{
+            onHide();
+            return true;
+          },
+        );
+
+      }
     );
 
   }
 
+
   /// Remove dialog in the stack of routes and execte the onHide callBack before dispose componente
   void hide() {
-    animationController.reverse();
-    Future.delayed(_duration, () {
+
+    Timer(_duration, () {
       Navigator.pop(context);
       onHide();
     });
+
   }
+
 
   /// Set the state to pause the current state
   void pauseAnimation() {
     setState(() => pause = true );
   }
 
+
   /// Execute [speechAtTheStart] and set the state to play the current state 
   void playAnimation() {
     speechAtTheStart();
     setState(() => pause = false);
   }
+
 
   /// Cancel previous animation and restart the animation
   void replayAnimation() {
@@ -207,7 +238,9 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     playAnimation();
     flareControl.play(animationName);
     ///
-    setState(() => futureSub = Timer(animationDuration, pauseAnimation) );
+    setState(() {
+      futureSub = Timer(animationDuration, pauseAnimation);
+    });
 
 
   }
@@ -216,45 +249,47 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   /// Build content dialog
   Widget buildHandwrinting() {
 
-
-    final size = MediaQuery.of(_context).size;
-
-
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (context, child) {
-        return Transform(
-          transform: Matrix4.translationValues(
-            _direction == Axis.horizontal ? animation.value : 0,
-            _direction == Axis.vertical ? animation.value : 0,
-            0
-          ),
-          child: Container(
-
-            alignment: Alignment.center,
-            child: Container(
-
-              width:       size.width  - 20,
-              height:      size.height - 20,
-              constraints: _constraints,
-              decoration:  _decoration,
-              child: Column(
-                children: [
-                  handwriting(size),
-                  bottomBar()
-                ],
-              ),
-
-            )
-
-          ),
-        );
-      },
+    return AnimatedContainer(
+      curve: _curve,
+      alignment: Alignment.center,
+      duration: Duration(milliseconds: 1300),
+      child: buildCard(),
     );
+
+    // return AnimatedBuilder(
+    //   animation: animation,
+    //   builder: (context, child) {
+    //     return Transform(
+    //       transform: _useAnimation
+    //         ? Matrix4.translationValues(
+    //           _direction == Axis.horizontal ? animation.value : 0,
+    //           _direction == Axis.vertical ? animation.value : 0,
+    //           0
+    //         )
+    //         : Matrix4.translationValues(0, 0, 0),
+    //       ),
+    //     );
+    //   },
+    // );
 
 
   }
 
+  Widget buildCard() {
+
+    final size = MediaQuery.of(context).size;
+
+    return Container(
+      width:  size.width - 40.0,
+      height: size.height- 80.0,
+      constraints: _constraints,
+      decoration:  _decoration,
+        child: Column(
+          children: [ handwriting(size), bottomBar() ],
+        ),
+    );
+
+  }
 
   /// Build container that contain: guide lines component and animation component
   Widget handwriting(Size size) {
@@ -382,7 +417,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   @override
   void dispose() {
     speechAtTheEnd();
-    animationController.dispose();
     super.dispose();
   }
 

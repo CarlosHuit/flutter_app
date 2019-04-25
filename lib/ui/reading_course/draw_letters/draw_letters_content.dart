@@ -154,6 +154,7 @@ class _DrawLettersContentState extends State<DrawLettersContent> {
               speechAtTheStart: vm.handWrintingMessage,
               speechAtTheEnd:   vm.blackboardInstructions,
               curve: Curves.linearToEaseOut,
+              useAnimation: false,
             )
             : SizedBox(),
 
