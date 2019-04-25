@@ -75,8 +75,21 @@ class RCLetterDetailState {
     slLowerCase.shuffle();
     slUpperCase.shuffle();
 
-    final dataLowerCase = SLData(letter: letterLC, data: slLowerCase, type: 'minúscula', letterSound: letterSound, helpCounter: 1);
-    final dataUpperCase = SLData(letter: letterUC, data: slUpperCase, type: 'mayúscula', letterSound: letterSound, helpCounter: 0);
+    final dataLowerCase = SLData(
+      data:        slLowerCase,
+      type:        'minúscula',
+      letter:      letterLC,
+      letterSound: letterSound,
+      helpCounter: 1
+    );
+
+    final dataUpperCase = SLData(
+      data:        slUpperCase,
+      type:        'mayúscula',
+      letter:      letterUC,
+      letterSound: letterSound,
+      helpCounter: 0
+    );
 
     final selections    = SLSelections(selection1: null, selection2: null);
     final data          = [ dataLowerCase, dataUpperCase ];
