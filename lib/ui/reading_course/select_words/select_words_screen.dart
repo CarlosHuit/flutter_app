@@ -12,6 +12,8 @@ class SelectWordsScreen extends StatefulWidget {
 }
 
 class _SelectWordsScreenState extends State<SelectWordsScreen> {
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -19,13 +21,26 @@ class _SelectWordsScreenState extends State<SelectWordsScreen> {
       distinct:  true,
       converter: (store) => SelectWordsViewModel.fromStore(store),
       onInit:    (store) => store.dispatch(RCSetInitialDataSW()),
-      onDispose: (store) {
-        store.dispatch(RCResetDataSW());
-        SpeechSynthesisService.stop();
-      },
-      builder:   (_, vm) => SelectWordsContent(viewModel: vm)
+      onDispose: (store) => store.dispatch(RCResetDataSW()),
+      builder:   (_, vm) {
+
+        return WillPopScope(
+          onWillPop: cancelTts,
+          child:     SelectWordsContent(viewModel: vm)
+        );
+
+      }
 
     );
 
   }
+
+  Future<bool> cancelTts() async{
+
+    SpeechSynthesisService.stop();
+    return true;
+
+  }
+
+
 }
