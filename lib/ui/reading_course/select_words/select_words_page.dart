@@ -1,6 +1,7 @@
 
 import 'package:app19022019/core/src/redux/reading_course/rc_select_words/rc_select_words_state.dart';
 import 'package:app19022019/core/src/viewmodels/reading_course/select_words_view_model.dart';
+import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:app19022019/ui/components/progress_bar_indicator.dart';
 import 'package:app19022019/ui/reading_course/select_words/select_words_button.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,6 @@ class SelectWordsPage extends StatelessWidget {
         ),
 
         Container(
-          // color: Colors.red
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           alignment: Alignment.center,
           child: Wrap(
@@ -55,6 +55,23 @@ class SelectWordsPage extends StatelessWidget {
             ),
           ),
         ),
+
+        Positioned(
+          bottom: 10.0,
+          left: 10.0,
+          child: CustomCircularIconButton(
+            height: 48.0,
+            width:  48.0,
+            onTap:  vm.speakInstructions,
+            splashColor: Colors.orange[100],
+            icon: Icon(
+              Icons.help_outline,
+              color: Colors.orange,
+              size: 36.0,
+            ),
+          ),
+        )
+
       ],
     );
 
