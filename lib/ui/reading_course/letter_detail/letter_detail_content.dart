@@ -65,8 +65,7 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
 
     final size    = MediaQuery.of(context).size;
     final width90 = size.width * 0.90;
-    // final options = 
-
+    final colWidth = width90 / 3;
 
     return Scaffold(
 
@@ -84,8 +83,6 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
                   image: AssetImage("assets/star-pattern.png"),
                 ),
                 gradient: LinearGradient(
-                  // begin: Alignment.bottomCenter,
-                  // end: Alignment.topCenter,
                   begin:  Alignment.topLeft,
                   end:    Alignment.bottomRight,
                   stops:  [ 0.0, 0.8 ],
@@ -101,7 +98,7 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
                   shrinkWrap: true,
                   physics:    NeverScrollableScrollPhysics(),
                   padding:    EdgeInsets.all(1.0),
-                  children:   buildOptions(),
+                  children:   buildOptions(colWidth),
 
                 ),
               ),
@@ -167,7 +164,7 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
   }
 
 
-  List<Widget> buildOptions() {
+  List<Widget> buildOptions(double colWidth) {
 
     return List.generate(
       vm.options.length,
@@ -176,6 +173,7 @@ class _LetterDetailContentState extends State<LetterDetailContent> {
         final letterId = '${vm.options[i]}$i';
 
         return OptionCard(
+          colWidth:     colWidth,
           vm:           vm,
           letterId:     letterId,
           hideAllCars:  vm.hideAllCards,

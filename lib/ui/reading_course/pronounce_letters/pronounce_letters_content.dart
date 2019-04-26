@@ -278,6 +278,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
 
   Widget buildLetter(String letter) {
 
+
     return Container(
 
       alignment: Alignment.center,
@@ -285,7 +286,7 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
         letter,
         style: TextStyle(
           color:  Colors.red,
-          fontSize: 160.0,
+          fontSize: calcFontSize(),
           fontWeight: FontWeight.bold,
           shadows: [
             Shadow(
@@ -298,6 +299,18 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
       ),
 
     );
+
+  }
+
+
+  double calcFontSize() {
+
+    final maxFontSize = 320.0;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final fontSize = screenWidth * 0.62;
+
+    return fontSize > maxFontSize ? maxFontSize : fontSize;
 
   }
 

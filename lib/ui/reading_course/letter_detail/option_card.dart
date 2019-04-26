@@ -9,17 +9,22 @@ class OptionCard extends StatelessWidget {
   final bool   showAllCards;
   final bool   hideAllCars;
   final LetterDetailViewModel vm;
+  final double colWidth;
 
   const OptionCard({
     Key key,
     @required this.letterId,
     @required this.hideAllCars,
     @required this.showAllCards,
-    @required this.vm
+    @required this.vm,
+    @required this.colWidth
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    print(colWidth);
+
     return Container(
 
       padding: EdgeInsets.all(3.0),
@@ -38,8 +43,9 @@ class OptionCard extends StatelessWidget {
   }
 
   Widget cardBack(String letter) {
-        const TextStyle letterStyle = TextStyle(
-      fontSize:   60.0,
+
+    final TextStyle letterStyle = TextStyle(
+      fontSize:   colWidth * 0.53,
       color:      Colors.white,
       fontWeight: FontWeight.bold,
     );
