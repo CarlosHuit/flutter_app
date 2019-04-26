@@ -88,13 +88,24 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
       distinct:  true,
       converter: (store) => PronounceLettersViewModel.fromStore(store),
       onInit:    (store) => store.dispatch(RCSetInitialDataPL()),
-      onDispose: (store) {
-        store.dispatch(RCResetDataPL());
-        SpeechSynthesisService.stop();
-      },
-      builder:   (_, vm) => PronounceLettersContent(vm: vm),
+      onDispose: (store) => store.dispatch(RCResetDataPL()),
+      builder:   (_, vm) {
+
+        return WillPopScope(
+          onWillPop: cancelTts,
+          child: PronounceLettersContent(vm: vm),
+        );
+
+      }
     );
 
+
+  }
+
+  Future<bool> cancelTts() async{
+
+    SpeechSynthesisService.stop();
+    return true;
 
   }
 
