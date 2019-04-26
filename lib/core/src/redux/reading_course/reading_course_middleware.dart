@@ -39,7 +39,7 @@ class ReadingCourseMiddleware extends MiddlewareClass<AppState> {
 
       store.dispatch(RCSetCurrentLetter(action.letter));
 
-      // TODO -> Navigation to firstScreen course
+      // TODO navigate to firs screen
 
       next(NavigatorPushWithTransition(
         screen:     LetterDetailScreen(),

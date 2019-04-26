@@ -7,25 +7,26 @@ import '../redux/navigation/navigation_actions.dart';
 class CourseDetailViewModel {
 
   final Course course;
-  final Function(String course) startCourse;
-
+  final Function(dynamic action) dispatch;
 
   CourseDetailViewModel({
     @required this.course,
-    @required this.startCourse
+    @required this.dispatch,
   });
 
 
-  static CourseDetailViewModel fromStore({@required Store<AppState> store}) {
+  factory CourseDetailViewModel.fromStore({@required Store<AppState> store}) {
 
     return CourseDetailViewModel(
-      course: store.state.coursesState.currentCourse,
-      startCourse: (course) => store.dispatch(NavigatorReplaceCourse(course: course))
+      course:   store.state.coursesState.currentCourse,
+      dispatch: (action) => store.dispatch(action),
     );
 
   }
 
-
+  void startCourse() {
+    dispatch(NavigatorReplaceCourse(course: course.subtitle));
+  }
 
 
   @override
