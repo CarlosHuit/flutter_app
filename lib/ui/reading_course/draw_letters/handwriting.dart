@@ -140,7 +140,9 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   void initState() {
 
     super.initState();
+
     existAnimation = false;
+
     loadAsset();
 
     handwritingDuration = Duration(seconds: 6);
@@ -165,7 +167,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
     if (_useAnimation) {
 
       Timer(Duration.zero, show);
-      Timer(translateDuration - Duration(milliseconds: 300), playAnimation);
+      Timer(translateDuration - Duration(milliseconds: 200), playAnimation);
 
     }
 
@@ -189,17 +191,19 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
 
     } catch (e) {
       print(e);
+
       setState(() {
         existAnimation = false;
         animationPath = '';
       });
-    }
 
-    print('....checking');
+    }
 
 
   }
 
+
+  /// Set initial color of background depending the status animation
   Color setInitialOpacity() {
 
     if (_useAnimation) {
@@ -211,6 +215,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   }
 
 
+  /// Set values `positionX` - `positionX` - `colorOpacity` to show background container and card
   void show() {
 
     setState(() {
@@ -222,6 +227,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   }
 
 
+  /// Set initial position in Y, depengind the animation status
   double setInitialPositionX(Size screenSize) {
 
     if ( _useAnimation && _direction == Axis.horizontal ) {
@@ -232,6 +238,7 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
   }
 
 
+  /// Set initial position in Y, depengind the animation status
   double setInitialPositionY(Size screenSize) {
 
     if ( _useAnimation && _direction == Axis.vertical ) {
