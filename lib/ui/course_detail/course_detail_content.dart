@@ -44,7 +44,7 @@ class _CourseDetailContentState extends State<CourseDetailContent> with SingleTi
 
     return Scaffold(
       appBar: AppBar( title: Text('Detalles del curso'), centerTitle: true ),
-      body:   Container(
+      body: Container(
 
         color: Colors.grey[100],
         child: Column(
