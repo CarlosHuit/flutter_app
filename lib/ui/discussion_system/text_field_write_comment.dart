@@ -18,8 +18,10 @@ class TextFieldWriteComment extends StatefulWidget {
 
 class _TextFieldWriteCommentState extends State<TextFieldWriteComment> {
 
+
   TextEditingController _controller;
   Function(String term) get onSubmit => widget.onSubmit;
+
 
   BoxDecoration _boxDecoration = BoxDecoration(
     color:        Colors.white,
@@ -29,17 +31,22 @@ class _TextFieldWriteCommentState extends State<TextFieldWriteComment> {
     ]
   );
 
+
   InputDecoration _inputDecoration = InputDecoration(
     enabledBorder:  InputBorder.none,
     disabledBorder: InputBorder.none,
     border: InputBorder.none,
   );
 
+
+
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
   }
+
+
 
   @override
   void dispose() {
@@ -55,9 +62,11 @@ class _TextFieldWriteCommentState extends State<TextFieldWriteComment> {
     if (term.length > 0) {
       FocusScope.of(context).requestFocus(new FocusNode());
       onSubmit(term);
+      _controller.clear();
     }
 
   }
+
 
   @override
   Widget build(BuildContext context) {
