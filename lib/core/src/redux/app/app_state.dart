@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/redux/discussion_system/discussion_system_state.dart';
 import 'package:flutter/material.dart';
 import 'package:key_value_store/key_value_store.dart';
 import 'package:meta/meta.dart';
@@ -21,7 +22,8 @@ class AppState {
   final CoursesState       coursesState;
   final ReadingCourseState readingCourseState;
   final DeviceState        deviceState;
-
+  final DiscussionSystemState   discussionSystem;
+ 
   AppState({
     @required this.authState,
     @required this.appName,
@@ -30,6 +32,7 @@ class AppState {
     @required this.coursesState,
     @required this.readingCourseState,
     @required this.deviceState,
+    @required this.discussionSystem,
   });
 
 
@@ -43,6 +46,7 @@ class AppState {
       deviceState:        DeviceState.initialState(),
       coursesState:       CoursesState.initialState(),
       readingCourseState: ReadingCourseState.initialState(),
+      discussionSystem:   DiscussionSystemState.initialState(),
     );
 
   }
@@ -55,6 +59,7 @@ class AppState {
     DeviceState deviceState,
     CoursesState coursesState,
     ReadingCourseState readingCourseState,
+    DiscussionSystemState discussionSystem,
   }) {
     return AppState(
       appName:            'Weduc',
@@ -64,6 +69,7 @@ class AppState {
       deviceState:        deviceState ?? this.deviceState,        
       coursesState:       coursesState ?? this.coursesState,
       readingCourseState: readingCourseState ?? this.readingCourseState,
+      discussionSystem:   discussionSystem ?? this.discussionSystem
     );
   }
 
@@ -77,7 +83,8 @@ class AppState {
       && signupState        == other.signupState
       && coursesState       == other.coursesState
       && readingCourseState == other.readingCourseState
-      && deviceState        == other.deviceState;
+      && deviceState        == other.deviceState
+      && discussionSystem   == other.discussionSystem;
 
   @override
   int get hashCode =>
@@ -87,6 +94,7 @@ class AppState {
     coursesState.hashCode ^
     readingCourseState.hashCode ^
     signupState.hashCode ^
-    deviceState.hashCode;
+    deviceState.hashCode ^
+    discussionSystem.hashCode;
 
 }

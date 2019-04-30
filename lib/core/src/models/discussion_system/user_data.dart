@@ -15,13 +15,17 @@ class UserData {
     @required this.id
   });
 
-  factory UserData.parseJson(Map<String, String> json){
+  String fullName() => '$lastName $firstName';
+
+  factory UserData.parseJson(dynamic json){
+
     return UserData(
-      avatar: null,
-      email: null,
-      firstName: null,
-      id: null,
-      lastName: null,
+      avatar:    json['avatar'],
+      email:     null,
+      firstName: json['firstName'],
+      id:        json['_id'],
+      lastName:  json['lastName'],
+
     );
   }
 

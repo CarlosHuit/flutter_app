@@ -25,7 +25,6 @@ class _CourseDetailContentState extends State<CourseDetailContent> with SingleTi
 
     super.initState();
     tabController = TabController(length: 2, vsync: this);
-
   }
 
 

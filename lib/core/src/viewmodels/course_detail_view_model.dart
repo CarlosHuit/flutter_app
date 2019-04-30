@@ -2,6 +2,7 @@ import 'package:app19022019/core/src/models/course.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
+
 import '../redux/navigation/navigation_actions.dart';
 
 class CourseDetailViewModel {

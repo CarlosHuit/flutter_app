@@ -13,12 +13,15 @@ class Answers {
     @required this.id
   }); 
 
-  factory Answers.parseJson() {
+  factory Answers.parseJson(dynamic json) {
+
+    final answersList = List.from(json['answers']);
+    final answers = answersList.map((el) => Answer.parseJson(el)).toList();
 
     return Answers(
-      answers: null,
-      commentId: null,
-      id: null
+      answers:   answers,
+      commentId: json['comment_id'],
+      id:        json['_id']
     );
 
   }

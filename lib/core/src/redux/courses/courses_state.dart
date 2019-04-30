@@ -23,7 +23,6 @@ class CoursesState {
 
     return CoursesState(
       courses: courses ?? this.courses,
-      // currentCourse: currentCourse ?? this.currentCourse
       currentCourse: currentCourse != null ? currentCourse : null
     );
 

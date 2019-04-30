@@ -5,6 +5,7 @@ import '../signup/signup_reducer.dart';
 import '../courses/courses_reducer.dart';
 import '../reading_course/reading_course_reducer.dart';
 import '../device/device_reducer.dart';
+import '../discussion_system/discussion_system.dart';
 
 AppState appReducer(AppState state, dynamic action) {
 
@@ -15,7 +16,8 @@ AppState appReducer(AppState state, dynamic action) {
     signupState:        signupReducer(state.signupState, action),
     coursesState:       coursesReducer(state.coursesState, action),
     readingCourseState: readingCourseReducer(state, action),
-    deviceState:        deviceReducer(state.deviceState, action)        
+    deviceState:        deviceReducer(state.deviceState, action),
+    discussionSystem:   discussionSystemReducer(state, action)
   );
 
 }

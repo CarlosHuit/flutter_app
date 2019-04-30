@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/networking/system_discussion_api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:key_value_store/key_value_store.dart';
 import 'package:redux/redux.dart';
@@ -11,6 +12,7 @@ import 'package:app19022019/core/src/models/auth_login_response.dart';
 import 'package:app19022019/core/src/redux/auth/auth_middleware.dart';
 import 'package:app19022019/core/src/networking/networking.dart';
 
+import '../redux/discussion_system/discussion_system.dart';
 import './navigation/navigation_middleware.dart';
 import '../redux/signup/signup_middleware.dart';
 import '../redux/login/login_middleware.dart';
@@ -30,7 +32,7 @@ Future<Store<AppState>> createStore({
   final readingCourseApi = ReadingCourseApi(client, secureStorage); 
   final coursesApi = CoursesApi(client, secureStorage);
   final authApi    = AuthApi(client);
-
+  final discussionSystemApi = DiscussionSystemApi(client, secureStorage);
 
 
 
@@ -45,8 +47,8 @@ Future<Store<AppState>> createStore({
       AuthMiddleware(secureStorage),
       CoursesMiddleware(coursesApi),
       ReadingCourseMiddleware(readingCourseApi),
+      DiscussionSystemMiddleware(discussionSystemApi),
       NavigationMiddleware(),
-
     ]
   );
   

@@ -1,6 +1,6 @@
 
 import 'package:app19022019/core/src/viewmodels/course_detail_view_model.dart';
-import 'package:app19022019/ui/system-discussion/system_discussion.dart';
+import 'package:app19022019/ui/discussion_system/discussion-system_component.dart';
 import 'package:flutter/material.dart';
 
 class CourseDetailTabBarView extends StatelessWidget {
@@ -10,8 +10,8 @@ class CourseDetailTabBarView extends StatelessWidget {
 
   const CourseDetailTabBarView({
     Key key,
-    @required this.tabController,
     @required this.viewModel,
+    @required this.tabController,
   }) : super(key: key);
 
   @override
@@ -22,8 +22,15 @@ class CourseDetailTabBarView extends StatelessWidget {
         child: TabBarView(
           controller: tabController,
           children: <Widget>[
-            CourseDetailView(viewModel: viewModel),
-            SystemDiscussion(),
+
+            CourseDetailView(
+              viewModel: viewModel
+            ),
+
+            DiscussionSystemComponent(
+              courseId: viewModel.course.id
+            ),
+
           ],
         ),
       ),
