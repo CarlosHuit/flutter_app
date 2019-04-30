@@ -51,9 +51,10 @@ class _DiscussionSystemComponentState extends State<DiscussionSystemComponent> {
               children: <Widget>[
 
                 SizedBox(height: 5.0),
-                TextFieldWriteComment(),
+                TextFieldWriteComment(
+                  onSubmit: (String term) => print('comment: $term'),
+                ),
                 buildContent(vm),
-                SizedBox(height: 10.0),
 
               ],
             ),

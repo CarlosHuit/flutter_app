@@ -1,39 +1,43 @@
 import 'package:app19022019/ui/components/custom_circular_icon_button.dart';
 import 'package:flutter/material.dart';
 
-class TextFieldWriteComment extends StatefulWidget {
+class TextFieldWriteAnswer extends StatefulWidget {
 
   final Function(String term) onSubmit;
 
-  const TextFieldWriteComment({
+  const TextFieldWriteAnswer({
     Key key,
     @required this.onSubmit
   }) : super(key: key);
 
   @override
-  _TextFieldWriteCommentState createState() => _TextFieldWriteCommentState();
-
+  _TextFieldWriteAnswerState createState() => _TextFieldWriteAnswerState();
 }
 
 
-class _TextFieldWriteCommentState extends State<TextFieldWriteComment> {
+class _TextFieldWriteAnswerState extends State<TextFieldWriteAnswer> {
 
-  TextEditingController _controller;
   Function(String term) get onSubmit => widget.onSubmit;
 
-  BoxDecoration _boxDecoration = BoxDecoration(
+  TextEditingController _controller;
+
+  BoxDecoration _decoration = BoxDecoration(
+
     color:        Colors.white,
     borderRadius: BorderRadius.circular(4.0),
-    boxShadow: [
-      BoxShadow( color: Colors.black26, blurRadius: 2.0 )
-    ]
+    boxShadow: [  BoxShadow( color: Colors.black26, blurRadius: 2.0 ) ]
+
   );
 
+
   InputDecoration _inputDecoration = InputDecoration(
+
     enabledBorder:  InputBorder.none,
     disabledBorder: InputBorder.none,
-    border: InputBorder.none,
+    border:         InputBorder.none,
+
   );
+
 
   @override
   void initState() {
@@ -41,14 +45,8 @@ class _TextFieldWriteCommentState extends State<TextFieldWriteComment> {
     _controller = TextEditingController();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
-
-  void onSubmitComment() {
+  void onSubmitAnswer() {
 
     final term = _controller.value.text.trim();
 
@@ -59,33 +57,35 @@ class _TextFieldWriteCommentState extends State<TextFieldWriteComment> {
 
   }
 
+
   @override
   Widget build(BuildContext context) {
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
-      child: Row(
+
+      margin: EdgeInsets.symmetric(vertical: 5.0),
+      child:  Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
 
 
           Expanded(
             child: Container(
+              margin:    EdgeInsets.only(
+                left: 0.0,
+                right: 5.0
+              ),
               alignment: Alignment.center,
-              margin:    EdgeInsets.only( left: 15.0, right: 5.0 ),
-              child:     Container(
-
-                padding:    EdgeInsets.symmetric(horizontal: 15.0),
-                decoration: _boxDecoration,
+              child: Container(
+                decoration: _decoration,
+                padding:    EdgeInsets.symmetric(horizontal: 10.0),
                 child: TextField(
-
                   maxLines:     null,
+                  autofocus:    true,
                   controller:   _controller,
                   decoration:   _inputDecoration,
                   keyboardType: TextInputType.multiline,
-
                 ),
-
               ),
             ),
           ),
@@ -96,10 +96,10 @@ class _TextFieldWriteCommentState extends State<TextFieldWriteComment> {
             height:    44.0,
             alignment: Alignment.center,
             child: CustomCircularIconButton(
-              height: 42.0,
-              width:  42.0,
-              onTap:  onSubmitComment,
-              icon:   Icon( Icons.send, color: Colors.blue, size: 32.0 ),
+              height: 42,
+              width:  42,
+              onTap:  onSubmitAnswer,
+              icon:   Icon( Icons.send, color: Colors.blue, size: 28.0 ),
               splashColor: Colors.blue[50],
             )
           )

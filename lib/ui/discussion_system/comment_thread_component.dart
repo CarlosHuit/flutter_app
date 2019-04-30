@@ -2,7 +2,9 @@
 import 'package:app19022019/core/src/models/discussion_system/comment.dart';
 import 'package:app19022019/ui/discussion_system/answer_component.dart';
 import 'package:app19022019/ui/discussion_system/comment_component.dart';
+import 'package:app19022019/ui/discussion_system/text_field_write_answer.dart';
 import 'package:flutter/material.dart';
+
 
 class CommentThreadComponent extends StatefulWidget {
 
@@ -14,17 +16,22 @@ class CommentThreadComponent extends StatefulWidget {
 
 }
 
+
 class _CommentThreadComponentState extends State<CommentThreadComponent> {
 
   Comment get data => widget.data;
 
   bool showAnswers;
+  bool hasAnswers;
+  bool showBoxWriteAnswer;
 
   @override
   void initState() {
 
     super.initState();
     showAnswers = false;
+    hasAnswers = data.answers.answers.length > 0;
+    showBoxWriteAnswer = false;
 
   }
 
@@ -36,6 +43,11 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
 
   }
 
+  void toggleShowBoxAnswer() {
+    setState(() {
+      showBoxWriteAnswer = !showBoxWriteAnswer;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +56,13 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
 
 
     return Container(
+      margin: EdgeInsets.only(bottom: 10.0),
+      padding: EdgeInsets.only(bottom: 10.0),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey[300], width: 1.0)
+        )
+      ),
       child: Column(
         children: <Widget>[
 
@@ -63,11 +82,16 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
 
-                      showAnswers ? buildAnswersList() : SizedBox(),
+                      showAnswers && hasAnswers ? buildAnswersList() : SizedBox(),
+                      showAnswers && hasAnswers ? buildShowAnswers() : SizedBox(),
+                      !showAnswers && hasAnswers ? buildHideAnswers() : SizedBox(),
 
-                      showAnswers ? buildShowAnswers() : buildHideAnswers(),
+                      showBoxWriteAnswer ? TextFieldWriteAnswer(
+                        onSubmit: (String term) => print('answer: $term'),
+                      ) : SizedBox(),
 
                       buildAnswerButton()
+
                     ],
                   ),
                 )
@@ -107,7 +131,7 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
   Widget buildShowAnswers() {
 
     return  Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      margin: EdgeInsets.symmetric(vertical: 5.0),
       alignment: Alignment.center,
       child: InkWell(
         onTap: toggleShowAnswersStatus,
@@ -130,7 +154,7 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
   Widget buildHideAnswers() {
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      margin: EdgeInsets.symmetric(vertical: 5.0),
       alignment: Alignment.center,
       child: InkWell(
         onTap: toggleShowAnswersStatus,
@@ -153,20 +177,23 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
   Widget buildAnswerButton() {
 
     return Container(
-      height: 40.0,
       alignment: Alignment.centerLeft,
-      child: RaisedButton(
+      height: 40.0,
+      child:  MaterialButton(
+
         highlightColor: Colors.transparent,
-        color: Colors.white,
+        color:     Colors.white,
         textColor: Theme.of(context).primaryColor,
-        onPressed: () {},
-        child: Text(
-          'Responder',
+        onPressed: toggleShowBoxAnswer,
+
+        child:     Text(
+          !showBoxWriteAnswer ? 'Responder' : 'Ocultar',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 16.0
+            fontSize: 14.0
           ),
         ),
+
       ),
     );
 
@@ -185,7 +212,7 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
       child: Container(
         decoration: BoxDecoration(
           border: Border(
-            left: BorderSide(color: _primaryColor, width: 2.0 ),
+            left:   BorderSide(color: _primaryColor, width: 2.0 ),
             bottom: BorderSide(color: _primaryColor, width: 2.0 )
           ),
         ),
