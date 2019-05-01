@@ -12,6 +12,7 @@ DiscussionSystemState discussionSystemReducer(AppState state, dynamic action) {
     return DiscussionSystemState.initialState();
   }
 
+
   return state.discussionSystem;
 
 }

@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/models/discussion_system/comment.dart';
 import 'package:app19022019/core/src/networking/system_discussion_api.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:redux/redux.dart';
@@ -14,13 +15,22 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
 
     if (action is DSGetCourseComments) {
       getComments(store, action);
+    }
 
+    if (action is DSAddComment) {
+
+      final txt = action.text;
+      final user = store.state.authState;
+
+      // final commentToSend = Comment(id: null, );
+      // final localComment = Comment();
 
     }
 
     next(action);
 
   }
+
 
 
   Future<void> getComments(Store<AppState> store, dynamic action ) async {
@@ -60,5 +70,11 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
 
   }
 
+
+  Future<void> addComment(Store<AppState> store, dynamic action) async {
+
+
+
+  }
 
 }

@@ -60,4 +60,28 @@ class DiscussionSystemApi {
 
 
 
+  // Future<Comment> addComment(Comment comment) async {
+  addComment(Comment comment) async {
+  
+  
+    final data  = json.encode(comment);
+    final token  = await secureStorage.read(key: 'token');
+    final headers = { HttpHeaders.authorizationHeader: token };
+    final response = await client.post(baseUrl, headers: headers, body: data);
+  
+    if (response.statusCode == 200) {
+  
+      final result = json.decode(response.body);
+      print(result);
+  
+    } else {
+  
+      return throw('Error al agregar comentario');
+  
+    }
+  
+  
+  }
+
+
 }

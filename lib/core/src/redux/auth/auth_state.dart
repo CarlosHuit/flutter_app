@@ -11,7 +11,7 @@ class AuthState {
   final String lastName;
   final String email;
   final String avatar;
-
+  final String userId;
 
   AuthState({
     @required this.isLoggedIn,
@@ -19,7 +19,8 @@ class AuthState {
     @required this.lastName,
     @required this.firstName,
     @required this.email,
-    @required this.avatar
+    @required this.avatar,
+    @required this.userId,
   });
 
 
@@ -29,7 +30,8 @@ class AuthState {
     String firstName,
     String lastName,
     String email,
-    String avatar
+    String avatar,
+    String userId,
   }) {
     return AuthState(
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
@@ -37,7 +39,8 @@ class AuthState {
       firstName:  firstName  ?? this.firstName,
       lastName:   lastName   ?? this.lastName,
       email:      email      ?? this.email,
-      avatar:     avatar     ?? this.avatar
+      avatar:     avatar     ?? this.avatar,
+      userId:     userId     ?? this.userId,
     );
   }
 
@@ -51,7 +54,8 @@ class AuthState {
       lastName:   !isNull ? auth.lastName : null,
       token:      !isNull ? auth.token : null,
       email:      !isNull ? auth.email : null,
-      avatar:     !isNull ? auth.avatar :null 
+      avatar:     !isNull ? auth.avatar : null,
+      userId:     !isNull ? auth.userId : null, 
     );
 
   } 
@@ -65,7 +69,8 @@ class AuthState {
       && lastName    == other.lastName
       && token       == other.token
       && avatar      == other.avatar
-      && email       == other.email;
+      && email       == other.email
+      && userId      == other.userId;
 
   @override
   int get hashCode =>
@@ -74,6 +79,7 @@ class AuthState {
     firstName.hashCode ^
     lastName.hashCode ^
     avatar.hashCode ^
-    email.hashCode;
+    email.hashCode ^
+    userId.hashCode;
 
 }

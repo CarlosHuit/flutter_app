@@ -20,14 +20,17 @@ class AuthLoginResponse {
   });
 
 
-  AuthLoginResponse.fromJson(Map<String, dynamic> parsedJson) {
-    token =     parsedJson['token'];
-    avatar =    parsedJson['avatar'];
-    email =     parsedJson['email'];
-    firstName = parsedJson['firstName'];
-    lastName =  parsedJson['lastName'];
-    message =   parsedJson['message'];
-    userId =    parsedJson['userId'];
+  factory AuthLoginResponse.fromJson(Map<String, dynamic> parsedJson) {
+    return AuthLoginResponse(
+      token     : parsedJson['token'],
+      avatar    : parsedJson['avatar'],
+      email     : parsedJson['email'],
+      firstName : parsedJson['firstName'],
+      lastName  : parsedJson['lastName'],
+      message   : parsedJson['message'],
+      userId    : parsedJson['userId'],
+
+    );
   }
 
   Map<String, dynamic> toJson() {
