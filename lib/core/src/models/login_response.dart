@@ -17,7 +17,7 @@ class LoginResponse {
 
     for (var i = 0; i < respJson['courses'].length; i++) {
 
-      Course el = Course(respJson['courses'][i]);
+      Course el = Course.fromJson(respJson['courses'][i]);
       temListCourse.add(el);
 
     }

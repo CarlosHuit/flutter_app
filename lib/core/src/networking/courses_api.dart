@@ -31,7 +31,7 @@ class CoursesApi {
       List<dynamic> result = json.decode(response.body);
       List<Course> coursesList = [];
 
-      result.forEach((c) =>  coursesList.add(Course(c)));
+      result.forEach((c) =>  coursesList.add(Course.fromJson(c)));
 
       return coursesList;
 
