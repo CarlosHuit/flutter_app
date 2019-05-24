@@ -19,14 +19,13 @@ class AuthResponse {
   factory AuthResponse.fromJson(dynamic json) {
 
     List<Course> courses = [];
-
+    print(json);
     for (var i = 0; i < json['courses'].length; i++) {
 
       Course el = Course.fromJson(json['courses'][i]);
       courses.add(el);
 
     }
-
 
     return AuthResponse(
       user: User.fromJson(json['user']),
@@ -40,14 +39,13 @@ class AuthResponse {
   
   Map<String, dynamic> toJson() {
 
+    final coursesList = courses.map((course) =>  course.toJson()).toList();
+
     return {
-      'token':     token,
-      'message':   message,
-      'userId':    user.id,
-      'firstName': user.firstName,
-      'lastName':  user.lastName,
-      'email':     user.email,
-      'avatar':    user.avatar,
+      'user':    user.toJson(),
+      'token':   token,
+      'courses':  coursesList,
+      'message': message,
     };
 
   }

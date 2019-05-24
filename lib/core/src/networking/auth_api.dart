@@ -20,7 +20,6 @@ class AuthApi {
   Future<AuthResponse> login(SigninForm credentials) async{
     
     final url = '$apiUrl/signin';
-    print(url);
     final response = await client.post(url, body: credentials.toJson());
     final result = json.decode(response.body);
     

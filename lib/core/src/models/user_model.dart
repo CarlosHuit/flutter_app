@@ -29,6 +29,18 @@ class User {
 
   }
 
+  Map<String, String> toJson() {
+
+    return {
+      'id':        id,
+      'firstName': firstName,
+      'lastName':  lastName,
+      'email':     email,
+      'avatar':    avatar,
+    };
+
+  }
+
   String fullName() => '$firstName $lastName';
 
 
