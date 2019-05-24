@@ -1,5 +1,6 @@
 
-import 'package:app19022019/core/src/models/auth_login_response.dart';
+import 'package:app19022019/core/src/models/auth_response_model.dart';
+import 'package:app19022019/core/src/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -7,55 +8,34 @@ class AuthState {
 
   final bool   isLoggedIn;
   final String token;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String avatar;
-  final String userId;
+  final User   user;
 
   AuthState({
     @required this.isLoggedIn,
     @required this.token,
-    @required this.lastName,
-    @required this.firstName,
-    @required this.email,
-    @required this.avatar,
-    @required this.userId,
+    @required this.user,
   });
 
 
   AuthState copyWith({
     bool   isLoggedIn,
     String token,
-    String firstName,
-    String lastName,
-    String email,
-    String avatar,
-    String userId,
+    User   user,
   }) {
     return AuthState(
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
       token:      token      ?? this.token,
-      firstName:  firstName  ?? this.firstName,
-      lastName:   lastName   ?? this.lastName,
-      email:      email      ?? this.email,
-      avatar:     avatar     ?? this.avatar,
-      userId:     userId     ?? this.userId,
+      user:       user       ?? this.user,
     );
   }
 
-  factory AuthState.initialState({@required AuthLoginResponse auth }) {
+  factory AuthState.initialState({@required AuthResponse auth }) {
 
     final bool isNull =  auth == null ? true : false;
-
     return AuthState(
       isLoggedIn: !isNull ? true : false,
-      firstName:  !isNull ? auth.firstName : null,
-      lastName:   !isNull ? auth.lastName : null,
       token:      !isNull ? auth.token : null,
-      email:      !isNull ? auth.email : null,
-      avatar:     !isNull ? auth.avatar : null,
-      userId:     !isNull ? auth.userId : null, 
+      user:       !isNull ? auth.user : null,
     );
 
   } 
@@ -65,21 +45,12 @@ class AuthState {
     identical(this, other) || other is AuthState
       && runtimeType == other.runtimeType
       && isLoggedIn  == other.isLoggedIn
-      && firstName   == other.firstName
-      && lastName    == other.lastName
       && token       == other.token
-      && avatar      == other.avatar
-      && email       == other.email
-      && userId      == other.userId;
+      && user        == other.user;
 
   @override
   int get hashCode =>
     token.hashCode ^
     isLoggedIn.hashCode ^
-    firstName.hashCode ^
-    lastName.hashCode ^
-    avatar.hashCode ^
-    email.hashCode ^
-    userId.hashCode;
-
+    user.hashCode;
 }

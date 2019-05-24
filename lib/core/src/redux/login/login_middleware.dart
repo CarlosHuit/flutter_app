@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:app19022019/core/src/models/auth_response_model.dart';
 import 'package:redux/redux.dart';
+
+import './login.dart';
 import '../../models/credentials.dart';
-import '../../models/login_response.dart';
 import '../../networking/auth_api.dart';
+import '../../redux/app/app_state.dart';
 import '../../redux/auth/auth_actions.dart';
 import '../../redux/courses/courses_actions.dart';
-import '../../redux/app/app_state.dart';
 import '../../redux/login/login.dart';
-import './login.dart';
 
 class LoginMiddleware extends MiddlewareClass<AppState> {
 
@@ -30,9 +31,9 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
 
       try {
 
-        final LoginResponse response = await api.login(credentials);
+        final AuthResponse response = await api.login(credentials);
         next(SetCourses(courses: response.courses));
-        next(PersistAuth(auth: response.auth, screen: 'login'));
+        next(PersistAuth(auth: response, screen: 'login'));
 
       } catch (e) {
 

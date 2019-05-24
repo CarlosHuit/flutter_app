@@ -8,10 +8,7 @@ AuthState authReducer(AuthState state, dynamic action) {
   if (action is PersistAuth) {
     return state.copyWith(
       token:      action.auth.token,
-      email:      action.auth.email,
-      firstName:  action.auth.firstName,
-      lastName:   action.auth.lastName,
-      avatar:     action.auth.avatar,
+      user:       action.auth.user,
       isLoggedIn: true
     );
   }

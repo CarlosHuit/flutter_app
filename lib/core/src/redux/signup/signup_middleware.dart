@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:app19022019/core/src/models/auth_response_model.dart';
 import 'package:redux/redux.dart';
 
 import '../../redux/courses/courses_actions.dart';
@@ -37,9 +38,9 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
       try {
  
 
-        final LoginResponse response = await api.signup(accountForm);
+        final AuthResponse response = await api.signup(accountForm);
         next(SetCourses(courses: response.courses));
-        next(PersistAuth(auth: response.auth, screen: 'signup'));
+        next(PersistAuth(auth: response, screen: 'signup'));
 
 
       } catch (e) {

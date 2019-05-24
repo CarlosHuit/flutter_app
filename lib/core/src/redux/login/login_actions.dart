@@ -1,4 +1,4 @@
-import '../../models/auth_login_response.dart';
+import 'package:app19022019/core/src/models/auth_response_model.dart';
 import 'package:meta/meta.dart';
 
 class LoginUpdateEmail {
@@ -20,7 +20,7 @@ class RemoveLoginError {}
 class LoginRestartData { }
 
 class LoginSuccess {
-  final AuthLoginResponse authLoginResponse;
+  final AuthResponse authLoginResponse;
   LoginSuccess({@required this.authLoginResponse});
 }
 

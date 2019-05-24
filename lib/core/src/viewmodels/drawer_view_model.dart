@@ -27,10 +27,10 @@ class DrawerViewModel {
 
   factory DrawerViewModel.fromStore(Store<AppState> store) {
     return DrawerViewModel(
-      avatar:    store.state.authState.avatar,
-      email:     store.state.authState.email,
-      firstName: store.state.authState.firstName,
-      lastName:  store.state.authState.lastName,
+      avatar:    store.state.authState.user.avatar,
+      email:     store.state.authState.user.email,
+      firstName: store.state.authState.user.firstName,
+      lastName:  store.state.authState.user.lastName,
       logout:    () => store.dispatch(Logout()),
       items:     null
     );

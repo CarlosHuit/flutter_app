@@ -24,7 +24,7 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
     if (action is DSAddComment) {
 
       final txt = action.text;
-      final user = store.state.authState;
+      final user = store.state.authState.user;
       final courseId = store.state.coursesState.currentCourse.id;
       final createdAt = DateTime.now();
       final temporaryId = generateTemporaryId(courseId);
@@ -33,7 +33,7 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
 
       final commentToSend = Comment(
         id:       null,
-        userId:   user.userId,
+        userId:   user.id,
         user:     null,
         text:     txt,
         date:     createdAt,
@@ -42,7 +42,7 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
         answers:  null,
       );
 
-      final u = UserData(id: user.userId, email: user.email, avatar: user.avatar, firstName:user.firstName, lastName: user.lastName);
+      final u = UserData(id: user.id, email: user.email, avatar: user.avatar, firstName:user.firstName, lastName: user.lastName);
 
       final localComment = Comment(
         id:       null,

@@ -1,15 +1,15 @@
+import 'package:app19022019/core/src/models/auth_response_model.dart';
 import 'package:app19022019/core/src/redux/discussion_system/discussion_system_state.dart';
 import 'package:flutter/material.dart';
 import 'package:key_value_store/key_value_store.dart';
 import 'package:meta/meta.dart';
 
-import '../reading_course/reading_course_state.dart';
-import '../../models/auth_login_response.dart';
-import '../courses/courses_state.dart';
-import '../signup/signup_state.dart';
 import '../auth/auth_state.dart';
-import '../login/login.dart';
+import '../courses/courses_state.dart';
 import '../device/device_state.dart';
+import '../login/login.dart';
+import '../reading_course/reading_course_state.dart';
+import '../signup/signup_state.dart';
 
 @immutable
 class AppState {
@@ -36,7 +36,7 @@ class AppState {
   });
 
 
-  factory AppState.initialState( AuthLoginResponse auth, KeyValueStore keyValueStore) {
+  factory AppState.initialState( AuthResponse auth, KeyValueStore keyValueStore) {
 
     return AppState(
       appName:            'Weduc',

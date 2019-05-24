@@ -1,4 +1,4 @@
-import '../../models/auth_login_response.dart';
+import 'package:app19022019/core/src/models/auth_response_model.dart';
 import 'package:meta/meta.dart';
 
 class SignupUpdateFirstName {
@@ -36,7 +36,7 @@ class Signup {}
 class RemoveSignupError {}
 
 class SignupSuccess {
-  final AuthLoginResponse authLoginResponse;
+  final AuthResponse authLoginResponse;
   SignupSuccess({@required this.authLoginResponse});
 }
 
