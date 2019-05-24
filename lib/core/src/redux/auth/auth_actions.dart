@@ -1,4 +1,3 @@
-import 'package:app19022019/core/src/models/auth_login_response.dart';
 import 'package:app19022019/core/src/models/auth_response_model.dart';
 import 'package:meta/meta.dart';
 

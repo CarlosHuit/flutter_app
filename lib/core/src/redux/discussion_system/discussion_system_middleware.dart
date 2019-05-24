@@ -55,6 +55,9 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
         text:     txt
       );
 
+      print(commentToSend);
+      print(localComment);
+
     }
 
     next(action);
