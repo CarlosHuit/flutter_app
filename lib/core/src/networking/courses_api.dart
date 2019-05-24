@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app19022019/environments/environments.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../models/models.dart';
@@ -11,7 +12,7 @@ class CoursesApi {
 
   http.Client client;
   final FlutterSecureStorage secureStorage;
-  final String baseUrl = 'https://weduc.herokuapp.com/api/courses';
+  final String apiUrl = '${Environments.apiUrl}/courses';
 
   CoursesApi(this.client, this.secureStorage);
 
@@ -21,7 +22,7 @@ class CoursesApi {
 
     final token = await secureStorage.read(key: 'token');
     final headers  = { HttpHeaders.authorizationHeader: token };
-    final response = await client.get(baseUrl, headers: headers);
+    final response = await client.get(apiUrl, headers: headers);
 
 
     
