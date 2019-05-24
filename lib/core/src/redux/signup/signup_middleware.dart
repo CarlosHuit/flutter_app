@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:app19022019/core/src/models/auth_response_model.dart';
+import 'package:app19022019/core/src/models/forms/signup_form_model.dart';
 import 'package:redux/redux.dart';
 
-import '../../redux/courses/courses_actions.dart';
-import '../../redux/auth/auth_actions.dart';
-import '../../redux/signup/signup.dart';
 import '../../networking/auth_api.dart';
 import '../../redux/app/app.dart';
-import '../../models/models.dart';
+import '../../redux/auth/auth_actions.dart';
+import '../../redux/courses/courses_actions.dart';
+import '../../redux/signup/signup.dart';
 
 class SignupMiddleware extends MiddlewareClass<AppState> {
 
@@ -26,19 +26,20 @@ class SignupMiddleware extends MiddlewareClass<AppState> {
 
       final path = store.state.signupState;
 
-      final AccountForm accountForm = AccountForm(
-        email:      path.email,
-        firstName:  path.firstName,
-        lastName:   path.lastName,
-        password:   path.password,
-        password2:  path.password2,
-        avatar:     path.avatar
+      final SignupForm signupForm = new SignupForm(
+        email:   path.email,
+        avatar:  path.avatar,
+        lastName: path.lastName,
+        password: path.password,
+        firstName: path.firstName,
+        password2: path.password2,
       );
 
       try {
  
 
-        final AuthResponse response = await api.signup(accountForm);
+        final AuthResponse response = await api.signup(signupForm);
+
         next(SetCourses(courses: response.courses));
         next(PersistAuth(auth: response, screen: 'signup'));
 
