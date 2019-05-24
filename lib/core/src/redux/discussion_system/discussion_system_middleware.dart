@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:app19022019/core/src/models/discussion_system/answers.dart';
 import 'package:app19022019/core/src/models/discussion_system/comment.dart';
+import 'package:app19022019/core/src/models/discussion_system/user_data.dart';
 import 'package:app19022019/core/src/networking/system_discussion_api.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:redux/redux.dart';
@@ -21,9 +25,35 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
 
       final txt = action.text;
       final user = store.state.authState;
+      final courseId = store.state.coursesState.currentCourse.id;
+      final createdAt = DateTime.now();
+      final temporaryId = generateTemporaryId(courseId);
 
-      // final commentToSend = Comment(id: null, );
-      // final localComment = Comment();
+      final answers = Answers( commentId: temporaryId, answers: [], id: null );
+
+      final commentToSend = Comment(
+        id:       null,
+        userId:   user.userId,
+        user:     null,
+        text:     txt,
+        date:     createdAt,
+        courseId: courseId,
+        tempId:   temporaryId,
+        answers:  null,
+      );
+
+      final u = UserData(id: user.userId, email: user.email, avatar: user.avatar, firstName:user.firstName, lastName: user.lastName);
+
+      final localComment = Comment(
+        id:       null,
+        userId:   null,
+        user:     u,
+        answers:  answers,
+        courseId: courseId,
+        date:     createdAt,
+        tempId:   temporaryId,
+        text:     txt
+      );
 
     }
 
@@ -75,6 +105,12 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
 
 
 
+  }
+
+  String generateTemporaryId(String courseId) {
+    final rn = Random();
+    final randomInt = rn.nextInt(4000);
+    return '$courseId$randomInt';
   }
 
 }

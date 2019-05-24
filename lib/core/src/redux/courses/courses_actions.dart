@@ -1,4 +1,4 @@
-import 'package:app19022019/core/src/models/course.dart';
+import 'package:app19022019/core/src/models/course_model.dart';
 import 'package:meta/meta.dart';
 
 class SetCourses {

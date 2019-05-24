@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 import '../../networking/courses_api.dart';
 import '../app/app_state.dart';
 import './courses_actions.dart';
-import '../../models/course.dart';
+import '../../models/course_model.dart';
 
 class CoursesMiddleware extends MiddlewareClass<AppState> {
 

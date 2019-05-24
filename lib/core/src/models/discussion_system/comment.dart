@@ -7,12 +7,28 @@ import './user_data.dart';
 
 class Comment {
 
+  /// comment id used to identify current comment
   final String   id;
-  final UserData user;
+
+  /// comment text content
   final String   text;
+
+  /// user is usef to display user data on the screen
+  final UserData user;
+
+  /// userId is used to save comment in the database, 
+  final String   userId;
+
+  /// DateTime of comment creation
   final DateTime date;
+
+  /// Answers of current comment
   final Answers  answers;
+
+  /// id to associate the comments to a course
   final String   courseId;
+
+  /// temporary id generated to handle comment transaction (save)
   final String   tempId;
 
   Comment({
@@ -22,7 +38,8 @@ class Comment {
     @required this.date,
     @required this.answers,
     @required this.courseId,
-    @required this.tempId
+    @required this.tempId,
+    @required this.userId,
   });
 
   factory Comment.parseJson(dynamic json) {
@@ -36,6 +53,7 @@ class Comment {
       tempId:   null,
       answers:  Answers.parseJson(json['answers_id']),
       courseId: null,
+      userId:   null,
     );
   }
 

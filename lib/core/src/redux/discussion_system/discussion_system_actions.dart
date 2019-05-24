@@ -27,6 +27,16 @@ class DSAddComment {
   DSAddComment(this.text);
 }
 
+class DSAddLocalComment {
+  final Comment comment;
+  DSAddLocalComment(this.comment);
+}
+
+class DSSendComment {
+  final Comment comment;
+  DSSendComment(this.comment);
+}
+
 class DSAddCommentSuccess {
   final Comment comment;
   DSAddCommentSuccess(this.comment);

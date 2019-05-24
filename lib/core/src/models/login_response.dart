@@ -1,4 +1,4 @@
-import './course.dart';
+import './course_model.dart';
 import './auth_login_response.dart';
 
 

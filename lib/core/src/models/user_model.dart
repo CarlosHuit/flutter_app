@@ -1,21 +1,32 @@
+import 'package:meta/meta.dart';
+
 class User {
 
-  String firstName;
-  String lastName;
-  String email;
-  String password; 
-  String password2;
-  String token;
+  final String id;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String avatar;
 
-  User( this.firstName, this.lastName, this.email, this.password, this.password2, this.token );
+  User({
+    @required this.id,
+    @required this.firstName,
+    @required this.lastName,
+    @required this.email,
+    @required this.avatar
+  }); 
 
-  User.fromJson(Map<String, dynamic> json) {
-    firstName = json['firstName'];
-    lastName  = json['lastName'];
-    email     = json['email'];
-    password  = json['password'];
-    password2 = json['password2'];
-    token     = json['token'];
+
+  factory User.fromJson(Map<String, dynamic> json) {
+
+    return User(
+      id:        json['id'],
+      firstName: json['firstName'],
+      lastName:  json['lastName'],
+      email:     json['email'],
+      avatar:    json['avatar'],
+    );
+
   }
 
   String fullName() => '$firstName $lastName';
