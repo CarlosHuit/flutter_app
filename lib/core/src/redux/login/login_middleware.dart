@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:app19022019/core/src/models/auth_response_model.dart';
+import 'package:app19022019/core/src/models/forms/signin_form_model.dart';
 import 'package:redux/redux.dart';
 
 import './login.dart';
-import '../../models/credentials.dart';
 import '../../networking/auth_api.dart';
 import '../../redux/app/app_state.dart';
 import '../../redux/auth/auth_actions.dart';
@@ -26,7 +26,11 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
     if (action is Login) {
 
       final path = store.state.loginState;
-      final credentials = Credentials(path.email, path.password);
+
+      final credentials = SigninForm(
+        email:    path.email,
+        password: path.password
+      );
 
 
       try {

@@ -11,4 +11,11 @@ class SigninForm {
     @required this.password,
   });
 
+  Map<String, String> toJson() {
+    return {
+      'email':    email,
+      'password': password
+    };
+  }
+
 }

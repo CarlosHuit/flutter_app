@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:app19022019/core/src/models/auth_response_model.dart';
+import 'package:app19022019/core/src/models/forms/signin_form_model.dart';
 import 'package:app19022019/core/src/models/forms/signup_form_model.dart';
 import 'package:app19022019/environments/environments.dart';
-
-import '../models/models.dart';
 import 'package:http/http.dart' as http;
 
 class AuthApi {
@@ -18,7 +17,7 @@ class AuthApi {
   AuthApi(this.client);
 
 
-  Future<AuthResponse> login(Credentials credentials) async{
+  Future<AuthResponse> login(SigninForm credentials) async{
     
     final url = '$apiUrl/signin';
     print(url);
