@@ -28,7 +28,7 @@ class CourseDetailTabBarView extends StatelessWidget {
             ),
 
             DiscussionSystemComponent(
-              courseId: viewModel.course.id
+              course: viewModel.course,
             ),
 
           ],

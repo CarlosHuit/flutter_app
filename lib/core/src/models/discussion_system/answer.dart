@@ -1,21 +1,20 @@
+import 'package:app19022019/core/src/models/user_model.dart';
 import 'package:app19022019/utils/date_format/date_format.dart';
 import 'package:meta/meta.dart';
 
-import './user_data.dart';
 
 class Answer {
-  final UserData user;
-  final String text;
-  final DateTime date;
-  final String commentId;
+
   final String id;
-  final String tempId; //tempId
+  final DateTime date;
+  final String tempId;
+  final String text;
+  final User user;
 
   Answer({
     @required this.user,
     @required this.text,
     @required this.date,
-    @required this.commentId,
     @required this.id,
     @required this.tempId
   });
@@ -23,13 +22,21 @@ class Answer {
   factory Answer.parseJson(dynamic json) {
 
     return Answer(
-      commentId: null,
-      tempId:    null,
-      date:      DateTime.parse(json['date']),
-      id:        json['_id'],
-      text:      json['text'],
-      user:      UserData.parseJson(json['user'])
+      tempId: json['tempId'],
+      date:   DateTime.parse(json['date']),
+      id:     json['id'],
+      text:   json['text'],
+      user:   User.fromJson(json['user'])
     );
+
+  }
+
+  static List<Answer> parseJsonList(dynamic jsonAnswers) {
+
+    final answers =
+        List.generate(jsonAnswers.length, (i) => Answer.parseJson(jsonAnswers[i]));
+
+    return answers;
 
   }
 

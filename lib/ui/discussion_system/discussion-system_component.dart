@@ -1,3 +1,4 @@
+import 'package:app19022019/core/src/models/course_model.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:app19022019/core/src/redux/discussion_system/discussion_system_actions.dart';
 import 'package:app19022019/core/src/viewmodels/discussion_system_view_model.dart';
@@ -8,11 +9,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class DiscussionSystemComponent extends StatefulWidget {
 
-  final String courseId;
+  final Course course;
 
   const DiscussionSystemComponent({
     Key key,
-    @required this.courseId
+    @required this.course
   }) : super(key: key);
 
   @override
@@ -22,7 +23,7 @@ class DiscussionSystemComponent extends StatefulWidget {
 class _DiscussionSystemComponentState extends State<DiscussionSystemComponent> {
 
 
-  String get courseId => widget.courseId;
+  Course get course => widget.course;
 
   @override
   void initState() {
@@ -40,7 +41,7 @@ class _DiscussionSystemComponentState extends State<DiscussionSystemComponent> {
     return StoreConnector<AppState, DiscussionSystemViewModel>(
       distinct:  true,
       converter: (store) => DiscussionSystemViewModel.fromStore(store),
-      onInit:    (store) => store.dispatch(DSGetCourseComments(courseId)),
+      onInit:    (store) => store.dispatch(DSGetCourseComments(course)),
       builder:   (_, vm) {
 
 

@@ -30,7 +30,7 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
 
     super.initState();
     showAnswers = false;
-    hasAnswers = data.answers.answers.length > 0;
+    hasAnswers = data.answers.length > 0;
     showBoxWriteAnswer = false;
 
   }
@@ -113,11 +113,11 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
     return Container(
       child: Column(
         children: List.generate(
-          data.answers.answers.length,
+          data.answers.length,
           (i) {
 
             return AnswerComponent(
-              data: data.answers.answers[i]
+              data: data.answers[i]
             );
 
           }

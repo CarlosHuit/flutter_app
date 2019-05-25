@@ -1,11 +1,12 @@
+import 'package:app19022019/core/src/models/course_model.dart';
 import 'package:app19022019/core/src/models/discussion_system/answer.dart';
 import 'package:app19022019/core/src/models/discussion_system/comment.dart';
 import 'package:meta/meta.dart';
 
 class DSGetCourseComments {
 
-  final String courseId;
-  DSGetCourseComments(this.courseId);
+  final Course course;
+  DSGetCourseComments(this.course);
 
 }
 
