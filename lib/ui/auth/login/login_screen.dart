@@ -193,6 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
       margin: EdgeInsets.only(top: 10.0, bottom: 15.0),
       child:  MaterialButton(
 
+        disabledColor: Colors.red,
         color:     Colors.red,
         textColor: Colors.white,
         minWidth:  180.0,
