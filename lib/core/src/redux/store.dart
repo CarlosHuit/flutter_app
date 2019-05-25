@@ -28,9 +28,6 @@ Future<Store<AppState>> createStore({
   final authJson = await secureStorage.read(key: 'auth');
   final auth = authJson != null ? AuthResponse.fromJson(json.decode(authJson)) : null;
 
-  print('1234567890-------------------');
-  print(auth);
-
   final readingCourseApi = ReadingCourseApi(client, secureStorage); 
   final coursesApi = CoursesApi(client, secureStorage);
   final authApi    = AuthApi(client);

@@ -60,7 +60,7 @@ class _ReadingCourseContentState extends State<ReadingCourseContent> with Single
     final index = _tabController.index;
 
     if (_timer != null) {
-      print('cancel timer');
+
       _timer.cancel();
     }
 

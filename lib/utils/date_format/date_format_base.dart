@@ -206,9 +206,7 @@ const String u = 'u';
 /// Outputs if hour is AM or PM
 ///
 /// Example:
-///     print(formatDate(DateTime(1989, 02, 1, 5), [am]));
 ///     // => AM
-///     print(formatDate(DateTime(1989, 02, 1, 15), [am]));
 ///     // => PM
 const String am = 'am';
 

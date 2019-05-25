@@ -72,7 +72,6 @@ class DiscussionSystemApi {
     if (response.statusCode == 200) {
   
       final result = json.decode(response.body);
-      print(result);
   
     } else {
   

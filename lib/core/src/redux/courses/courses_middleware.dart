@@ -26,7 +26,6 @@ class CoursesMiddleware extends MiddlewareClass<AppState> {
 
         final List<Course> courses = await api.fetchCourses();
         store.dispatch(FetchCoursesSuccess(courses: courses));
-        print('getCourse success');
 
       } catch (e) {
 

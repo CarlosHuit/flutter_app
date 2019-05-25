@@ -23,8 +23,6 @@ class OptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print(colWidth);
-
     return Container(
 
       padding: EdgeInsets.all(3.0),

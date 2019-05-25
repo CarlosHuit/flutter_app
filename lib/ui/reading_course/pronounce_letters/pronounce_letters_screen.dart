@@ -35,7 +35,6 @@ class _PronounceLettersScreenState extends State<PronounceLettersScreen> {
     if (permissionMic != PermissionStatus.granted || permissionSpeech != permissionSpeech ) {
       
       final req = await requestePermision();
-      print(req);
       final denied = req[PermissionGroup.microphone] != PermissionStatus.granted && req[PermissionGroup.speech] != PermissionStatus.granted;
 
       if (denied) {

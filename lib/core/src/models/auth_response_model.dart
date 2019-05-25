@@ -19,7 +19,7 @@ class AuthResponse {
   factory AuthResponse.fromJson(dynamic json) {
 
     List<Course> courses = [];
-    print(json);
+
     for (var i = 0; i < json['courses'].length; i++) {
 
       Course el = Course.fromJson(json['courses'][i]);

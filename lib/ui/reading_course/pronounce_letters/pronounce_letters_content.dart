@@ -144,7 +144,6 @@ class _PronounceLettersContentState extends State<PronounceLettersContent> {
   /// or when speech recognition stops for some error or when speech recognition is cancelled
   void onRecognitionComplete(String term) {
 
-    print('______________________________________________: $term - ${term.length}');
 
     vm.setRecordingState(false);
 

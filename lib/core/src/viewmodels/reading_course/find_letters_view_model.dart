@@ -86,7 +86,7 @@ class FindLettersViewModel {
   }
 
   void redirection() {
-    print('dispatch event to redirect');
+
     dispatch(NavigatorPushReplaceWithTransition(
       screen: DrawLettersScreen(),
       transition: PageTransitionType.rightToLeft      

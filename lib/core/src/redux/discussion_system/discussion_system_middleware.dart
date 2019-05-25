@@ -90,7 +90,6 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
 
     if (store.state.discussionSystem.comments.length != null) {
 
-      print('get comments from cache');
 
       final comments = store.state.discussionSystem.comments;
       store.dispatch(DSGetCourseCommentsSuccess(comments));

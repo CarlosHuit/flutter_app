@@ -190,7 +190,6 @@ class _ModalHandwritingState extends State<ModalHandwriting> with SingleTickerPr
       });
 
     } catch (e) {
-      print(e);
 
       setState(() {
         existAnimation = false;
