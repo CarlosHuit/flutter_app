@@ -1,5 +1,6 @@
 
 import 'package:app19022019/core/src/models/discussion_system/comment.dart';
+import 'package:app19022019/core/src/viewmodels/discussion_system_view_model.dart';
 import 'package:app19022019/ui/discussion_system/answer_component.dart';
 import 'package:app19022019/ui/discussion_system/comment_component.dart';
 import 'package:app19022019/ui/discussion_system/text_field_write_answer.dart';
@@ -9,7 +10,13 @@ import 'package:flutter/material.dart';
 class CommentThreadComponent extends StatefulWidget {
 
   final Comment data;
-  const CommentThreadComponent({Key key, this.data}) : super(key: key);
+  final DiscussionSystemViewModel viewModel;
+
+  const CommentThreadComponent({
+    Key key,
+    @required this.data,
+    @required this.viewModel,
+  }) : super(key: key);
 
   @override
   _CommentThreadComponentState createState() => _CommentThreadComponentState();
@@ -20,6 +27,7 @@ class CommentThreadComponent extends StatefulWidget {
 class _CommentThreadComponentState extends State<CommentThreadComponent> {
 
   Comment get data => widget.data;
+  DiscussionSystemViewModel get vm => widget.viewModel;
 
   bool showAnswers;
   bool hasAnswers;
@@ -66,7 +74,14 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
       child: Column(
         children: <Widget>[
 
-          CommentComponent(data: data),
+          CommentComponent(
+            data: data,
+            userId: vm.userId,
+            answersToDelete: vm.answersToDelete,
+            commentsToDelete: vm.commentsToDelete,
+            fnToDeleteComment: vm.deleleComment,
+
+          ),
 
           Container(
             width: _cardWidth,

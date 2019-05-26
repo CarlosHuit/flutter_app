@@ -52,9 +52,7 @@ class _DiscussionSystemComponentState extends State<DiscussionSystemComponent> {
               children: <Widget>[
 
                 SizedBox(height: 5.0),
-                TextFieldWriteComment(
-                  onSubmit: (String term) => print('comment: $term'),
-                ),
+                TextFieldWriteComment( onSubmit: vm.addComment ),
                 buildContent(vm),
 
               ],
@@ -90,8 +88,19 @@ class _DiscussionSystemComponentState extends State<DiscussionSystemComponent> {
 
     if (hasComments) {
 
-      final threadsComments =
-        List.generate( vm.comments.length, (i) => CommentThreadComponent( data: vm.comments[i] ) );
+      final threadsComments = List.generate(
+        vm.comments.length,
+        (i) {
+
+          final comment = vm.comments[i];
+
+          return CommentThreadComponent(
+            data: comment,
+            viewModel: vm,
+          );
+
+        }
+      );
 
       return SingleChildScrollView(
         child: Column(

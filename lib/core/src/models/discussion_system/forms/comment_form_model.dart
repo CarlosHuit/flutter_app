@@ -16,4 +16,16 @@ class CommentForm {
     @required this.courseId,
   });
 
+  Map<String, dynamic> toJson() {
+
+    return {
+      'date': date.toIso8601String(),
+      'text': text,
+      'userId': userId,
+      'tempId': tempId,
+      'courseId': courseId,
+    };
+
+  }
+
 }

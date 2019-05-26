@@ -46,6 +46,10 @@ class DSAddCommentSuccess {
 class DSAddCommentError { }
 
 
+class DSDeleteComment {
+  final String commentId;
+  DSDeleteComment(this.commentId);
+}
 
 
 /*----- actions Add Answer -----*/

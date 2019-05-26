@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:app19022019/core/src/models/discussion_system/comment.dart';
+import 'package:app19022019/core/src/models/discussion_system/forms/comment_form_model.dart';
 import 'package:app19022019/core/src/networking/system_discussion_api.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
 import 'package:redux/redux.dart';
@@ -25,35 +27,7 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
 
     if (action is DSAddComment) {
 
-      // final txt = action.text;
-      // final user = store.state.authState.user;
-      // final courseId = store.state.coursesState.currentCourse.id;
-      // final createdAt = DateTime.now();
-      // final temporaryId = generateTemporaryId(courseId);
-
-      // final answers = Answers( commentId: temporaryId, answers: [], id: null );
-
-      // final commentToSend = Comment(
-      //   id:       null,
-      //   user:     null,
-      //   text:     txt,
-      //   date:     createdAt,
-      //   courseId: courseId,
-      //   tempId:   temporaryId,
-      //   answers:  null,
-      // );
-
-      // final u = UserData(id: user.id, email: user.email, avatar: user.avatar, firstName:user.firstName, lastName: user.lastName);
-
-      // final localComment = Comment(
-      //   id:       null,
-      //   date:     createdAt,
-      //   tempId:   temporaryId,
-      //   text:     txt
-      // );
-
-      // print(commentToSend);
-      // print(localComment);
+      this.addComment(store, action, next);
 
     }
 
@@ -94,9 +68,38 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
   }
 
 
-  Future<void> addComment(Store<AppState> store, dynamic action) async {
+  Future<void> addComment(Store<AppState> store, dynamic action, NextDispatcher next) async {
+
+    final txt = action.text;
+    final user = store.state.authState.user;
+    final course = store.state.coursesState.currentCourse;
+    final courseId = store.state.coursesState.currentCourse.id;
+    final createdAt = DateTime.now();
+    final temporaryId = generateTemporaryId(courseId);
+
+    final commentToSave = new CommentForm(
+      text:     txt,
+      date:     createdAt,
+      tempId:   temporaryId,
+      userId:   user.id,
+      courseId: courseId,
+    );
+
+    final comment = new Comment(
+      id:      null,
+      text:    txt,
+      user:    user,
+      date:    createdAt,
+      tempId:  temporaryId,
+      answers: [],
+    );
 
 
+    next(DSAddLocalComment(comment));
+
+    final commentSaved = await this.api.addComment(commentToSave, course);
+    print(commentSaved);
+    next(DSAddCommentSuccess(commentSaved));
 
   }
 

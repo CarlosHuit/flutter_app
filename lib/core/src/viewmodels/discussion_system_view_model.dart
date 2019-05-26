@@ -1,5 +1,6 @@
 import 'package:app19022019/core/src/models/discussion_system/comment.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/discussion_system/discussion_system_actions.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
@@ -15,6 +16,8 @@ class DiscussionSystemViewModel {
   final Map<String, String> showAnswersOf;
   final Map<String, String> answersToDelete;
   final Map<String, String> commentsToDelete;
+  final Function(dynamic action) dispatch;
+  final String userId;
   
 
   DiscussionSystemViewModel({
@@ -26,13 +29,15 @@ class DiscussionSystemViewModel {
     @required this.writeAnswerFor,
     @required this.showAnswersOf,
     @required this.comments,
+    @required this.dispatch,
+    @required this.userId,
   });
 
   factory DiscussionSystemViewModel.fromStore(Store<AppState> store) {
 
     final ds = store.state.discussionSystem;
 
-    return DiscussionSystemViewModel(
+    var discussionSystemViewModel = DiscussionSystemViewModel(
       comments:             ds.comments,
       showAnswersOf:        ds.showAnswersOf,
       writeAnswerFor:       ds.writeAnswerFor,
@@ -41,9 +46,32 @@ class DiscussionSystemViewModel {
       isLoadingComments:    ds.isLoadingComments,
       answersTemporaryIds:  ds.answersTemporaryIds,
       commentsTemporaryIds: ds.commentsTemporaryIds,
+      dispatch:             (action) => store.dispatch(action),
+      userId:               store.state.authState.user.id,
     );
+    return discussionSystemViewModel;
 
   }
+
+
+  void addComment(String term) {
+
+    this.dispatch(DSAddComment(term));
+
+  }
+
+
+  void deleleComment(String commentId) {
+
+    this.dispatch(DSDeleteComment(commentId));
+
+  }
+
+
+  void addAnswer() {
+
+  }
+
 
   @override
   bool operator == (Object other) => 
@@ -51,6 +79,7 @@ class DiscussionSystemViewModel {
       && runtimeType          == other.runtimeType
       && isLoadingComments    == other.isLoadingComments
       && comments             == other.comments
+      && userId               == other.userId
       && writeAnswerFor       == other.writeAnswerFor
       && answersTemporaryIds  == other.answersTemporaryIds
       && commentsTemporaryIds == other.commentsTemporaryIds
@@ -68,6 +97,7 @@ class DiscussionSystemViewModel {
     answersToDelete.hashCode ^ 
     writeAnswerFor.hashCode ^
     showAnswersOf.hashCode ^ 
-    comments.hashCode;
+    comments.hashCode ^
+    userId.hashCode;
 
 }

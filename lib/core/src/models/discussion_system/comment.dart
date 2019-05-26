@@ -37,6 +37,17 @@ class Comment {
     );
   }
 
+  Comment addSavedId(Comment commentSaved) {
+    return Comment(
+      answers: answers,
+      date:    date,
+      id:      commentSaved.id,
+      tempId:  null,
+      text:    text,
+      user:    user,
+    );
+  }
+
   String parseDate() {
     return dateFormat(date, ['dd', ' ',  MM, ' ', 'yyyy', ' - ', 'hh', ':', 'nn', ' ', am]);
   }

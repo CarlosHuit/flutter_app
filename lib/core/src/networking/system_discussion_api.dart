@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:app19022019/core/src/models/course_model.dart';
 import 'package:app19022019/core/src/models/discussion_system/comment.dart';
+import 'package:app19022019/core/src/models/discussion_system/forms/comment_form_model.dart';
 import 'package:app19022019/environments/environments.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +14,6 @@ class DiscussionSystemApi {
 
   http.Client client;
   final FlutterSecureStorage secureStorage;
-  final String baseUrl = 'https://weduc.herokuapp.com/api/comments';
   final String apiUrl = '${Environments.apiUrl}/courses';
 
   DiscussionSystemApi( this.client, this.secureStorage );
@@ -62,19 +62,19 @@ class DiscussionSystemApi {
 
 
 
-  // Future<Comment> addComment(Comment comment) async {
-  addComment(Comment comment) async {
+  Future<Comment> addComment(CommentForm comment, Course course) async {
   
-  
-    final data  = json.encode(comment);
+    final url = '$apiUrl/${course.subtitle}/comments';
     final token  = await secureStorage.read(key: 'token');
     final headers = { HttpHeaders.authorizationHeader: token };
-    final response = await client.post(baseUrl, headers: headers, body: data);
+    final response = await client.post(url, headers: headers, body: comment.toJson());
+    final result = json.decode(response.body);
+
+    print(response.statusCode); 
+
+    if (response.statusCode == 201) {
   
-    if (response.statusCode == 200) {
-  
-      final result = json.decode(response.body);
-      print(result);
+      return Comment.parseJson(result);
 
     } else {
   
