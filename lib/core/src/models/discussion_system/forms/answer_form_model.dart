@@ -16,4 +16,14 @@ class AnswerForm {
     @required this.commentId,
   });
 
+  Map<String, String> toJson() {
+    return {
+      'text': text,
+      'date': date.toString(),
+      'tempId': tempId,
+      'userId': userId,
+      'commentId': commentId,
+    };
+  }
+
 }

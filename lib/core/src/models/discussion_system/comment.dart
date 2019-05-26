@@ -48,6 +48,46 @@ class Comment {
     );
   }
 
+  Comment addAnswer(Answer newAnswer) {
+
+    return Comment(
+      answers: [...answers, newAnswer],
+      date: date,
+      text: text,
+      tempId: tempId,
+      id: id,
+      user: user,
+    );
+
+  }
+
+  Comment updateAnswers(Answer answerSaved) {
+    return Comment(
+      date: date,
+      id: id,
+      tempId: tempId,
+      text: text,
+      user: user,
+      answers: answers.map((a) => a.tempId == answerSaved.tempId ? a.replaceId(answerSaved) : a).toList(),
+    );
+  }
+
+  Comment removeAnswer(String answerId) {
+
+    final s = answers.where((a) => a.id != answerId).toList();
+
+    return Comment(
+      answers: s,
+      date: date,
+      id: id,
+      tempId: tempId,
+      text: text,
+      user: user,      
+
+    );
+
+  }
+
   String parseDate() {
     return dateFormat(date, ['dd', ' ',  MM, ' ', 'yyyy', ' - ', 'hh', ':', 'nn', ' ', am]);
   }

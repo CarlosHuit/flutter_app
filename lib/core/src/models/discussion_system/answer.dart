@@ -40,6 +40,19 @@ class Answer {
 
   }
 
+  Answer replaceId(Answer answerSaved) {
+
+    return Answer(
+      date: date,
+      id: answerSaved.id,
+      tempId: null,
+      text: text,
+      user: user,
+    );
+
+  }
+
+
   String parseDate() {
     return dateFormat(date, ['dd', ' ',  'MM', ' ', 'yyyy', ' - ', 'hh', ':', 'nn', ' ', am]);
   }

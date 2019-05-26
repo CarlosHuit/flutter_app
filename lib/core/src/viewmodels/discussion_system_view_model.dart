@@ -75,9 +75,9 @@ class DiscussionSystemViewModel {
   }
 
 
-  void deleteAnswer(String commentId, String answerId, int index) {
+  void deleteAnswer(String commentId, String answerId,) {
 
-    this.dispatch( DSDeleteAnswer(commentId: commentId, answerId: answerId, index: index ));
+    this.dispatch( DSDeleteAnswer(commentId: commentId, answerId: answerId ));
 
   }
 

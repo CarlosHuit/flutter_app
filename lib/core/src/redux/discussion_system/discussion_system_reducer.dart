@@ -1,5 +1,6 @@
 import 'package:app19022019/core/src/models/discussion_system/comment.dart';
 import 'package:app19022019/core/src/redux/app/app_state.dart';
+import 'package:app19022019/core/src/redux/discussion_system/discussion_system.dart';
 import 'package:app19022019/core/src/redux/discussion_system/discussion_system_state.dart';
 import './discussion_system_actions.dart';
 
@@ -62,6 +63,70 @@ DiscussionSystemState discussionSystemReducer(AppState state, dynamic action) {
       comments: comments,
       commentsToDelete: commentsToDelete,
     );
+  }
+
+  if (action is DSAddLocalAnswer) {
+
+    final comments = state.discussionSystem.comments.map((c) => c.id == action.commentId ? c.addAnswer(action.answer) : c ).toList();
+    print(comments[0].answers);
+    return state.discussionSystem.copyWith(
+      comments: comments,
+    );
+
+  }
+
+  if (action is DSAddAnswerSuccess) {
+
+    final comments = state.discussionSystem.comments.map((c) {
+
+      if (c.id == action.commentId) {
+        return c.updateAnswers(action.answer);
+      }
+
+      return c;
+
+    }).toList();
+
+    print('replace id');
+
+    return state.discussionSystem.copyWith(
+      comments: comments,
+    );
+
+  }
+
+  if (action is DSRegisterAnswerToDelete) {
+
+    final t = state.discussionSystem.answersToDelete;
+    final sd = Map.of(t)..addAll({'${action.answerId}': action.answerId});
+    print(sd);
+
+    return state.discussionSystem.copyWith(
+      answersToDelete: sd,
+    );
+
+  }
+
+  if (action is DSDeleteAnswerSuccess) {
+
+    final comments = state.discussionSystem.comments.map((c) {
+
+      if (c.id == action.commentId) {
+        return c.removeAnswer(action.answerId);
+      }
+
+      return c;
+      
+    }).toList();
+
+    final answersToDelete = {...state.discussionSystem.answersToDelete};
+    answersToDelete.remove(action.answerId);
+
+    return state.discussionSystem.copyWith(
+      comments: comments,
+      answersToDelete: answersToDelete,
+    );
+
   }
 
   return state.discussionSystem;

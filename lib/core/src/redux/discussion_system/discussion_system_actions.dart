@@ -71,10 +71,17 @@ class DSAddAnswer {
   DSAddAnswer(this.text, this.commentId);
 }
 
+class DSAddLocalAnswer {
+  final Answer answer;
+  final String commentId;
+  DSAddLocalAnswer(this.answer, this.commentId);
+}
+
 
 class DSAddAnswerSuccess {
   final Answer answer;
-  DSAddAnswerSuccess(this.answer);
+  final String commentId;
+  DSAddAnswerSuccess(this.answer, this.commentId);
 }
 
 class DSAddAnswerError {}
@@ -85,24 +92,28 @@ class DSAddAnswerError {}
 class DSDeleteAnswer {
   final String commentId;
   final String answerId;
-  final int index;
 
   DSDeleteAnswer({
     @required this.commentId,
     @required this.answerId,
-    @required this.index
   });
 
 }
 
+class DSRegisterAnswerToDelete {
+  final String commentId;
+  final String answerId;
+
+  DSRegisterAnswerToDelete(this.commentId, this.answerId);
+}
+
+
 class DSDeleteAnswerSuccess {
   final String commentId;
-  final List<Answer> answersUpdated;
+  final String answerId;
 
-  DSDeleteAnswerSuccess({
-    @required this.commentId,
-    @required this.answersUpdated
-  });
+  DSDeleteAnswerSuccess(this.commentId, this.answerId);
+
 }
 
 class DSDeleteAnswerError {}

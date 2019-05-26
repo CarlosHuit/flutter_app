@@ -53,6 +53,7 @@ class _TextFieldWriteAnswerState extends State<TextFieldWriteAnswer> {
     if (term.length > 0) {
       FocusScope.of(context).requestFocus(new FocusNode());
       onSubmit(term);
+      _controller.clear();
     }
 
   }

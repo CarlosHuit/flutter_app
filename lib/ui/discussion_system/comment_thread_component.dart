@@ -51,6 +51,12 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
 
   }
 
+  void showAnswersStatus() {
+    setState(() {
+      showAnswers = true;
+    });
+  }
+
   void toggleShowBoxAnswer() {
     setState(() {
       showBoxWriteAnswer = !showBoxWriteAnswer;
@@ -61,7 +67,6 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
   Widget build(BuildContext context) {
 
     final _cardWidth = MediaQuery.of(context).size.width - 20;
-
 
     return Container(
       margin: EdgeInsets.only(bottom: 10.0),
@@ -102,7 +107,10 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
                       !showAnswers && hasAnswers ? buildHideAnswers() : SizedBox(),
 
                       showBoxWriteAnswer ? TextFieldWriteAnswer(
-                        onSubmit: (String term) => print('answer: $term'),
+                        onSubmit: (String term) {
+                          vm.addAnswer(term, data.id);
+                          showAnswersStatus();
+                        },
                       ) : SizedBox(),
 
                       buildAnswerButton()
@@ -132,7 +140,11 @@ class _CommentThreadComponentState extends State<CommentThreadComponent> {
           (i) {
 
             return AnswerComponent(
-              data: data.answers[i]
+              data: data.answers[i],
+              userId: vm.userId,
+              commentId: data.id,
+              answersToDelete: vm.answersToDelete,
+              fnToDeleteAnswer: vm.deleteAnswer,
             );
 
           }
