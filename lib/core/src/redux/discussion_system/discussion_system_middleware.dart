@@ -31,6 +31,17 @@ class DiscussionSystemMiddleware extends MiddlewareClass<AppState> {
 
     }
 
+    if (action is DSDeleteComment) {
+
+      next(DSRegisterCommetToDelete(action.commentId));
+
+      final course = store.state.coursesState.currentCourse;
+      final commentId = await this.api.deleteComment(course, action.commentId);
+
+      next(DSDeleteCommentSuccess(commentId));
+
+    }
+
     next(action);
 
   }

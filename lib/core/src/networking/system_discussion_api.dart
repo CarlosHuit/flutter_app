@@ -86,4 +86,20 @@ class DiscussionSystemApi {
   }
 
 
+  Future<String> deleteComment(Course course, String commentId) async {
+
+    final url = '$apiUrl/${course.subtitle}/comments/$commentId';
+
+    final token  = await secureStorage.read(key: 'token');
+    final headers = { HttpHeaders.authorizationHeader: token };
+    final response = await this.client.delete(url, headers: headers);
+
+    if (response.statusCode == 204) {
+      return commentId;
+    } else {
+      return throw('Error al eliminar comentario');
+    }
+
+  }
+
 }

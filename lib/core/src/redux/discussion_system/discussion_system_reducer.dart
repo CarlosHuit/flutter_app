@@ -26,7 +26,7 @@ DiscussionSystemState discussionSystemReducer(AppState state, dynamic action) {
 
   }
 
-  if (action is DSDeleteComment) {
+  if (action is DSRegisterCommetToDelete) {
 
     final t = state.discussionSystem.commentsToDelete;
     final sd = Map.of(t)..addAll({'${action.commentId}': action.commentId});
@@ -50,6 +50,18 @@ DiscussionSystemState discussionSystemReducer(AppState state, dynamic action) {
       comments: comments,
     );
 
+  }
+
+  if (action is DSDeleteCommentSuccess) {
+
+    final comments = state.discussionSystem.comments.where((c) => c.id != action.commentId).toList();
+    final commentsToDelete = {...state.discussionSystem.commentsToDelete};
+    commentsToDelete.remove(action.commentId);
+
+    return state.discussionSystem.copyWith(
+      comments: comments,
+      commentsToDelete: commentsToDelete,
+    );
   }
 
   return state.discussionSystem;

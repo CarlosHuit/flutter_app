@@ -46,9 +46,21 @@ class DSAddCommentSuccess {
 class DSAddCommentError { }
 
 
+
+
 class DSDeleteComment {
   final String commentId;
   DSDeleteComment(this.commentId);
+}
+
+class DSDeleteCommentSuccess {
+  final String commentId;
+  DSDeleteCommentSuccess(this.commentId);
+}
+
+class DSRegisterCommetToDelete {
+  final String commentId;
+  DSRegisterCommetToDelete(this.commentId);
 }
 
 
