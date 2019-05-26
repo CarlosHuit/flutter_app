@@ -67,7 +67,8 @@ class DSRegisterCommetToDelete {
 /*----- actions Add Answer -----*/
 class DSAddAnswer {
   final String text;
-  DSAddAnswer(this.text);
+  final String commentId;
+  DSAddAnswer(this.text, this.commentId);
 }
 
 
